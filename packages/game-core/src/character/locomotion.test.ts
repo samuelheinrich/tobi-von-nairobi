@@ -24,6 +24,7 @@ const idle: InputActions = {
   jumpPressed: false,
   sprintHeld: false,
   interactPressed: false,
+  specialPressed: false,
 };
 
 describe('Locomotion', () => {

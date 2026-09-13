@@ -3,6 +3,8 @@ import type { GameView } from '@tobi/contracts';
 export class GameViewStore {
   private value: GameView = {
     phase: 'loading',
+    levelId: 'welcome_to_bali_prototype',
+    pursuit: null,
     collected: 0,
     total: 5,
     stamina: 100,
@@ -10,6 +12,7 @@ export class GameViewStore {
     elapsedSeconds: 0,
     objective: 'Sammle 5 Flaschen',
     nearDestination: false,
+    canCheckIn: false,
     toast: '',
     error: null,
     debug: false,

@@ -1,6 +1,6 @@
 # Implementierungsstand
 
-Stand: 13. September 2026. Initialer Veröffentlichungsbranch: `feature/tobi-branding`.
+Stand: 13. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Nächster Ausbauschritt: `feature/bali-escape`.
 
 ## Bereits implementiert
 
@@ -12,12 +12,14 @@ Stand: 13. September 2026. Initialer Veröffentlichungsbranch: `feature/tobi-bra
 - Entwicklungsmenü mit Teleport, Respawn und Zustands-/FPS-Inspektion; aus dem Produktionsimportgraph entfernt.
 - NestJS/Fastify-API für Liveness, Datenbankbereitschaft und Content; PostgreSQL in Compose; Prisma-Schema und initiale Migration für User, Saveslots und Settings.
 - CI-Workflow sowie Unit-, echte PostgreSQL-Integrations- und Browsertests.
+- Separat wählbares Bali-Escape-Level mit Chaos, unabhängiger Fahndung, modularer Police-FSM, echtem Sichtkontakt, Bodengitter-Routing, zwölfsekündiger Flucht, Festnahme und Neustart.
+- R als wiederholbare Chaos-Aktion mit Cooldown; datengetriebenes Escape-Objective und Check-in-Gate, +500 Fluchtpunkte, eigene HUD-Anzeigen und Debug-Inspektion.
 
 ## Bewusst noch offen
 
-Dieser Stand ist ein **technischer Tutorialprototyp**, kein vollständiges Bali-MVP. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
+Dieser Stand enthält **technisches Tutorial und Flucht-Blockout**, noch kein vollständiges Bali-MVP mit Login und Speicherung. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
 
-Polizei/Chaos/Wanted, Power-ups, Flaschenwerfen, umfangreiche Animationen, Login, Savegame-API und dauerhafte Speicherung des Spielverlaufs sind noch nicht angeschlossen. Das vorhandene Datenbankschema ist eine Foundation, nicht das vollständige Datenmodell aus dem Plan. Es werden keine Accounts oder Saves über ungeschützte Endpunkte angelegt.
+Power-ups, Kombos, Risiko-Scoremultiplikatoren, Inventar, Flaschenwerfen, umfangreiche Animationen, Login, Savegame-API und dauerhafte Speicherung des Spielverlaufs sind noch nicht angeschlossen. Das vorhandene Datenbankschema ist eine Foundation, nicht das vollständige Datenmodell aus dem Plan. Es werden keine Accounts oder Saves über ungeschützte Endpunkte angelegt.
 
 Die Kamera verwendet fünf Ray-Probes als erste Annäherung an einen Kameraradius; ein echter Shape Sweep und engere Innenräume bleiben Phase-1-Arbeit. Die Physik läuft in festen Schritten, visuelle Transforminterpolation ist noch offen. Referenzgeräte-/Safari-Abnahme und ein zehnminütiger manueller Kollisions-Parcours sind nicht durch einen Headless-Chromium-Lauf ersetzt.
 
@@ -31,7 +33,9 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
-Die Prüfkette umfasst zwölf Unit-Tests (Levelvalidierung, feste Uhr, Bewegung und eindeutige Missions-/Scorewertung), drei Integrationstests gegen echtes PostgreSQL und drei Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+Die Prüfkette umfasst 23 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), drei Integrationstests gegen echtes PostgreSQL und fünf Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+
+Zusätzlich fährt der Browser den gesamten Fluchtweg mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
 
 `pnpm check:bundle` prüft zusätzlich das komprimierte Gesamtbudget aller gebauten Client-Assets und stellt sicher, dass das Developer-Menü im Produktionsartefakt fehlt. Der gemessene Gesamtumfang beträgt derzeit rund **1,31 MiB gzip**; das ist ein Transfergrössenvergleich, keine FPS-Messung. Vite weist weiterhin auf den absichtlich verzögert geladenen, grösseren Engine-Chunk hin. Referenzhardware und Safari bleiben separate Abnahmen.
 
@@ -40,7 +44,7 @@ Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgesc
 ## Nächste Arbeitspakete
 
 1. Bewegung/Kamera an Treppen, Ecken, Sprüngen und langsamem Rendering weiter prüfen; Controllergefühl mit Nutzern abstimmen.
-2. Chaos, Wanted, Police-Director und modulare FSM aufbauen und das separate `bali_mvp_escape`-Level anschliessen.
+2. Fluchtgefühl mit Spielern abstimmen; Patrouillen, Animations-/Audiofeedback und grössere Levelrouten ergänzen. Inventar, Power-ups, Combo- und Risiko-Score folgen als eigene Module.
 3. Run-/Saveverträge und DB-Modell erweitern, Auth und atomare Belohnungen integrieren.
 4. Erst dann den vollständigen MVP-Abnahmelauf einschliesslich Reload aus PostgreSQL durchführen.
 

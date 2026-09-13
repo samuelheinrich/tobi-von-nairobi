@@ -19,6 +19,26 @@ const level: LevelDefinition = {
 };
 
 describe('confirmed tutorial events', () => {
+  it('requires an escape after collection before the destination can complete', () => {
+    const escapeLevel: LevelDefinition = {
+      ...level,
+      maxWanted: 1,
+      policeSpawns: [{ x: 4, y: 0, z: 0 }],
+      objectives: [
+        level.objectives[0]!,
+        { id: 'escape', type: 'escapePolice', after: ['collect'] },
+        { id: 'reach', type: 'reach', targetId: 'home', after: ['escape'] },
+      ],
+    };
+    const session = new PrototypeSession(escapeLevel, { bottlePoints: 100, completionBonus: 500 });
+    session.escaped();
+    session.collect('one');
+    expect(session.reach('home')).toBe(false);
+    session.escaped();
+    expect(session.reach('home')).toBe(true);
+    expect(session.reach('home')).toBe(false);
+    expect(session.score).toBe(600);
+  });
   it('rejects unknown and repeated pickups without awarding points', () => {
     const session = new PrototypeSession(level, { bottlePoints: 100, completionBonus: 500 });
     expect(session.collect('unknown')).toBe(false);

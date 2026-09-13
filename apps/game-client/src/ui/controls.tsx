@@ -1,4 +1,4 @@
-export function Controls() {
+export function Controls({ escape = false }: { escape?: boolean }) {
   return (
     <div className="controls">
       <span>
@@ -16,6 +16,11 @@ export function Controls() {
       <span>
         <kbd>E</kbd> Interaktion
       </span>
+      {escape && (
+        <span>
+          <kbd>R</kbd> Aufsehen erregen
+        </span>
+      )}
       <span>
         <kbd>ESC</kbd> Pause
       </span>

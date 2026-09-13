@@ -2,3 +2,8 @@ export * from './clock/fixed-clock.js';
 export * from './character/locomotion.js';
 export * from './missions/mission.js';
 export * from './session/prototype-session.js';
+export * from './chaos/chaos.js';
+export * from './wanted/wanted.js';
+export * from './police/police-agent.js';
+export * from './police/pursuit.js';
+export * from './navigation/navigation-grid.js';

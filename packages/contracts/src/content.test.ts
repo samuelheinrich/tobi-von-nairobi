@@ -18,6 +18,15 @@ const data = {
 };
 
 describe('Level schema', () => {
+  it('rejects pursuit without spawns and escape objectives in a peaceful level', () => {
+    expect(levelSchema.safeParse({ ...data, maxWanted: 3 }).success).toBe(false);
+    expect(
+      levelSchema.safeParse({
+        ...data,
+        objectives: [{ id: 'escape', type: 'escapePolice', after: [] }],
+      }).success,
+    ).toBe(false);
+  });
   it('accepts a resolvable level', () => {
     expect(levelSchema.safeParse(data).success).toBe(true);
   });

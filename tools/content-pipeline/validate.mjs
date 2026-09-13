@@ -1,4 +1,5 @@
-import { welcomeToBali } from '../../packages/game-data/dist/index.js';
-console.log(
-  `Validated ${welcomeToBali.id}: ${welcomeToBali.pickups.length} unique pickups, ${welcomeToBali.objectives.length} objectives.`,
-);
+import { playableLevels } from '../../packages/game-data/dist/index.js';
+for (const level of playableLevels)
+  console.log(
+    `Validated ${level.id}: ${level.pickups.length} unique pickups, ${level.objectives.length} objectives.`,
+  );

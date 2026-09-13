@@ -1,0 +1,20 @@
+/** Seconds and metres; tuned for the compact Bali escape blockout. */
+export const pursuitBalance = Object.freeze({
+  chaosPerBottle: 16,
+  provokeChaos: 20,
+  provokeCooldown: 3,
+  chaosDecayDelay: 10,
+  chaosDecayPerSecond: 1.5,
+  wantedThresholds: [41, 61, 71, 81, 95] as readonly number[],
+  escapeDuration: 12,
+  sightRange: 15,
+  suspicionDuration: 0.8,
+  chaseSpeed: 4.6,
+  patrolSpeed: 2,
+  captureRadius: 1.25,
+  captureDuration: 1.6,
+  searchDuration: 12,
+  aiInterval: 0.1,
+  repathInterval: 0.6,
+  escapeBonus: 500,
+});

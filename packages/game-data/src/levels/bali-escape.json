@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "id": "bali_mvp_escape",
+  "worldId": "bali",
+  "title": "Bali Escape",
+  "subtitle": "Fünf Flaschen. Drei Uniformen. Kein Plan.",
+  "maxWanted": 3,
+  "spawn": {
+    "x": 0,
+    "y": 1.5,
+    "z": -18
+  },
+  "destination": {
+    "id": "airbnb",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 19
+    },
+    "radius": 3
+  },
+  "pickups": [
+    {
+      "id": "bali_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -12
+      }
+    },
+    {
+      "id": "bali_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -6
+      }
+    },
+    {
+      "id": "bali_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "bali_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 6
+      }
+    },
+    {
+      "id": "bali_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 12
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect_bottles",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 5,
+      "after": []
+    },
+    {
+      "id": "escape_police",
+      "type": "escapePolice",
+      "after": ["collect_bottles"]
+    },
+    {
+      "id": "reach_airbnb",
+      "type": "reach",
+      "targetId": "airbnb",
+      "after": ["escape_police"]
+    }
+  ],
+  "policeSpawns": [
+    {
+      "x": 12,
+      "y": 0,
+      "z": -12
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "z": 0
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "z": 12
+    }
+  ],
+  "navigationBounds": {
+    "minX": -30,
+    "maxX": 30,
+    "minZ": -34,
+    "maxZ": 34
+  }
+}

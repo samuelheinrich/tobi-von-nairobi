@@ -14,6 +14,7 @@ const gameKeys = new Set([
   'ShiftLeft',
   'ShiftRight',
   'KeyE',
+  'KeyR',
 ]);
 
 /** Keyboard/mouse adapter; gameplay never reads DOM key codes. */
@@ -65,6 +66,7 @@ export class KeyboardInput implements InputSource {
       jumpPressed: this.pressed.has('Space'),
       sprintHeld: down('ShiftLeft', 'ShiftRight') > 0,
       interactPressed: this.pressed.has('KeyE'),
+      specialPressed: this.pressed.has('KeyR'),
     };
     this.pressed.clear();
     this.lookX = this.lookY = 0;

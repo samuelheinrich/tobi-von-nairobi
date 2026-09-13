@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
+import { welcomeToBali, baliEscape } from '@tobi/game-data';
 import { Landing } from '../ui/landing.js';
 import { Hud, formatTime } from '../ui/hud.js';
 import { Controls } from '../ui/controls.js';
@@ -8,7 +9,8 @@ import { CompassIcon } from '../ui/icons.js';
 
 export function App() {
   const [generation, setGeneration] = useState(0);
-  const store = useMemo(() => new GameViewStore(), [generation]);
+  const [level, setLevel] = useState(welcomeToBali);
+  const store = useMemo(() => new GameViewStore(), [generation, level]);
   const view = useSyncExternalStore(store.subscribe, store.getSnapshot);
   const canvas = useRef<HTMLCanvasElement>(null);
   const host = useRef<GameHost | null>(null);
@@ -24,7 +26,7 @@ export function App() {
     if (!element) return;
     void import('../runtime/session/game-host.js')
       .then(async ({ GameHost }) => {
-        instance = await GameHost.create(element, store, controller.signal);
+        instance = await GameHost.create(element, store, controller.signal, level);
         if (controller.signal.aborted) {
           instance?.dispose();
           return;
@@ -44,7 +46,7 @@ export function App() {
       instance?.dispose();
       host.current = null;
     };
-  }, [store]);
+  }, [store, level]);
 
   const restart = (): void => {
     setHelp(false);
@@ -54,7 +56,7 @@ export function App() {
     host.current?.setMuted(!muted);
     setMuted(!muted);
   };
-  const active = ['playing', 'paused', 'complete'].includes(view.phase);
+  const active = ['playing', 'paused', 'complete', 'caught'].includes(view.phase);
   return (
     <main className={`game-app ${active ? 'in-game' : ''}`}>
       <canvas
@@ -100,7 +102,11 @@ export function App() {
         </div>
       </header>
       {['ready', 'loading'].includes(view.phase) && (
-        <Landing view={view} onStart={() => host.current?.start()} />
+        <Landing
+          view={view}
+          onStart={() => host.current?.start()}
+          onSelectEscape={() => setLevel(level.maxWanted > 0 ? welcomeToBali : baliEscape)}
+        />
       )}
       {active && <Hud view={view} />}
       {(view.phase === 'paused' || help) && (
@@ -118,7 +124,7 @@ export function App() {
               <em>eine Pause.</em>
             </h2>
             <p>Die Stadt kann kurz warten.</p>
-            <Controls />
+            <Controls escape={level.maxWanted > 0} />
             <p className="muted-copy">
               Maus bewegen: Kamera. Falls die Maussperre nicht verfügbar ist, mit gedrückter
               Maustaste ziehen.
@@ -138,15 +144,39 @@ export function App() {
           </section>
         </div>
       )}
+      {view.phase === 'caught' && (
+        <div className="modal-backdrop">
+          <section className="dialog" role="dialog" aria-modal="true" aria-label="Erwischt">
+            <span className="eyebrow">KURZER ZWISCHENSTOPP</span>
+            <h2>
+              Zu viel Tobi.
+              <br />
+              <em>Zu wenig Abstand.</em>
+            </h2>
+            <p>
+              Security hat dich erwischt. Nutze Sprint und die Rückseiten der Häuser, um den
+              Sichtkontakt zu unterbrechen.
+            </p>
+            <button className="primary-button" onClick={restart}>
+              NOCH EIN VERSUCH <span>↻</span>
+            </button>
+            <p className="muted-copy">
+              Der Durchlauf wird zurückgesetzt. Kein Geld und kein Spielstand gehen verloren.
+            </p>
+          </section>
+        </div>
+      )}
       {view.phase === 'complete' && (
         <div className="modal-backdrop results-backdrop">
           <section
             className="dialog results"
             role="dialog"
             aria-modal="true"
-            aria-label="Tutorial abgeschlossen"
+            aria-label={level.maxWanted > 0 ? 'Flucht abgeschlossen' : 'Tutorial abgeschlossen'}
           >
-            <span className="eyebrow">WELCOME TO BALI · GESCHAFFT</span>
+            <span className="eyebrow">
+              {level.maxWanted > 0 ? 'BALI ESCAPE · ABGEHÄNGT' : 'WELCOME TO BALI · GESCHAFFT'}
+            </span>
             <div className="result-star">✳</div>
             <h2>
               Buchung bestätigt.
@@ -169,13 +199,19 @@ export function App() {
                 <strong>{view.score.toLocaleString('de-CH')}</strong>
               </div>
             </div>
+            {view.pursuit && (
+              <p>
+                {view.pursuit.escapes} erfolgreiche Flucht · Maximal{' '}
+                {'★'.repeat(view.pursuit.maxWanted)} · Fluchtbonus enthalten
+              </p>
+            )}
             <p>Tobi ist angekommen. Das ist schon mal verdächtig gut gelaufen.</p>
             <button className="primary-button" onClick={restart}>
               NOCH EINE RUNDE <span>↻</span>
             </button>
             <p className="muted-copy">
-              Technischer Prototyp: Dieser Durchlauf wird noch nicht gespeichert. Polizei und
-              weitere Levels folgen.
+              Technischer Prototyp: Dieser Durchlauf wird noch nicht gespeichert. Login und weitere
+              Levels folgen.
             </p>
           </section>
         </div>

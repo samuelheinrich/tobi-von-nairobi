@@ -4,7 +4,7 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: spielbarer technischer Bali-Tutorialprototyp.** Tobi kann laufen, sprinten, springen, fünf Flaschen sammeln und beim Airbnb einchecken. Die PostgreSQL-/API-Foundation steht. Polizei, Login und dauerhafte Spielstandspeicherung folgen in den nächsten Phasen; die Ergebnisansicht benennt diese Grenze ausdrücklich.
+**Aktueller Stand: Bali-Tutorial und erster spielbarer Flucht-Loop.** Im Tutorial kann Tobi laufen, sprinten, springen, fünf Flaschen sammeln und beim Airbnb einchecken. Über **NEU: BALI ESCAPE →** startet zusätzlich eine Variante mit Chaos, bis zu drei Fahndungssternen, verfolgenden Gegnern, Flucht-Countdown und Festnahme. Die PostgreSQL-/API-Foundation steht; Login und dauerhafte Spielstandspeicherung sind noch offen.
 
 ![Tobi von Nairobi: Startbildschirm des Bali-Prototyps](docs/screenshots/tobi-landing.png)
 
@@ -37,17 +37,18 @@ Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und
 
 ## Steuerung
 
-| Eingabe            | Aktion                                                          |
-| ------------------ | --------------------------------------------------------------- |
-| WASD / Pfeiltasten | bewegen                                                         |
-| Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                |
-| Space              | springen                                                        |
-| Shift              | sprinten; Stamina beachten                                      |
-| E                  | am Airbnb einchecken, nachdem alle fünf Flaschen gesammelt sind |
-| ESC                | Pause                                                           |
-| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild            |
+| Eingabe            | Aktion                                                               |
+| ------------------ | -------------------------------------------------------------------- |
+| WASD / Pfeiltasten | bewegen                                                              |
+| Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                     |
+| Space              | springen                                                             |
+| Shift              | sprinten; Stamina beachten                                           |
+| E                  | am Airbnb einchecken, nachdem alle fünf Flaschen gesammelt sind      |
+| R                  | in Bali Escape: «Ich kenne Karl!» rufen, +20 Chaos (alle 3 Sekunden) |
+| ESC                | Pause                                                                |
+| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                 |
 
-Flaschen werden bei Annäherung automatisch aufgenommen. Das Tutorial ist bewusst polizeifrei. Neustart setzt den lokalen Durchlauf zurück. Es wird noch kein Spielfortschritt gespeichert.
+Flaschen werden bei Annäherung automatisch aufgenommen. Das Tutorial ist bewusst polizeifrei. In **Bali Escape** muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor der Check-in zählt. Häuser bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. Es wird noch kein Spielfortschritt gespeichert. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
 
 ## Checks und Builds
 
@@ -93,6 +94,7 @@ pnpm test:e2e
 
 ## Planung und aktueller Status
 
+- [Bali Escape: Regeln und Technik](docs/gameplay/pursuit.md)
 - [Implementierungsstand und offene Arbeit](docs/development/implementation-status.md)
 - [Vollständiger Implementierungsplan](IMPLEMENTATION_PLAN.md)
 - [Architektur und Engine-Vergleich](ARCHITECTURE.md)

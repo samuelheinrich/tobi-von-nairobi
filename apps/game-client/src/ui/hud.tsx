@@ -1,4 +1,5 @@
 import type { GameView } from '@tobi/contracts';
+import { PursuitHud } from './pursuit-hud.js';
 import { BottleIcon } from './icons.js';
 
 export function formatTime(seconds: number): string {
@@ -12,13 +13,16 @@ export function Hud({ view }: { view: GameView }) {
     <div className="hud" aria-label="Spielstatus">
       <section className="mission-card">
         <div className="eyebrow">
-          01 / BALI <span className="mission-type">TUTORIAL</span>
+          01 / BALI{' '}
+          <span className="mission-type">{view.pursuit ? 'BALI ESCAPE' : 'TUTORIAL'}</span>
         </div>
         <h2>{view.objective}</h2>
         <p>
           {view.collected < view.total
             ? 'Folge dem Weg. Tobi kennt sich aus.'
-            : 'Die Casa Tobi wartet am Ende des Wegs.'}
+            : view.pursuit && !view.canCheckIn
+              ? 'Nutze die Rückseiten der Häuser. Zwölf Sekunden ohne Sichtkontakt!'
+              : 'Die Casa Tobi wartet am Ende des Wegs.'}
         </p>
         <div className="bottle-progress">
           <BottleIcon />
@@ -37,9 +41,11 @@ export function Hud({ view }: { view: GameView }) {
         <span>TOBI SCORE</span>
         <strong data-testid="score">{view.score.toLocaleString('de-CH')}</strong>
         <small>
-          {formatTime(view.elapsedSeconds)} <span>·</span> ALLES ENTSPANNT
+          {formatTime(view.elapsedSeconds)} <span>·</span>{' '}
+          {view.pursuit?.wanted ? 'GANZ NORMALER URLAUB' : 'ALLES ENTSPANNT'}
         </small>
       </div>
+      {view.pursuit && <PursuitHud pursuit={view.pursuit} />}
       <div className="stamina-card">
         <div>
           <span>TOBIS ENERGIE</span>
@@ -66,7 +72,9 @@ export function Hud({ view }: { view: GameView }) {
       )}
       {view.nearDestination && (
         <div className="interact-prompt">
-          {view.collected === view.total ? (
+          {view.pursuit && view.collected === view.total && !view.canCheckIn ? (
+            <>ERST DIE POLIZEI ABHÄNGEN.</>
+          ) : view.collected === view.total ? (
             <>
               <kbd>E</kbd> EINCHECKEN
             </>

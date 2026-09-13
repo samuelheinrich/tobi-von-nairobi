@@ -2,7 +2,15 @@ import type { GameView } from '@tobi/contracts';
 import { CompassIcon } from './icons.js';
 import { Controls } from './controls.js';
 
-export function Landing({ view, onStart }: { view: GameView; onStart(): void }) {
+export function Landing({
+  view,
+  onStart,
+  onSelectEscape,
+}: {
+  view: GameView;
+  onStart(): void;
+  onSelectEscape(): void;
+}) {
   return (
     <div className="landing">
       <div className="landing-copy">
@@ -30,8 +38,19 @@ export function Landing({ view, onStart }: { view: GameView; onStart(): void }) 
           onClick={onStart}
           disabled={view.phase !== 'ready'}
         >
-          {view.phase === 'loading' ? 'KOFFER WIRD GEPACKT …' : 'AB NACH BALI'}
+          {view.phase === 'loading'
+            ? 'KOFFER WIRD GEPACKT …'
+            : view.pursuit
+              ? 'FLUCHT STARTEN'
+              : 'AB NACH BALI'}
           <span aria-hidden="true">↗</span>
+        </button>
+        <button
+          className="level-select"
+          onClick={onSelectEscape}
+          disabled={view.phase === 'loading'}
+        >
+          {view.pursuit ? '← ZUM TUTORIAL' : 'NEU: BALI ESCAPE →'}
         </button>
         <div className="start-note">
           <span className="tiny-play">▶</span> Direkt im Browser <span>·</span> Tastatur & Maus
@@ -47,13 +66,13 @@ export function Landing({ view, onStart }: { view: GameView; onStart(): void }) 
         </div>
         <div className="destination-rule" />
         <div className="destination-meta">
-          <span>WELCOME TO BALI</span>
+          <span>{view.pursuit ? 'BALI ESCAPE · ★★★' : 'WELCOME TO BALI'}</span>
           <span>☀ 29°</span>
         </div>
         <p>
-          Erst mal ankommen.
+          {view.pursuit ? 'Sammeln. Sprinten. Sichtkontakt verlieren.' : 'Erst mal ankommen.'}
           <br />
-          Eskalieren können wir später.
+          {view.pursuit ? 'Zwölf Sekunden. Dann nach Hause.' : 'Eskalieren können wir später.'}
         </p>
         <div className="postmark">
           TOBI
@@ -79,7 +98,7 @@ export function Landing({ view, onStart }: { view: GameView; onStart(): void }) 
         </span>
       </div>
       <div className="landing-footer">
-        <Controls />
+        <Controls escape={view.pursuit !== null} />
         <span className="prototype-tag">TECHNISCHER PROTOTYP · 0.1</span>
       </div>
     </div>

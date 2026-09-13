@@ -2,7 +2,9 @@ import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { FixedClock, Locomotion, PrototypeSession } from '@tobi/game-core';
-import { movement, prototypeBalance, welcomeToBali } from '@tobi/game-data';
+import { movement, prototypeBalance, welcomeToBali, pursuitBalance } from '@tobi/game-data';
+import type { LevelDefinition } from '@tobi/contracts';
+import { PoliceRuntime } from '../police/police-runtime.js';
 import type { GameViewStore } from '../../app/game-view-store.js';
 import { KeyboardInput } from '../input/keyboard-input.js';
 import { HavokCharacterMotor, HavokWorld, preparePhysics } from '../physics/havok-world.js';
@@ -23,7 +25,8 @@ export class GameHost {
   private readonly camera: ThirdPersonCamera;
   private readonly clock = new FixedClock(prototypeBalance.fixedStep, prototypeBalance.maxSubSteps);
   private readonly locomotion = new Locomotion(movement);
-  private readonly session = new PrototypeSession(welcomeToBali, prototypeBalance);
+  private readonly session: PrototypeSession;
+  private readonly police: PoliceRuntime | null;
   private readonly audio = new AudioFeedback();
   private disposed = false;
   private lastTime = performance.now();
@@ -36,6 +39,7 @@ export class GameHost {
     canvas: HTMLCanvasElement,
     store: GameViewStore,
     signal: AbortSignal,
+    level: LevelDefinition = welcomeToBali,
   ): Promise<GameHost | null> {
     if (!Engine.IsSupported)
       throw new Error(
@@ -50,7 +54,7 @@ export class GameHost {
     }
     engine.setHardwareScalingLevel(Math.max(1, window.devicePixelRatio / 1.5));
     try {
-      return new GameHost(canvas, store, engine, module);
+      return new GameHost(canvas, store, engine, module, level);
     } catch (error) {
       engine.dispose();
       throw error;
@@ -62,13 +66,19 @@ export class GameHost {
     private readonly store: GameViewStore,
     private readonly engine: Engine,
     module: Awaited<ReturnType<typeof preparePhysics>>,
+    private readonly level: LevelDefinition,
   ) {
+    this.session = new PrototypeSession(level, prototypeBalance);
     this.scene = new Scene(engine);
     this.world = new HavokWorld(this.scene, module);
-    const environment = createBaliScene(this.scene, this.world, welcomeToBali);
-    this.motor = new HavokCharacterMotor(this.scene, welcomeToBali.spawn);
+    const environment = createBaliScene(this.scene, this.world, level);
+    this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
-    this.bottles = new BottlePickups(this.scene, welcomeToBali, environment.shadows);
+    this.bottles = new BottlePickups(this.scene, level, environment.shadows);
+    this.police =
+      level.maxWanted > 0
+        ? new PoliceRuntime(this.scene, level, environment.colliders, environment.shadows)
+        : null;
     this.camera = new ThirdPersonCamera(this.scene);
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
@@ -84,7 +94,12 @@ export class GameHost {
     document.addEventListener('visibilitychange', this.onVisibility);
     document.addEventListener('pointerlockchange', this.onPointerLock);
     canvas.addEventListener('webglcontextlost', this.onContextLost);
-    this.store.update({ phase: 'ready', total: welcomeToBali.pickups.length });
+    this.store.update({
+      phase: 'ready',
+      total: level.pickups.length,
+      levelId: level.id,
+      pursuit: this.police?.system.snapshot() ?? null,
+    });
     this.engine.runRenderLoop(this.render);
   }
 
@@ -175,6 +190,12 @@ export class GameHost {
               fps: Math.round(this.engine.getFps()),
               droppedSeconds: Number(this.clock.droppedSeconds.toFixed(3)),
               objective: this.session.mission.active?.id,
+              pursuit: this.police?.system.snapshot(),
+              agents: this.police?.system.agents.map((a) => ({
+                id: a.id,
+                state: a.state,
+                position: a.position,
+              })),
             },
             null,
             2,
@@ -186,7 +207,7 @@ export class GameHost {
   }
 
   private respawn(): void {
-    this.motor.teleport(welcomeToBali.spawn);
+    this.motor.teleport(this.level.spawn);
     this.locomotion.reset();
     this.camera.reset();
     this.clock.reset();
@@ -212,20 +233,44 @@ export class GameHost {
     for (const id of this.bottles.nearby(position)) {
       if (!this.session.collect(id)) continue;
       this.bottles.collect(id);
+      this.police?.system.disrupt();
       this.audio.pickup();
       this.toastUntil = this.session.elapsedSeconds + 2;
       this.store.update({
         toast:
           this.session.collected.size === 5
-            ? 'Flaschen vollzählig. Ab ins Airbnb!'
+            ? this.police
+              ? 'Flaschen vollzählig. Jetzt die Polizei abhängen!'
+              : 'Flaschen vollzählig. Ab ins Airbnb!'
             : '+100 · Läuft bei Tobi.',
       });
     }
-    const destination = welcomeToBali.destination;
+    if (actions.specialPressed && this.police?.system.provoke()) {
+      this.toastUntil = this.session.elapsedSeconds + 3;
+      this.store.update({ toast: '«ICH KENNE KARL!» · +20 CHAOS' });
+    }
+    const outcome = this.police?.system.step(delta, position);
+    if (outcome === 'escaped') {
+      this.session.escaped();
+      this.session.score += pursuitBalance.escapeBonus;
+      this.toastUntil = this.session.elapsedSeconds + 4;
+      this.store.update({ toast: '+500 · ABGEHÄNGT. Karl war’s diesmal nicht.' });
+    }
+    if (outcome === 'caught') {
+      this.pause();
+      this.store.update({ phase: 'caught', pursuit: this.police?.system.snapshot() ?? null });
+      return;
+    }
+    const destination = this.level.destination;
     const nearDestination =
       Vector3.Distance(position, new Vector3(destination.position.x, 1, destination.position.z)) <
       destination.radius;
-    if (actions.interactPressed && nearDestination && this.session.reach(destination.id)) {
+    if (
+      actions.interactPressed &&
+      nearDestination &&
+      !this.police?.system.wanted.level &&
+      this.session.reach(destination.id)
+    ) {
       this.input.enabled = false;
       this.input.reset();
       this.audio.victory();
@@ -273,6 +318,7 @@ export class GameHost {
     try {
       if (this.store.getSnapshot().phase === 'playing') this.clock.advance(delta, this.step);
       this.syncVisual(Math.min(delta, 0.1));
+      this.police?.sync();
       if (this.store.getSnapshot().phase !== 'paused') this.bottles.update(Math.min(delta, 0.1));
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       this.uiTime += delta;
@@ -287,7 +333,12 @@ export class GameHost {
           objective:
             this.session.mission.active?.type === 'collect'
               ? 'Sammle 5 Flaschen'
-              : 'Erreiche das Airbnb',
+              : this.session.mission.active?.type === 'escapePolice'
+                ? 'Hänge die Polizei ab'
+                : 'Erreiche das Airbnb',
+          pursuit: this.police?.system.snapshot() ?? null,
+          canCheckIn:
+            this.session.mission.active?.type === 'reach' && !this.police?.system.wanted.level,
           ...(this.session.elapsedSeconds > this.toastUntil ? { toast: '' } : {}),
         });
       }
@@ -319,6 +370,7 @@ export class GameHost {
     this.removeDebug?.();
     this.input.dispose();
     this.audio.dispose();
+    this.police?.dispose();
     this.bottles.dispose();
     this.motor.dispose();
     this.visual.dispose();

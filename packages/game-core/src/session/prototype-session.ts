@@ -1,5 +1,5 @@
 import type { LevelDefinition } from '@tobi/contracts';
-import { collectHandler, Mission, reachHandler } from '../missions/mission.js';
+import { collectHandler, escapeHandler, Mission, reachHandler } from '../missions/mission.js';
 
 /** Authoritative in-memory tutorial progress, never advertised as a persistent savegame. */
 export class PrototypeSession {
@@ -13,7 +13,7 @@ export class PrototypeSession {
     public readonly level: LevelDefinition,
     private readonly points: { bottlePoints: number; completionBonus: number },
   ) {
-    this.mission = new Mission(level.objectives, [collectHandler, reachHandler]);
+    this.mission = new Mission(level.objectives, [collectHandler, reachHandler, escapeHandler]);
   }
 
   public collect(pickupId: string): boolean {
@@ -23,6 +23,10 @@ export class PrototypeSession {
     this.score += this.points.bottlePoints;
     this.mission.onEvent({ type: 'itemCollected', itemId: pickup.itemId, pickupId });
     return true;
+  }
+
+  public escaped(): void {
+    this.mission.onEvent({ type: 'policeEscaped' });
   }
 
   public reach(targetId: string): boolean {

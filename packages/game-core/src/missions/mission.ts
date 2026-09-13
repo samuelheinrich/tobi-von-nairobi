@@ -33,6 +33,13 @@ export const reachHandler: ObjectiveHandler = {
   },
 };
 
+export const escapeHandler: ObjectiveHandler = {
+  type: 'escapePolice',
+  handle(objective, event, count) {
+    return { count, complete: objective.type === 'escapePolice' && event.type === 'policeEscaped' };
+  },
+};
+
 /** Data-driven objective graph. Callers deliver confirmed, deduplicated gameplay events. */
 export class Mission {
   private readonly completed = new Set<string>();

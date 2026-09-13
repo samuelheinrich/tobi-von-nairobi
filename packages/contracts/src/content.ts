@@ -25,6 +25,13 @@ export const objectiveSchema = z.discriminatedUnion('type', [
   z
     .object({
       id: z.string(),
+      type: z.literal('escapePolice'),
+      after: z.array(z.string()).default([]),
+    })
+    .strict(),
+  z
+    .object({
+      id: z.string(),
       type: z.literal('reach'),
       targetId: z.string(),
       after: z.array(z.string()).default([]),
@@ -39,7 +46,17 @@ export const levelSchema = z
     worldId: z.literal('bali'),
     title: z.string(),
     subtitle: z.string(),
-    maxWanted: z.literal(0),
+    maxWanted: z.number().int().min(0).max(5),
+    policeSpawns: z.array(positionSchema).optional(),
+    navigationBounds: z
+      .object({
+        minX: z.number().finite(),
+        maxX: z.number().finite(),
+        minZ: z.number().finite(),
+        maxZ: z.number().finite(),
+      })
+      .strict()
+      .optional(),
     spawn: positionSchema,
     destination: z
       .object({ id: z.string(), position: positionSchema, radius: z.number().positive() })
@@ -49,6 +66,34 @@ export const levelSchema = z
   })
   .strict()
   .superRefine((level, ctx) => {
+    if (level.maxWanted > 0 && !level.policeSpawns?.length)
+      ctx.addIssue({ code: 'custom', message: 'Wanted levels require police spawns' });
+    if (level.maxWanted === 0 && level.objectives.some((o) => o.type === 'escapePolice'))
+      ctx.addIssue({ code: 'custom', message: 'Escape objective requires pursuit' });
+    if (
+      level.maxWanted > 0 &&
+      (!level.navigationBounds || (level.policeSpawns?.length ?? 0) < level.maxWanted)
+    )
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Pursuit requires navigation bounds and one spawn per wanted tier',
+      });
+    const bounds = level.navigationBounds;
+    if (
+      bounds &&
+      (bounds.minX >= bounds.maxX ||
+        bounds.minZ >= bounds.maxZ ||
+        bounds.maxX - bounds.minX > 256 ||
+        bounds.maxZ - bounds.minZ > 256)
+    )
+      ctx.addIssue({ code: 'custom', message: 'Invalid or oversized navigation bounds' });
+    if (
+      bounds &&
+      level.policeSpawns?.some(
+        (p) => p.x < bounds.minX || p.x > bounds.maxX || p.z < bounds.minZ || p.z > bounds.maxZ,
+      )
+    )
+      ctx.addIssue({ code: 'custom', message: 'Police spawn outside navigation bounds' });
     const ids = new Set<string>();
     for (const pickup of level.pickups) {
       if (ids.has(pickup.id))

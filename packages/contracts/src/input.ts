@@ -7,6 +7,7 @@ export interface InputActions {
   jumpPressed: boolean;
   sprintHeld: boolean;
   interactPressed: boolean;
+  specialPressed: boolean;
 }
 
 export interface InputSource {
