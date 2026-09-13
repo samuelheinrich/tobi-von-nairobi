@@ -3,7 +3,13 @@ import { EngineStore } from '@babylonjs/core/Engines/engineStore.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Locomotion, PrototypeSession } from '@tobi/game-core';
-import { baliEscape, movement, prototypeBalance, pursuitBalance } from '@tobi/game-data';
+import {
+  baliEscape,
+  playableLevels,
+  movement,
+  prototypeBalance,
+  pursuitBalance,
+} from '@tobi/game-data';
 import {
   HavokWorld,
   HavokCharacterMotor,
@@ -16,19 +22,24 @@ import { BottlePickups } from '../src/runtime/items/bottle-pickups.js';
 /** Executes an authored escape route through actual Havok movement, pickups, geometry and police.
  * No teleport, mission completion hook or simulated perception results.
  */
-export async function exerciseEscapeRoute(mode: 'escape' | 'stand' = 'escape') {
+export async function exerciseEscapeRoute(
+  mode: 'escape' | 'stand' = 'escape',
+  levelId = baliEscape.id,
+) {
+  const level = playableLevels.find((entry) => entry.id === levelId);
+  if (!level) throw new Error('Unknown level');
   const module = await preparePhysics();
   const canvas = document.createElement('canvas');
   document.body.append(canvas);
   const engine = new Engine(canvas, false),
     scene = new Scene(engine);
   const world = new HavokWorld(scene, module);
-  const environment = createBaliScene(scene, world, baliEscape);
-  const police = new PoliceRuntime(scene, baliEscape, environment.colliders, environment.shadows);
-  const motor = new HavokCharacterMotor(scene, baliEscape.spawn);
+  const environment = createBaliScene(scene, world, level);
+  const police = new PoliceRuntime(scene, level, environment.colliders, environment.shadows);
+  const motor = new HavokCharacterMotor(scene, level.spawn);
   const locomotion = new Locomotion(movement);
-  const bottles = new BottlePickups(scene, baliEscape, environment.shadows);
-  const session = new PrototypeSession(baliEscape, prototypeBalance);
+  const bottles = new BottlePickups(scene, level, environment.shadows);
+  const session = new PrototypeSession(level, prototypeBalance);
   const states = new Set<string>();
   let maxChaos = 0,
     ticks = 0;
@@ -77,8 +88,16 @@ export async function exerciseEscapeRoute(mode: 'escape' | 'stand' = 'escape') {
   };
   try {
     for (let i = 0; i < 90; i++) tick();
-    walk(0, 12);
-    const blockedCheckIn = !session.reach(baliEscape.destination.id);
+    if (level.scenery === 'beach-bar') {
+      for (const pickup of level.pickups)
+        walk(pickup.position.x, pickup.position.z, police.system.snapshot().status === 'chase');
+    } else if (level.scenery === 'night-market') {
+      walk(0, 9);
+      walk(3, 12);
+      walk(1, 15);
+      walk(0, 18);
+    } else walk(0, 12);
+    const blockedCheckIn = !session.reach(level.destination.id);
     if (mode === 'stand') {
       for (let i = 0; i < 3600 && !police.system.caught; i++) tick();
       return {
@@ -93,7 +112,7 @@ export async function exerciseEscapeRoute(mode: 'escape' | 'stand' = 'escape') {
     }
     // North, then around the western bungalow. Its rear wall breaks sightlines.
     for (const [x, z] of [
-      [-4, 12],
+      [-4, level.scenery === 'night-market' ? 18 : 12],
       [-4, 22],
       [-15, 22],
       [-15, 12],
@@ -112,8 +131,8 @@ export async function exerciseEscapeRoute(mode: 'escape' | 'stand' = 'escape') {
         walk(x!, z!);
     }
     const nearHome =
-      Vector3.Distance(motor.position, new Vector3(0, 1, 19)) < baliEscape.destination.radius;
-    const completed = escaped && nearHome && session.reach(baliEscape.destination.id);
+      Vector3.Distance(motor.position, new Vector3(0, 1, 19)) < level.destination.radius;
+    const completed = escaped && nearHome && session.reach(level.destination.id);
     return {
       completed,
       escaped,

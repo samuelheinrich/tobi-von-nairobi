@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "id": "bali_beach_bar",
+  "worldId": "bali",
+  "title": "Beach Bar",
+  "subtitle": "Nur kurz die Bar aufräumen. Tobi nimmt das persönlich.",
+  "maxWanted": 1,
+  "spawn": {
+    "x": 20,
+    "y": 1.5,
+    "z": -27
+  },
+  "destination": {
+    "id": "airbnb",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 19
+    },
+    "radius": 3
+  },
+  "pickups": [
+    {
+      "id": "bali_beach_bar_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": 20,
+        "y": 0,
+        "z": -22
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": 20,
+        "y": 0,
+        "z": -16
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": 20,
+        "y": 0,
+        "z": -10
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": 20,
+        "y": 0,
+        "z": -4
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": 20,
+        "y": 0,
+        "z": 2
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_06",
+      "itemId": "bottle",
+      "position": {
+        "x": 16,
+        "y": 0,
+        "z": 6
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_07",
+      "itemId": "bottle",
+      "position": {
+        "x": 12,
+        "y": 0,
+        "z": 6
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_08",
+      "itemId": "bottle",
+      "position": {
+        "x": 8,
+        "y": 0,
+        "z": 9
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_09",
+      "itemId": "bottle",
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 12
+      }
+    },
+    {
+      "id": "bali_beach_bar_bottle_10",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 12
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect_bottles",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 10,
+      "after": []
+    },
+    {
+      "id": "escape_police",
+      "type": "escapePolice",
+      "after": ["collect_bottles"]
+    },
+    {
+      "id": "reach_airbnb",
+      "type": "reach",
+      "targetId": "airbnb",
+      "after": ["escape_police"]
+    }
+  ],
+  "policeSpawns": [
+    {
+      "x": 28,
+      "y": 0,
+      "z": -2
+    }
+  ],
+  "navigationBounds": {
+    "minX": -30,
+    "maxX": 30,
+    "minZ": -34,
+    "maxZ": 34
+  },
+  "atmosphere": "sunset",
+  "scenery": "beach-bar",
+  "chaosPerBottle": 8
+}

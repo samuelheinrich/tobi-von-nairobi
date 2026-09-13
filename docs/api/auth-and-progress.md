@@ -4,7 +4,7 @@ Dieser Vertrag beschreibt den Stand `feature/accounts-and-saves`. Das umfangreic
 
 ## Spielablauf
 
-Vor dem Start über **ANMELDEN → NEUES KONTO ERSTELLEN** ein Konto anlegen. Tutorial und Bali Escape sind aktuell beide verfügbar. Gastspiel funktioniert weiterhin; ein nachträglicher Login übernimmt den davor begonnenen Gastdurchlauf nicht.
+Vor dem Start über **ANMELDEN → NEUES KONTO ERSTELLEN** ein Konto anlegen. Tutorial, Beach Bar, Bali Night Market und Bali Escape sind verfügbar. Gastspiel funktioniert weiterhin; ein nachträglicher Login übernimmt den davor begonnenen Gastdurchlauf nicht.
 
 Ein angemeldeter Start erzeugt einen serverseitigen Versuch. Nach dem Check-in schreibt der Client das Ergebnis zuerst in IndexedDB und sendet es danach an die API. Erst eine bestätigte Antwort entfernt den lokalen Eintrag. Geht die Antwort nach erfolgreichem Commit verloren, liefert dieselbe Anfrage erneut denselben Beleg, ohne Punkte oder Abschlüsse doppelt zu zählen. Die Kontoansicht lädt bestätigte Bestwerte aus PostgreSQL.
 
@@ -41,7 +41,7 @@ Migrationen `202609130002` und `202609130003` erweitern die Foundation ohne Rese
 
 Abschluss sperrt zuerst den eigenen Run, dann den Save. Levelprogress, Gesamtpunkte, Revision und Run-Beleg werden in derselben PostgreSQL-Transaktion geschrieben. Gleicher Ergebnis-Digest liefert den vorhandenen Beleg; ein abweichender liefert 409. Pickups werden zur Digestbildung sortiert. Start sperrt den Save; Verwerfen aktualisiert nur den Run.
 
-Der Server akzeptiert keinen frei angegebenen Score. Er prüft eindeutige, vollständige Pickup-IDs, Contentversion, Zeituntergrenzen, Serverlaufzeit, Fluchtzahl und Debug-Markierung. Aktuelle Wertung: 100 pro Flasche, 500 Abschlussbonus, 500 pro gemeldeter plausibler Flucht. Tutorial: 1'000 Punkte, Bali Escape mit einer Flucht: 1'500 Punkte.
+Der Server akzeptiert keinen frei angegebenen Score. Er prüft eindeutige, vollständige Pickup-IDs, Contentversion, Zeituntergrenzen, Serverlaufzeit, Fluchtzahl und Debug-Markierung. Aktuelle Wertung: 100 pro Flasche, 500 Abschlussbonus, 500 pro gemeldeter plausibler Flucht. Tutorial: 1'000 Punkte; mit jeweils einer Flucht: Bali Escape 1'500, Beach Bar 2'000 und Bali Night Market 2'500 Punkte.
 
 **Vertrauensgrenze:** Bewegungen und Ereignisse stammen vom Browser. Plausibilitätsprüfungen ersetzen keine autoritative Simulation; diese Punkte sind persönliche Kampagnenergebnisse und keine verifizierten öffentlichen Highscores. Wiederholte reguläre Durchläufe erhöhen die Gesamtpunkte, während Bestwerte separat geführt werden.
 

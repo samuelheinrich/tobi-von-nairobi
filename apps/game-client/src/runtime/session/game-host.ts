@@ -1,7 +1,7 @@
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
-import { FixedClock, Locomotion, PrototypeSession } from '@tobi/game-core';
+import { FixedClock, Locomotion, PrototypeSession, BottleMood } from '@tobi/game-core';
 import { movement, prototypeBalance, welcomeToBali, pursuitBalance } from '@tobi/game-data';
 import type { LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
@@ -12,6 +12,7 @@ import { createBaliScene } from '../levels/bali-scene.js';
 import { TobiVisual } from '../character/tobi-visual.js';
 import { BottlePickups } from '../items/bottle-pickups.js';
 import { ThirdPersonCamera } from '../camera/third-person-camera.js';
+import { BaliCrowd } from '../levels/bali-crowd.js';
 import { AudioFeedback } from '../audio/audio-feedback.js';
 
 /** Composition root for one scene. It owns listeners and resources and can be disposed during async boot. */
@@ -22,12 +23,16 @@ export class GameHost {
   private readonly motor: HavokCharacterMotor;
   private readonly visual: TobiVisual;
   private readonly bottles: BottlePickups;
+  private readonly crowd: BaliCrowd;
   private readonly camera: ThirdPersonCamera;
   private readonly clock = new FixedClock(prototypeBalance.fixedStep, prototypeBalance.maxSubSteps);
   private readonly locomotion = new Locomotion(movement);
   private readonly session: PrototypeSession;
   private readonly police: PoliceRuntime | null;
   private readonly audio = new AudioFeedback();
+  private readonly mood = new BottleMood();
+  private wasGrounded = true;
+  private lastWanted = 0;
   private disposed = false;
   private lastTime = performance.now();
   private uiTime = 0;
@@ -74,6 +79,7 @@ export class GameHost {
     const environment = createBaliScene(this.scene, this.world, level);
     this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
+    this.crowd = new BaliCrowd(this.scene, level, environment.shadows);
     this.bottles = new BottlePickups(this.scene, level, environment.shadows);
     this.police =
       level.maxWanted > 0
@@ -86,6 +92,7 @@ export class GameHost {
       this.world.step(1 / 60);
       this.motor.move({ x: 0, y: -2, z: 0 }, 1 / 60);
     }
+    this.motor.support(1 / 60);
     this.syncVisual(0);
     this.camera.update(this.motor.position, 0, true);
     window.addEventListener('resize', this.onResize);
@@ -96,11 +103,16 @@ export class GameHost {
     canvas.addEventListener('webglcontextlost', this.onContextLost);
     this.store.update({
       phase: 'ready',
+      objective: `Sammle ${level.pickups.length} Flaschen`,
       total: level.pickups.length,
       levelId: level.id,
       pursuit: this.police?.system.snapshot() ?? null,
     });
     this.engine.runRenderLoop(this.render);
+  }
+
+  public unlockAudio(): void {
+    this.audio.start();
   }
 
   public start = (): void => {
@@ -126,6 +138,7 @@ export class GameHost {
     this.input.reset();
     this.clock.reset();
     this.store.update({ phase: 'paused' });
+    this.audio.pause();
     if (document.pointerLockElement === this.canvas) document.exitPointerLock();
   };
 
@@ -137,9 +150,10 @@ export class GameHost {
   };
   private onBlur = (): void => {
     this.pause();
+    this.audio.pause();
   };
   private onVisibility = (): void => {
-    if (document.hidden) this.pause();
+    if (document.hidden) this.onBlur();
   };
   private onPointerLock = (): void => {
     if (!document.pointerLockElement) this.pause();
@@ -179,7 +193,7 @@ export class GameHost {
         },
         teleportHome: () => {
           this.store.update({ debug: true });
-          this.motor.teleport({ x: 0, y: 1.5, z: 19 });
+          this.motor.teleport({ ...this.level.destination.position, y: 1.5 });
           this.locomotion.reset();
         },
         inspect: () =>
@@ -223,6 +237,9 @@ export class GameHost {
       this.motor.support(delta),
       delta,
     );
+    if (velocity.y > 0 && this.motor.grounded && this.wasGrounded) this.audio.play('jump');
+    if (this.motor.grounded && !this.wasGrounded) this.audio.play('land');
+    this.wasGrounded = this.motor.grounded;
     this.world.step(delta);
     this.motor.move(velocity, delta);
     if (velocity.y > 0 && this.motor.velocity.y < velocity.y)
@@ -234,23 +251,38 @@ export class GameHost {
       if (!this.session.collect(id)) continue;
       this.bottles.collect(id);
       this.police?.system.disrupt();
+      this.mood.collect();
+      this.visual.celebratePickup();
       this.audio.pickup();
+      if (this.session.collected.size % 3 === 0) this.audio.play('hiccup');
       this.toastUntil = this.session.elapsedSeconds + 2;
       this.store.update({
         toast:
-          this.session.collected.size === 5
+          this.session.collected.size === this.level.pickups.length
             ? this.police
               ? 'Flaschen vollzählig. Jetzt die Polizei abhängen!'
               : 'Flaschen vollzählig. Ab ins Airbnb!'
-            : '+100 · Läuft bei Tobi.',
+            : `+100 · ${this.mood.label}`,
       });
     }
     if (actions.specialPressed && this.police?.system.provoke()) {
+      this.audio.play('provoke');
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({ toast: '«ICH KENNE KARL!» · +20 CHAOS' });
     }
     const outcome = this.police?.system.step(delta, position);
+    const wanted = this.police?.system.wanted.level ?? 0;
+    if (wanted > this.lastWanted) this.audio.play('alert');
+    this.lastWanted = wanted;
+    this.audio.update(
+      delta,
+      Math.hypot(this.motor.velocity.x, this.motor.velocity.z),
+      this.motor.grounded,
+      wanted,
+      this.level.atmosphere === 'night',
+    );
     if (outcome === 'escaped') {
+      this.audio.play('escape');
       this.session.escaped();
       this.session.score += pursuitBalance.escapeBonus;
       this.toastUntil = this.session.elapsedSeconds + 4;
@@ -258,6 +290,8 @@ export class GameHost {
     }
     if (outcome === 'caught') {
       this.pause();
+      this.audio.start();
+      this.audio.play('caught');
       this.store.update({ phase: 'caught', pursuit: this.police?.system.snapshot() ?? null });
       return;
     }
@@ -308,12 +342,15 @@ export class GameHost {
       );
       this.visual.root.rotation.y += difference * Math.min(1, delta * 14);
     }
-    this.visual.animate(
-      delta,
+    const tripped = this.visual.animate(
+      ['paused', 'caught'].includes(this.store.getSnapshot().phase) ? 0 : delta,
       this.store.getSnapshot().phase === 'playing' ? speed : 0,
       this.motor.grounded,
       this.store.getSnapshot().phase === 'complete',
+      this.mood.amount,
+      this.locomotion.stamina,
     );
+    if (tripped) this.audio.play('stumble');
   }
 
   private render = (): void => {
@@ -324,7 +361,12 @@ export class GameHost {
     try {
       if (this.store.getSnapshot().phase === 'playing') this.clock.advance(delta, this.step);
       this.syncVisual(Math.min(delta, 0.1));
-      this.police?.sync();
+      this.crowd.update(
+        this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
+        this.motor.position,
+        this.mood.amount,
+      );
+      this.police?.sync(this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0);
       if (this.store.getSnapshot().phase !== 'paused') this.bottles.update(Math.min(delta, 0.1));
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       this.uiTime += delta;
@@ -332,13 +374,15 @@ export class GameHost {
         this.uiTime = 0;
         this.store.update({
           collected: this.session.collected.size,
+          mood: Math.round(this.mood.amount * 100),
+          moodLabel: this.mood.label,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
           elapsedSeconds: Math.floor(this.session.elapsedSeconds),
           fps: Math.round(this.engine.getFps()),
           objective:
             this.session.mission.active?.type === 'collect'
-              ? 'Sammle 5 Flaschen'
+              ? `Sammle ${this.level.pickups.length} Flaschen`
               : this.session.mission.active?.type === 'escapePolice'
                 ? 'Hänge die Polizei ab'
                 : 'Erreiche das Airbnb',
@@ -380,6 +424,7 @@ export class GameHost {
     this.bottles.dispose();
     this.motor.dispose();
     this.visual.dispose();
+    this.crowd.dispose();
     this.world.dispose();
     this.scene.dispose();
     this.engine.dispose();

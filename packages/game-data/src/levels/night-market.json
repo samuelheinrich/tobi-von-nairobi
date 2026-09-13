@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "id": "bali_night_market",
+  "worldId": "bali",
+  "title": "Bali Night Market",
+  "subtitle": "Neon an. Gleichgewicht aus. Die Nacht hat noch Pläne.",
+  "maxWanted": 2,
+  "spawn": {
+    "x": 0,
+    "y": 1.5,
+    "z": -28
+  },
+  "destination": {
+    "id": "airbnb",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 19
+    },
+    "radius": 3
+  },
+  "pickups": [
+    {
+      "id": "bali_night_market_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -24
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -21
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -18
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -15
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -12
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_06",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -9
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_07",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -6
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_08",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -3
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_09",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_10",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 3
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_11",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 6
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_12",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 9
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_13",
+      "itemId": "bottle",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 12
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_14",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 15
+      }
+    },
+    {
+      "id": "bali_night_market_bottle_15",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 18
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect_bottles",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 15,
+      "after": []
+    },
+    {
+      "id": "escape_police",
+      "type": "escapePolice",
+      "after": ["collect_bottles"]
+    },
+    {
+      "id": "reach_airbnb",
+      "type": "reach",
+      "targetId": "airbnb",
+      "after": ["escape_police"]
+    }
+  ],
+  "policeSpawns": [
+    {
+      "x": 12,
+      "y": 0,
+      "z": -12
+    },
+    {
+      "x": 12,
+      "y": 0,
+      "z": -20
+    }
+  ],
+  "navigationBounds": {
+    "minX": -30,
+    "maxX": 30,
+    "minZ": -34,
+    "maxZ": 34
+  },
+  "atmosphere": "night",
+  "scenery": "night-market",
+  "chaosPerBottle": 8,
+  "policeSpeed": 4.0
+}

@@ -15,6 +15,8 @@ export interface GameView {
   collected: number;
   total: number;
   stamina: number;
+  mood: number;
+  moodLabel: string;
   score: number;
   elapsedSeconds: number;
   objective: string;

@@ -3,7 +3,7 @@ import { AccountPanel } from '../ui/account/account-panel.js';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
-import { welcomeToBali, baliEscape } from '@tobi/game-data';
+import { welcomeToBali, baliEscape, playableLevels } from '@tobi/game-data';
 import { Landing } from '../ui/landing.js';
 import { Hud, formatTime } from '../ui/hud.js';
 import { Controls } from '../ui/controls.js';
@@ -57,6 +57,7 @@ export function App() {
   }, [view.phase, view.result]);
   const begin = async (): Promise<void> => {
     if (account.busy) return;
+    host.current?.unlockAudio();
     if (await account.begin(level.id)) host.current?.start();
     else setShowAccount(true);
   };
@@ -75,12 +76,12 @@ export function App() {
   };
   const active = ['playing', 'paused', 'complete', 'caught'].includes(view.phase);
   return (
-    <main className={`game-app ${active ? 'in-game' : ''}`}>
+    <main className={`game-app atmosphere-${level.atmosphere} ${active ? 'in-game' : ''}`}>
       <canvas
         ref={canvas}
         className="game-canvas"
         tabIndex={0}
-        aria-label="3D-Spielwelt: Welcome to Bali"
+        aria-label={`3D-Spielwelt: ${level.title}`}
         data-testid="game-canvas"
       />
       {!active && <div className="scene-gradient" />}
@@ -128,6 +129,11 @@ export function App() {
       {['ready', 'loading'].includes(view.phase) && (
         <Landing
           view={view}
+          level={level}
+          onSelectLevel={(id) => {
+            const next = playableLevels.find((entry) => entry.id === id);
+            if (next) setLevel(next);
+          }}
           starting={account.busy || !account.ready}
           onStart={() => void begin()}
           onSelectEscape={() => setLevel(level.maxWanted > 0 ? welcomeToBali : baliEscape)}
@@ -199,9 +205,7 @@ export function App() {
             aria-modal="true"
             aria-label={level.maxWanted > 0 ? 'Flucht abgeschlossen' : 'Tutorial abgeschlossen'}
           >
-            <span className="eyebrow">
-              {level.maxWanted > 0 ? 'BALI ESCAPE · ABGEHÄNGT' : 'WELCOME TO BALI · GESCHAFFT'}
-            </span>
+            <span className="eyebrow">{level.title.toUpperCase()} · GESCHAFFT</span>
             <div className="result-star">✳</div>
             <h2>
               Buchung bestätigt.
@@ -234,6 +238,24 @@ export function App() {
             <button className="primary-button" onClick={restart}>
               NOCH EINE RUNDE <span>↻</span>
             </button>
+            {playableLevels[playableLevels.findIndex((entry) => entry.id === level.id) + 1] && (
+              <button
+                className="text-button"
+                disabled={account.busy}
+                onClick={() => {
+                  const next =
+                    playableLevels[playableLevels.findIndex((entry) => entry.id === level.id) + 1];
+                  void account.resetRun().then((ok) => {
+                    if (ok && next) {
+                      setHelp(false);
+                      setLevel(next);
+                    } else setShowAccount(true);
+                  });
+                }}
+              >
+                NÄCHSTES LEVEL →
+              </button>
+            )}
             {account.auth.user ? (
               <div className="save-status">
                 <p role="status" data-testid="save-status">

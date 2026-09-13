@@ -13,6 +13,7 @@ import type { LevelDefinition } from '@tobi/contracts';
 import type { HavokWorld } from '../physics/havok-world.js';
 import { box, material } from './materials.js';
 import { palm, parasol } from './scenery.js';
+import { createBaliVenue } from './bali-venues.js';
 
 export interface BaliScene {
   shadows: ShadowGenerator;
@@ -26,9 +27,11 @@ export function createBaliScene(
   physics: HavokWorld,
   level: LevelDefinition,
 ): BaliScene {
-  scene.clearColor = Color4.FromHexString('#b9e5e7ff');
+  const night = level.atmosphere === 'night';
+  const sky = night ? '#233951' : level.atmosphere === 'sunset' ? '#edb7aa' : '#b9e5e7';
+  scene.clearColor = Color4.FromHexString(`${sky}ff`);
   scene.fogMode = 3;
-  scene.fogColor = Color3.FromHexString('#b9e5e7');
+  scene.fogColor = Color3.FromHexString(sky);
   scene.fogStart = 65;
   scene.fogEnd = 145;
   const ambient = new HemisphericLight('sky-light', new Vector3(0, 1, 0), scene);
@@ -36,14 +39,17 @@ export function createBaliScene(
   ambient.groundColor = Color3.FromHexString('#ddbd8a');
   const sun = new DirectionalLight('afternoon-sun', new Vector3(-0.5, -1, 0.35), scene);
   sun.position.set(20, 35, -20);
-  sun.intensity = 0.85;
+  sun.intensity = night ? 0.35 : 0.85;
+  sun.diffuse = Color3.FromHexString(
+    night ? '#a2caff' : level.atmosphere === 'sunset' ? '#ffc7a1' : '#ffffff',
+  );
   const shadows = new ShadowGenerator(1024, sun);
   shadows.usePercentageCloserFiltering = true;
   shadows.bias = 0.002;
   shadows.normalBias = 0.025;
   shadows.darkness = 0.25;
-  const sand = material(scene, 'warm-sand', '#e9ce98');
-  const pavement = material(scene, 'sun-bleached-pavement', '#efdfb7');
+  const sand = material(scene, 'warm-sand', night ? '#a8a08d' : '#e9ce98');
+  const pavement = material(scene, 'sun-bleached-pavement', night ? '#c5bb9d' : '#efdfb7');
   const road = material(scene, 'road', '#90988a');
   const water = material(scene, 'lagoon-water', '#43c2ca');
   water.specularColor = Color3.FromHexString('#abdedd');
@@ -133,6 +139,7 @@ export function createBaliScene(
     bush.material = leaves;
     shadows.addShadowCaster(bush);
   }
+  createBaliVenue(scene, level, solid);
   const signTexture = new DynamicTexture('airbnb-sign', { width: 512, height: 128 }, scene, false);
   signTexture.drawText('CASA TOBI', null, 86, 'bold 56px sans-serif', '#234744', '#f8eacb', true);
   const signMaterial = new StandardMaterial('sign', scene);

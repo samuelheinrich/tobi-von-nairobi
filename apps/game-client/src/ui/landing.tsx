@@ -1,14 +1,19 @@
-import type { GameView } from '@tobi/contracts';
+import { playableLevels } from '@tobi/game-data';
+import type { GameView, LevelDefinition } from '@tobi/contracts';
 import { CompassIcon } from './icons.js';
 import { Controls } from './controls.js';
 
 export function Landing({
   view,
+  level,
+  onSelectLevel,
   onStart,
   onSelectEscape,
   starting = false,
 }: {
   view: GameView;
+  level: LevelDefinition;
+  onSelectLevel(id: string): void;
   onStart(): void;
   onSelectEscape(): void;
   starting?: boolean;
@@ -31,7 +36,7 @@ export function Landing({
           <em>Grosses Chaos.</em>
         </p>
         <p className="intro">
-          Fünf Flaschen. Eine Unterkunft.
+          {level.pickups.length} Flaschen. Eine Unterkunft.
           <br />
           Und ein Mann, der alles im Griff hat. Fast.
         </p>
@@ -60,7 +65,7 @@ export function Landing({
       </div>
       <div className="destination-card">
         <div className="destination-heading">
-          <span>DEIN ERSTER STOPP</span>
+          <span>DEIN NÄCHSTER STOPP</span>
           <CompassIcon />
         </div>
         <div className="destination-name">
@@ -68,14 +73,27 @@ export function Landing({
         </div>
         <div className="destination-rule" />
         <div className="destination-meta">
-          <span>{view.pursuit ? 'BALI ESCAPE · ★★★' : 'WELCOME TO BALI'}</span>
-          <span>☀ 29°</span>
+          <span>
+            {level.title.toUpperCase()} {'★'.repeat(level.maxWanted)}
+          </span>
+          <span>{level.atmosphere === 'night' ? '☾ 25°' : '☀ 29°'}</span>
         </div>
-        <p>
-          {view.pursuit ? 'Sammeln. Sprinten. Sichtkontakt verlieren.' : 'Erst mal ankommen.'}
-          <br />
-          {view.pursuit ? 'Zwölf Sekunden. Dann nach Hause.' : 'Eskalieren können wir später.'}
-        </p>
+        <p>{level.subtitle}</p>
+        <label className="level-picker">
+          LEVEL WÄHLEN
+          <select
+            aria-label="Level wählen"
+            value={level.id}
+            disabled={view.phase === 'loading' || starting}
+            onChange={(event) => onSelectLevel(event.target.value)}
+          >
+            {playableLevels.map((entry, index) => (
+              <option key={entry.id} value={entry.id}>
+                {index + 1}. {entry.title} · {entry.pickups.length} Flaschen
+              </option>
+            ))}
+          </select>
+        </label>
         <div className="postmark">
           TOBI
           <br />

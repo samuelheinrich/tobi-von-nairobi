@@ -7,3 +7,4 @@ export * from './wanted/wanted.js';
 export * from './police/police-agent.js';
 export * from './police/pursuit.js';
 export * from './navigation/navigation-grid.js';
+export { BottleMood, characterPose } from './character/bottle-mood.js';

@@ -1004,3 +1004,77 @@ kbd {
 .save-status {
   font-size: 12px;
 }
+
+.level-picker {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 18px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.level-picker select {
+  display: block;
+  width: 100%;
+  padding: 10px 8px;
+  margin-top: 8px;
+  border: 1px solid #9ba991;
+  background: #f5edda;
+  color: #234744;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0;
+  border-radius: 3px;
+}
+.mood-card {
+  position: absolute;
+  left: 48px;
+  bottom: 176px;
+  width: 258px;
+  background: #f8efdbed;
+  color: #234744;
+  padding: 16px 18px;
+  border-radius: 4px;
+}
+.mood-card > span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  margin-bottom: 7px;
+}
+.mood-card strong {
+  font-size: 12px;
+}
+.mood-card [role='progressbar'] {
+  height: 5px;
+  margin: 9px 0;
+  background: #d8dcca;
+  overflow: hidden;
+}
+.mood-card i {
+  display: block;
+  height: 100%;
+  background: #e96746;
+  transition: width 0.2s;
+}
+.mood-card small {
+  font-size: 10px;
+}
+.progress-pips {
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .mood-card {
+    left: 24px;
+    bottom: 155px;
+    width: 220px;
+    padding: 10px 14px;
+  }
+}
+.atmosphere-night .brand {
+  color: #f6ebcf;
+}
+.bottle-progress strong {
+  white-space: nowrap;
+  flex-shrink: 0;
+}

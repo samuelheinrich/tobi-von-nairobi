@@ -46,7 +46,11 @@ export const levelSchema = z
     worldId: z.literal('bali'),
     title: z.string(),
     subtitle: z.string(),
+    atmosphere: z.enum(['day', 'sunset', 'night']).default('day'),
+    scenery: z.enum(['village', 'beach-bar', 'night-market']).default('village'),
     maxWanted: z.number().int().min(0).max(5),
+    chaosPerBottle: z.number().positive().max(30).default(16),
+    policeSpeed: z.number().min(2).max(8).default(4.6),
     policeSpawns: z.array(positionSchema).optional(),
     navigationBounds: z
       .object({

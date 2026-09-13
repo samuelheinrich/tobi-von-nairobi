@@ -8,6 +8,8 @@ export class GameViewStore {
     collected: 0,
     total: 5,
     stamina: 100,
+    mood: 0,
+    moodLabel: 'NOCH GANZ GERADE',
     score: 0,
     elapsedSeconds: 0,
     objective: 'Sammle 5 Flaschen',

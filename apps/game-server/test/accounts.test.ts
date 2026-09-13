@@ -5,7 +5,7 @@ import { createApplication } from '../dist/application.js';
 import { createDatabase } from '@tobi/database';
 import type { Database } from '@tobi/database';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { welcomeToBali, baliEscape } from '@tobi/game-data';
+import { welcomeToBali, baliEscape, beachBar, nightMarket } from '@tobi/game-data';
 
 if (existsSync('apps/game-server/.env')) process.loadEnvFile('apps/game-server/.env');
 const origin = process.env.CLIENT_URL ?? 'http://localhost:5173';
@@ -214,43 +214,46 @@ describe('authenticated, durable campaign progress', () => {
       ).json().score,
     ).toBe(0);
   });
-  it('requires a real escape result before awarding Bali Escape progress', async () => {
-    const user = await register();
-    const start = await app.inject({
-      method: 'POST',
-      url: '/api/v1/runs',
-      headers: user.headers,
-      payload: { requestId: randomUUID(), levelId: baliEscape.id },
-    });
-    expect(start.statusCode).toBe(201);
-    const id = start.json().id;
-    await db.gameRun.update({ where: { id }, data: { startedAt: new Date(Date.now() - 40000) } });
-    const result = {
-      pickupIds: baliEscape.pickups.map((p) => p.id),
-      elapsedMs: 35000,
-      escapes: 0,
-      debugUsed: false,
-    };
-    const incomplete = await app.inject({
-      method: 'POST',
-      url: `/api/v1/runs/${id}/complete`,
-      headers: user.headers,
-      payload: result,
-    });
-    expect(incomplete.statusCode).toBe(422);
-    expect(
-      (await app.inject({ method: 'GET', url: '/api/v1/progress', headers: user.headers })).json()
-        .score,
-    ).toBe(0);
-    const complete = await app.inject({
-      method: 'POST',
-      url: `/api/v1/runs/${id}/complete`,
-      headers: user.headers,
-      payload: { ...result, escapes: 1 },
-    });
-    expect(complete.statusCode).toBe(200);
-    expect(complete.json().score).toBe(1500);
-  });
+  it.each([baliEscape, beachBar, nightMarket])(
+    'requires an escape result before awarding $title progress',
+    async (level) => {
+      const user = await register();
+      const start = await app.inject({
+        method: 'POST',
+        url: '/api/v1/runs',
+        headers: user.headers,
+        payload: { requestId: randomUUID(), levelId: level.id },
+      });
+      expect(start.statusCode).toBe(201);
+      const id = start.json().id;
+      await db.gameRun.update({ where: { id }, data: { startedAt: new Date(Date.now() - 40000) } });
+      const result = {
+        pickupIds: level.pickups.map((p) => p.id),
+        elapsedMs: 35000,
+        escapes: 0,
+        debugUsed: false,
+      };
+      const incomplete = await app.inject({
+        method: 'POST',
+        url: `/api/v1/runs/${id}/complete`,
+        headers: user.headers,
+        payload: result,
+      });
+      expect(incomplete.statusCode).toBe(422);
+      expect(
+        (await app.inject({ method: 'GET', url: '/api/v1/progress', headers: user.headers })).json()
+          .score,
+      ).toBe(0);
+      const complete = await app.inject({
+        method: 'POST',
+        url: `/api/v1/runs/${id}/complete`,
+        headers: user.headers,
+        payload: { ...result, escapes: 1 },
+      });
+      expect(complete.statusCode).toBe(200);
+      expect(complete.json().score).toBe(level.pickups.length * 100 + 1000);
+    },
+  );
 
   it('rejects expired sessions, weak passwords and invalid credentials', async () => {
     const user = await register();

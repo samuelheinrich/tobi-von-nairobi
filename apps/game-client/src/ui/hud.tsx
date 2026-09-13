@@ -1,3 +1,4 @@
+import { playableLevels } from '@tobi/game-data';
 import type { GameView } from '@tobi/contracts';
 import { PursuitHud } from './pursuit-hud.js';
 import { BottleIcon } from './icons.js';
@@ -14,7 +15,9 @@ export function Hud({ view }: { view: GameView }) {
       <section className="mission-card">
         <div className="eyebrow">
           01 / BALI{' '}
-          <span className="mission-type">{view.pursuit ? 'BALI ESCAPE' : 'TUTORIAL'}</span>
+          <span className="mission-type">
+            {playableLevels.find((entry) => entry.id === view.levelId)?.title.toUpperCase()}
+          </span>
         </div>
         <h2>{view.objective}</h2>
         <p>
@@ -37,6 +40,20 @@ export function Hud({ view }: { view: GameView }) {
           </div>
         </div>
       </section>
+      <div className="mood-card" data-testid="tobi-mood">
+        <span>TOBIS PEGEL</span>
+        <strong>{view.moodLabel}</strong>
+        <div
+          role="progressbar"
+          aria-label="Tobis Pegel"
+          aria-valuenow={view.mood}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <i style={{ width: `${view.mood}%` }} />
+        </div>
+        <small>«Ich laufe noch absolut gerade.»</small>
+      </div>
       <div className="score-card">
         <span>TOBI SCORE</span>
         <strong data-testid="score">{view.score.toLocaleString('de-CH')}</strong>

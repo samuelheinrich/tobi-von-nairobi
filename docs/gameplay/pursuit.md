@@ -18,7 +18,7 @@ R lässt Tobi «Ich kenne Karl!» rufen: +20 Chaos, drei Sekunden Abklingzeit. D
 - Sinkendes Chaos entfernt keine aktive Fahndung. Erst tatsächlicher Sichtkontakt und anschliessend zwölf Sekunden ohne Sichtkontakt führen zur Flucht. Jede erneute Sichtung setzt den Countdown zurück.
 - Sichtweite: 15 Meter, bewusst 360° für diesen Arcade-Prototyp. Raycasts auf Augenhöhe berücksichtigen die realen festen Gebäude; niedrige Hindernisse verdecken die Sicht nicht automatisch.
 - Gegner verwenden ein statisches Bodengitter mit einem Meter Rasterweite und 0,5 Metern Kollisionsabstand. Exakte Segmentprüfungen verhindern das Schneiden dünner Wände. Wege werden höchstens etwa alle 0,6 Sekunden neu gesucht, Wahrnehmung läuft mit etwa 10 Hz, Bewegung im festen Spieltakt.
-- Flucht: +500 Punkte; Levelabschluss: einmalig +500 Punkte. Ein direkter erfolgreicher Durchlauf ergibt 1'500 Punkte. Punkte sind lokal und nicht für öffentliche Highscores validiert.
+- Flucht: +500 Punkte; Levelabschluss: einmalig +500 Punkte. Ein direkter erfolgreicher Durchlauf ergibt 1'500 Punkte. Angemeldete Levelergebnisse werden gespeichert; sie sind nicht für öffentliche Highscores validiert.
 - Das Missionsziel `escapePolice` wird erst nach den fünf Flaschen aktiv. Eine frühere Flucht überspringt diese Bedingung nicht. E schliesst den Lauf nur nach der aktiven Fluchtbedingung und ohne laufende Fahndung ab.
 
 ## Zuständigkeiten
@@ -44,4 +44,6 @@ Alle Zeiten verwenden Simulationszeit: Pause friert Verfolgung und Cooldowns ein
 
 Unit-Tests prüfen Heat-/Wanted-Trennung, Countdown-Reset, Kontaktpflicht, einmalige Ereignisse, Wiederanlocken, Missionsgates, Routing und dünne Wände. Der Browser-Integrationstest fährt einen vollständigen Fluchtweg mit dem echten Havok-Controller, Stamina, Pickups, Sicht-Raycasts und Missionssystem ab, ohne Teleport oder Abschluss-Hook. Der E2E-Test bedient die produktive Oberfläche bis zur Festnahme und prüft den Neustart. Das ursprüngliche Tutorial bleibt ebenfalls E2E-geprüft.
 
-Noch offen: Patrouillenrouten, Sichtkegel, Verkehr, Backup/Strassensperren, dynamisches Navmesh, ausgearbeitete Polizei-Animationen/Sirenen, Kombos, Inventar/Power-ups, Risiko-Scoremultiplikatoren und persistente Spielstände. Die 60-FPS-Abnahme auf Referenzgeräten ist eine separate Aufgabe; Software-Rendering in der CI ersetzt sie nicht.
+Noch offen: Patrouillenrouten, Sichtkegel, Verkehr, Backup/Strassensperren, dynamisches Navmesh, importierte Polizei-Animationsclips, Kombos, Inventar/Power-ups, Risiko-Scoremultiplikatoren und persistente Checkpoints. Die 60-FPS-Abnahme auf Referenzgeräten ist eine separate Aufgabe; Software-Rendering in der CI ersetzt sie nicht.
+
+Weitere Level, prozedurale Figurenbewegung und Sirenen sind im [Bali-Contentpaket](bali-venues-and-feedback.md) beschrieben.
