@@ -15,7 +15,8 @@ test('loads the scene, pauses safely, collects real pickups and checks in', asyn
   await expect(page.getByRole('heading', { name: 'Sammle 5 Flaschen' })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Pause und Steuerung' })).toBeVisible();
-  await page.getByRole('button', { name: 'WEITER GEHT’S' }).click();
+  // Keyboard activation avoids synthetic cursor movement during pointer-lock transitions.
+  await page.getByRole('button', { name: 'WEITER GEHT’S' }).press('Enter');
   // Movement follows the actual authored path; no teleport or completion test hook.
   await page.keyboard.down('KeyW');
   await expect(page.getByTestId('bottle-count')).toContainText('5 / 5', {
@@ -49,7 +50,8 @@ test('sprint drains stamina and pause releases held movement keys', async ({ pag
   await expect(page.getByRole('dialog', { name: 'Pause und Steuerung' })).toBeVisible();
   await page.keyboard.up('KeyW');
   await page.keyboard.up('ShiftLeft');
-  await page.getByRole('button', { name: 'WEITER GEHT’S' }).click();
+  // Keyboard activation avoids synthetic cursor movement during pointer-lock transitions.
+  await page.getByRole('button', { name: 'WEITER GEHT’S' }).press('Enter');
   await expect(stamina).toHaveAttribute('aria-valuenow', '100', { timeout: recoveryTimeoutMs });
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
