@@ -25,7 +25,7 @@ jobs:
           --health-interval 5s --health-timeout 3s --health-retries 20
     env:
       DATABASE_URL: postgresql://tobi_test:ephemeral_ci_database@localhost:5432/tobi_test
-      NODE_ENV: test
+      # Vitest sets NODE_ENV=test for tests; keep Vite builds in their production default.
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
