@@ -1071,7 +1071,7 @@ kbd {
     padding: 10px 14px;
   }
 }
-.atmosphere-night .brand {
+.atmosphere-night.in-game .brand {
   color: #f6ebcf;
 }
 .bottle-progress strong {
