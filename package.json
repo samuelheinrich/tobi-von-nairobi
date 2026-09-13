@@ -19,7 +19,7 @@
     "dev:client": "pnpm build:packages && pnpm --filter @tobi/game-client dev",
     "build:packages": "pnpm --filter './packages/**' -r build",
     "build": "pnpm -r build",
-    "typecheck": "pnpm build:packages && pnpm -r typecheck && tsc -p tsconfig.check.json",
+    "typecheck": "pnpm build:packages && pnpm --filter @tobi/game-server build && pnpm -r typecheck && tsc -p tsconfig.check.json",
     "lint": "eslint . && node tools/check-boundaries.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
