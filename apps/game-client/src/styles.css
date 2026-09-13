@@ -937,3 +937,70 @@ kbd {
     padding: 12px;
   }
 }
+
+.topbar-actions .account-button {
+  width: auto;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.account-backdrop {
+  z-index: 100;
+  pointer-events: auto;
+}
+.account-dialog {
+  max-height: 90vh;
+  overflow: auto;
+  text-align: left;
+}
+.account-dialog h2 {
+  font-size: 48px;
+  overflow-wrap: anywhere;
+}
+.account-dialog label {
+  display: block;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.account-dialog input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  background: #fffdf4;
+  border: 1px solid #8a9d8e;
+  border-radius: 4px;
+  font: inherit;
+  color: #234744;
+}
+.account-dialog .primary-button {
+  margin-top: 12px;
+}
+.account-error {
+  color: #a93624;
+}
+.saved-levels {
+  list-style: none;
+  padding: 0;
+}
+.saved-levels li {
+  padding: 12px 0;
+  border-bottom: 1px solid #d6d9c3;
+}
+.saved-levels span {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.active-run-note {
+  padding: 12px;
+  background: #ebe5cc;
+}
+.save-status {
+  font-size: 12px;
+}

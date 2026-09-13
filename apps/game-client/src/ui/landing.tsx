@@ -6,10 +6,12 @@ export function Landing({
   view,
   onStart,
   onSelectEscape,
+  starting = false,
 }: {
   view: GameView;
   onStart(): void;
   onSelectEscape(): void;
+  starting?: boolean;
 }) {
   return (
     <div className="landing">
@@ -36,7 +38,7 @@ export function Landing({
         <button
           className="primary-button start-button"
           onClick={onStart}
-          disabled={view.phase !== 'ready'}
+          disabled={view.phase !== 'ready' || starting}
         >
           {view.phase === 'loading'
             ? 'KOFFER WIRD GEPACKT …'
@@ -48,7 +50,7 @@ export function Landing({
         <button
           className="level-select"
           onClick={onSelectEscape}
-          disabled={view.phase === 'loading'}
+          disabled={view.phase === 'loading' || starting}
         >
           {view.pursuit ? '← ZUM TUTORIAL' : 'NEU: BALI ESCAPE →'}
         </button>

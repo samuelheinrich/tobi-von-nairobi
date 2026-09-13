@@ -25,7 +25,7 @@
     "format:check": "prettier --check .",
     "test:unit": "vitest run --project unit",
     "test:integration": "pnpm build && vitest run --project integration",
-    "test:e2e": "pnpm --filter @tobi/game-client build && playwright test",
+    "test:e2e": "pnpm build && playwright test",
     "content:validate": "pnpm build:packages && node tools/content-pipeline/validate.mjs",
     "db:generate": "pnpm --filter @tobi/database generate",
     "db:migrate": "pnpm --filter @tobi/database migrate",

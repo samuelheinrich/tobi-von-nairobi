@@ -12,8 +12,21 @@ export default defineConfig({
   },
   webServer: [
     {
+      command: 'pnpm --filter @tobi/game-server start',
+      url: 'http://127.0.0.1:3001/api/v1/health/ready',
+      env: {
+        PORT: '3001',
+        CLIENT_URL: 'http://127.0.0.1:4173',
+        NODE_ENV: 'test',
+        SESSION_SECRET: 'ephemeral-browser-test-session-secret',
+      },
+      reuseExistingServer: false,
+      timeout: 30000,
+    },
+    {
       command: 'pnpm --filter @tobi/game-client preview --port 4173 --strictPort',
       url: 'http://127.0.0.1:4173',
+      env: { TOBI_TEST_API_URL: 'http://127.0.0.1:3001' },
       reuseExistingServer: false,
       timeout: 30000,
     },

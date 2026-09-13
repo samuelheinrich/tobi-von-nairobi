@@ -15,6 +15,8 @@ model User {
   passwordHash       String   @map("password_hash")
   createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   lastLogin          DateTime? @map("last_login") @db.Timestamptz(3)
+  sessions           Session[]
+  runs               GameRun[]
   saves              SaveGame[]
   settings           UserSettings?
   @@map("users")
@@ -27,6 +29,8 @@ model SaveGame {
   slot                  Int @default(1)
   currentWorld          String @default("bali") @map("current_world")
   currentLevel          String @default("welcome_to_bali") @map("current_level")
+  runs                  GameRun[]
+  levels                LevelProgress[]
   checkpoint            Json?
   snapshotSchemaVersion Int @default(1) @map("snapshot_schema_version")
   money                 Int @default(0)
@@ -45,4 +49,48 @@ model UserSettings {
   values        Json @default("{}")
   revision      Int @default(0)
   @@map("user_settings")
+}
+
+model Session {
+  id        String @id @default(uuid()) @db.Uuid
+  userId    String @map("user_id") @db.Uuid
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String @unique @map("token_hash") @db.VarChar(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(3)
+  lastSeenAt DateTime @default(now()) @map("last_seen_at") @db.Timestamptz(3)
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+model GameRun {
+  id             String @id @default(uuid()) @db.Uuid
+  userId         String @map("user_id") @db.Uuid
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  saveId         String @map("save_id") @db.Uuid
+  save           SaveGame @relation(fields: [saveId], references: [id], onDelete: Cascade)
+  requestId      String @map("request_id") @db.Uuid
+  levelId        String @map("level_id")
+  contentVersion String @map("content_version")
+  status         String @default("active")
+  startedAt      DateTime @default(now()) @map("started_at") @db.Timestamptz(3)
+  finishedAt     DateTime? @map("finished_at") @db.Timestamptz(3)
+  resultDigest   String? @map("result_digest") @db.VarChar(64)
+  score          Int?
+  elapsedMs      Int? @map("elapsed_ms")
+  @@unique([userId, requestId])
+  @@index([userId, startedAt])
+  @@map("game_runs")
+}
+model LevelProgress {
+  saveId       String @map("save_id") @db.Uuid
+  save         SaveGame @relation(fields: [saveId], references: [id], onDelete: Cascade)
+  levelId      String @map("level_id")
+  completed    Boolean @default(true)
+  bestScore    Int @map("best_score")
+  bestTimeMs   Int @map("best_time_ms")
+  completions  Int @default(1)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@id([saveId, levelId])
+  @@map("level_progress")
 }

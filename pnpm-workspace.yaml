@@ -5,6 +5,7 @@ strictPeerDependencies: true
 overrides:
   fastify: 5.12.4
 onlyBuiltDependencies:
+  - argon2
   - '@nestjs/core'
   - '@prisma/engines'
   - esbuild

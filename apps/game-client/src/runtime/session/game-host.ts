@@ -276,6 +276,12 @@ export class GameHost {
       this.audio.victory();
       this.store.update({
         phase: 'complete',
+        result: {
+          pickupIds: [...this.session.collected],
+          elapsedMs: Math.round(this.session.elapsedSeconds * 1000),
+          escapes: this.police?.system.escapes ?? 0,
+          debugUsed: this.store.getSnapshot().debug,
+        },
         toast: '',
         score: this.session.score,
         collected: this.session.collected.size,

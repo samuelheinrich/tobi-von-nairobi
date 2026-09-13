@@ -1,6 +1,6 @@
 # Implementierungsstand
 
-Stand: 13. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Nächster Ausbauschritt: `feature/bali-escape`.
+Stand: 13. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`.
 
 ## Bereits implementiert
 
@@ -15,11 +15,14 @@ Stand: 13. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Näch
 - Separat wählbares Bali-Escape-Level mit Chaos, unabhängiger Fahndung, modularer Police-FSM, echtem Sichtkontakt, Bodengitter-Routing, zwölfsekündiger Flucht, Festnahme und Neustart.
 - R als wiederholbare Chaos-Aktion mit Cooldown; datengetriebenes Escape-Objective und Check-in-Gate, +500 Fluchtpunkte, eigene HUD-Anzeigen und Debug-Inspektion.
 
+- Registrierung/Login/Logout mit Argon2id, serverseitigen Sessions, Origin-/CSRF-Prüfung und Rate Limits.
+- Angemeldete Levelversuche, atomare Abschlüsse, Bestwerte und Gesamtpunkte in PostgreSQL. Dauerhafte lokale Ergebniswarteschlange mit idempotenter Wiederholung nach Verbindungsabbruch oder Reload. Gastspiel bleibt möglich.
+
 ## Bewusst noch offen
 
-Dieser Stand enthält **technisches Tutorial und Flucht-Blockout**, noch kein vollständiges Bali-MVP mit Login und Speicherung. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
+Dieser Stand enthält **technisches Tutorial und Flucht-Blockout**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
 
-Power-ups, Kombos, Risiko-Scoremultiplikatoren, Inventar, Flaschenwerfen, umfangreiche Animationen, Login, Savegame-API und dauerhafte Speicherung des Spielverlaufs sind noch nicht angeschlossen. Das vorhandene Datenbankschema ist eine Foundation, nicht das vollständige Datenmodell aus dem Plan. Es werden keine Accounts oder Saves über ungeschützte Endpunkte angelegt.
+Power-ups, Kombos, Risiko-Scoremultiplikatoren, Inventar, Flaschenwerfen und umfangreiche Animationen sind noch offen. Speicherung umfasst derzeit einen Saveslot mit abgeschlossenen Levelergebnissen; Checkpoints, Positionswiederherstellung, Achievements, Settings-API und kompetitive Highscores fehlen. Passwortwiederherstellung, Kontolöschung und produktiver Betrieb sind noch nicht umgesetzt. [Implementierter API-Vertrag und Grenzen](../api/auth-and-progress.md).
 
 Die Kamera verwendet fünf Ray-Probes als erste Annäherung an einen Kameraradius; ein echter Shape Sweep und engere Innenräume bleiben Phase-1-Arbeit. Die Physik läuft in festen Schritten, visuelle Transforminterpolation ist noch offen. Referenzgeräte-/Safari-Abnahme und ein zehnminütiger manueller Kollisions-Parcours sind nicht durch einen Headless-Chromium-Lauf ersetzt.
 
@@ -33,11 +36,11 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
-Die Prüfkette umfasst 23 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), drei Integrationstests gegen echtes PostgreSQL und fünf Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+Die Prüfkette umfasst 24 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), acht Integrationstests gegen echtes PostgreSQL und sechs Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
 
 Zusätzlich fährt der Browser den gesamten Fluchtweg mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
 
-`pnpm check:bundle` prüft zusätzlich das komprimierte Gesamtbudget aller gebauten Client-Assets und stellt sicher, dass das Developer-Menü im Produktionsartefakt fehlt. Der gemessene Gesamtumfang beträgt derzeit rund **1,31 MiB gzip**; das ist ein Transfergrössenvergleich, keine FPS-Messung. Vite weist weiterhin auf den absichtlich verzögert geladenen, grösseren Engine-Chunk hin. Referenzhardware und Safari bleiben separate Abnahmen.
+`pnpm check:bundle` prüft zusätzlich das komprimierte Gesamtbudget aller gebauten Client-Assets und stellt sicher, dass das Developer-Menü im Produktionsartefakt fehlt. Der gemessene Gesamtumfang beträgt derzeit rund **1,32 MiB gzip**; das ist ein Transfergrössenvergleich, keine FPS-Messung. Vite weist weiterhin auf den absichtlich verzögert geladenen, grösseren Engine-Chunk hin. Referenzhardware und Safari bleiben separate Abnahmen.
 
 Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgeschlagene CI-Browsertests laden ihre Traces/Screenshots als kurzlebiges Artefakt hoch. Der Integrationstest legt nur eindeutig benannte Testdatensätze an und entfernt sie anschliessend; er setzt die Entwicklungsdatenbank nicht zurück.
 
@@ -45,7 +48,7 @@ Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgesc
 
 1. Bewegung/Kamera an Treppen, Ecken, Sprüngen und langsamem Rendering weiter prüfen; Controllergefühl mit Nutzern abstimmen.
 2. Fluchtgefühl mit Spielern abstimmen; Patrouillen, Animations-/Audiofeedback und grössere Levelrouten ergänzen. Inventar, Power-ups, Combo- und Risiko-Score folgen als eigene Module.
-3. Run-/Saveverträge und DB-Modell erweitern, Auth und atomare Belohnungen integrieren.
-4. Erst dann den vollständigen MVP-Abnahmelauf einschliesslich Reload aus PostgreSQL durchführen.
+3. Angemeldetes Bali Escape als durchgehenden Browser-Abnahmelauf ergänzen; Checkpoints und Achievements auf die bestehenden atomaren Run-Transaktionen aufbauen.
+4. Den Flucht-Blockout zu einem 5–15-Minuten-Level ausbauen und das gesamte Bali-MVP mit Spielern abnehmen.
 
 Die langfristige Spezifikation bleibt in [IMPLEMENTATION_PLAN.md](../../IMPLEMENTATION_PLAN.md). Dieser Status beschreibt ausschliesslich tatsächlich gelieferte und noch ausstehende Arbeit.

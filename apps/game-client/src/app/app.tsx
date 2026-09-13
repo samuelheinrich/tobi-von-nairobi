@@ -1,3 +1,5 @@
+import { useAccount } from '../persistence/use-account.js';
+import { AccountPanel } from '../ui/account/account-panel.js';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
@@ -8,6 +10,8 @@ import { Controls } from '../ui/controls.js';
 import { CompassIcon } from '../ui/icons.js';
 
 export function App() {
+  const account = useAccount();
+  const [showAccount, setShowAccount] = useState(false);
   const [generation, setGeneration] = useState(0);
   const [level, setLevel] = useState(welcomeToBali);
   const store = useMemo(() => new GameViewStore(), [generation, level]);
@@ -48,7 +52,20 @@ export function App() {
     };
   }, [store, level]);
 
-  const restart = (): void => {
+  useEffect(() => {
+    if (view.phase === 'complete' && view.result) void account.finish(view.result);
+  }, [view.phase, view.result]);
+  const begin = async (): Promise<void> => {
+    if (account.busy) return;
+    if (await account.begin(level.id)) host.current?.start();
+    else setShowAccount(true);
+  };
+  const restart = async (): Promise<void> => {
+    if (account.busy) return;
+    if (!(await account.resetRun())) {
+      setShowAccount(true);
+      return;
+    }
     setHelp(false);
     setGeneration((value) => value + 1);
   };
@@ -79,6 +96,13 @@ export function App() {
         </div>
         <div className="topbar-actions">
           <button
+            className="account-button"
+            disabled={account.busy || view.phase === 'playing' || view.phase === 'paused'}
+            onClick={() => setShowAccount(true)}
+          >
+            {account.auth.user ? `KONTO · ${account.auth.user.username}` : 'ANMELDEN'}
+          </button>
+          <button
             aria-label={muted ? 'Ton einschalten' : 'Ton ausschalten'}
             aria-pressed={muted}
             onClick={toggleMute}
@@ -104,7 +128,8 @@ export function App() {
       {['ready', 'loading'].includes(view.phase) && (
         <Landing
           view={view}
-          onStart={() => host.current?.start()}
+          starting={account.busy || !account.ready}
+          onStart={() => void begin()}
           onSelectEscape={() => setLevel(level.maxWanted > 0 ? welcomeToBali : baliEscape)}
         />
       )}
@@ -133,7 +158,7 @@ export function App() {
               className="primary-button"
               onClick={() => {
                 setHelp(false);
-                host.current?.start();
+                if (view.phase === 'paused') host.current?.start();
               }}
             >
               WEITER GEHT’S <span>↗</span>
@@ -209,13 +234,26 @@ export function App() {
             <button className="primary-button" onClick={restart}>
               NOCH EINE RUNDE <span>↻</span>
             </button>
-            <p className="muted-copy">
-              Technischer Prototyp: Dieser Durchlauf wird noch nicht gespeichert. Login und weitere
-              Levels folgen.
-            </p>
+            {account.auth.user ? (
+              <div className="save-status">
+                <p role="status" data-testid="save-status">
+                  {account.saveStatus ||
+                    'Für diesen Durchlauf wurde noch kein gespeicherter Versuch gestartet.'}
+                </p>
+                <button className="text-button" onClick={() => void account.retrySave()}>
+                  SPEICHERN ERNEUT VERSUCHEN
+                </button>
+              </div>
+            ) : (
+              <p className="muted-copy">
+                Dieser Durchlauf wird noch nicht gespeichert. Melde dich vor dem nächsten Spiel an,
+                um Fortschritt zu behalten.
+              </p>
+            )}
           </section>
         </div>
       )}
+      {showAccount && <AccountPanel account={account} onClose={() => setShowAccount(false)} />}
       {view.phase === 'error' && (
         <div className="modal-backdrop">
           <section className="dialog" role="alert">

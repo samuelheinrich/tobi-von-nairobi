@@ -1,3 +1,4 @@
+import type { Completion } from './progress.js';
 export type GamePhase =
   'loading' | 'ready' | 'playing' | 'paused' | 'complete' | 'caught' | 'error';
 
@@ -19,6 +20,7 @@ export interface GameView {
   objective: string;
   nearDestination: boolean;
   canCheckIn: boolean;
+  result: Completion | null;
   toast: string;
   error: string | null;
   debug: boolean;

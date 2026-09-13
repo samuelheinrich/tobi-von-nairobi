@@ -4,7 +4,7 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: Bali-Tutorial und erster spielbarer Flucht-Loop.** Im Tutorial kann Tobi laufen, sprinten, springen, fünf Flaschen sammeln und beim Airbnb einchecken. Über **NEU: BALI ESCAPE →** startet zusätzlich eine Variante mit Chaos, bis zu drei Fahndungssternen, verfolgenden Gegnern, Flucht-Countdown und Festnahme. Die PostgreSQL-/API-Foundation steht; Login und dauerhafte Spielstandspeicherung sind noch offen.
+**Aktueller Stand: Bali-Tutorial und erster spielbarer Flucht-Loop.** Im Tutorial kann Tobi laufen, sprinten, springen, fünf Flaschen sammeln und beim Airbnb einchecken. Über **NEU: BALI ESCAPE →** startet zusätzlich eine Variante mit Chaos, bis zu drei Fahndungssternen, verfolgenden Gegnern, Flucht-Countdown und Festnahme. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. Die Kontoansicht zeigt Gesamtpunkte und Bestwerte nach einem Reload oder erneuten Login.
 
 ![Tobi von Nairobi: Startbildschirm des Bali-Prototyps](docs/screenshots/tobi-landing.png)
 
@@ -27,7 +27,7 @@ Danach:
 
 `pnpm run setup` erzeugt fehlende `.env`-Dateien mit zufälligen lokalen Secrets und lässt vorhandene Dateien bestehen. Wichtig: `pnpm setup` ist ein anderer, eingebauter pnpm-Befehl. `pnpm dev` wendet bestehende Migrationen an, baut die Packages und startet Client/API mit Watchprozessen. PostgreSQL muss vorher gesund laufen. Compose bindet den Datenbankport ausschliesslich an localhost.
 
-Nur das Tutorial ohne Backend starten:
+Als Gast ohne Backend spielen:
 
 ```bash
 pnpm dev:client
@@ -48,7 +48,7 @@ Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und
 | ESC                | Pause                                                                |
 | F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                 |
 
-Flaschen werden bei Annäherung automatisch aufgenommen. Das Tutorial ist bewusst polizeifrei. In **Bali Escape** muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor der Check-in zählt. Häuser bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. Es wird noch kein Spielfortschritt gespeichert. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
+Flaschen werden bei Annäherung automatisch aufgenommen. Das Tutorial ist bewusst polizeifrei. In **Bali Escape** muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor der Check-in zählt. Häuser bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. **Vor dem Start anmelden**, damit der Levelabschluss gespeichert wird. Bei einem Verbindungsabbruch werden abgeschlossene Ergebnisse lokal zwischengespeichert und erneut übertragen. Laufende Positionen werden noch nicht wiederhergestellt. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
 
 ## Checks und Builds
 
@@ -68,7 +68,7 @@ pnpm db:migrate
 pnpm test:integration
 ```
 
-Browsertests bauen den Client und prüfen den echten Weg vom Start über Flaschenaufnahme bis Check-in einschliesslich Pause und Neustart:
+Browsertests benötigen ebenfalls die migrierte PostgreSQL-Instanz. Sie bauen Client und Server, starten eine separate Test-API und prüfen Gameplay, Registrierung, Login und Wiederherstellung nach verlorener Speicherantwort:
 
 ```bash
 pnpm exec playwright install chromium
@@ -82,7 +82,7 @@ pnpm test:e2e
 | Pfad                  | Zuständigkeit                                                  |
 | --------------------- | -------------------------------------------------------------- |
 | `apps/game-client`    | React-UI, Babylon-Runtime, Input, Kamera, Physik, Assets       |
-| `apps/game-server`    | NestJS/Fastify, Health-/Contentmodule und Datenbankanbindung   |
+| `apps/game-server`    | NestJS/Fastify, Auth, Run-/Fortschritts-API und Datenbank      |
 | `packages/contracts`  | gemeinsame validierbare Schemas, Actions, Events und DTOs      |
 | `packages/game-core`  | testbare Clock-, Bewegungs-, Missions- und Sessionregeln       |
 | `packages/game-data`  | Balancing und JSON-Leveldefinition                             |
@@ -99,6 +99,7 @@ pnpm test:e2e
 - [Vollständiger Implementierungsplan](IMPLEMENTATION_PLAN.md)
 - [Architektur und Engine-Vergleich](ARCHITECTURE.md)
 - [Game Design mit 16 Kampagnenlevels](GAME_DESIGN.md)
+- [Implementierte Konto- und Speicher-API](docs/api/auth-and-progress.md)
 - [Datenbank-/API-Zielmodell](docs/api/data-and-api.md)
 - [Repository-/Teamworkflow](docs/development/repository-and-workflow.md)
 - [Milestones und Commit-Reihenfolge](docs/development/milestones.md)

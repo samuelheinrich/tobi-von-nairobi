@@ -13,6 +13,7 @@ export class GameViewStore {
     objective: 'Sammle 5 Flaschen',
     nearDestination: false,
     canCheckIn: false,
+    result: null,
     toast: '',
     error: null,
     debug: false,
