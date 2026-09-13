@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "noEmit": true, "jsx": "react-jsx", "types": ["node"] },
+  "include": [
+    "packages/**/*.test.ts",
+    "apps/game-server/test/**/*.ts",
+    "tests/**/*.ts",
+    "playwright.config.ts",
+    "vitest.config.ts"
+  ]
+}

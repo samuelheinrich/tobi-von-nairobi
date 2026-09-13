@@ -1,0 +1,46 @@
+{
+  "name": "tobi-von-nairobi",
+  "homepage": "https://tobi-von-nairobi.ch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samuelheinrich/tobi-von-nairobi.git"
+  },
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "pnpm": ">=10.34.5 <11"
+  },
+  "scripts": {
+    "setup": "node tools/setup/setup.mjs",
+    "dev": "node tools/setup/dev.mjs",
+    "dev:client": "pnpm build:packages && pnpm --filter @tobi/game-client dev",
+    "build:packages": "pnpm --filter './packages/**' -r build",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm build:packages && pnpm -r typecheck && tsc -p tsconfig.check.json",
+    "lint": "eslint . && node tools/check-boundaries.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "pnpm build && vitest run --project integration",
+    "test:e2e": "pnpm --filter @tobi/game-client build && playwright test",
+    "content:validate": "pnpm build:packages && node tools/content-pipeline/validate.mjs",
+    "db:generate": "pnpm --filter @tobi/database generate",
+    "db:migrate": "pnpm --filter @tobi/database migrate",
+    "db:seed": "pnpm --filter @tobi/database seed",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test:unit && pnpm content:validate && pnpm build && pnpm check:bundle",
+    "check:bundle": "node tools/check-bundle.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.10.1",
+    "eslint": "10.10.0",
+    "prettier": "3.9.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
+    "vitest": "5.0.0"
+  }
+}

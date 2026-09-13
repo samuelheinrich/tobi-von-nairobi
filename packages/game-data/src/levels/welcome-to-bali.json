@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "welcome_to_bali_prototype",
+  "worldId": "bali",
+  "title": "Welcome to Bali",
+  "subtitle": "Nur schnell ins Airbnb. Was soll schon passieren?",
+  "maxWanted": 0,
+  "spawn": { "x": 0, "y": 1.5, "z": -18 },
+  "destination": { "id": "airbnb", "position": { "x": 0, "y": 0, "z": 19 }, "radius": 3 },
+  "pickups": [
+    { "id": "bali_bottle_01", "itemId": "bottle", "position": { "x": 0, "y": 0, "z": -12 } },
+    { "id": "bali_bottle_02", "itemId": "bottle", "position": { "x": 1, "y": 0, "z": -6 } },
+    { "id": "bali_bottle_03", "itemId": "bottle", "position": { "x": -1, "y": 0, "z": 0 } },
+    { "id": "bali_bottle_04", "itemId": "bottle", "position": { "x": 1, "y": 0, "z": 6 } },
+    { "id": "bali_bottle_05", "itemId": "bottle", "position": { "x": 0, "y": 0, "z": 12 } }
+  ],
+  "objectives": [
+    { "id": "collect_bottles", "type": "collect", "itemId": "bottle", "amount": 5, "after": [] },
+    { "id": "reach_airbnb", "type": "reach", "targetId": "airbnb", "after": ["collect_bottles"] }
+  ]
+}

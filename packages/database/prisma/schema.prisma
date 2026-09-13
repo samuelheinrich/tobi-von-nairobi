@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                 String   @id @default(uuid()) @db.Uuid
+  username           String   @db.VarChar(40)
+  usernameNormalized String   @unique @map("username_normalized") @db.VarChar(40)
+  passwordHash       String   @map("password_hash")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  lastLogin          DateTime? @map("last_login") @db.Timestamptz(3)
+  saves              SaveGame[]
+  settings           UserSettings?
+  @@map("users")
+}
+
+model SaveGame {
+  id                    String @id @default(uuid()) @db.Uuid
+  userId                String @map("user_id") @db.Uuid
+  user                  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slot                  Int @default(1)
+  currentWorld          String @default("bali") @map("current_world")
+  currentLevel          String @default("welcome_to_bali") @map("current_level")
+  checkpoint            Json?
+  snapshotSchemaVersion Int @default(1) @map("snapshot_schema_version")
+  money                 Int @default(0)
+  score                 Int @default(0)
+  revision              Int @default(0)
+  createdAt             DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@unique([userId, slot])
+  @@map("save_games")
+}
+
+model UserSettings {
+  userId        String @id @map("user_id") @db.Uuid
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  schemaVersion Int @default(1) @map("schema_version")
+  values        Json @default("{}")
+  revision      Int @default(0)
+  @@map("user_settings")
+}

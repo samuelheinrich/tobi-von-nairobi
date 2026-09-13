@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+strictPeerDependencies: true
+overrides:
+  fastify: 5.12.4
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@prisma/engines'
+  - esbuild
+  - prisma

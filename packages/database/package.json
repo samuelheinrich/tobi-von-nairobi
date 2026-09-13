@@ -1,0 +1,29 @@
+{
+  "name": "@tobi/database",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "build": "pnpm generate && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "migrate": "prisma migrate deploy",
+    "seed": "prisma db seed"
+  },
+  "dependencies": {
+    "@prisma/client": "7.10.0",
+    "@prisma/adapter-pg": "7.10.0",
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "prisma": "7.10.0",
+    "dotenv": "17.4.2",
+    "tsx": "4.23.13"
+  }
+}

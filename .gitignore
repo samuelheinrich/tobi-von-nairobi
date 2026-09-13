@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+.DS_Store
+.artifacts/
+playwright-report/
+test-results/
+packages/database/src/generated/
+*.log
+
+# Local coding-session metadata is not part of the public repository.
+codex-session
