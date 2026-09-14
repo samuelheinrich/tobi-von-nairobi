@@ -26,6 +26,8 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 
 - Arlesheim Hippie-WG mit drei realen Stockwerken, je sechs Zimmern, zwei begehbaren Treppen, 18 weiteren Flaschen und Ausgang im Erdgeschoss. Höhenkorrekte Pickups und grafischer Stockwerksausschnitt. Insgesamt sieben Level mit 81 Flaschen. [Details](../gameplay/arlesheim-hippie-wg.md).
 
+- Levelgalerie mit sieben echten WebP-Vorschaubildern, Tutorial an erster Stelle und direktem Gaststart unabhängig von der Kontoabfrage. Tastaturbedienung, schmale Fenster und verspätete Sessionantworten sind geprüft. [Details](../gameplay/level-selection.md).
+
 ## Bewusst noch offen
 
 Dieser Stand enthält **sieben kompakte Level**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
@@ -44,7 +46,7 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
-Die Prüfkette umfasst 29 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), dreizehn Integrationstests gegen echtes PostgreSQL und sechzehn Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+Die Prüfkette umfasst 29 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), dreizehn Integrationstests gegen echtes PostgreSQL und neunzehn Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
 
 Zusätzlich prüft der Browser echte Audioausgabe, Stummschaltung/Pause und die Pegelanzeige. Er fährt die gesamten Fluchtwege aller vier Verfolgungslevels mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
 

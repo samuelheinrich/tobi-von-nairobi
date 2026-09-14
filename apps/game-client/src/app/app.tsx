@@ -3,7 +3,7 @@ import { AccountPanel } from '../ui/account/account-panel.js';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
-import { welcomeToBali, baliEscape, playableLevels } from '@tobi/game-data';
+import { welcomeToBali, playableLevels } from '@tobi/game-data';
 import { Landing } from '../ui/landing.js';
 import { Hud, formatTime } from '../ui/hud.js';
 import { Controls } from '../ui/controls.js';
@@ -151,9 +151,9 @@ export function App() {
             const next = playableLevels.find((entry) => entry.id === id);
             if (next) setLevel(next);
           }}
-          starting={account.busy || !account.ready}
+          starting={account.busy}
+          signedIn={account.auth.user !== null}
           onStart={() => void begin()}
-          onSelectEscape={() => setLevel(level.maxWanted > 0 ? welcomeToBali : baliEscape)}
         />
       )}
       {active && <Hud view={view} />}
@@ -295,7 +295,7 @@ export function App() {
                 NÄCHSTES LEVEL →
               </button>
             )}
-            {account.auth.user ? (
+            {account.auth.user && !account.guestRun ? (
               <div className="save-status">
                 <p role="status" data-testid="save-status">
                   {account.saveStatus ||

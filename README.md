@@ -4,9 +4,9 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: sieben spielbare Level mit insgesamt 81 Flaschen.** Neu: **Arlesheim Hippie-WG**, drei Stockwerke mit je sechs Zimmern und 18 Flaschen, begehbarem Treppenhaus und Erdgeschoss-Ausgang. Daneben stehen die vier Bali-Level sowie **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Auswählbar über **LEVEL WÄHLEN** auf der Zielkarte. Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
+**Aktueller Stand: sieben spielbare Level mit insgesamt 81 Flaschen.** Neu: **Arlesheim Hippie-WG**, drei Stockwerke mit je sechs Zimmern und 18 Flaschen, begehbarem Treppenhaus und Erdgeschoss-Ausgang. Daneben stehen die vier Bali-Level sowie **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Direkt über die **Levelgalerie mit Vorschaubildern** auswählbar, ohne Login. **Level 01 ist das Tutorial.** Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
 
-![Tobi von Nairobi: Startbildschirm des Bali-Prototyps](docs/screenshots/tobi-landing.png)
+![Tobi von Nairobi: Levelgalerie mit Tutorial als erstem Level](docs/screenshots/level-gallery.png)
 
 ## Lokal starten
 
@@ -34,6 +34,10 @@ pnpm dev:client
 ```
 
 Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und braucht für diesen Prototyp keine Onlineverbindung. Fonts, Havok-WASM und Geometrie kommen aus dem lokalen Build; es gibt keine Laufzeitabhängigkeit von externen Asset-CDNs.
+
+## Level auswählen
+
+Auf der Startseite eine Bildkarte anklicken und den Startknopf beim ausgewählten Level betätigen. Das Tutorial ist standardmässig gewählt. Alle sieben Level sind ohne Anmeldung verfügbar; ein Konto wird nur für gespeicherte Ergebnisse benötigt. Auch eine noch laufende oder fehlgeschlagene Kontoabfrage blockiert den Gaststart nicht. [Details und Vorschau-Pipeline](docs/gameplay/level-selection.md).
 
 ## Steuerung
 

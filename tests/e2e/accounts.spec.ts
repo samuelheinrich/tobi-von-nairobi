@@ -20,10 +20,10 @@ test('registers, finishes a real level, survives a lost save response and restor
     await page.getByRole('button', { name: 'KONTO ERSTELLEN', exact: true }).click();
     await expect(page.getByRole('button', { name: `KONTO · ${username}` })).toBeVisible();
     await expect(page.getByRole('dialog', { name: 'Konto und Fortschritt' })).not.toBeVisible();
-    await expect(page.getByRole('button', { name: 'AB NACH BALI' })).toBeEnabled({
+    await expect(page.getByRole('button', { name: 'TUTORIAL STARTEN' })).toBeEnabled({
       timeout: 45000,
     });
-    await page.getByRole('button', { name: 'AB NACH BALI' }).press('Enter');
+    await page.getByRole('button', { name: 'TUTORIAL STARTEN' }).press('Enter');
     await expect(page.getByRole('heading', { name: 'Sammle 5 Flaschen' })).toBeVisible();
     await page.keyboard.down('KeyW');
     await expect(page.getByTestId('bottle-count')).toContainText('5 / 5', { timeout: 60000 });

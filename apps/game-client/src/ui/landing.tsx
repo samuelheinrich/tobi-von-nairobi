@@ -1,140 +1,90 @@
-import { playableLevels, worldNames, destinationName } from '@tobi/game-data';
+import { destinationName, welcomeToBali } from '@tobi/game-data';
 import type { GameView, LevelDefinition } from '@tobi/contracts';
-import { CompassIcon } from './icons.js';
-import { Controls } from './controls.js';
+import { LevelGallery, levelPreview, levelTitle } from './level-gallery.js';
+import './level-gallery.css';
 
 export function Landing({
   view,
   level,
   onSelectLevel,
   onStart,
-  onSelectEscape,
   starting = false,
+  signedIn = false,
 }: {
   view: GameView;
   level: LevelDefinition;
   onSelectLevel(id: string): void;
   onStart(): void;
-  onSelectEscape(): void;
   starting?: boolean;
+  signedIn?: boolean;
 }) {
+  const tutorial = level.id === welcomeToBali.id;
   return (
-    <div className="landing">
-      <div className="landing-copy">
-        <div className="eyebrow">
-          <span className="live-dot" /> EIN GANZ NORMALER URLAUB.
-        </div>
+    <div className="level-menu">
+      <section className="level-intro" aria-label="Ausgewähltes Level">
+        <span className="eyebrow">
+          <span className="live-dot" /> KLEINE PLÄNE. GROSSES CHAOS.
+        </span>
         <h1>
-          TOBI<span className="title-small">VON</span>
-          <span className="title-bottom">
-            NAIROBI<span className="title-dot">.</span>
-          </span>
+          Wohin geht’s,
+          <br />
+          <em>Tobi?</em>
         </h1>
-        <p className="tagline">
-          Kleine Pläne.
+        <p className="menu-invitation">
+          Such dir dein nächstes Abenteuer aus.
           <br />
-          <em>Grosses Chaos.</em>
+          Tobi hat selbstverständlich alles im Griff.
         </p>
-        <p className="intro">
-          {level.pickups.length} Flaschen. Ziel: {destinationName(level)}.
-          <br />
-          Und ein Mann, der alles im Griff hat. Fast.
+        <div className="selected-level">
+          <img
+            className="selected-level-preview"
+            src={levelPreview(level.id)}
+            alt={`Vorschau: ${level.title}`}
+            width="640"
+            height="360"
+          />
+          <div className="selected-level-content">
+            <span className="eyebrow">
+              {tutorial ? 'DEIN ERSTER STOPP / TUTORIAL' : 'BEREIT FÜR DIE NÄCHSTE RUNDE'}
+            </span>
+            <h2>{levelTitle(level.id, level.title)}</h2>
+            <p>
+              {tutorial
+                ? 'Bewegen, springen, fünf Flaschen sammeln und das Airbnb finden. Ganz entspannt, ohne Polizei.'
+                : level.subtitle}
+            </p>
+            <div className="selected-mission">
+              {level.pickups.length} Flaschen <span>→ {destinationName(level)}</span>
+            </div>
+            <button
+              className="primary-button gallery-start"
+              disabled={view.phase !== 'ready' || starting}
+              onClick={onStart}
+            >
+              {view.phase === 'loading'
+                ? 'LEVEL WIRD GELADEN …'
+                : tutorial
+                  ? 'TUTORIAL STARTEN'
+                  : level.scenery === 'hippie-house'
+                    ? 'REIN IN DIE WG'
+                    : level.scenery === 'railway'
+                      ? 'EINSTEIGEN'
+                      : 'FLUCHT STARTEN'}
+              <span aria-hidden="true">↗</span>
+            </button>
+            <p className="guest-note">
+              {signedIn
+                ? 'Mit deinem Konto: Levelergebnisse werden gespeichert.'
+                : 'Ohne Anmeldung spielen. Ein Konto brauchst du nur zum Speichern.'}
+            </p>
+          </div>
+        </div>
+        <p className="menu-controls">
+          WASD bewegen · Maus Kamera · Space springen
+          <br />G Flasche werfen · ESC Pause
         </p>
-        <button
-          className="primary-button start-button"
-          onClick={onStart}
-          disabled={view.phase !== 'ready' || starting}
-        >
-          {view.phase === 'loading'
-            ? 'KOFFER WIRD GEPACKT …'
-            : level.scenery === 'hippie-house'
-              ? 'REIN IN DIE WG'
-              : level.scenery === 'railway'
-                ? 'EINSTEIGEN'
-                : view.pursuit
-                  ? 'FLUCHT STARTEN'
-                  : 'AB NACH BALI'}
-          <span aria-hidden="true">↗</span>
-        </button>
-        <button
-          className="level-select"
-          onClick={onSelectEscape}
-          disabled={view.phase === 'loading' || starting}
-        >
-          {view.pursuit ? '← ZUM TUTORIAL' : 'NEU: BALI ESCAPE →'}
-        </button>
-        <div className="start-note">
-          <span className="tiny-play">▶</span> Direkt im Browser <span>·</span> Tastatur & Maus
-        </div>
-      </div>
-      <div className="destination-card">
-        <div className="destination-heading">
-          <span>DEIN NÄCHSTER STOPP</span>
-          <CompassIcon />
-        </div>
-        <div className="destination-name">
-          {worldNames[level.worldId]}
-          <span>
-            {level.worldId === 'bali'
-              ? '01'
-              : level.worldId === 'bangkok'
-                ? '02'
-                : level.worldId === 'zurich'
-                  ? '03'
-                  : '04'}{' '}
-            / 04
-          </span>
-        </div>
-        <div className="destination-rule" />
-        <div className="destination-meta">
-          <span>
-            {level.title.toUpperCase()} {'★'.repeat(level.maxWanted)}
-          </span>
-          <span>{level.atmosphere === 'night' ? '☾ 25°' : '☀ 29°'}</span>
-        </div>
-        <p>{level.subtitle}</p>
-        <label className="level-picker">
-          LEVEL WÄHLEN
-          <select
-            aria-label="Level wählen"
-            value={level.id}
-            disabled={view.phase === 'loading' || starting}
-            onChange={(event) => onSelectLevel(event.target.value)}
-          >
-            {playableLevels.map((entry, index) => (
-              <option key={entry.id} value={entry.id}>
-                {index + 1}. {entry.title} · {entry.pickups.length} Flaschen
-              </option>
-            ))}
-          </select>
-        </label>
-        <div className="postmark">
-          TOBI
-          <br />
-          <strong>APPROVED</strong>
-          <br />
-          SEIT GERADE EBEN
-        </div>
-      </div>
-      <div className="world-strip">
-        <span className="strip-label">DIE REISE</span>
-        <span className={level.worldId === 'bali' ? 'world-current' : ''}>
-          <b>01</b> BALI <i />
-        </span>
-        <span>
-          <b>02</b> THAILAND <small>RAILWAY</small>
-        </span>
-        <span>
-          <b>03</b> ZÜRICH <small>PARADE</small>
-        </span>
-        <span>
-          <b>04</b> ARLESHEIM <small>HIPPIE-WG</small>
-        </span>
-      </div>
-      <div className="landing-footer">
-        <Controls escape={view.pursuit !== null} />
-        <span className="prototype-tag">TECHNISCHER PROTOTYP · 0.1</span>
-      </div>
+      </section>
+      <LevelGallery selected={level.id} disabled={starting} onSelect={onSelectLevel} />
     </div>
   );
 }

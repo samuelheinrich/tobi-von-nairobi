@@ -6,10 +6,12 @@ test('selects escape, dispatches police, catches Tobi and resets the next run', 
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('/');
-  await expect(page.getByRole('button', { name: 'NEU: BALI ESCAPE' })).toBeEnabled({
+  await expect(page.getByRole('button', { name: 'Level 4: Bali Escape' })).toBeEnabled({
     timeout: 45000,
   });
-  await page.getByRole('button', { name: 'NEU: BALI ESCAPE' }).press('Enter', { timeout: 45000 });
+  await page
+    .getByRole('button', { name: 'Level 4: Bali Escape' })
+    .press('Enter', { timeout: 45000 });
   await expect(page.getByRole('button', { name: 'FLUCHT STARTEN' })).toBeEnabled({
     timeout: 45000,
   });

@@ -12,6 +12,7 @@ export function useAccount() {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [busy, setBusy] = useState(false);
   const [ready, setReady] = useState(false);
+  const [guestRun, setGuestRun] = useState(false);
   const epoch = useRef(0);
   const starting = useRef(false);
   const [error, setError] = useState('');
@@ -140,7 +141,7 @@ export function useAccount() {
     }
   };
   const begin = async (levelId: string): Promise<boolean> => {
-    if (!ready || starting.current) return false;
+    if (starting.current) return false;
     if (volatileResult.current) {
       setError('Ergebnis noch nicht gesichert. Bitte zuerst erneut speichern.');
       return false;
@@ -150,6 +151,8 @@ export function useAccount() {
     setError('');
     if (!authRef.current.user) {
       run.current = null;
+      // A later session response must never turn an already-started guest run into a saved run.
+      setGuestRun(true);
       return true;
     }
     starting.current = true;
@@ -164,6 +167,7 @@ export function useAccount() {
         throw new Error('Versuch bereits beendet. Bitte neu starten.');
       }
       run.current = { owner: authRef.current.user.id, data };
+      setGuestRun(false);
       startId.current = null;
       const owner = authRef.current.user.id;
       void api
@@ -260,6 +264,7 @@ export function useAccount() {
   };
   return {
     auth,
+    guestRun,
     ready,
     progress,
     busy,

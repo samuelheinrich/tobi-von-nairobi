@@ -17,6 +17,7 @@
     "setup": "node tools/setup/setup.mjs",
     "dev": "node tools/setup/dev.mjs",
     "dev:client": "pnpm build:packages && pnpm --filter @tobi/game-client dev",
+    "assets:previews": "pnpm build:packages && node tools/assets/capture-level-previews.mjs",
     "build:packages": "pnpm --filter './packages/**' -r build",
     "build": "pnpm -r build",
     "typecheck": "pnpm build:packages && pnpm --filter @tobi/game-server build && pnpm -r typecheck && tsc -p tsconfig.check.json",
