@@ -24,6 +24,20 @@ interface NoiseSpec {
 
 const MAX_VOICES = 32;
 
+/** Per-cue playback level for recorded samples, relative to the master bus.
+ *
+ * Recordings arrive at whatever level the pack was mastered at, which is far hotter than the
+ * synthesized cues they replace. A footstep fires every 1.6 metres, so it needs to sit well under
+ * a one-off like a smashing bottle. Anything not listed plays at the default.
+ */
+const sampleGain: Partial<Record<SoundCue, number>> = {
+  step: 0.16,
+  land: 0.34,
+  block: 0.4,
+  smash: 0.62,
+};
+const DEFAULT_SAMPLE_GAIN = 0.55;
+
 /** Original synthesized foley and ambience, built from oscillators and filtered white noise.
  *
  * Nothing is downloaded at runtime unless a level author drops sample files into
@@ -543,11 +557,16 @@ export class AudioFeedback {
     const source = context.createBufferSource();
     source.buffer = buffer;
     const gain = context.createGain();
-    gain.gain.setValueAtTime(0.7, context.currentTime);
+    gain.gain.setValueAtTime(sampleGain[cue] ?? DEFAULT_SAMPLE_GAIN, context.currentTime);
     source.connect(gain).connect(this.master!);
     this.track(source, gain);
     source.start(context.currentTime);
     return true;
+  }
+
+  /** How many recorded takes back a cue; zero means it is synthesized. Used by the audio harness. */
+  public takesFor(cue: SoundCue): number {
+    return this.bank.countFor(cue);
   }
 
   private clearVoices(): void {

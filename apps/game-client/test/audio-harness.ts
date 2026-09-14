@@ -53,3 +53,30 @@ export async function exerciseAudio() {
     if (context.state !== 'closed') await context.close();
   }
 }
+
+/** Proves the shipped CC0 recordings actually reach the audio graph and rotate their variants.
+ * A silent regression here (wrong glob, bad filename, undecodable file) is invisible in play:
+ * every cue would simply fall back to synthesis and still make a noise.
+ */
+export async function exerciseSamples() {
+  const context = new AudioContext();
+  try {
+    const { SoundBank, sampleUrls } = await import('../src/runtime/audio/sound-bank.js');
+    const bank = new SoundBank();
+    await bank.load(context);
+    const smash = [bank.get('smash'), bank.get('smash'), bank.get('smash'), bank.get('smash')];
+    return {
+      declared: sampleUrls().length,
+      cues: bank.size,
+      smashTakes: bank.countFor('smash'),
+      stepTakes: bank.countFor('step'),
+      // Four draws over three takes: all three appear, and the fourth wraps to the first.
+      distinctSmash: new Set(smash.filter(Boolean)).size,
+      wrapsAround: smash[0] === smash[3],
+      allDecoded: smash.every((buffer) => (buffer?.duration ?? 0) > 0),
+      synthesizedCue: bank.countFor('victory'),
+    };
+  } finally {
+    if (context.state !== 'closed') await context.close();
+  }
+}

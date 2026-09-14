@@ -54,17 +54,24 @@ Der Kontext startet erst nach einer Nutzergeste, pausiert bei Fokusverlust und T
 
 Offen bleiben räumliches Audio, eine Musikintensitätssteuerung nach Fahndungsgrad, getrennte Regler für Musik und Effekte sowie die Abnahme mit Kopfhörern auf Referenzhardware.
 
-## Geprüfte Kandidaten und nächste Klangpassage — 14. September 2026
+## Eingebaute Aufnahmen — 14. September 2026
 
-Die bisherige Entscheidung «Synthese jetzt, Sample-Pfad vorbereitet» bleibt bestehen. Die folgenden Quellen wurden anhand ihrer Originalseiten geprüft, aber noch nicht heruntergeladen, angehört oder eingebaut. Die Klangqualität und Eignung bleiben deshalb Hörproben im Spiel vorbehalten.
+Vier Cues laufen jetzt über echte Aufnahmen aus **[Kenney Impact Sounds 1.0](https://kenney.nl/assets/impact-sounds)** (CC0, Lizenz liegt dem Paket bei, keine Namensnennungspflicht):
 
-| Kandidat                                                                                    | Einsatz                                   | Quellenbefund                                                                                           |
-| ------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [Glass Break — avrahamy](https://freesound.org/people/avrahamy/sounds/141563/)              | Kurzer Splitterschweif für `smash`        | CC0; 1,865 s, Aufnahme einer Fensterscheibe. Für eine Flasche wahrscheinlich kürzen und leiser mischen. |
-| [Cartoon Hiccup — NicknameLarry](https://freesound.org/people/NicknameLarry/sounds/508900/) | `hiccup`                                  | CC0; 1,325 s, Cartoon-Stimme. Gegen Tobis übrige Stimme probehören.                                     |
-| [Impact Sounds — Kenney](https://kenney.nl/assets/impact-sounds)                            | Schritte, Landung, Möbel- und Türkontakte | Paket mit 130 Foley-Effekten unter CC0; konkrete Dateien erst nach Hörprobe auswählen.                  |
+| Cue     | Takes | Herkunft           | Warum diese                                                 |
+| ------- | ----- | ------------------ | ----------------------------------------------------------- |
+| `smash` | 3     | Glas schwer/mittel | Der Flaschenwurf ist der auffälligste Klang im Spiel        |
+| `step`  | 3     | Beton              | Läuft dauernd; echte Schritte tragen den Eindruck von Tempo |
+| `land`  | 2     | weicher Aufprall   | Zusammen mit `step` wird die Fortbewegung körperlich        |
+| `block` | 2     | Schlag mittel      | Wenn der Schaffner Tobi zurückschiebt                       |
 
-Freesound verlangt auf den beiden Dateiseiten einen Login für den Download. Seine [Lizenzübersicht](https://freesound.org/help/faq/#licenses) unterscheidet CC0, CC-BY und CC-BY-NC; eine Suchtreffer-Erwähnung von CC0 ist kein Lizenznachweis für den Treffer selbst. Für Trinkgeräusche und verständliche Pöbelsprüche sind kurze eigene Aufnahmen ebenfalls eine passende Option.
+Zusammen 92 KiB. Alles andere — Trinken, Schluckauf, Sirene, Rufe, Jubel und sämtliche Ambient-Loops — bleibt synthetisiert. Für Stimme und Flüssigkeit gibt es in CC0-Foley-Paketen schlicht nichts Passendes; dafür braucht es entweder eigene Aufnahmen oder Sprachsynthese.
+
+`SoundBank` wählt pro Cue reihum eine andere Aufnahme, damit ein oft wiederholter Klang nicht als identische Wellenform hämmert. `AudioFeedback` setzt die Abspiellautstärke **pro Cue**: Pakete sind deutlich heisser gemastert als die synthetischen Cues, und ein Schritt alle 1,6 Meter muss klar unter einer zerspringenden Flasche liegen. Ein Browsertest prüft, dass die Dateien tatsächlich dekodieren, als Varianten registriert sind und rotieren — sonst fiele ein Tippfehler im Dateinamen nur auf die Synthese zurück und bliebe unbemerkt.
+
+### Noch nicht eingebaut
+
+Freesound verlangt für die geprüften Kandidaten (Glasbruch von avrahamy, Cartoon-Schluckauf von NicknameLarry, beide CC0) einen Login zum Download; seine [Lizenzübersicht](https://freesound.org/help/faq/#licenses) unterscheidet CC0, CC-BY und CC-BY-NC, eine Suchtreffer-Erwähnung ist kein Lizenznachweis für den Treffer selbst.
 
 ### Zusätzliche Effekte, nach Nutzen priorisiert
 
