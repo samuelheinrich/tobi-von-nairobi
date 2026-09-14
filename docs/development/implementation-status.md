@@ -69,4 +69,4 @@ Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgesc
 3. Angemeldetes Bali Escape als durchgehenden Browser-Abnahmelauf ergänzen; Checkpoints und Achievements auf die bestehenden atomaren Run-Transaktionen aufbauen.
 4. Den Flucht-Blockout zu einem 5–15-Minuten-Level ausbauen und das gesamte Bali-MVP mit Spielern abnehmen.
 
-Die langfristige Spezifikation bleibt in [IMPLEMENTATION_PLAN.md](../../IMPLEMENTATION_PLAN.md). Dieser Status beschreibt ausschliesslich tatsächlich gelieferte und noch ausstehende Arbeit.
+Die Übergabe des aktuellen Arbeitsstands einschliesslich Begründungen und Stolpersteine steht in [handover-2026-09-14.md](handover-2026-09-14.md). Die langfristige Spezifikation bleibt in [IMPLEMENTATION_PLAN.md](../../IMPLEMENTATION_PLAN.md). Dieser Status beschreibt ausschliesslich tatsächlich gelieferte und noch ausstehende Arbeit.
