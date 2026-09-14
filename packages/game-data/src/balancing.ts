@@ -37,4 +37,11 @@ export const socialBalance = Object.freeze({
   flirtRange: 5,
   flirtCooldownSeconds: 1.2,
   replySeconds: 3.2,
+  /** Unprompted greetings when Tobi walks into somebody's personal space. */
+  greeting: Object.freeze({
+    range: 3.6,
+    perSpeakerSeconds: 25,
+    betweenSeconds: 3.5,
+    sameFloorWithin: 2,
+  }),
 });

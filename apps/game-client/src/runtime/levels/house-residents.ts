@@ -3,7 +3,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { NpcVoices } from '@tobi/game-core';
+import { NpcVoices, ProximityGreeter } from '@tobi/game-core';
 import { hippieHouseLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { material } from './materials.js';
@@ -28,6 +28,7 @@ interface Resident {
 export class HouseResidents implements LevelNpcs {
   private readonly people: Resident[] = [];
   private readonly voices = new NpcVoices();
+  private readonly greeter = new ProximityGreeter(socialBalance.greeting);
   private reply: NpcReply | null = null;
   private time = 0;
 
@@ -104,6 +105,24 @@ export class HouseResidents implements LevelNpcs {
   public update(delta: number, player: Position3): void {
     if (delta <= 0) return;
     this.time += delta;
+    const greeted = this.greeter.step(
+      delta,
+      player,
+      this.people.map((person) => ({
+        id: person.id,
+        x: person.rig.root.position.x,
+        z: person.rig.root.position.z,
+        y: person.floor * hippieHouseLayout.floorHeight,
+      })),
+    );
+    const neighbour = this.people.find((candidate) => candidate.id === greeted);
+    if (neighbour)
+      this.speak(
+        neighbour,
+        neighbour.activity === 'yoga' || neighbour.activity === 'meditate'
+          ? 'greetingYoga'
+          : 'greeting',
+      );
     for (const person of this.people) {
       // Same cutaway rule the level uses: never draw a storey above Tobi's head.
       const y = person.floor * hippieHouseLayout.floorHeight;
@@ -144,19 +163,23 @@ export class HouseResidents implements LevelNpcs {
       count++;
       speaker ??= person;
     }
-    if (speaker) {
-      const topic =
-        speaker.activity === 'yoga' || speaker.activity === 'meditate' ? 'yoga' : 'resident';
-      const line = this.voices.next(topic, speaker.id);
-      this.reply = { text: line, cue: replyCue(topic) };
-      this.bubbles.say(
-        speaker.rig.root.position.add(new Vector3(0, 2.4, 0)),
-        line,
-        socialBalance.replySeconds,
-        { topic, speaker: speaker.id },
+    if (speaker)
+      this.speak(
+        speaker,
+        speaker.activity === 'yoga' || speaker.activity === 'meditate' ? 'yoga' : 'resident',
       );
-    }
     return count;
+  }
+
+  private speak(person: Resident, topic: 'yoga' | 'resident' | 'greeting' | 'greetingYoga'): void {
+    const line = this.voices.next(topic, person.id);
+    this.reply = { text: line, cue: replyCue(topic) };
+    this.bubbles.say(
+      person.rig.root.position.add(new Vector3(0, 2.4, 0)),
+      line,
+      socialBalance.replySeconds,
+      { topic, speaker: person.id },
+    );
   }
 
   public flirt(): boolean {

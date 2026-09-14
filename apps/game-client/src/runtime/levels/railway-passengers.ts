@@ -2,7 +2,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { Blocker, NpcVoices } from '@tobi/game-core';
+import { Blocker, NpcVoices, ProximityGreeter } from '@tobi/game-core';
 import { railwayLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
@@ -24,6 +24,7 @@ export class RailwayPassengers implements LevelNpcs {
   private readonly people: Passenger[] = [];
   private readonly conductor: { rig: NpcRig; brain: Blocker };
   private readonly voices = new NpcVoices();
+  private readonly greeter = new ProximityGreeter(socialBalance.greeting);
   private reply: NpcReply | null = null;
   private time = 0;
   private touching = false;
@@ -116,6 +117,13 @@ export class RailwayPassengers implements LevelNpcs {
   public update(delta: number, player: Position3): void {
     if (delta <= 0) return;
     this.time += delta;
+    const greeted = this.greeter.step(
+      delta,
+      player,
+      this.people.map((person) => ({ id: person.id, x: person.home.x, z: person.home.z })),
+    );
+    const neighbour = this.people.find((candidate) => candidate.id === greeted);
+    if (neighbour) this.say(neighbour.rig, 'greetingTrain', `seat-${neighbour.id}`, neighbour.id);
     const shouting = this.conductor.brain.step(delta, player);
     const at = this.conductor.brain.position;
     this.conductor.rig.root.position.set(at.x, 0, at.z);
@@ -179,14 +187,19 @@ export class RailwayPassengers implements LevelNpcs {
     return line;
   }
 
-  private say(rig: NpcRig, topic: 'conductor', speaker: string): void {
+  private say(
+    rig: NpcRig,
+    topic: 'conductor' | 'greetingTrain',
+    speaker: string,
+    voiceId = 1,
+  ): void {
     const line = this.voices.next(topic, speaker);
     this.reply = { text: line, cue: replyCue(topic) };
     this.bubbles.say(
       rig.root.position.add(new Vector3(0, 2.5, 0)),
       line,
       socialBalance.replySeconds,
-      { topic, speaker: 1 },
+      { topic, speaker: voiceId },
     );
   }
 

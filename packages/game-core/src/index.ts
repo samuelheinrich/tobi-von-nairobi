@@ -13,6 +13,8 @@ export { ColorTrip } from './items/color-trip.js';
 export { ReactiveCrowd } from './character/reactive-crowd.js';
 export type { CrowdPerson } from './character/reactive-crowd.js';
 export { Blocker } from './character/blocker.js';
+export { ProximityGreeter } from './character/proximity-greeter.js';
+export type { GreetCandidate, GreeterConfig } from './character/proximity-greeter.js';
 export type { BlockerConfig } from './character/blocker.js';
 export {
   NpcVoices,

@@ -4,7 +4,7 @@ import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { NpcVoices } from '@tobi/game-core';
+import { NpcVoices, ProximityGreeter } from '@tobi/game-core';
 import { nanaPlazaLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
@@ -29,6 +29,7 @@ interface VenueNpc {
 export class NanaVenue implements LevelNpcs {
   private readonly people: VenueNpc[] = [];
   private readonly voices = new NpcVoices();
+  private readonly greeter = new ProximityGreeter(socialBalance.greeting);
   private readonly solids: Set<Mesh>;
   private reply: NpcReply | null = null;
   private time = 0;
@@ -110,9 +111,17 @@ export class NanaVenue implements LevelNpcs {
     )?.hit;
   }
 
-  public update(delta: number): void {
+  public update(delta: number, player: Position3): void {
     if (delta <= 0) return;
     this.time += delta;
+    const greeted = this.greeter.step(
+      delta,
+      player,
+      this.people.map((person) => ({ id: person.id, x: person.home.x, z: person.home.z })),
+    );
+    const nearby = this.people.find((candidate) => candidate.id === greeted);
+    // Staff and dancers welcome him in; the guests on the stools are less enthusiastic.
+    if (nearby) this.say(nearby, nearby.role === 'guest' ? 'greeting' : 'greetingBar');
     this.cooldown = Math.max(0, this.cooldown - delta);
     for (const person of this.people) {
       person.startled = Math.max(0, person.startled - delta);
@@ -179,7 +188,10 @@ export class NanaVenue implements LevelNpcs {
     return line;
   }
 
-  private say(person: VenueNpc, topic: 'flirt' | 'flirtRejected' | 'bargirlTaunt'): void {
+  private say(
+    person: VenueNpc,
+    topic: 'flirt' | 'flirtRejected' | 'bargirlTaunt' | 'greeting' | 'greetingBar',
+  ): void {
     const line = this.voices.next(topic, person.id);
     this.reply = { text: line, cue: replyCue(topic) };
     this.bubbles.say(
