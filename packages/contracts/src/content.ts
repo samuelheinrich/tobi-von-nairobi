@@ -43,17 +43,36 @@ export const levelSchema = z
   .object({
     schemaVersion: z.literal(1),
     id: z.string().min(1),
-    worldId: z.enum(['bali', 'bangkok', 'zurich', 'arlesheim']),
+    worldId: z.enum(['bali', 'bangkok', 'zurich', 'arlesheim', 'custody']),
     title: z.string(),
     subtitle: z.string(),
     atmosphere: z.enum(['day', 'sunset', 'night']).default('day'),
     scenery: z
-      .enum(['village', 'beach-bar', 'night-market', 'railway', 'street-parade', 'hippie-house'])
+      .enum([
+        'village',
+        'beach-bar',
+        'night-market',
+        'railway',
+        'street-parade',
+        'hippie-house',
+        'nana-plaza',
+        'drunk-tank',
+      ])
       .default('village'),
+    /** Levels reachable only through a gameplay outcome stay out of the menu gallery. */
+    selectable: z.boolean().default(true),
     maxWanted: z.number().int().min(0).max(5),
     chaosPerBottle: z.number().positive().max(30).default(16),
     policeSpeed: z.number().min(2).max(8).default(4.6),
     policeSpawns: z.array(positionSchema).optional(),
+    /** Overrides the prototype score table; a level without a score economy sets both to zero. */
+    scoring: z
+      .object({
+        bottlePoints: z.number().int().min(0),
+        completionBonus: z.number().int().min(0),
+      })
+      .strict()
+      .optional(),
     navigationBounds: z
       .object({
         minX: z.number().finite(),
@@ -67,7 +86,7 @@ export const levelSchema = z
     destination: z
       .object({ id: z.string(), position: positionSchema, radius: z.number().positive() })
       .strict(),
-    pickups: z.array(pickupSchema).min(1),
+    pickups: z.array(pickupSchema),
     powerups: z
       .array(z.object({ id: z.string().min(1), position: positionSchema }).strict())
       .max(100)

@@ -6,18 +6,19 @@ Auf dem Startbildschirm führt **NEU: BALI ESCAPE →** zum separaten Level `bal
 
 ## Spielen
 
-Fünf Flaschen sammeln, Security/Polizei auf sich aufmerksam machen, den Sichtkontakt zwölf Sekunden lang unterbrechen und dann mit E in der Casa Tobi einchecken. Die Häuser links vom Weg bieten Deckung. Ein geprüfter Weg führt nach der fünften Flasche links am grünen Bungalow entlang, um dessen Rückseite und auf der anderen Seite wieder nach Süden. Sprint gezielt für die Ecken aufheben; auf freier Strecke sind Verfolger etwas schneller als Tobis normales Gehen.
+Fünf Flaschen sammeln, Security/Polizei auf sich aufmerksam machen, den Sichtkontakt neun Sekunden lang unterbrechen und dann mit E in der Casa Tobi einchecken. Die Häuser links vom Weg bieten Deckung. Ein geprüfter Weg führt nach der fünften Flasche links am grünen Bungalow entlang, um dessen Rückseite und auf der anderen Seite wieder nach Süden. Sprint gezielt für die Ecken aufheben; auf freier Strecke sind Verfolger etwas schneller als Tobis normales Gehen.
 
-R lässt Tobi «Ich kenne Karl!» rufen: +20 Chaos, drei Sekunden Abklingzeit. Damit lässt sich auch nach einer frühen Flucht eine weitere Verfolgung auslösen. Karl selbst greift noch nicht ein. Wird Tobi 1,6 Sekunden lang aus nächster Nähe festgehalten, endet der Durchlauf mit **Erwischt**. Abstand baut die Festnahmeanzeige wieder ab. Ein neuer Versuch setzt den gesamten Lauf zurück.
+R lässt Tobi «Ich kenne Karl!» rufen: +20 Chaos, drei Sekunden Abklingzeit. Damit lässt sich auch nach einer frühen Flucht eine weitere Verfolgung auslösen. Karl selbst greift noch nicht ein. Wird Tobi 1,6 Sekunden lang aus nächster Nähe festgehalten, endet der Durchlauf mit **Erwischt**. Abstand baut die Festnahmeanzeige wieder ab. Von dort führt entweder ein sofortiger neuer Versuch zurück ins Level oder **AB IN DIE ZELLE** in die [Ausnüchterungszelle](nana-plaza-and-custody.md). Ein neuer Versuch setzt den gesamten Lauf zurück.
 
 ## Regeln und Grenzen
 
 - Flasche: +16 Chaos, +100 Punkte; jede konkrete Flasche zählt nur einmal.
 - Ab zehn ruhigen Sekunden sinkt Chaos um 1,5 pro Sekunde. Sichtkontakt unterbricht den Abbau.
 - Fahndung steigt bei 41/61/71/81/95 Chaos auf bis zu fünf Sterne. Bali begrenzt dies auf drei Sterne und drei Figuren: einen Security-Mitarbeiter und zwei Polizisten.
-- Sinkendes Chaos entfernt keine aktive Fahndung. Erst tatsächlicher Sichtkontakt und anschliessend zwölf Sekunden ohne Sichtkontakt führen zur Flucht. Jede erneute Sichtung setzt den Countdown zurück.
+- Sinkendes Chaos entfernt keine aktive Fahndung. Erst tatsächlicher Sichtkontakt und anschliessend neun Sekunden ohne Sichtkontakt führen zur Flucht. Jede erneute Sichtung setzt den Countdown zurück. Das Fenster wurde zusammen mit Tobis höherem Tempo verkürzt, damit eine Flucht gleich anspruchsvoll bleibt.
 - Sichtweite: 15 Meter, bewusst 360° für diesen Arcade-Prototyp. Raycasts auf Augenhöhe berücksichtigen die realen festen Gebäude; niedrige Hindernisse verdecken die Sicht nicht automatisch.
-- Gegner verwenden ein statisches Bodengitter mit einem Meter Rasterweite und 0,5 Metern Kollisionsabstand. Exakte Segmentprüfungen verhindern das Schneiden dünner Wände. Wege werden höchstens etwa alle 0,6 Sekunden neu gesucht, Wahrnehmung läuft mit etwa 10 Hz, Bewegung im festen Spieltakt.
+- Gegner verwenden ein statisches Bodengitter mit einem Meter Rasterweite und 0,5 Metern Kollisionsabstand. Exakte Segmentprüfungen verhindern das Schneiden dünner Wände. Die Hindernisse liegen in 8-Meter-Kacheln, damit eine Abfrage nur benachbarte Rechtecke prüft; erst damit bleibt die grosse Zürcher Karte bezahlbar.
+- Verfolger laufen mit 6,1 m/s; Tobi geht 5,8 und sprintet 10,2 m/s. Auf freier Strecke ist der Sprint schneller, dauerhaftes Weglaufen bleibt aber nicht möglich. Wege werden höchstens etwa alle 0,6 Sekunden neu gesucht, Wahrnehmung läuft mit etwa 10 Hz, Bewegung im festen Spieltakt.
 - Flucht: +500 Punkte; Levelabschluss: einmalig +500 Punkte. Ein direkter erfolgreicher Durchlauf ergibt 1'500 Punkte. Angemeldete Levelergebnisse werden gespeichert; sie sind nicht für öffentliche Highscores validiert.
 - Das Missionsziel `escapePolice` wird erst nach den fünf Flaschen aktiv. Eine frühere Flucht überspringt diese Bedingung nicht. E schliesst den Lauf nur nach der aktiven Fluchtbedingung und ohne laufende Fahndung ab.
 

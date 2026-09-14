@@ -4,7 +4,9 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: sieben spielbare Level mit insgesamt 81 Flaschen.** Neu: **Arlesheim Hippie-WG**, drei Stockwerke mit je sechs Zimmern und 18 Flaschen, begehbarem Treppenhaus und Erdgeschoss-Ausgang. Daneben stehen die vier Bali-Level sowie **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Direkt über die **Levelgalerie mit Vorschaubildern** auswählbar, ohne Login. **Level 01 ist das Tutorial.** Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
+**Aktueller Stand: acht wählbare Level mit insgesamt 111 Flaschen, plus ein neuntes, das man sich verdienen muss.** Neu: **Bangkok Nana Plaza** mit drei Stockwerken Neon, Discofläche, acht Tanzstangen und NPCs, die sich nicht nur anpöbeln, sondern auch anflirten lassen — und die **Ausnüchterungszelle**, in der man landet, wenn die Polizei einen erwischt. **Zürich Street Parade** bildet jetzt das Seebecken mit Quaibrücke, Bürkliplatz und Bahnhofstrasse ab; **Thailand Railway** hat einen Barwagen, sitzende Reisende und einen Schaffner, der einem im Weg steht. Die **Arlesheim Hippie-WG** ist bewohnt, inklusive Yogagruppe. Direkt über die **Levelgalerie mit Vorschaubildern** auswählbar, ohne Login. **Level 01 ist das Tutorial.**
+
+Tobi bewegt sich deutlich schneller, jede Flasche füllt seine Energie komplett auf, Leergut fliegt in die Richtung, in die er schaut, die Kamera dreht 360° um ihn, und seine Zigarette qualmt. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Nana Plaza und Zelle](docs/gameplay/nana-plaza-and-custody.md) · [Levels und Wurfmechanik](docs/gameplay/railway-parade-and-bottles.md) · [Klang](docs/gameplay/audio.md).
 
 ![Tobi von Nairobi: Levelgalerie mit Tutorial als erstem Level](docs/screenshots/level-gallery.png)
 
@@ -37,23 +39,24 @@ Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und
 
 ## Level auswählen
 
-Auf der Startseite eine Bildkarte anklicken und den Startknopf beim ausgewählten Level betätigen. Das Tutorial ist standardmässig gewählt. Alle sieben Level sind ohne Anmeldung verfügbar; ein Konto wird nur für gespeicherte Ergebnisse benötigt. Auch eine noch laufende oder fehlgeschlagene Kontoabfrage blockiert den Gaststart nicht. [Details und Vorschau-Pipeline](docs/gameplay/level-selection.md).
+Auf der Startseite eine Bildkarte anklicken und den Startknopf beim ausgewählten Level betätigen. Das Tutorial ist standardmässig gewählt. Alle acht Level sind ohne Anmeldung verfügbar; ein Konto wird nur für gespeicherte Ergebnisse benötigt. Auch eine noch laufende oder fehlgeschlagene Kontoabfrage blockiert den Gaststart nicht. [Details und Vorschau-Pipeline](docs/gameplay/level-selection.md).
 
 ## Steuerung
 
-| Eingabe            | Aktion                                                                           |
-| ------------------ | -------------------------------------------------------------------------------- |
-| WASD / Pfeiltasten | bewegen                                                                          |
-| Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                                 |
-| Space              | springen                                                                         |
-| Shift              | sprinten; Stamina beachten                                                       |
-| E                  | Levelziel bestätigen: Airbnb, erster Wagen, Backstage oder WG-Ausgang            |
-| G                  | leere Flasche in Blickrichtung werfen, nach dem automatischen Trinken            |
-| R                  | Passanten in der Nähe anpöbeln; in Verfolgungslevels +20 Chaos (alle 3 Sekunden) |
-| ESC                | Pause                                                                            |
-| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                             |
+| Eingabe            | Aktion                                                                            |
+| ------------------ | --------------------------------------------------------------------------------- |
+| WASD / Pfeiltasten | bewegen                                                                           |
+| Maus               | Kamera, volle 360° um die Figur; bei fehlender Maussperre gedrückt ziehen         |
+| Space              | springen                                                                          |
+| Shift              | sprinten; Stamina beachten                                                        |
+| E                  | Levelziel bestätigen: Airbnb, Wagen 1, Hafendamm, WG-Ausgang, Soi 4 oder Pritsche |
+| G                  | leere Flasche dorthin werfen, wohin die Kamera zeigt — auch nach oben oder unten  |
+| R                  | Passanten in der Nähe anpöbeln; in Verfolgungslevels +20 Chaos (alle 3 Sekunden)  |
+| F                  | anflirten: das nächste sichtbare Gegenüber antwortet (Nana Plaza)                 |
+| ESC                | Pause                                                                             |
+| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                              |
 
-Flaschen werden bei Annäherung automatisch aufgenommen und nacheinander getrunken. Tobis Schwanken steigt nach jedem Schluck. Geworfenes Leergut hält getroffene Guards 2,5 Sekunden auf oder verscheucht Passanten. Die ◈-Schaltfläche reduziert den Farbeffekt der Parade; das HUD bleibt stets unverfärbt. Tutorial und Zugfahrt sind polizeifrei. In den Verfolgungslevels muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor das Ziel zählt. Häuser und Musik-Trucks bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. **Vor dem Start anmelden**, damit der Levelabschluss gespeichert wird. Bei einem Verbindungsabbruch werden abgeschlossene Ergebnisse lokal zwischengespeichert und erneut übertragen. Laufende Positionen werden noch nicht wiederhergestellt. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
+Flaschen werden bei Annäherung automatisch aufgenommen, nacheinander getrunken und **füllen dabei die Energie vollständig auf**. Tobis Schwanken steigt nach jedem Schluck. Geworfenes Leergut hält getroffene Guards 2,5 Sekunden auf oder verscheucht Passanten. Die ◈-Schaltfläche reduziert den Farbeffekt der Parade; das HUD bleibt stets unverfärbt. Tutorial und Zugfahrt sind polizeifrei. In den Verfolgungslevels muss Tobi nach dem Sammeln neun Sekunden ohne Sichtkontakt entkommen, bevor das Ziel zählt. Häuser und Musik-Trucks bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme — und danach wahlweise in die Ausnüchterungszelle. Neustart setzt den lokalen Durchlauf zurück. **Vor dem Start anmelden**, damit der Levelabschluss gespeichert wird. Bei einem Verbindungsabbruch werden abgeschlossene Ergebnisse lokal zwischengespeichert und erneut übertragen. Laufende Positionen werden noch nicht wiederhergestellt. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
 
 ## Checks und Builds
 

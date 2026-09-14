@@ -5,8 +5,49 @@ import { Ray } from '@babylonjs/core/Culling/ray.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import { NavigationGrid, ReactiveCrowd } from '@tobi/game-core';
+import type { Point2 } from '@tobi/game-core';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import { material } from './materials.js';
+import { navigationObstacles, sightBlockers } from './nav-obstacles.js';
+
+export const PARADE_CROWD_SIZE = 240;
+
+/** Fills the route with dancers instead of lining them up: walk the polyline, then fan out
+ * sideways and keep whatever the navigation grid says is standable. */
+export function crowdAlongRoute(
+  route: readonly Point2[],
+  nav: NavigationGrid,
+  limit: number,
+): Point2[] {
+  const positions: Point2[] = [];
+  const offsets = [2.6, -2.6, 4.2, -4.2, 5.8, -5.8, 7.4, -7.4];
+  for (let leg = 0; leg + 1 < route.length; leg++) {
+    const from = route[leg]!,
+      to = route[leg + 1]!;
+    const dx = to.x - from.x,
+      dz = to.z - from.z;
+    const length = Math.hypot(dx, dz);
+    if (length < 0.01) continue;
+    const nx = -dz / length,
+      nz = dx / length;
+    for (let travelled = 0; travelled < length; travelled += 1.6) {
+      const t = travelled / length;
+      const baseX = from.x + dx * t,
+        baseZ = from.z + dz * t;
+      for (const [index, offset] of offsets.entries()) {
+        if (positions.length >= limit) return positions;
+        // Deterministic jitter avoids a parade that marches in perfect rows.
+        const wobble = Math.sin(travelled * 1.7 + index * 2.3) * 0.55;
+        const point = {
+          x: baseX + nx * (offset + wobble),
+          z: baseZ + nz * (offset + wobble) + Math.cos(travelled + index) * 0.4,
+        };
+        if (nav.open(point)) positions.push(point);
+      }
+    }
+  }
+  return positions;
+}
 
 /** Hundreds of individually reactive dancers rendered with six thin-instance batches. */
 export class ParadeCrowd {
@@ -26,27 +67,12 @@ export class ParadeCrowd {
     private readonly scene: Scene,
     level: LevelDefinition,
     colliders: Mesh[],
+    route: readonly Point2[],
+    limit = PARADE_CROWD_SIZE,
   ) {
-    this.solids = new Set(colliders.filter((m) => m.name !== 'island-ground' && m.isVisible));
-    const obstacles = [...this.solids].map((m) => {
-      m.computeWorldMatrix(true);
-      const b = m.getBoundingInfo().boundingBox;
-      return {
-        minX: b.minimumWorld.x,
-        maxX: b.maximumWorld.x,
-        minZ: b.minimumWorld.z,
-        maxZ: b.maximumWorld.z,
-      };
-    });
-    this.nav = new NavigationGrid(level.navigationBounds!, obstacles, 0.3);
-    const positions = [];
-    for (let z = -32; z <= 32 && positions.length < 240; z += 1.5)
-      for (const x of [-19, -17, -8, -6, -4, 4, 6, 8, 17, 19]) {
-        // Stable small variations keep the aisle open without lining dancers up like a squad.
-        const point = { x: x + Math.sin(z * 3 + x * 7) * 0.35, z: z + Math.cos(z * 7 + x) * 0.35 };
-        if (this.nav.open(point)) positions.push(point);
-      }
-    this.system = new ReactiveCrowd(positions.slice(0, 240));
+    this.solids = sightBlockers(colliders);
+    this.nav = new NavigationGrid(level.navigationBounds!, navigationObstacles(colliders), 0.3);
+    this.system = new ReactiveCrowd(crowdAlongRoute(route, this.nav, limit));
     const surface = material(scene, 'crowd-instance-white', '#ffffff');
     for (const [name, size, offset, limb] of [
       ['body', [0.55, 0.75, 0.35], [0, 1.1, 0], 0],

@@ -1,4 +1,5 @@
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
+import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -6,8 +7,9 @@ import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { box, cylinderBetween, material } from '../levels/materials.js';
 
-/** Original geometry based on owner-supplied references; no photos or external brand textures. */
-export function createTobiLikeness(scene: Scene, body: TransformNode, head: TransformNode): void {
+/** Original geometry based on owner-supplied references; no photos or external brand textures.
+ * Returns the lit cigarette tip so the visual layer can hang its smoke on a real world position. */
+export function createTobiLikeness(scene: Scene, body: TransformNode, head: TransformNode): Mesh {
   const hair = material(scene, 'tobi-brown-curls', '#61402d');
   const beard = material(scene, 'tobi-short-beard', '#59463a');
   const skin = scene.getMaterialByName('tobi-skin') as StandardMaterial;
@@ -98,5 +100,5 @@ export function createTobiLikeness(scene: Scene, body: TransformNode, head: Tran
   filter.parent = head;
   const ember = material(scene, 'tobi-ember', '#ce7050');
   ember.emissiveColor = new Color3(0.4, 0.07, 0.01);
-  sphere('tobi-cigarette-tip', [0.05, 0.05, 0.05], [0.22, -0.24, 0.65], ember);
+  return sphere('tobi-cigarette-tip', [0.05, 0.05, 0.05], [0.22, -0.24, 0.65], ember);
 }

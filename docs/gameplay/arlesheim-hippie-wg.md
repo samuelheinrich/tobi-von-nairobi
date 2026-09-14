@@ -14,6 +14,8 @@ Tobi wollte nur kurz jemanden besuchen. Jetzt soll er vor dem Gehen die leeren F
 
 Je drei Zimmer liegen links und rechts eines zentralen Flurs. Jedes besitzt eine eigene Türöffnung. Das innenliegende Treppenhaus liegt im Norden: links hinunter, auf dem Zwischenpodest wenden, rechts weiter hinunter. Zwei solche Treppen verbinden die drei Etagen. Der Weg ist in beide Richtungen begehbar; vergessene Zimmer bleiben erreichbar. Der Ausgang liegt im Süden des Erdgeschosses. Stockwerksanzeige und Bodenbeschriftungen helfen bei der Orientierung.
 
+**Die WG ist bewohnt.** Im ersten Obergeschoss übt eine Gruppe auf fünf Matten Yoga, angeleitet von einer Lehrerin; unter dem Dach sitzt ein Meditationskreis. In weiteren Zimmern wird gerührt, getanzt und gesessen. Ein Zuruf mit **R** lässt sie zusammenzucken und antworten — «Namasteee.», «Der Abwasch macht sich nicht selber.», im Yogaraum «Bitte leise, wir atmen gerade.». Die Bewohner sind reine Kulisse ohne eigene Physikkörper, damit kein enges Zimmer zur Falle wird; die Stockwerksausblendung gilt für sie wie für alles andere.
+
 Die Palette verändert sich je Etage. Runde gewebte Teppiche, Peace-Wandbehänge, Pflanzen, Palettenmöbel, Kissen, Yogamatten und Plattenregale prägen den Hippie-Stil. Die Zimmernamen und Running Gags wie **KARL SPÜLT SPÄTER** stehen auf Bodenmarkierungen. Ein langsames synthetisiertes Zupfmotiv begleitet den Rundgang. Möbel sind aktuell exemplarische Kulisse; individuelle Küchen-/Bad-/Werkstatt-Interaktionen sind noch nicht umgesetzt.
 
 ![Tobi im obersten WG-Stockwerk](../screenshots/arlesheim-hippie-wg.png)
@@ -22,7 +24,7 @@ Die Palette verändert sich je Etage. Runde gewebte Teppiche, Peace-Wandbehänge
 
 Die begehbaren Bodenhöhen sind 0, 4,5 und 9 Meter. Wände, Böden, Treppen und Podeste haben echte Havok-Kollider. Die beiden Treppen verwenden kontinuierliche geneigte Kollisionsflächen mit sichtbaren Stufenmarkierungen, damit die Kapsel nicht an kleinen Stufenkanten hängenbleibt. Es gibt keine Stockwerks-Teleports.
 
-Die erhöhte Innenraumkamera folgt der Spielerhöhe. Oberhalb von Tobi werden die Darstellung der Etagen und ihre Flaschen ausgeblendet; eine grafische Schnittfläche entfernt darüberliegende Wandteile. **Die Physik bleibt erhalten**, auch bei unsichtbaren oberen Stockwerken. Die Kamera verwendet für diese offene Innenraumansicht keine Wand-Ray-Korrektur, da diese sie unter die Geschossdecke drücken würde. Die übrigen Level behalten ihre bisherigen Kameramodi.
+Die erhöhte Innenraumkamera folgt der Spielerhöhe. Oberhalb von Tobi werden die Darstellung der Etagen und ihre Flaschen ausgeblendet; eine grafische Schnittfläche entfernt darüberliegende Wandteile. **Die Physik bleibt erhalten**, auch bei unsichtbaren oberen Stockwerken. Die Kamera lässt sich inzwischen **vollständig um die Figur drehen**: der frühere Gierbereich von ±0,3 Radiant machte gerade dieses Level unübersichtlich, weil sich ein Flur nicht nach hinten einsehen liess. Jedes Rig — Aussen, Zug, Innenraum, Zelle — besitzt nur noch eigene Abstands- und Neigungsgrenzen, während der Gierwinkel überall frei läuft.
 
 Flaschen beachten jetzt beim Platzieren und Animieren ihre Datenhöhe. Nahaufnahme bleibt räumlich begrenzt: Ein Gegenstand an derselben X/Z-Position auf einer anderen Etage wird nicht eingesammelt. Zielabstände berücksichtigen ebenfalls die Datenhöhe. Das Missionssystem verwendet weiterhin Collect und Reach; es enthält keine WG-spezifischen Objective-Handler.
 

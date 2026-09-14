@@ -1,4 +1,10 @@
-import { playableLevels, worldNames, destinationName } from '@tobi/game-data';
+import {
+  levelById,
+  playableLevels,
+  pursuitBalance,
+  worldNames,
+  destinationName,
+} from '@tobi/game-data';
 import type { GameView } from '@tobi/contracts';
 import { PursuitHud } from './pursuit-hud.js';
 import { BottleIcon } from './icons.js';
@@ -10,7 +16,7 @@ export function formatTime(seconds: number): string {
 }
 
 export function Hud({ view }: { view: GameView }) {
-  const level = playableLevels.find((entry) => entry.id === view.levelId) ?? playableLevels[0];
+  const level = levelById(view.levelId) ?? playableLevels[0];
   return (
     <div className="hud" aria-label="Spielstatus">
       <section className="mission-card">
@@ -20,28 +26,34 @@ export function Hud({ view }: { view: GameView }) {
         </div>
         <h2>{view.objective}</h2>
         <p>
-          {view.collected < view.total
-            ? level.scenery === 'hippie-house'
-              ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
-              : level.scenery === 'railway'
-                ? 'Durch die offenen Wagen nach vorne. G: leere Flasche werfen.'
-                : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
-            : view.pursuit && !view.canCheckIn
-              ? 'Nutze Gebäude oder Musikfahrzeuge als Deckung. Zwölf Sekunden ohne Sichtkontakt!'
-              : `${destinationName(level)} wartet am Ende des Wegs.`}
+          {level.scenery === 'drunk-tank'
+            ? 'R: rumpöbeln, bis der Wärter vorbeischaut. E auf der Pritsche beendet die Nacht.'
+            : view.collected < view.total
+              ? level.scenery === 'hippie-house'
+                ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
+                : level.scenery === 'railway'
+                  ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
+                  : level.scenery === 'nana-plaza'
+                    ? 'Jede Flasche füllt die Energie. F: anflirten, R: anpöbeln.'
+                    : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
+              : view.pursuit && !view.canCheckIn
+                ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
+                : `${destinationName(level)} wartet am Ende des Wegs.`}
         </p>
-        <div className="bottle-progress">
-          <BottleIcon />
-          <strong data-testid="bottle-count">
-            {view.collected}
-            <span> / {view.total}</span>
-          </strong>
-          <div className="progress-pips">
-            {Array.from({ length: view.total }, (_, i) => (
-              <i key={i} className={i < view.collected ? 'filled' : ''} />
-            ))}
+        {view.total > 0 && (
+          <div className="bottle-progress">
+            <BottleIcon />
+            <strong data-testid="bottle-count">
+              {view.collected}
+              <span> / {view.total}</span>
+            </strong>
+            <div className="progress-pips">
+              {Array.from({ length: Math.min(view.total, 30) }, (_, i) => (
+                <i key={i} className={i < view.collected ? 'filled' : ''} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
       <div className="mood-card" data-testid="tobi-mood">
         <span>TOBIS PEGEL</span>
@@ -80,6 +92,12 @@ export function Hud({ view }: { view: GameView }) {
             <kbd>R</kbd> Anpöbeln · {view.tauntedCount} / {view.crowdCount} reagieren
           </span>
         )}
+        {view.flirts > 0 && (
+          <span data-testid="flirt-count">
+            <kbd>F</kbd> Anflirten · {view.flirts} Komplimente
+          </span>
+        )}
+        {view.blocked && <span data-testid="npc-block">DER SCHAFFNER STEHT IM WEG</span>}
         {view.tripSeconds > 0 && (
           <span data-testid="color-trip">FARBRAUSCH · {view.tripSeconds}s</span>
         )}
@@ -117,7 +135,12 @@ export function Hud({ view }: { view: GameView }) {
           <kbd>SHIFT</kbd> Erstaunlich schnell für seine Verhältnisse.
         </small>
       </div>
-      {view.toast && (
+      {view.speech && (
+        <div className="npc-speech" role="status" data-testid="npc-speech">
+          {view.speech}
+        </div>
+      )}
+      {view.toast && !view.speech && (
         <div className="pickup-toast" role="status">
           {view.toast}
         </div>
@@ -135,7 +158,11 @@ export function Hud({ view }: { view: GameView }) {
                   ? 'WAGEN 1 ERREICHT'
                   : level.scenery === 'street-parade'
                     ? 'BACKSTAGE BETRETEN'
-                    : 'EINCHECKEN'}
+                    : level.scenery === 'nana-plaza'
+                      ? 'SOI 4 VERLASSEN'
+                      : level.scenery === 'drunk-tank'
+                        ? 'HINLEGEN UND AUSNÜCHTERN'
+                        : 'EINCHECKEN'}
             </>
           ) : (
             <>ERST DIE FLASCHEN, DANN DER CHECK-IN.</>
@@ -145,7 +172,11 @@ export function Hud({ view }: { view: GameView }) {
       <div className="location-chip">
         <span>◉</span> {destinationName(level).toUpperCase()}{' '}
         <small>
-          {level.scenery === 'railway' ? 'BITTE NICHT AUSSTEIGEN.' : 'KARL HAT EINEN PLAN.'}
+          {level.scenery === 'railway'
+            ? 'BITTE NICHT AUSSTEIGEN.'
+            : level.scenery === 'drunk-tank'
+              ? 'KARL IST NICHT ERREICHBAR.'
+              : 'KARL HAT EINEN PLAN.'}
         </small>
       </div>
       {view.debug && <div className="debug-badge">DEBUG RUN · {view.fps} FPS</div>}

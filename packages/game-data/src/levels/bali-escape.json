@@ -108,5 +108,6 @@
     "maxX": 30,
     "minZ": -34,
     "maxZ": 34
-  }
+  },
+  "policeSpeed": 6.1
 }

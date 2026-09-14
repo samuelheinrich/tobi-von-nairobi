@@ -1,12 +1,13 @@
 import type { Scene } from '@babylonjs/core/scene.js';
-import type { LevelDefinition } from '@tobi/contracts';
+import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import type { HavokWorld } from '../physics/havok-world.js';
 import type { BaliScene } from './bali-scene.js';
 import { createBaliScene } from './bali-scene.js';
 import { createRailwayScene } from './railway-scene.js';
 import { createParadeScene } from './parade-scene.js';
 import { createHippieHouseScene } from './hippie-house-scene.js';
-import type { Position3 } from '@tobi/contracts';
+import { createNanaPlazaScene } from './nana-plaza-scene.js';
+import { createCellScene } from './cell-scene.js';
 
 export interface LevelScene extends BaliScene {
   update?(delta: number): void;
@@ -20,5 +21,7 @@ export function createLevelScene(
   if (level.scenery === 'railway') return createRailwayScene(scene, world, level);
   if (level.scenery === 'street-parade') return createParadeScene(scene, world, level);
   if (level.scenery === 'hippie-house') return createHippieHouseScene(scene, world, level);
+  if (level.scenery === 'nana-plaza') return createNanaPlazaScene(scene, world, level);
+  if (level.scenery === 'drunk-tank') return createCellScene(scene, world, level);
   return createBaliScene(scene, world, level);
 }

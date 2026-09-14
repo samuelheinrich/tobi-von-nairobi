@@ -3,7 +3,7 @@ import { AccountPanel } from '../ui/account/account-panel.js';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
-import { welcomeToBali, playableLevels } from '@tobi/game-data';
+import { welcomeToBali, playableLevels, drunkTank } from '@tobi/game-data';
 import { Landing } from '../ui/landing.js';
 import { Hud, formatTime } from '../ui/hud.js';
 import { Controls } from '../ui/controls.js';
@@ -55,14 +55,29 @@ export function App() {
     };
   }, [store, level]);
 
+  // The drunk tank is an epilogue, not a level result: it has no bottles and is never saved.
+  const custody = !level.selectable;
   useEffect(() => {
-    if (view.phase === 'complete' && view.result) void account.finish(view.result);
-  }, [view.phase, view.result]);
+    if (view.phase === 'complete' && view.result && !custody) void account.finish(view.result);
+  }, [view.phase, view.result, custody]);
   const begin = async (): Promise<void> => {
     if (account.busy) return;
     host.current?.unlockAudio();
+    if (custody) {
+      host.current?.start();
+      return;
+    }
     if (await account.begin(level.id)) host.current?.start();
     else setShowAccount(true);
+  };
+  const goTo = async (next: typeof level): Promise<void> => {
+    if (account.busy) return;
+    if (!(await account.resetRun())) {
+      setShowAccount(true);
+      return;
+    }
+    setHelp(false);
+    setLevel(next);
   };
   const restart = async (): Promise<void> => {
     if (account.busy) return;
@@ -143,7 +158,39 @@ export function App() {
           )}
         </div>
       </header>
-      {['ready', 'loading'].includes(view.phase) && (
+      {['ready', 'loading'].includes(view.phase) && custody && (
+        <div className="modal-backdrop">
+          <section
+            className="dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Ausnüchterungszelle"
+          >
+            <span className="eyebrow">ZUGANG OHNE TERMIN</span>
+            <h2>
+              Zelle drei.
+              <br />
+              <em>Ganz für dich allein.</em>
+            </h2>
+            <p>
+              Pritsche, Klo, Tisch. Mehr gibt es hier nicht. Pöbeln darfst du, dann schaut der
+              Wärter kurz vorbei. Danach hilft nur noch hinlegen.
+            </p>
+            <button
+              className="primary-button"
+              disabled={view.phase !== 'ready'}
+              onClick={() => void begin()}
+            >
+              {view.phase === 'loading' ? 'ZELLE WIRD AUFGESCHLOSSEN …' : 'ZELLE BETRETEN'}
+              <span aria-hidden="true">↗</span>
+            </button>
+            <p className="muted-copy">
+              Dieser Aufenthalt zählt nicht als Durchlauf und wird nicht gespeichert.
+            </p>
+          </section>
+        </div>
+      )}
+      {['ready', 'loading'].includes(view.phase) && !custody && (
         <Landing
           view={view}
           level={level}
@@ -172,7 +219,7 @@ export function App() {
               <em>eine Pause.</em>
             </h2>
             <p>Die Stadt kann kurz warten.</p>
-            <Controls escape={level.maxWanted > 0} />
+            <Controls escape={level.maxWanted > 0} flirt={level.scenery === 'nana-plaza'} />
             <p className="muted-copy">
               Maus bewegen: Kamera. Falls die Maussperre nicht verfügbar ist, mit gedrückter
               Maustaste ziehen.
@@ -210,11 +257,18 @@ export function App() {
               <em>Zu wenig Abstand.</em>
             </h2>
             <p>
-              Security hat dich erwischt. Nutze Sprint und die Rückseiten der Häuser, um den
-              Sichtkontakt zu unterbrechen.
+              Die Polizei hat dich eingesammelt. Der Wagen fährt nicht zum Airbnb, sondern zur
+              Ausnüchterungszelle.
             </p>
-            <button className="primary-button" onClick={restart}>
-              NOCH EIN VERSUCH <span>↻</span>
+            <button
+              className="primary-button"
+              disabled={account.busy}
+              onClick={() => void goTo(drunkTank)}
+            >
+              AB IN DIE ZELLE <span>↗</span>
+            </button>
+            <button className="text-button" onClick={restart}>
+              Oder direkt nochmal versuchen
             </button>
             <p className="muted-copy">
               Der Durchlauf wird zurückgesetzt. Kein Geld und kein Spielstand gehen verloren.
@@ -233,12 +287,18 @@ export function App() {
                 ? 'WG verlassen'
                 : level.scenery === 'railway'
                   ? 'Zugfahrt abgeschlossen'
-                  : level.maxWanted > 0
-                    ? 'Flucht abgeschlossen'
-                    : 'Tutorial abgeschlossen'
+                  : level.scenery === 'nana-plaza'
+                    ? 'Nana Plaza verlassen'
+                    : level.scenery === 'drunk-tank'
+                      ? 'Nacht beendet'
+                      : level.maxWanted > 0
+                        ? 'Flucht abgeschlossen'
+                        : 'Tutorial abgeschlossen'
             }
           >
-            <span className="eyebrow">{level.title.toUpperCase()} · GESCHAFFT</span>
+            <span className="eyebrow">
+              {level.title.toUpperCase()} · {custody ? 'AUSGENÜCHTERT' : 'GESCHAFFT'}
+            </span>
             <div className="result-star">✳</div>
             <h2>
               {level.scenery === 'hippie-house'
@@ -247,9 +307,13 @@ export function App() {
                   ? 'Wagen eins erreicht.'
                   : level.scenery === 'street-parade'
                     ? 'Parade überlebt.'
-                    : 'Buchung bestätigt.'}
+                    : level.scenery === 'nana-plaza'
+                      ? 'Soi vier überstanden.'
+                      : level.scenery === 'drunk-tank'
+                        ? 'Nacht beendet.'
+                        : 'Buchung bestätigt.'}
               <br />
-              <em>Nerven storniert.</em>
+              <em>{custody ? 'Würde storniert.' : 'Nerven storniert.'}</em>
             </h2>
             <div className="result-stats">
               <div>
@@ -273,29 +337,50 @@ export function App() {
                 {'★'.repeat(view.pursuit.maxWanted)} · Fluchtbonus enthalten
               </p>
             )}
-            <p>Tobi ist angekommen. Das ist schon mal verdächtig gut gelaufen.</p>
-            <button className="primary-button" onClick={restart}>
-              NOCH EINE RUNDE <span>↻</span>
-            </button>
-            {playableLevels[playableLevels.findIndex((entry) => entry.id === level.id) + 1] && (
+            <p>
+              {custody
+                ? 'Morgen um acht ist Entlassung. Die Flaschen sind leider einbehalten worden.'
+                : 'Tobi ist angekommen. Das ist schon mal verdächtig gut gelaufen.'}
+            </p>
+            {custody ? (
               <button
-                className="text-button"
+                className="primary-button"
                 disabled={account.busy}
-                onClick={() => {
-                  const next =
-                    playableLevels[playableLevels.findIndex((entry) => entry.id === level.id) + 1];
-                  void account.resetRun().then((ok) => {
-                    if (ok && next) {
-                      setHelp(false);
-                      setLevel(next);
-                    } else setShowAccount(true);
-                  });
-                }}
+                onClick={() => void goTo(welcomeToBali)}
               >
-                NÄCHSTES LEVEL →
+                ZURÜCK AN DEN ANFANG <span>↗</span>
+              </button>
+            ) : (
+              <button className="primary-button" onClick={restart}>
+                NOCH EINE RUNDE <span>↻</span>
               </button>
             )}
-            {account.auth.user && !account.guestRun ? (
+            {!custody &&
+              playableLevels[playableLevels.findIndex((entry) => entry.id === level.id) + 1] && (
+                <button
+                  className="text-button"
+                  disabled={account.busy}
+                  onClick={() => {
+                    const next =
+                      playableLevels[
+                        playableLevels.findIndex((entry) => entry.id === level.id) + 1
+                      ];
+                    void account.resetRun().then((ok) => {
+                      if (ok && next) {
+                        setHelp(false);
+                        setLevel(next);
+                      } else setShowAccount(true);
+                    });
+                  }}
+                >
+                  NÄCHSTES LEVEL →
+                </button>
+              )}
+            {custody ? (
+              <p className="muted-copy">
+                Aufenthalte in der Zelle werden nicht gespeichert. Karl hat davon nie gehört.
+              </p>
+            ) : account.auth.user && !account.guestRun ? (
               <div className="save-status">
                 <p role="status" data-testid="save-status">
                   {account.saveStatus ||

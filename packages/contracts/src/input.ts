@@ -9,6 +9,7 @@ export interface InputActions {
   interactPressed: boolean;
   specialPressed: boolean;
   throwPressed: boolean;
+  flirtPressed: boolean;
 }
 
 export interface InputSource {

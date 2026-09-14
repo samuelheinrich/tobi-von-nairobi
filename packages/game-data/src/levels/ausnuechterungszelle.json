@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "ausnuechterungszelle",
+  "worldId": "custody",
+  "title": "Ausnüchterungszelle",
+  "subtitle": "Eine Pritsche, ein Klo, ein Tisch. Und ein Wärter, der das schon oft gehört hat.",
+  "atmosphere": "night",
+  "scenery": "drunk-tank",
+  "selectable": false,
+  "maxWanted": 0,
+  "scoring": {
+    "bottlePoints": 0,
+    "completionBonus": 0
+  },
+  "spawn": {
+    "x": 1.1,
+    "y": 1.2,
+    "z": 1.8
+  },
+  "destination": {
+    "id": "cell_bunk",
+    "position": {
+      "x": -1.4,
+      "y": 0.0,
+      "z": -2.2
+    },
+    "radius": 1.5
+  },
+  "pickups": [],
+  "powerups": [],
+  "objectives": [
+    {
+      "id": "sleep_it_off",
+      "type": "reach",
+      "targetId": "cell_bunk",
+      "after": []
+    }
+  ]
+}

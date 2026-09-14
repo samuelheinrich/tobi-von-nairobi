@@ -1,6 +1,6 @@
 # Implementierungsstand
 
-Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`. Mehrstöckige Hippie-WG: `feature/arlesheim-hippie-wg`.
+Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`. Mehrstöckige Hippie-WG: `feature/arlesheim-hippie-wg`. Bewohner, Nana Plaza, Zelle, Zürcher Karte und Bewegungs-/Wurf-/Kamera-Überarbeitung: `feature/guest-level-gallery`.
 
 ## Bereits implementiert
 
@@ -21,16 +21,24 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 - Beach Bar und Bali Night Market mit zehn beziehungsweise 15 Flaschen, eigenen Kulissen und angepasstem Verfolgungsbalancing. Diese vier Bali-Level sind direkt auswählbar.
 - Ansteigender Cartoon-Pegel, artikulierte Tobi-Animation, animierte Guards/Passanten, elf Sound-Cues, Sirenen und Ambient-Cues mit Pause-/Mute-Lebenszyklus. [Details](../gameplay/bali-venues-and-feedback.md).
 
-- Thailand Railway mit vier offenen Wagen und acht Flaschen, angepasster Innenraumkamera und eigenem Zugrhythmus. Zürich Street Parade mit 20 Flaschen, 240 einzeln reagierenden Tänzern, 22 Farb-Tabletten, Musik-Trucks und Backstage-Ziel. Sechs direkt auswählbare Level, insgesamt 63 Flaschen.
+- Thailand Railway mit fünf offenen Wagen, Barwagen, sitzenden Reisenden, blockierendem Schaffner und zwölf Flaschen. Zürich Street Parade als Ausschnitt des Zürcher Seebeckens: Utoquai, Bellevue, Quaibrücke, Bürkliplatz, Hafendamm Enge, dazu Bahnhofstrasse, Hauptbahnhof, Altstadt, Fraumünster, Grossmünster und Opernhaus. See und Limmat sind echte Hindernisse, die Brücken die einzigen Übergänge; 30 verteilte Flaschen, 24 Tabletten, vier Musik-Trucks und 240 entlang der Route ausgestreute Tänzer.
 - Referenzbasierte prozedurale Tobi-Figur mit Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Automatische Trinkfolge, Leergut in der Hand, Wurfgeschosse mit Hindernisprüfung, kurze Guard-Taumelei und verscheuchbare Passanten. Reduzierbarer Farbrausch und vier zusätzliche Sound-Cues. [Details](../gameplay/railway-parade-and-bottles.md).
 
 - Arlesheim Hippie-WG mit drei realen Stockwerken, je sechs Zimmern, zwei begehbaren Treppen, 18 weiteren Flaschen und Ausgang im Erdgeschoss. Höhenkorrekte Pickups und grafischer Stockwerksausschnitt. Insgesamt sieben Level mit 81 Flaschen. [Details](../gameplay/arlesheim-hippie-wg.md).
 
-- Levelgalerie mit sieben echten WebP-Vorschaubildern, Tutorial an erster Stelle und direktem Gaststart unabhängig von der Kontoabfrage. Tastaturbedienung, schmale Fenster und verspätete Sessionantworten sind geprüft. [Details](../gameplay/level-selection.md).
+- Levelgalerie mit acht echten WebP-Vorschaubildern, Tutorial an erster Stelle und direktem Gaststart unabhängig von der Kontoabfrage. Tastaturbedienung, schmale Fenster und verspätete Sessionantworten sind geprüft. `selectable` hält nicht wählbare Kapitel aus der Galerie heraus. [Details](../gameplay/level-selection.md).
+
+- Bangkok Nana Plaza: dreistöckiger Innenhof mit Neonbändern, pulsender Discofläche, Spiegelkugel, acht Tanzstangen, drei Theken, 16 Flaschen und zwei Guards. **F** flirtet das nächste sichtbare Gegenüber an; die Antwort erscheint als Sprechblase und im HUD. Ausnüchterungszelle als nicht wählbares Kapitel nach einer Festnahme, ohne Flaschen, ohne Punkte und ohne Speicherung. Acht wählbare Level mit 111 Flaschen plus die Zelle. [Details](../gameplay/nana-plaza-and-custody.md).
+
+- Bewohner in der Hippie-WG einschliesslich Yogagruppe und Meditationskreis; Reisende, Barpersonal und Schaffner im Zug. Alle über einen gemeinsamen `LevelNpcs`-Vertrag angebunden, ohne Verbindung zum Verfolgungssystem. Der Schaffner blockiert, gibt aber garantiert nach.
+
+- Bewegungs- und Feedback-Überarbeitung: Gehen 5,8 und Sprint 10,2 m/s bei mitskalierten Verfolgungswerten, volle Energie pro Flasche, in Blickrichtung geworfene Flaschen mit Neigung aus dem Kamerarig, 360°-Kamera in allen Rigs und qualmende Zigarette.
+
+- Klang vollständig überarbeitet: Oszillatoren plus gefiltertes Rauschen ergeben Glasklirren, Gluck-gluck, Schluckauf, europäische Zweiton-Sirene, Pöbel- und Flirtrufe, Anprall und Jubel; `SoundBank` erlaubt später echte CC0-Samples ohne Codeänderung. [Details](../gameplay/audio.md).
 
 ## Bewusst noch offen
 
-Dieser Stand enthält **sieben kompakte Level**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
+Dieser Stand enthält **acht wählbare kompakte Level plus die Zelle**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
 
 Weitere Power-ups neben dem Farbrausch, Kombos, Risiko-Scoremultiplikatoren, ein allgemeines Inventar und importierte Animationsclips sind noch offen. Speicherung umfasst derzeit einen Saveslot mit abgeschlossenen Levelergebnissen; Checkpoints, Positionswiederherstellung, Achievements, Settings-API und kompetitive Highscores fehlen. Passwortwiederherstellung, Kontolöschung und produktiver Betrieb sind noch nicht umgesetzt. [Implementierter API-Vertrag und Grenzen](../api/auth-and-progress.md).
 
@@ -46,9 +54,9 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
-Die Prüfkette umfasst 29 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), dreizehn Integrationstests gegen echtes PostgreSQL und neunzehn Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+Die Prüfkette umfasst 43 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse, Navigation samt Referenzvergleich des räumlichen Index, Blockierlogik und die Zürcher Platzierungsinvarianten), dreizehn Integrationstests gegen echtes PostgreSQL und 21 Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
 
-Zusätzlich prüft der Browser echte Audioausgabe, Stummschaltung/Pause und die Pegelanzeige. Er fährt die gesamten Fluchtwege aller vier Verfolgungslevels mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
+Zusätzlich prüft der Browser echte Audioausgabe, Stummschaltung/Pause und die Pegelanzeige. Er fährt die gesamten Fluchtwege der Bali-Verfolgungslevels sowie die komplette Zürcher Paraderoute mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab und belegt dabei, dass Tobi nie auf dem Wasser steht und das Becken nicht durchqueren kann. E2E deckt Nana Plaza einschliesslich Energie-Auffüllung und beantworteter Annäherung sowie den Weg von der Festnahme über die Zelle zurück ins Menü ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
 
 `pnpm check:bundle` prüft zusätzlich das komprimierte Gesamtbudget aller gebauten Client-Assets und stellt sicher, dass das Developer-Menü im Produktionsartefakt fehlt. Der gemessene Gesamtumfang beträgt derzeit unter **1,5 MiB gzip**; das ist ein Transfergrössenvergleich, keine FPS-Messung. Vite weist weiterhin auf den absichtlich verzögert geladenen, grösseren Engine-Chunk hin. Referenzhardware und Safari bleiben separate Abnahmen.
 

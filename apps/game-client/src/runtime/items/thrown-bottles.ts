@@ -4,6 +4,7 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { Position3 } from '@tobi/contracts';
+import { prototypeBalance } from '@tobi/game-data';
 import { createBottleModel } from './bottle-model.js';
 
 export interface BottleTarget {
@@ -11,6 +12,15 @@ export interface BottleTarget {
   radius: number;
   hit(): void;
 }
+
+/** Maps the camera's look pitch onto a throwing arc: looking up lobs, looking down smashes. */
+export function throwElevation(cameraPitch: number): number {
+  return Math.max(
+    prototypeBalance.throwPitchMin,
+    Math.min(prototypeBalance.throwPitchMax, 0.42 - cameraPitch * 0.9),
+  );
+}
+
 /** Bounded ballistic projectiles with swept segment collisions, never hits through a nearer wall. */
 export class ThrownBottles {
   private readonly active: { node: TransformNode; velocity: Vector3; time: number }[] = [];
@@ -26,13 +36,20 @@ export class ThrownBottles {
   public get count(): number {
     return this.active.length;
   }
-  public launch(position: Position3, yaw: number): boolean {
+  /** Yaw and elevation come from the camera rig, so Tobi throws wherever he is actually looking. */
+  public launch(position: Position3, yaw: number, elevation = 0.17): boolean {
     if (this.active.length >= 8) return false;
     const node = createBottleModel(this.scene, 'thrown-bottle');
     node.position.set(position.x, position.y + 0.5, position.z);
+    const speed = prototypeBalance.throwSpeed;
+    const flat = Math.cos(elevation) * speed;
     this.active.push({
       node,
-      velocity: new Vector3(Math.sin(yaw) * 17, 3, Math.cos(yaw) * 17),
+      velocity: new Vector3(
+        Math.sin(yaw) * flat,
+        Math.sin(elevation) * speed,
+        Math.cos(yaw) * flat,
+      ),
       time: 0,
     });
     return true;

@@ -8,6 +8,7 @@ const level: LevelDefinition = {
   worldId: 'bali',
   atmosphere: 'day',
   scenery: 'village',
+  selectable: true,
   powerups: [],
   title: 'Fixture',
   subtitle: '',

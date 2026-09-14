@@ -5,6 +5,7 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import { box, material } from './materials.js';
+import { navigationObstacles } from './nav-obstacles.js';
 
 /** Decorative bystanders react visually; they have no mission or navigation authority. */
 export class BaliCrowd {
@@ -41,18 +42,7 @@ export class BaliCrowd {
   ) {
     this.nav = new NavigationGrid(
       level.navigationBounds ?? { minX: -30, maxX: 30, minZ: -34, maxZ: 34 },
-      colliders
-        .filter((m) => m.name !== 'island-ground' && m.isVisible)
-        .map((m) => {
-          m.computeWorldMatrix(true);
-          const b = m.getBoundingInfo().boundingBox;
-          return {
-            minX: b.minimumWorld.x,
-            maxX: b.maximumWorld.x,
-            minZ: b.minimumWorld.z,
-            maxZ: b.maximumWorld.z,
-          };
-        }),
+      navigationObstacles(colliders),
       0.3,
     );
     const positions =

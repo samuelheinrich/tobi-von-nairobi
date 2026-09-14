@@ -24,6 +24,11 @@ export interface GameView {
   crowdCount: number;
   interiorFloor: number | null;
   tauntedCount: number;
+  /** Last spoken line shown in the HUD, already localised by the speaking system. */
+  speech: string;
+  flirts: number;
+  /** A non-police NPC is physically standing in Tobi's way right now. */
+  blocked: boolean;
   score: number;
   elapsedSeconds: number;
   objective: string;

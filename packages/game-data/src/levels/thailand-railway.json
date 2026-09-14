@@ -3,119 +3,155 @@
   "id": "thailand_railway",
   "worldId": "bangkok",
   "title": "Thailand Railway",
-  "subtitle": "Letzter Wagen. Falsches Ticket. Ganz vorne weiss jemand Bescheid.",
+  "subtitle": "Fünf Wagen, ein Barwagen und ein Schaffner, der seinen Gang sehr ernst nimmt.",
+  "atmosphere": "sunset",
+  "scenery": "railway",
   "maxWanted": 0,
+  "chaosPerBottle": 16,
   "spawn": {
-    "x": 0,
+    "x": 0.0,
     "y": 1.5,
-    "z": -35
+    "z": -45.0
   },
   "destination": {
     "id": "first_wagon",
     "position": {
-      "x": 0,
-      "y": 0,
-      "z": 34
+      "x": 0.0,
+      "y": 0.0,
+      "z": 45.5
     },
-    "radius": 2.2
+    "radius": 2.6
+  },
+  "navigationBounds": {
+    "minX": -4,
+    "maxX": 4,
+    "minZ": -48,
+    "maxZ": 48
   },
   "pickups": [
     {
       "id": "thailand_railway_bottle_01",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": -31
+        "x": -1.2,
+        "y": 0.0,
+        "z": -40.0
       }
     },
     {
       "id": "thailand_railway_bottle_02",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": -24
+        "x": 1.2,
+        "y": 0.0,
+        "z": -35.0
       }
     },
     {
       "id": "thailand_railway_bottle_03",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": -15
+        "x": -1.0,
+        "y": 0.0,
+        "z": -30.0
       }
     },
     {
       "id": "thailand_railway_bottle_04",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": -7
+        "x": 1.3,
+        "y": 0.0,
+        "z": -22.0
       }
     },
     {
       "id": "thailand_railway_bottle_05",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 2
+        "x": -1.3,
+        "y": 0.0,
+        "z": -16.0
       }
     },
     {
       "id": "thailand_railway_bottle_06",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 11
+        "x": 0.9,
+        "y": 0.0,
+        "z": -9.5
       }
     },
     {
       "id": "thailand_railway_bottle_07",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 21
+        "x": -1.4,
+        "y": 0.0,
+        "z": -4.0
       }
     },
     {
       "id": "thailand_railway_bottle_08",
       "itemId": "bottle",
       "position": {
-        "x": 0,
-        "y": 0,
-        "z": 30
+        "x": 1.4,
+        "y": 0.0,
+        "z": 2.0
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_09",
+      "itemId": "bottle",
+      "position": {
+        "x": -1.1,
+        "y": 0.0,
+        "z": 9.5
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_10",
+      "itemId": "bottle",
+      "position": {
+        "x": 1.2,
+        "y": 0.0,
+        "z": 15.0
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_11",
+      "itemId": "bottle",
+      "position": {
+        "x": -1.2,
+        "y": 0.0,
+        "z": 22.0
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_12",
+      "itemId": "bottle",
+      "position": {
+        "x": 1.0,
+        "y": 0.0,
+        "z": 30.0
       }
     }
   ],
+  "powerups": [],
   "objectives": [
     {
-      "id": "collect",
+      "id": "collect_bottles",
       "type": "collect",
       "itemId": "bottle",
-      "amount": 8,
+      "amount": 12,
       "after": []
     },
     {
-      "id": "reach",
+      "id": "reach_first_wagon",
       "type": "reach",
       "targetId": "first_wagon",
-      "after": ["collect"]
+      "after": ["collect_bottles"]
     }
-  ],
-  "scenery": "railway",
-  "atmosphere": "sunset",
-  "chaosPerBottle": 16,
-  "policeSpeed": 4,
-  "navigationBounds": {
-    "minX": -4,
-    "maxX": 4,
-    "minZ": -38,
-    "maxZ": 38
-  }
+  ]
 }

@@ -11,6 +11,7 @@ export interface CrowdPerson {
 export class ReactiveCrowd {
   public readonly people: CrowdPerson[];
   public readonly taunted = new Set<number>();
+  public readonly charmed = new Set<number>();
   public constructor(positions: readonly Point2[]) {
     this.people = positions.map((p, id) => ({
       id,
@@ -42,6 +43,24 @@ export class ReactiveCrowd {
         count++;
       }
     return count;
+  }
+  /** Closest person Tobi can actually see, used for one-to-one interactions such as flirting. */
+  public nearestVisible(
+    source: Point2,
+    range: number,
+    canSee: (a: Point2, b: Point2) => boolean,
+  ): CrowdPerson | undefined {
+    let best: CrowdPerson | undefined;
+    let bestDistance = range;
+    for (const p of this.people) {
+      const distance = Math.hypot(p.position.x - source.x, p.position.z - source.z);
+      if (distance > bestDistance || p.frightened > 0) continue;
+      if (!canSee(source, p.position)) continue;
+      best = p;
+      bestDistance = distance;
+    }
+    if (best) this.charmed.add(best.id);
+    return best;
   }
   public step(delta: number, clear: (a: Point2, b: Point2) => boolean): void {
     for (const p of this.people) {

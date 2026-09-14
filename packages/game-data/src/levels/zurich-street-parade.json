@@ -3,427 +3,533 @@
   "id": "zurich_street_parade",
   "worldId": "zurich",
   "title": "Zürich Street Parade",
-  "subtitle": "240 Leute. Ein Tobi. Alle sollen wissen, dass Karl das regelt.",
+  "subtitle": "Vom Utoquai über die Quaibrücke bis zum Hafendamm Enge. Und Karl regelt das.",
+  "atmosphere": "night",
+  "scenery": "street-parade",
   "maxWanted": 3,
+  "chaosPerBottle": 5,
+  "policeSpeed": 5.4,
   "spawn": {
-    "x": 0,
+    "x": 20.0,
     "y": 1.5,
-    "z": -31
+    "z": -46.0
   },
   "destination": {
-    "id": "backstage",
+    "id": "hafendamm_enge",
     "position": {
-      "x": 0,
-      "y": 0,
-      "z": 34
+      "x": -40.0,
+      "y": 0.0,
+      "z": -44.0
     },
-    "radius": 2.2
+    "radius": 3.0
   },
+  "navigationBounds": {
+    "minX": -50,
+    "maxX": 50,
+    "minZ": -52,
+    "maxZ": 52
+  },
+  "policeSpawns": [
+    {
+      "x": 24.0,
+      "y": 0.0,
+      "z": -20.0
+    },
+    {
+      "x": -30.0,
+      "y": 0.0,
+      "z": -10.0
+    },
+    {
+      "x": 30.0,
+      "y": 0.0,
+      "z": 2.0
+    }
+  ],
   "pickups": [
     {
       "id": "zurich_street_parade_bottle_01",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": -26
+        "x": 20.0,
+        "y": 0.0,
+        "z": -42.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_02",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": -26
+        "x": 20.0,
+        "y": 0.0,
+        "z": -38.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_03",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": -20
+        "x": 22.0,
+        "y": 0.0,
+        "z": -34.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_04",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": -20
+        "x": 24.0,
+        "y": 0.0,
+        "z": -30.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_05",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": -14
+        "x": 22.0,
+        "y": 0.0,
+        "z": -26.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_06",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": -14
+        "x": 23.0,
+        "y": 0.0,
+        "z": -21.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_07",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": -8
+        "x": 22.0,
+        "y": 0.0,
+        "z": -17.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_08",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": -8
+        "x": 33.0,
+        "y": 0.0,
+        "z": -37.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_09",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": -2
+        "x": 39.0,
+        "y": 0.0,
+        "z": -33.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_10",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": -2
+        "x": 36.0,
+        "y": 0.0,
+        "z": -27.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_11",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": 4
+        "x": 20.0,
+        "y": 0.0,
+        "z": -8.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_12",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 4
+        "x": 29.0,
+        "y": 0.0,
+        "z": -12.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_13",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": 10
+        "x": 31.0,
+        "y": 0.0,
+        "z": -5.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_14",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 10
+        "x": 42.0,
+        "y": 0.0,
+        "z": -9.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_15",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": 16
+        "x": 8.0,
+        "y": 0.0,
+        "z": -6.5
       }
     },
     {
       "id": "zurich_street_parade_bottle_16",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 16
+        "x": -3.0,
+        "y": 0.0,
+        "z": -5.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_17",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": 22
+        "x": -14.0,
+        "y": 0.0,
+        "z": -8.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_18",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 22
+        "x": -28.0,
+        "y": 0.0,
+        "z": -3.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_19",
       "itemId": "bottle",
       "position": {
-        "x": -1,
-        "y": 0,
-        "z": 28
+        "x": -38.0,
+        "y": 0.0,
+        "z": -11.0
       }
     },
     {
       "id": "zurich_street_parade_bottle_20",
       "itemId": "bottle",
       "position": {
-        "x": 1,
-        "y": 0,
-        "z": 28
+        "x": -33.0,
+        "y": 0.0,
+        "z": 8.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_21",
+      "itemId": "bottle",
+      "position": {
+        "x": -31.0,
+        "y": 0.0,
+        "z": 20.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_22",
+      "itemId": "bottle",
+      "position": {
+        "x": -34.0,
+        "y": 0.0,
+        "z": 33.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_23",
+      "itemId": "bottle",
+      "position": {
+        "x": -21.0,
+        "y": 0.0,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_24",
+      "itemId": "bottle",
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 14.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_25",
+      "itemId": "bottle",
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 30.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_26",
+      "itemId": "bottle",
+      "position": {
+        "x": -30.0,
+        "y": 0.0,
+        "z": -18.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_27",
+      "itemId": "bottle",
+      "position": {
+        "x": -34.0,
+        "y": 0.0,
+        "z": -25.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_28",
+      "itemId": "bottle",
+      "position": {
+        "x": -34.0,
+        "y": 0.0,
+        "z": -33.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_29",
+      "itemId": "bottle",
+      "position": {
+        "x": -36.0,
+        "y": 0.0,
+        "z": -39.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_30",
+      "itemId": "bottle",
+      "position": {
+        "x": -43.0,
+        "y": 0.0,
+        "z": -41.0
+      }
+    }
+  ],
+  "powerups": [
+    {
+      "id": "zurich_street_parade_tablet_01",
+      "position": {
+        "x": 21.0,
+        "y": 0.0,
+        "z": -44.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_02",
+      "position": {
+        "x": 25.0,
+        "y": 0.0,
+        "z": -35.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_03",
+      "position": {
+        "x": 25.0,
+        "y": 0.0,
+        "z": -29.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_04",
+      "position": {
+        "x": 27.0,
+        "y": 0.0,
+        "z": -24.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_05",
+      "position": {
+        "x": 20.0,
+        "y": 0.0,
+        "z": -13.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_06",
+      "position": {
+        "x": 21.0,
+        "y": 0.0,
+        "z": -11.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_07",
+      "position": {
+        "x": 38.0,
+        "y": 0.0,
+        "z": -15.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_08",
+      "position": {
+        "x": 44.0,
+        "y": 0.0,
+        "z": -3.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_09",
+      "position": {
+        "x": 26.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_10",
+      "position": {
+        "x": 14.0,
+        "y": 0.0,
+        "z": -7.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_11",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -9.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_12",
+      "position": {
+        "x": -9.0,
+        "y": 0.0,
+        "z": -4.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_13",
+      "position": {
+        "x": -27.0,
+        "y": 0.0,
+        "z": 1.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_14",
+      "position": {
+        "x": -37.0,
+        "y": 0.0,
+        "z": -5.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_15",
+      "position": {
+        "x": -36.0,
+        "y": 0.0,
+        "z": 15.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_16",
+      "position": {
+        "x": -30.0,
+        "y": 0.0,
+        "z": 27.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_17",
+      "position": {
+        "x": -26.0,
+        "y": 0.0,
+        "z": 10.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_18",
+      "position": {
+        "x": 11.0,
+        "y": 0.0,
+        "z": 5.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_19",
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 20.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_20",
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 40.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_21",
+      "position": {
+        "x": -28.0,
+        "y": 0.0,
+        "z": -12.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_22",
+      "position": {
+        "x": -30.0,
+        "y": 0.0,
+        "z": -22.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_23",
+      "position": {
+        "x": -36.0,
+        "y": 0.0,
+        "z": -30.0
+      }
+    },
+    {
+      "id": "zurich_street_parade_tablet_24",
+      "position": {
+        "x": -40.0,
+        "y": 0.0,
+        "z": -35.0
       }
     }
   ],
   "objectives": [
     {
-      "id": "collect",
+      "id": "collect_bottles",
       "type": "collect",
       "itemId": "bottle",
-      "amount": 20,
+      "amount": 30,
       "after": []
     },
     {
-      "id": "escape",
+      "id": "lose_the_patrol",
       "type": "escapePolice",
-      "after": ["collect"]
+      "after": ["collect_bottles"]
     },
     {
-      "id": "reach",
+      "id": "reach_backstage",
       "type": "reach",
-      "targetId": "backstage",
-      "after": ["escape"]
-    }
-  ],
-  "scenery": "street-parade",
-  "atmosphere": "night",
-  "chaosPerBottle": 5,
-  "policeSpeed": 3.8,
-  "navigationBounds": {
-    "minX": -27,
-    "maxX": 27,
-    "minZ": -38,
-    "maxZ": 38
-  },
-  "policeSpawns": [
-    {
-      "x": 8,
-      "y": 0,
-      "z": -2
-    },
-    {
-      "x": 8,
-      "y": 0,
-      "z": 8
-    },
-    {
-      "x": 8,
-      "y": 0,
-      "z": 20
-    }
-  ],
-  "powerups": [
-    {
-      "id": "parade_color_00",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": -25
-      }
-    },
-    {
-      "id": "parade_color_01",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": -25
-      }
-    },
-    {
-      "id": "parade_color_02",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": -20
-      }
-    },
-    {
-      "id": "parade_color_03",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": -20
-      }
-    },
-    {
-      "id": "parade_color_04",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": -15
-      }
-    },
-    {
-      "id": "parade_color_05",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": -15
-      }
-    },
-    {
-      "id": "parade_color_06",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": -10
-      }
-    },
-    {
-      "id": "parade_color_07",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": -10
-      }
-    },
-    {
-      "id": "parade_color_08",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": -5
-      }
-    },
-    {
-      "id": "parade_color_09",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": -5
-      }
-    },
-    {
-      "id": "parade_color_10",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 0
-      }
-    },
-    {
-      "id": "parade_color_11",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 0
-      }
-    },
-    {
-      "id": "parade_color_12",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 5
-      }
-    },
-    {
-      "id": "parade_color_13",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 5
-      }
-    },
-    {
-      "id": "parade_color_14",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 10
-      }
-    },
-    {
-      "id": "parade_color_15",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 10
-      }
-    },
-    {
-      "id": "parade_color_16",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 15
-      }
-    },
-    {
-      "id": "parade_color_17",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 15
-      }
-    },
-    {
-      "id": "parade_color_18",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 20
-      }
-    },
-    {
-      "id": "parade_color_19",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 20
-      }
-    },
-    {
-      "id": "parade_color_20",
-      "position": {
-        "x": -3,
-        "y": 0,
-        "z": 25
-      }
-    },
-    {
-      "id": "parade_color_21",
-      "position": {
-        "x": 3,
-        "y": 0,
-        "z": 25
-      }
+      "targetId": "hafendamm_enge",
+      "after": ["lose_the_patrol"]
     }
   ]
 }

@@ -9,6 +9,7 @@ import type { LevelDefinition } from '@tobi/contracts';
 import { NavigationGrid, PursuitSystem } from '@tobi/game-core';
 import { pursuitBalance } from '@tobi/game-data';
 import { box, material } from '../levels/materials.js';
+import { navigationObstacles, sightBlockers } from '../levels/nav-obstacles.js';
 
 /** Babylon projection of portable pursuit rules. Ground navigation comes from real static colliders. */
 export class PoliceRuntime {
@@ -23,23 +24,12 @@ export class PoliceRuntime {
     colliders: Mesh[],
     shadows: ShadowGenerator,
   ) {
-    const obstacles = colliders
-      .filter((mesh) => mesh.name !== 'island-ground' && mesh.isVisible)
-      .map((mesh) => {
-        mesh.computeWorldMatrix(true);
-        const bounds = mesh.getBoundingInfo().boundingBox;
-        return {
-          minX: bounds.minimumWorld.x,
-          maxX: bounds.maximumWorld.x,
-          minZ: bounds.minimumWorld.z,
-          maxZ: bounds.maximumWorld.z,
-        };
-      });
+    const obstacles = navigationObstacles(colliders);
     if (!level.navigationBounds) throw new Error('Missing navigation bounds');
     const nav = new NavigationGrid(level.navigationBounds, obstacles);
     for (const spawn of level.policeSpawns ?? [])
       if (!nav.open(spawn)) throw new Error('Police spawn intersects a collider');
-    const solids = new Set(colliders.filter((m) => m.name !== 'island-ground' && m.isVisible));
+    const solids = sightBlockers(colliders);
     this.system = new PursuitSystem(
       level.maxWanted,
       level.policeSpawns ?? [],

@@ -146,5 +146,6 @@
   },
   "atmosphere": "sunset",
   "scenery": "beach-bar",
-  "chaosPerBottle": 8
+  "chaosPerBottle": 8,
+  "policeSpeed": 5.6
 }

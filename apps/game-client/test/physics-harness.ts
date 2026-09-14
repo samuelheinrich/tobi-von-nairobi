@@ -42,6 +42,7 @@ export async function exercisePhysics() {
     interactPressed: false,
     specialPressed: false,
     throwPressed: false,
+    flirtPressed: false,
   };
   const tick = (input = idle): void => {
     const velocity = locomotion.step(input, 0, motor.support(1 / 60), 1 / 60);

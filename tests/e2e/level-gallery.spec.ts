@@ -11,7 +11,7 @@ test('guests can browse every illustrated level and start the WG with the API of
   await page.goto('/');
   const gallery = page.getByRole('region', { name: 'Levelauswahl' });
   const cards = gallery.getByRole('button');
-  await expect(cards).toHaveCount(7);
+  await expect(cards).toHaveCount(8);
   await expect(cards.first()).toHaveAccessibleName('Level 1: Tutorial · Welcome to Bali');
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'true');
   await expect(gallery).toContainText('Kein Login nötig.');
@@ -32,6 +32,8 @@ test('guests can browse every illustrated level and start the WG with the API of
     await expect(card).toHaveAttribute('aria-pressed', 'true');
     await expect(gallery.locator('[aria-pressed="true"]')).toHaveCount(1);
   }
+  // Browsing ends on the last card, so pick the WG again before starting it.
+  await page.getByRole('button', { name: 'Level 7: Arlesheim Hippie-WG' }).press('Enter');
   const start = page.getByRole('button', { name: 'REIN IN DIE WG' });
   await expect(start).toBeEnabled({ timeout: 45000 });
   await page.screenshot({ path: '.artifacts/screenshots/level-gallery.png' });

@@ -30,6 +30,13 @@ export class Locomotion {
     this.stamina = config.maxStamina;
   }
 
+  /** A fresh bottle clears exhaustion and the regeneration delay, not only the stamina number. */
+  public refill(): void {
+    this.stamina = this.config.maxStamina;
+    this.exhausted = false;
+    this.recoveryDelay = 0;
+  }
+
   public step(actions: InputActions, yaw: number, grounded: boolean, delta: number): Position3 {
     const c = this.config;
     if (!grounded) this.jumpConsumed = false;

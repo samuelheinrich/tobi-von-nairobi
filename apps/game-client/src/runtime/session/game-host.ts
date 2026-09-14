@@ -16,6 +16,7 @@ import {
   pursuitBalance,
   destinationName,
   hippieHouseLayout,
+  zurichLayout,
 } from '@tobi/game-data';
 import type { LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
@@ -25,8 +26,11 @@ import { HavokCharacterMotor, HavokWorld, preparePhysics } from '../physics/havo
 import { createLevelScene } from '../levels/create-level-scene.js';
 import type { LevelScene } from '../levels/create-level-scene.js';
 import { ParadeCrowd } from '../levels/parade-crowd.js';
+import { SpeechBubbles } from '../levels/speech-bubbles.js';
+import { createLevelNpcs } from '../levels/create-level-npcs.js';
+import type { LevelNpcs } from '../levels/level-npcs.js';
 import { ColorPickups } from '../items/color-pickups.js';
-import { ThrownBottles } from '../items/thrown-bottles.js';
+import { ThrownBottles, throwElevation } from '../items/thrown-bottles.js';
 import { TobiVisual } from '../character/tobi-visual.js';
 import { BottlePickups } from '../items/bottle-pickups.js';
 import { ThirdPersonCamera } from '../camera/third-person-camera.js';
@@ -54,7 +58,10 @@ export class GameHost {
   private readonly pills: ColorPickups;
   private readonly projectiles: ThrownBottles;
   private readonly parade: ParadeCrowd | null;
+  private readonly bubbles: SpeechBubbles;
+  private readonly npcs: LevelNpcs | null;
   private readonly environment: LevelScene;
+  private flirts = 0;
   private tauntCooldown = 0;
   private wasGrounded = true;
   private lastWanted = 0;
@@ -98,7 +105,8 @@ export class GameHost {
     module: Awaited<ReturnType<typeof preparePhysics>>,
     private readonly level: LevelDefinition,
   ) {
-    this.session = new PrototypeSession(level, prototypeBalance);
+    // A level may run without a score economy; the drunk tank hands out neither points nor bonus.
+    this.session = new PrototypeSession(level, level.scoring ?? prototypeBalance);
     this.scene = new Scene(engine);
     this.world = new HavokWorld(this.scene, module);
     const environment = createLevelScene(this.scene, this.world, level);
@@ -109,8 +117,10 @@ export class GameHost {
     );
     this.parade =
       level.scenery === 'street-parade'
-        ? new ParadeCrowd(this.scene, level, environment.colliders)
+        ? new ParadeCrowd(this.scene, level, environment.colliders, zurichLayout.route)
         : null;
+    this.bubbles = new SpeechBubbles(this.scene);
+    this.npcs = createLevelNpcs(this.scene, level, environment, this.bubbles);
     this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
     this.crowd = new BaliCrowd(this.scene, level, environment.shadows, environment.colliders);
@@ -123,9 +133,11 @@ export class GameHost {
       this.scene,
       level.scenery === 'railway'
         ? 'railway'
-        : level.scenery === 'hippie-house'
-          ? 'interior'
-          : 'follow',
+        : level.scenery === 'drunk-tank'
+          ? 'cell'
+          : level.scenery === 'hippie-house'
+            ? 'interior'
+            : 'follow',
     );
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
@@ -144,7 +156,7 @@ export class GameHost {
     canvas.addEventListener('webglcontextlost', this.onContextLost);
     this.store.update({
       phase: 'ready',
-      objective: `Sammle ${level.pickups.length} Flaschen`,
+      objective: this.objectiveText(),
       total: level.pickups.length,
       levelId: level.id,
       pursuit: this.police?.system.snapshot() ?? null,
@@ -261,6 +273,14 @@ export class GameHost {
     }
   }
 
+  private objectiveText(): string {
+    if (this.level.scenery === 'drunk-tank') return 'Ausnüchtern und die Nacht beenden';
+    const active = this.session.mission.active?.type;
+    if (active === 'collect') return `Sammle ${this.level.pickups.length} Flaschen`;
+    if (active === 'escapePolice') return 'Hänge die Polizei ab';
+    return `Erreiche ${destinationName(this.level)}`;
+  }
+
   private respawn(): void {
     this.motor.teleport(this.level.spawn);
     this.locomotion.reset();
@@ -296,6 +316,10 @@ export class GameHost {
       this.hands.collect();
       this.visual.celebratePickup();
       this.audio.pickup();
+      // Every bottle is also a full refuel: the run is about momentum, not about pacing stamina.
+      const wasTired = this.locomotion.stamina < movement.maxStamina - 5;
+      this.locomotion.refill();
+      if (wasTired) this.audio.play('refill');
 
       this.toastUntil = this.session.elapsedSeconds + 2;
       this.store.update({
@@ -304,7 +328,7 @@ export class GameHost {
             ? this.police
               ? 'Flaschen vollzählig. Jetzt die Polizei abhängen!'
               : `Flaschen vollzählig. Auf zu ${destinationName(this.level)}!`
-            : `+100 · ${this.mood.label}`,
+            : `+${prototypeBalance.bottlePoints} · ENERGIE VOLL · ${this.mood.label}`,
       });
     }
     const drinks = this.hands.step(delta);
@@ -323,7 +347,8 @@ export class GameHost {
         this.store.update({ toast: 'FARBRAUSCH · Die Parade hat jetzt noch mehr Farben.' });
       }
     if (actions.throwPressed && this.projectiles.count < 8 && this.hands.throw()) {
-      this.projectiles.launch(position, this.camera.yaw);
+      // Yaw and pitch both come from the camera, so any direction Tobi faces is reachable.
+      this.projectiles.launch(position, this.camera.yaw, throwElevation(this.camera.pitch));
       this.visual.throwBottle();
       this.audio.play('throw');
       this.police?.system.disrupt();
@@ -342,11 +367,14 @@ export class GameHost {
             this.parade?.system.frighten(p.id, position);
           },
         })) ?? this.crowd.targets),
+        ...(this.npcs?.targets ?? []),
       ]);
     this.tauntCooldown = Math.max(0, this.tauntCooldown - delta);
     if (actions.specialPressed && this.tauntCooldown === 0) {
       this.tauntCooldown = 3;
-      const count = this.parade?.taunt(position) ?? this.crowd.taunt(position);
+      const count =
+        (this.parade?.taunt(position) ?? this.crowd.taunt(position)) +
+        (this.npcs?.taunt(position) ?? 0);
       this.police?.system.provoke();
       this.audio.play('provoke');
       this.toastUntil = this.session.elapsedSeconds + 3;
@@ -355,6 +383,20 @@ export class GameHost {
           ? `«PLATZ DA, ICH KENNE KARL!» · ${count} Leute reagieren.`
           : '«ICH KENNE KARL!»',
       });
+    }
+    if (actions.flirtPressed && this.npcs?.flirt(position)) this.flirts++;
+    this.npcs?.update(delta, position);
+    // A blocking NPC pushes Tobi back out of its body; it never reports him to anyone.
+    const pushed = this.npcs?.resolve(position) ?? null;
+    if (pushed) {
+      this.motor.teleport({ x: pushed.x, y: position.y, z: pushed.z });
+      this.audio.play('block');
+    }
+    const reply = this.npcs?.takeReply();
+    if (reply) {
+      this.audio.play(reply.cue);
+      this.toastUntil = this.session.elapsedSeconds + 3;
+      this.store.update({ speech: reply.text, toast: reply.text });
     }
     const outcome = this.police?.system.step(delta, position);
     const wanted = this.police?.system.wanted.level ?? 0;
@@ -465,6 +507,10 @@ export class GameHost {
       );
       this.police?.sync(this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0);
       if (this.store.getSnapshot().phase !== 'paused') this.bottles.update(Math.min(delta, 0.1));
+      this.bubbles.update(
+        this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
+        this.camera.camera.position,
+      );
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       this.uiTime += delta;
       if (this.uiTime >= 0.1) {
@@ -489,20 +535,17 @@ export class GameHost {
                 )
               : null,
           tauntedCount: this.parade?.system.taunted.size ?? 0,
+          flirts: this.flirts,
+          blocked: this.npcs?.blocked ?? false,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
           elapsedSeconds: Math.floor(this.session.elapsedSeconds),
           fps: Math.round(this.engine.getFps()),
-          objective:
-            this.session.mission.active?.type === 'collect'
-              ? `Sammle ${this.level.pickups.length} Flaschen`
-              : this.session.mission.active?.type === 'escapePolice'
-                ? 'Hänge die Polizei ab'
-                : `Erreiche ${destinationName(this.level)}`,
+          objective: this.objectiveText(),
           pursuit: this.police?.system.snapshot() ?? null,
           canCheckIn:
             this.session.mission.active?.type === 'reach' && !this.police?.system.wanted.level,
-          ...(this.session.elapsedSeconds > this.toastUntil ? { toast: '' } : {}),
+          ...(this.session.elapsedSeconds > this.toastUntil ? { toast: '', speech: '' } : {}),
         });
       }
       this.scene.render();
@@ -533,6 +576,8 @@ export class GameHost {
     this.removeDebug?.();
     this.input.dispose();
     this.audio.dispose();
+    this.npcs?.dispose();
+    this.bubbles.dispose();
     this.projectiles.dispose();
     this.pills.dispose();
     this.parade?.dispose();

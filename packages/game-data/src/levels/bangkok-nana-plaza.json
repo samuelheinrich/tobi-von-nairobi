@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "id": "bangkok_nana_plaza",
+  "worldId": "bangkok",
+  "title": "Bangkok Nana Plaza",
+  "subtitle": "Drei Stockwerke Neon, acht Stangen und sehr viele Komplimente.",
+  "atmosphere": "night",
+  "scenery": "nana-plaza",
+  "maxWanted": 2,
+  "chaosPerBottle": 7,
+  "policeSpeed": 5.8,
+  "spawn": {
+    "x": 0.0,
+    "y": 1.5,
+    "z": -20.0
+  },
+  "destination": {
+    "id": "soi_four_exit",
+    "position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0
+    },
+    "radius": 3.0
+  },
+  "navigationBounds": {
+    "minX": -20,
+    "maxX": 20,
+    "minZ": -27,
+    "maxZ": 22
+  },
+  "policeSpawns": [
+    {
+      "x": -11.0,
+      "y": 0.0,
+      "z": 16.0
+    },
+    {
+      "x": 11.0,
+      "y": 0.0,
+      "z": -11.0
+    }
+  ],
+  "pickups": [
+    {
+      "id": "bangkok_nana_plaza_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": -8.0,
+        "y": 0.0,
+        "z": -12.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": 8.0,
+        "y": 0.0,
+        "z": -12.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": -11.5,
+        "y": 0.0,
+        "z": -6.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": 11.5,
+        "y": 0.0,
+        "z": -6.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": -6.0,
+        "y": 0.0,
+        "z": -2.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_06",
+      "itemId": "bottle",
+      "position": {
+        "x": 6.0,
+        "y": 0.0,
+        "z": -2.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_07",
+      "itemId": "bottle",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -6.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_08",
+      "itemId": "bottle",
+      "position": {
+        "x": -11.5,
+        "y": 0.0,
+        "z": 4.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_09",
+      "itemId": "bottle",
+      "position": {
+        "x": 11.5,
+        "y": 0.0,
+        "z": 4.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_10",
+      "itemId": "bottle",
+      "position": {
+        "x": -7.0,
+        "y": 0.0,
+        "z": 10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_11",
+      "itemId": "bottle",
+      "position": {
+        "x": 7.0,
+        "y": 0.0,
+        "z": 10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_12",
+      "itemId": "bottle",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 12.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_13",
+      "itemId": "bottle",
+      "position": {
+        "x": -11.5,
+        "y": 0.0,
+        "z": 14.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_14",
+      "itemId": "bottle",
+      "position": {
+        "x": 11.5,
+        "y": 0.0,
+        "z": 14.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_15",
+      "itemId": "bottle",
+      "position": {
+        "x": -3.0,
+        "y": 0.0,
+        "z": -19.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_bottle_16",
+      "itemId": "bottle",
+      "position": {
+        "x": 3.0,
+        "y": 0.0,
+        "z": -22.0
+      }
+    }
+  ],
+  "powerups": [
+    {
+      "id": "bangkok_nana_plaza_tablet_01",
+      "position": {
+        "x": -13.0,
+        "y": 0.0,
+        "z": -10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_02",
+      "position": {
+        "x": 13.0,
+        "y": 0.0,
+        "z": -10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_03",
+      "position": {
+        "x": -4.0,
+        "y": 0.0,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_04",
+      "position": {
+        "x": 4.0,
+        "y": 0.0,
+        "z": 6.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_05",
+      "position": {
+        "x": -13.0,
+        "y": 0.0,
+        "z": 10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_06",
+      "position": {
+        "x": 13.0,
+        "y": 0.0,
+        "z": 10.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_07",
+      "position": {
+        "x": -9.0,
+        "y": 0.0,
+        "z": 17.0
+      }
+    },
+    {
+      "id": "bangkok_nana_plaza_tablet_08",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -16.0
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect_bottles",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 16,
+      "after": []
+    },
+    {
+      "id": "lose_the_patrol",
+      "type": "escapePolice",
+      "after": ["collect_bottles"]
+    },
+    {
+      "id": "reach_soi_four",
+      "type": "reach",
+      "targetId": "soi_four_exit",
+      "after": ["lose_the_patrol"]
+    }
+  ]
+}

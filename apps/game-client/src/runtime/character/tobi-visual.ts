@@ -6,6 +6,7 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import { characterPose } from '@tobi/game-core';
 import { createTobiLikeness } from './tobi-likeness.js';
+import { CigaretteSmoke } from './cigarette-smoke.js';
 import { createBottleModel } from '../items/bottle-model.js';
 import { material } from '../levels/materials.js';
 
@@ -17,6 +18,7 @@ export class TobiVisual {
   private readonly legs: TransformNode[] = [];
   private readonly arms: TransformNode[] = [];
   private readonly heldBottle: TransformNode;
+  private readonly smoke: CigaretteSmoke;
   private throwing = 0;
   private time = 0;
   private gait = 0;
@@ -73,7 +75,7 @@ export class TobiVisual {
       part('hand', 0.23, [1, 1, 1], [side * 0.06, -0.62, 0], skin, arm);
       this.arms.push(arm);
     }
-    createTobiLikeness(scene, this.body, this.head);
+    this.smoke = new CigaretteSmoke(scene, createTobiLikeness(scene, this.body, this.head));
     this.heldBottle = createBottleModel(scene, 'tobi-held-bottle');
     this.heldBottle.parent = this.arms[0]!;
     this.heldBottle.position.set(-0.06, -0.62, 0.13);
@@ -100,6 +102,7 @@ export class TobiVisual {
     drinking = 0,
   ): boolean {
     this.time += delta;
+    this.smoke.update(delta);
     this.throwing = Math.max(0, this.throwing - delta * 3);
     this.heldBottle.setEnabled(holding);
     this.gait += delta * (victory ? 9 : speed * 2.8);
@@ -168,6 +171,7 @@ export class TobiVisual {
     return tripped;
   }
   public dispose(): void {
+    this.smoke.dispose();
     this.root.dispose(false, true);
   }
 }

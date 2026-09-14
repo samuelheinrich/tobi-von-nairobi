@@ -11,3 +11,8 @@ export { BottleMood, characterPose } from './character/bottle-mood.js';
 export { BottleHands } from './items/bottle-hands.js';
 export { ColorTrip } from './items/color-trip.js';
 export { ReactiveCrowd } from './character/reactive-crowd.js';
+export type { CrowdPerson } from './character/reactive-crowd.js';
+export { Blocker } from './character/blocker.js';
+export type { BlockerConfig } from './character/blocker.js';
+export { NpcVoices, speechOptions } from './character/npc-speech.js';
+export type { SpeechTopic } from './character/npc-speech.js';

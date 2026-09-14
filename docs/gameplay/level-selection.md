@@ -1,6 +1,6 @@
 # Levelauswahl ohne Anmeldung
 
-Die Startseite zeigt alle sieben spielbaren Level als Bildkarten. **Karte 01 ist das Tutorial „Welcome to Bali“**, standardmässig ausgewählt und mit „Hier beginnen“ gekennzeichnet. Der Spieler lernt dort Bewegung, Sprung, Flaschenaufnahme und Ankunft am Airbnb ohne Polizei.
+Die Startseite zeigt alle acht spielbaren Level als Bildkarten. **Karte 01 ist das Tutorial „Welcome to Bali“**, standardmässig ausgewählt und mit „Hier beginnen“ gekennzeichnet. Der Spieler lernt dort Bewegung, Sprung, Flaschenaufnahme und Ankunft am Airbnb ohne Polizei.
 
 Eine Karte auswählen und den Startknopf beim ausgewählten Level betätigen. Die gewählte Karte erhält eine farbige Umrandung und ein Häkchen. Alle Level bleiben ohne Account und ohne vorherige Freischaltung direkt erreichbar. Das Dropdown dient weiterhin als kompakte Schnellauswahl. Karten sind per Tab/Enter bedienbar; auf schmalen Fenstern bleibt die Galerie vertikal scrollbar.
 
@@ -10,7 +10,9 @@ Für Gastspiel ist keine erfolgreiche Konto-/API-Abfrage erforderlich. Läuft be
 
 ## Vorschaubilder aktualisieren
 
-Die Vorschaubilder sind echte Aufnahmen der prozeduralen Spielwelten, keine externen Bilder. Sie liegen als 640 × 360 WebP unter `apps/game-client/src/assets/level-previews/`, benannt nach der stabilen Level-ID. Alle sieben zusammen benötigen rund 137 KiB. Vite verarbeitet die Dateien als versionierte Build-Assets; die Galerie selbst startet keine zusätzlichen 3D-Szenen.
+Die Vorschaubilder sind echte Aufnahmen der prozeduralen Spielwelten, keine externen Bilder. Sie liegen als 640 × 360 WebP unter `apps/game-client/src/assets/level-previews/`, benannt nach der stabilen Level-ID. Alle acht zusammen benötigen rund 150 KiB. Vite verarbeitet die Dateien als versionierte Build-Assets; die Galerie selbst startet keine zusätzlichen 3D-Szenen.
+
+Nicht jedes Level erscheint in der Galerie: `levelSchema.selectable` markiert Kapitel, die nur durch ein Spielereignis erreichbar sind. Die Ausnüchterungszelle ist so ein Fall und braucht deshalb kein Vorschaubild.
 
 Bei neuen Levels oder grösseren Kulissenänderungen:
 

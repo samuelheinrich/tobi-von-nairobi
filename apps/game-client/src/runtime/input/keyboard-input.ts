@@ -16,6 +16,7 @@ const gameKeys = new Set([
   'KeyE',
   'KeyR',
   'KeyG',
+  'KeyF',
 ]);
 
 /** Keyboard/mouse adapter; gameplay never reads DOM key codes. */
@@ -69,6 +70,7 @@ export class KeyboardInput implements InputSource {
       interactPressed: this.pressed.has('KeyE'),
       specialPressed: this.pressed.has('KeyR'),
       throwPressed: this.pressed.has('KeyG'),
+      flirtPressed: this.pressed.has('KeyF'),
     };
     this.pressed.clear();
     this.lookX = this.lookY = 0;

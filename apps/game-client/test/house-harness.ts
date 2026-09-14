@@ -40,6 +40,7 @@ export async function exerciseHouseRoute() {
         interactPressed: false,
         specialPressed: false,
         throwPressed: false,
+        flirtPressed: false,
       },
       0,
       motor.support(delta),
