@@ -39,20 +39,56 @@ jobs:
       - run: pnpm db:migrate
       - run: pnpm test:integration
       - run: pnpm check:bundle
+  browser:
+    name: browser (${{ matrix.shard }}/3)
+    needs: [quality]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      # Preserve the other shards' results and traces when one fails.
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    services:
+      # Every matrix job has its own VM, database and webserver ports.
+      postgres:
+        image: postgres:17.6-alpine
+        env:
+          POSTGRES_DB: tobi_test
+          POSTGRES_USER: tobi_test
+          POSTGRES_PASSWORD: ephemeral_ci_database
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U tobi_test -d tobi_test"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      SESSION_SECRET: ephemeral-ci-session-secret-not-for-production
+      DATABASE_URL: postgresql://tobi_test:ephemeral_ci_database@localhost:5432/tobi_test
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+      - run: npm install --global pnpm@10.34.5
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:migrate
+      - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e
+      # Already built above; do not rebuild once more through test:e2e.
+      - run: pnpm exec playwright test --shard=${{ matrix.shard }}/3 --reporter=line
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: failure()
         with:
-          name: browser-failure-artifacts
+          name: browser-failure-artifacts-${{ matrix.shard }}
           path: test-results/
           retention-days: 7
   required:
     if: always()
-    needs: [quality]
+    needs: [quality, browser]
     runs-on: ubuntu-latest
     steps:
       - name: Require all quality checks to succeed
         env:
-          RESULT: ${{ needs.quality.result }}
-        run: test "$RESULT" = success
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          BROWSER_RESULT: ${{ needs.browser.result }}
+        run: test "$QUALITY_RESULT" = success && test "$BROWSER_RESULT" = success

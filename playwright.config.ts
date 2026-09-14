@@ -4,6 +4,8 @@ export default defineConfig({
   testDir: './tests',
   timeout: process.env.CI ? 180000 : 90000,
   workers: 1,
+  // Split independent tests evenly across CI shards, never add local GPU contention.
+  fullyParallel: Boolean(process.env.CI),
   use: {
     baseURL: 'http://127.0.0.1:4173',
     viewport: { width: 1440, height: 1000 },

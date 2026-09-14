@@ -1,5 +1,7 @@
 # Implementierungsstand
 
+CI-Aufteilung und Betrieb: [ci.md](ci.md). Die bisherige gemeinsame Prüfung wird in Qualitätsprüfung und drei isolierte Browser-Shards getrennt; `required` bleibt der Pflichtcheck für beide Jobgruppen.
+
 Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`. Mehrstöckige Hippie-WG: `feature/arlesheim-hippie-wg`. Bewohner, Nana Plaza, Zelle, Zürcher Karte und Bewegungs-/Wurf-/Kamera-Überarbeitung: `feature/guest-level-gallery`. Fly High, wiederverwendbares Sitzen, geführtes Tutorial und zusammengeführte Bali-Küste: `feature/fly-high-and-bali`.
 
 ## Bereits implementiert
