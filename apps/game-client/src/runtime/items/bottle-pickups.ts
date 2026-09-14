@@ -10,6 +10,7 @@ import { material } from '../levels/materials.js';
 
 export class BottlePickups {
   private readonly pickups = new Map<string, TransformNode>();
+  private readonly heights = new Map<string, number>();
   private time = 0;
 
   public constructor(scene: Scene, level: LevelDefinition, shadows: ShadowGenerator) {
@@ -20,7 +21,8 @@ export class BottlePickups {
     gold.emissiveColor = Color3.FromHexString('#685025');
     for (const pickup of level.pickups) {
       const root = new TransformNode(pickup.id, scene);
-      root.position.set(pickup.position.x, 0.65, pickup.position.z);
+      root.position.set(pickup.position.x, pickup.position.y + 0.65, pickup.position.z);
+      this.heights.set(pickup.id, pickup.position.y);
       const body = MeshBuilder.CreateCylinder(
         'bottle',
         { diameter: 0.26, height: 0.52, tessellation: 8 },
@@ -60,7 +62,10 @@ export class BottlePickups {
     this.time += delta;
     for (const pickup of this.pickups.values()) {
       pickup.rotation.y += delta * 1.2;
-      pickup.position.y = 0.7 + Math.sin(this.time * 2.5 + pickup.position.z) * 0.08;
+      pickup.position.y =
+        (this.heights.get(pickup.name) ?? 0) +
+        0.7 +
+        Math.sin(this.time * 2.5 + pickup.position.z) * 0.08;
     }
   }
 
@@ -78,9 +83,17 @@ export class BottlePickups {
     const pickup = this.pickups.get(id);
     pickup?.dispose();
     this.pickups.delete(id);
+    this.heights.delete(id);
+  }
+  /** Cut away upper storeys visually without changing pickup eligibility or physics. */
+  public cutaway(playerY: number): void {
+    for (const [id, root] of this.pickups)
+      for (const mesh of root.getChildMeshes())
+        mesh.isVisible = (this.heights.get(id) ?? 0) < playerY;
   }
   public dispose(): void {
     for (const pickup of this.pickups.values()) pickup.dispose();
     this.pickups.clear();
+    this.heights.clear();
   }
 }

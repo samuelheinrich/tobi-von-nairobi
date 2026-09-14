@@ -21,9 +21,11 @@ export function Hud({ view }: { view: GameView }) {
         <h2>{view.objective}</h2>
         <p>
           {view.collected < view.total
-            ? level.scenery === 'railway'
-              ? 'Durch die offenen Wagen nach vorne. G: leere Flasche werfen.'
-              : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
+            ? level.scenery === 'hippie-house'
+              ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
+              : level.scenery === 'railway'
+                ? 'Durch die offenen Wagen nach vorne. G: leere Flasche werfen.'
+                : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
             : view.pursuit && !view.canCheckIn
               ? 'Nutze Gebäude oder Musikfahrzeuge als Deckung. Zwölf Sekunden ohne Sichtkontakt!'
               : `${destinationName(level)} wartet am Ende des Wegs.`}
@@ -56,6 +58,13 @@ export function Hud({ view }: { view: GameView }) {
         <small>«Ich laufe noch absolut gerade.»</small>
       </div>
       <div className="hands-card">
+        {view.interiorFloor !== null && (
+          <strong data-testid="interior-floor">
+            {view.interiorFloor === 0
+              ? 'ERDGESCHOSS · AUSGANG IM SÜDEN'
+              : `${view.interiorFloor}. OBERGESCHOSS · 6 ZIMMER`}
+          </strong>
+        )}
         <strong data-testid="bottle-hand">
           {view.drinking
             ? 'TOBI TRINKT …'
@@ -120,11 +129,13 @@ export function Hud({ view }: { view: GameView }) {
           ) : view.collected === view.total ? (
             <>
               <kbd>E</kbd>{' '}
-              {level.scenery === 'railway'
-                ? 'WAGEN 1 ERREICHT'
-                : level.scenery === 'street-parade'
-                  ? 'BACKSTAGE BETRETEN'
-                  : 'EINCHECKEN'}
+              {level.scenery === 'hippie-house'
+                ? 'WG VERLASSEN'
+                : level.scenery === 'railway'
+                  ? 'WAGEN 1 ERREICHT'
+                  : level.scenery === 'street-parade'
+                    ? 'BACKSTAGE BETRETEN'
+                    : 'EINCHECKEN'}
             </>
           ) : (
             <>ERST DIE FLASCHEN, DANN DER CHECK-IN.</>

@@ -1,6 +1,6 @@
 # Implementierungsstand
 
-Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`.
+Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`. Mehrstöckige Hippie-WG: `feature/arlesheim-hippie-wg`.
 
 ## Bereits implementiert
 
@@ -24,13 +24,15 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 - Thailand Railway mit vier offenen Wagen und acht Flaschen, angepasster Innenraumkamera und eigenem Zugrhythmus. Zürich Street Parade mit 20 Flaschen, 240 einzeln reagierenden Tänzern, 22 Farb-Tabletten, Musik-Trucks und Backstage-Ziel. Sechs direkt auswählbare Level, insgesamt 63 Flaschen.
 - Referenzbasierte prozedurale Tobi-Figur mit Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Automatische Trinkfolge, Leergut in der Hand, Wurfgeschosse mit Hindernisprüfung, kurze Guard-Taumelei und verscheuchbare Passanten. Reduzierbarer Farbrausch und vier zusätzliche Sound-Cues. [Details](../gameplay/railway-parade-and-bottles.md).
 
+- Arlesheim Hippie-WG mit drei realen Stockwerken, je sechs Zimmern, zwei begehbaren Treppen, 18 weiteren Flaschen und Ausgang im Erdgeschoss. Höhenkorrekte Pickups und grafischer Stockwerksausschnitt. Insgesamt sieben Level mit 81 Flaschen. [Details](../gameplay/arlesheim-hippie-wg.md).
+
 ## Bewusst noch offen
 
-Dieser Stand enthält **sechs kompakte Level**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
+Dieser Stand enthält **sieben kompakte Level**, mit Login und gespeicherten Levelabschlüssen. Der komplette angemeldete Tutorialablauf einschliesslich Reload ist im Browser geprüft; die Fluchtphysik und die Speicherung von Fluchtergebnissen sind zusätzlich separat getestet. Ein einziger durchgehender Browser-Abnahmelauf für angemeldetes Bali Escape bleibt offen. Ein Durchlauf dauert auf dem direkten Testweg deutlich unter fünf Minuten. Er dient der Funktionsprüfung, nicht der finalen Leveldauer.
 
 Weitere Power-ups neben dem Farbrausch, Kombos, Risiko-Scoremultiplikatoren, ein allgemeines Inventar und importierte Animationsclips sind noch offen. Speicherung umfasst derzeit einen Saveslot mit abgeschlossenen Levelergebnissen; Checkpoints, Positionswiederherstellung, Achievements, Settings-API und kompetitive Highscores fehlen. Passwortwiederherstellung, Kontolöschung und produktiver Betrieb sind noch nicht umgesetzt. [Implementierter API-Vertrag und Grenzen](../api/auth-and-progress.md).
 
-Die Kamera verwendet fünf Ray-Probes als erste Annäherung an einen Kameraradius; ein echter Shape Sweep und weitere Innenraumformen über den offenen Zug hinaus bleiben Arbeitspakete. Die Physik läuft in festen Schritten, visuelle Transforminterpolation ist noch offen. Referenzgeräte-/Safari-Abnahme und ein zehnminütiger manueller Kollisions-Parcours sind nicht durch einen Headless-Chromium-Lauf ersetzt.
+Die Kamera verwendet fünf Ray-Probes als erste Annäherung an einen Kameraradius; ein echter Shape Sweep und weitere Innenraumformen über offenen Zug und WG hinaus bleiben Arbeitspakete. Die Physik läuft in festen Schritten, visuelle Transforminterpolation ist noch offen. Referenzgeräte-/Safari-Abnahme und ein zehnminütiger manueller Kollisions-Parcours sind nicht durch einen Headless-Chromium-Lauf ersetzt.
 
 Das GitHub-Repository ist [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/tobi-von-nairobi), mit `@samuelheinrich` als initialem Codeowner. Die Erstveröffentlichung erfolgt nach einem leeren Bootstrap-Commit auf `main` als Pull Request. `main` ist geschützt: mindestens ein unabhängiges Review, erfolgreicher `required`-CI-Check und geklärte Diskussionen sind vor dem Merge nötig; der Schutz gilt auch für Administratoren. Force-Push und Löschen sind deaktiviert. Der aktuelle Review- und CI-Status ist im Pull Request sichtbar. Produktionsziel ist **https://tobi-von-nairobi.ch**; DNS, Hosting und Deployment sind noch nicht eingerichtet.
 
@@ -42,7 +44,7 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
-Die Prüfkette umfasst 29 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), zwölf Integrationstests gegen echtes PostgreSQL und vierzehn Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
+Die Prüfkette umfasst 29 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse und Navigation), dreizehn Integrationstests gegen echtes PostgreSQL und sechzehn Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
 
 Zusätzlich prüft der Browser echte Audioausgabe, Stummschaltung/Pause und die Pegelanzeige. Er fährt die gesamten Fluchtwege aller vier Verfolgungslevels mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
 

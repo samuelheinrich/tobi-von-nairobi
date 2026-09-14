@@ -1092,6 +1092,10 @@ kbd {
   display: block;
   margin-top: 7px;
 }
+.hands-card > strong {
+  display: block;
+  margin-top: 5px;
+}
 .throw-reticle {
   position: absolute;
   left: 50%;

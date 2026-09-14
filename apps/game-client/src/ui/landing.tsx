@@ -47,11 +47,13 @@ export function Landing({
         >
           {view.phase === 'loading'
             ? 'KOFFER WIRD GEPACKT …'
-            : level.scenery === 'railway'
-              ? 'EINSTEIGEN'
-              : view.pursuit
-                ? 'FLUCHT STARTEN'
-                : 'AB NACH BALI'}
+            : level.scenery === 'hippie-house'
+              ? 'REIN IN DIE WG'
+              : level.scenery === 'railway'
+                ? 'EINSTEIGEN'
+                : view.pursuit
+                  ? 'FLUCHT STARTEN'
+                  : 'AB NACH BALI'}
           <span aria-hidden="true">↗</span>
         </button>
         <button
@@ -73,7 +75,14 @@ export function Landing({
         <div className="destination-name">
           {worldNames[level.worldId]}
           <span>
-            {level.worldId === 'bali' ? '01' : level.worldId === 'bangkok' ? '02' : '03'} / 04
+            {level.worldId === 'bali'
+              ? '01'
+              : level.worldId === 'bangkok'
+                ? '02'
+                : level.worldId === 'zurich'
+                  ? '03'
+                  : '04'}{' '}
+            / 04
           </span>
         </div>
         <div className="destination-rule" />
@@ -119,7 +128,7 @@ export function Landing({
           <b>03</b> ZÜRICH <small>PARADE</small>
         </span>
         <span>
-          <b>04</b> ARLESHEIM <small>SPÄTER</small>
+          <b>04</b> ARLESHEIM <small>HIPPIE-WG</small>
         </span>
       </div>
       <div className="landing-footer">

@@ -12,6 +12,7 @@ import {
   nightMarket,
   streetParade,
   thailandRailway,
+  hippieHouse,
 } from '@tobi/game-data';
 
 if (existsSync('apps/game-server/.env')) process.loadEnvFile('apps/game-server/.env');
@@ -37,6 +38,8 @@ describe('authenticated, durable campaign progress', () => {
     const result = await app.inject({
       method: 'POST',
       url: '/api/v1/auth/register',
+      // Isolate fixture clients; the dedicated rate-limit test uses its own fixed IP.
+      remoteAddress: `192.0.2.${100 + users.length}`,
       headers: { origin },
       payload: { username, password },
     });
@@ -262,39 +265,46 @@ describe('authenticated, durable campaign progress', () => {
     },
   );
 
-  it('stores a railway completion without requiring police and restores its own level result', async () => {
-    const user = await register();
-    const start = await app.inject({
-      method: 'POST',
-      url: '/api/v1/runs',
-      headers: user.headers,
-      payload: { requestId: randomUUID(), levelId: thailandRailway.id },
-    });
-    expect(start.statusCode).toBe(201);
-    const id = start.json().id;
-    await db.gameRun.update({ where: { id }, data: { startedAt: new Date(Date.now() - 40000) } });
-    const complete = await app.inject({
-      method: 'POST',
-      url: `/api/v1/runs/${id}/complete`,
-      headers: user.headers,
-      payload: {
-        pickupIds: thailandRailway.pickups.map((p) => p.id),
-        elapsedMs: 35000,
-        escapes: 0,
-        debugUsed: false,
-      },
-    });
-    expect(complete.statusCode, complete.body).toBe(200);
-    expect(complete.json().score).toBe(1300);
-    const read = await app.inject({
-      method: 'GET',
-      url: '/api/v1/progress',
-      headers: user.headers,
-    });
-    expect(read.json().levels).toEqual([
-      expect.objectContaining({ levelId: thailandRailway.id, bestScore: 1300, completions: 1 }),
-    ]);
-  });
+  it.each([thailandRailway, hippieHouse])(
+    'stores $title without requiring police and restores its own result',
+    async (level) => {
+      const user = await register();
+      const start = await app.inject({
+        method: 'POST',
+        url: '/api/v1/runs',
+        headers: user.headers,
+        payload: { requestId: randomUUID(), levelId: level.id },
+      });
+      expect(start.statusCode).toBe(201);
+      const id = start.json().id;
+      await db.gameRun.update({ where: { id }, data: { startedAt: new Date(Date.now() - 40000) } });
+      const complete = await app.inject({
+        method: 'POST',
+        url: `/api/v1/runs/${id}/complete`,
+        headers: user.headers,
+        payload: {
+          pickupIds: level.pickups.map((p) => p.id),
+          elapsedMs: 35000,
+          escapes: 0,
+          debugUsed: false,
+        },
+      });
+      expect(complete.statusCode, complete.body).toBe(200);
+      expect(complete.json().score).toBe(level.pickups.length * 100 + 500);
+      const read = await app.inject({
+        method: 'GET',
+        url: '/api/v1/progress',
+        headers: user.headers,
+      });
+      expect(read.json().levels).toEqual([
+        expect.objectContaining({
+          levelId: level.id,
+          bestScore: level.pickups.length * 100 + 500,
+          completions: 1,
+        }),
+      ]);
+    },
+  );
 
   it('rejects expired sessions, weak passwords and invalid credentials', async () => {
     const user = await register();

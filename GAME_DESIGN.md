@@ -2,7 +2,7 @@
 
 Dies ist die spielerische Spezifikation für die Umsetzung. Zahlen sind initiales Balancing, keine bereits getesteten Ergebnisse. [Architektur](ARCHITECTURE.md) · [MVP-Abnahme](docs/development/milestones.md)
 
-**Aktualisierung vom 14. September 2026:** Die aktuelle Umsetzung verwendet automatische Trinkgesten nach Flaschenaufnahme, anschliessend werfbares Leergut (G) und Anpöbeln (R). Die zusätzlichen spielbaren Kapitel **Thailand Railway** und **Zürich Street Parade** sind in [Regeln und Leveldesign](docs/gameplay/railway-parade-and-bottles.md) beschrieben. Diese Entscheidungen ersetzen für den aktuellen Stand die manuellen Flaschen-/R-Belegungen im ursprünglichen Zielentwurf unten. Weitere Inventar-/Power-up-Arten bleiben geplant.
+**Aktualisierung vom 14. September 2026:** Die aktuelle Umsetzung verwendet automatische Trinkgesten nach Flaschenaufnahme, anschliessend werfbares Leergut (G) und Anpöbeln (R). Die zusätzlichen spielbaren Kapitel **Thailand Railway** und **Zürich Street Parade** sind in [Regeln und Leveldesign](docs/gameplay/railway-parade-and-bottles.md) beschrieben. Diese Entscheidungen ersetzen für den aktuellen Stand die manuellen Flaschen-/R-Belegungen im ursprünglichen Zielentwurf unten. Weitere Inventar-/Power-up-Arten bleiben geplant. Die zusätzliche [Arlesheimer Hippie-WG](docs/gameplay/arlesheim-hippie-wg.md) ergänzt drei reale Etagen mit insgesamt 18 Räumen und einen Weg vom obersten Stockwerk zum Erdgeschoss-Ausgang.
 
 ## 1. Erlebnis und Gameplay-Loop
 

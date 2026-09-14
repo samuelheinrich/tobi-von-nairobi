@@ -22,6 +22,7 @@ export interface GameView {
   tripSeconds: number;
   tripIntensity: number;
   crowdCount: number;
+  interiorFloor: number | null;
   tauntedCount: number;
   score: number;
   elapsedSeconds: number;

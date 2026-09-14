@@ -15,6 +15,7 @@ import {
   welcomeToBali,
   pursuitBalance,
   destinationName,
+  hippieHouseLayout,
 } from '@tobi/game-data';
 import type { LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
@@ -120,7 +121,11 @@ export class GameHost {
         : null;
     this.camera = new ThirdPersonCamera(
       this.scene,
-      level.scenery === 'railway' ? 'railway' : 'follow',
+      level.scenery === 'railway'
+        ? 'railway'
+        : level.scenery === 'hippie-house'
+          ? 'interior'
+          : 'follow',
     );
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
@@ -379,8 +384,10 @@ export class GameHost {
     }
     const destination = this.level.destination;
     const nearDestination =
-      Vector3.Distance(position, new Vector3(destination.position.x, 1, destination.position.z)) <
-      destination.radius;
+      Vector3.Distance(
+        position,
+        new Vector3(destination.position.x, destination.position.y + 1, destination.position.z),
+      ) < destination.radius;
     if (
       actions.interactPressed &&
       nearDestination &&
@@ -411,6 +418,8 @@ export class GameHost {
 
   private syncVisual(delta: number): void {
     const position = this.motor.position;
+    this.environment.focus?.(position);
+    if (this.level.scenery === 'hippie-house') this.bottles.cutaway(position.y);
     this.visual.root.position.copyFrom(
       position.subtract(new Vector3(0, movement.capsuleHeight / 2, 0)),
     );
@@ -469,6 +478,16 @@ export class GameHost {
           tripSeconds: Math.ceil(this.trip.remaining),
           tripIntensity: this.trip.intensity,
           crowdCount: this.parade?.system.people.length ?? 0,
+          interiorFloor:
+            this.level.scenery === 'hippie-house'
+              ? Math.max(
+                  0,
+                  Math.min(
+                    hippieHouseLayout.floors.length - 1,
+                    Math.floor((this.motor.position.y - 0.5) / hippieHouseLayout.floorHeight),
+                  ),
+                )
+              : null,
           tauntedCount: this.parade?.system.taunted.size ?? 0,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
@@ -479,7 +498,7 @@ export class GameHost {
               ? `Sammle ${this.level.pickups.length} Flaschen`
               : this.session.mission.active?.type === 'escapePolice'
                 ? 'Hänge die Polizei ab'
-                : `Erreiche ${this.level.scenery === 'railway' ? 'Wagen 1' : this.level.scenery === 'street-parade' ? 'Backstage' : 'das Airbnb'}`,
+                : `Erreiche ${destinationName(this.level)}`,
           pursuit: this.police?.system.snapshot() ?? null,
           canCheckIn:
             this.session.mission.active?.type === 'reach' && !this.police?.system.wanted.level,

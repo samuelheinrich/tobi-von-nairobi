@@ -5,9 +5,12 @@ import type { BaliScene } from './bali-scene.js';
 import { createBaliScene } from './bali-scene.js';
 import { createRailwayScene } from './railway-scene.js';
 import { createParadeScene } from './parade-scene.js';
+import { createHippieHouseScene } from './hippie-house-scene.js';
+import type { Position3 } from '@tobi/contracts';
 
 export interface LevelScene extends BaliScene {
   update?(delta: number): void;
+  focus?(position: Position3): void;
 }
 export function createLevelScene(
   scene: Scene,
@@ -16,5 +19,6 @@ export function createLevelScene(
 ): LevelScene {
   if (level.scenery === 'railway') return createRailwayScene(scene, world, level);
   if (level.scenery === 'street-parade') return createParadeScene(scene, world, level);
+  if (level.scenery === 'hippie-house') return createHippieHouseScene(scene, world, level);
   return createBaliScene(scene, world, level);
 }

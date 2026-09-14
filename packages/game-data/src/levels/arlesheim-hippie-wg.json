@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "id": "arlesheim_hippie_wg",
+  "worldId": "arlesheim",
+  "title": "Arlesheim Hippie-WG",
+  "subtitle": "Drei Etagen. Achtzehn Zimmer. Und niemand weiss, wer den Abwasch macht.",
+  "maxWanted": 0,
+  "spawn": {
+    "x": -9,
+    "y": 10.5,
+    "z": -13
+  },
+  "destination": {
+    "id": "wg_exit",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": -13
+    },
+    "radius": 1.8
+  },
+  "pickups": [
+    {
+      "id": "arlesheim_wg_floor0_room1",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 0.0,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor0_room2",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 0.0,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor0_room3",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 0.0,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor0_room4",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 0.0,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor0_room5",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 0.0,
+        "z": 10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor0_room6",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 0.0,
+        "z": 10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room1",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 4.5,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room2",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 4.5,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room3",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 4.5,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room4",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 4.5,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room5",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 4.5,
+        "z": 10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor1_room6",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 4.5,
+        "z": 10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room1",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 9.0,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room2",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 9.0,
+        "z": -10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room3",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 9.0,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room4",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 9.0,
+        "z": 0
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room5",
+      "itemId": "bottle",
+      "position": {
+        "x": -9,
+        "y": 9.0,
+        "z": 10
+      }
+    },
+    {
+      "id": "arlesheim_wg_floor2_room6",
+      "itemId": "bottle",
+      "position": {
+        "x": 9,
+        "y": 9.0,
+        "z": 10
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 18,
+      "after": []
+    },
+    {
+      "id": "reach",
+      "type": "reach",
+      "targetId": "wg_exit",
+      "after": ["collect"]
+    }
+  ],
+  "scenery": "hippie-house",
+  "atmosphere": "sunset",
+  "navigationBounds": {
+    "minX": -15,
+    "maxX": 15,
+    "minZ": -15,
+    "maxZ": 31
+  }
+}

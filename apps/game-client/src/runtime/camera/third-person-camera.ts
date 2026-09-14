@@ -13,9 +13,9 @@ export class ThirdPersonCamera {
 
   public constructor(
     private readonly scene: Scene,
-    private readonly mode: 'follow' | 'railway' = 'follow',
+    private readonly mode: 'follow' | 'railway' | 'interior' = 'follow',
   ) {
-    if (mode === 'railway') {
+    if (mode !== 'follow') {
       this.pitch = 1.02;
       this.distance = 10;
     }
@@ -27,7 +27,7 @@ export class ThirdPersonCamera {
   }
 
   public look(x: number, y: number): void {
-    if (this.mode === 'railway') {
+    if (this.mode !== 'follow') {
       this.yaw = Math.max(-0.3, Math.min(0.3, this.yaw + x));
       this.pitch = Math.max(0.88, Math.min(1.2, this.pitch + y));
       return;
@@ -43,7 +43,7 @@ export class ThirdPersonCamera {
       Math.sin(this.pitch),
       -Math.cos(this.yaw) * Math.cos(this.pitch),
     );
-    let allowed: number = this.mode === 'railway' ? 10 : prototypeBalance.cameraDistance;
+    let allowed: number = this.mode !== 'follow' ? 10 : prototypeBalance.cameraDistance;
     // Five parallel probes approximate a camera radius and cover wall edges in this blockout.
     for (const offset of [
       Vector3.Zero(),
@@ -69,7 +69,7 @@ export class ThirdPersonCamera {
 
   public reset(): void {
     this.yaw = 0;
-    this.pitch = this.mode === 'railway' ? 1.02 : 0.34;
-    this.distance = this.mode === 'railway' ? 10 : prototypeBalance.cameraDistance;
+    this.pitch = this.mode !== 'follow' ? 1.02 : 0.34;
+    this.distance = this.mode !== 'follow' ? 10 : prototypeBalance.cameraDistance;
   }
 }

@@ -90,7 +90,10 @@ export class AudioFeedback {
   public environment(delta: number, scenery: string): void {
     if (this.paused || this.silent) return;
     this.beatTime += delta;
-    if (this.beatTime < (scenery === 'street-parade' ? 0.46 : 0.36)) return;
+    if (
+      this.beatTime < (scenery === 'hippie-house' ? 1.2 : scenery === 'street-parade' ? 0.46 : 0.36)
+    )
+      return;
     this.beatTime = 0;
     this.beat++;
     if (scenery === 'street-parade') {
@@ -100,6 +103,11 @@ export class AudioFeedback {
     if (scenery === 'railway') {
       this.tone(80, 0.07, 0, 45, 0.025);
       this.tone(120, 0.05, 0.12, 65, 0.018);
+    }
+    if (scenery === 'hippie-house') {
+      const note = [196, 247, 294, 247][this.beat % 4]!;
+      this.tone(note, 0.65, 0, note, 0.014, 'triangle');
+      this.tone(note * 1.5, 0.4, 0.16, note * 1.5, 0.009, 'triangle');
     }
   }
   public get muted(): boolean {

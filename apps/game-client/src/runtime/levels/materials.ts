@@ -1,6 +1,7 @@
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
+import type { Material } from '@babylonjs/core/Materials/material.js';
 import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -17,7 +18,7 @@ export function box(
   name: string,
   size: [number, number, number],
   position: [number, number, number],
-  surface: StandardMaterial,
+  surface: Material,
 ): Mesh {
   const mesh = MeshBuilder.CreateBox(
     name,
@@ -36,7 +37,7 @@ export function cylinderBetween(
   start: Vector3,
   end: Vector3,
   diameter: number,
-  surface: StandardMaterial,
+  surface: Material,
 ): Mesh {
   const delta = end.subtract(start);
   const mesh = MeshBuilder.CreateCylinder(

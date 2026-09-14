@@ -4,7 +4,7 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: sechs spielbare Level mit insgesamt 63 Flaschen.** Zu den vier Bali-Leveln kommen **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Auswählbar über **LEVEL WÄHLEN** auf der Zielkarte. Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
+**Aktueller Stand: sieben spielbare Level mit insgesamt 81 Flaschen.** Neu: **Arlesheim Hippie-WG**, drei Stockwerke mit je sechs Zimmern und 18 Flaschen, begehbarem Treppenhaus und Erdgeschoss-Ausgang. Daneben stehen die vier Bali-Level sowie **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Auswählbar über **LEVEL WÄHLEN** auf der Zielkarte. Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
 
 ![Tobi von Nairobi: Startbildschirm des Bali-Prototyps](docs/screenshots/tobi-landing.png)
 
@@ -43,7 +43,7 @@ Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und
 | Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                                 |
 | Space              | springen                                                                         |
 | Shift              | sprinten; Stamina beachten                                                       |
-| E                  | Levelziel bestätigen: Airbnb, erster Wagen oder Backstage                        |
+| E                  | Levelziel bestätigen: Airbnb, erster Wagen, Backstage oder WG-Ausgang            |
 | G                  | leere Flasche in Blickrichtung werfen, nach dem automatischen Trinken            |
 | R                  | Passanten in der Nähe anpöbeln; in Verfolgungslevels +20 Chaos (alle 3 Sekunden) |
 | ESC                | Pause                                                                            |
@@ -95,6 +95,7 @@ pnpm test:e2e
 
 ## Planung und aktueller Status
 
+- [Arlesheim Hippie-WG: drei Stockwerke, 18 Zimmer und Treppenhaus](docs/gameplay/arlesheim-hippie-wg.md)
 - [Tobis Figur, Wurfflaschen, Thailand Railway und Zürich Street Parade](docs/gameplay/railway-parade-and-bottles.md)
 - [Neue Bali-Level, Sounds und Tobis Pegel](docs/gameplay/bali-venues-and-feedback.md)
 - [Bali Escape: Regeln und Technik](docs/gameplay/pursuit.md)

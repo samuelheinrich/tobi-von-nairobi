@@ -229,21 +229,25 @@ export function App() {
             role="dialog"
             aria-modal="true"
             aria-label={
-              level.scenery === 'railway'
-                ? 'Zugfahrt abgeschlossen'
-                : level.maxWanted > 0
-                  ? 'Flucht abgeschlossen'
-                  : 'Tutorial abgeschlossen'
+              level.scenery === 'hippie-house'
+                ? 'WG verlassen'
+                : level.scenery === 'railway'
+                  ? 'Zugfahrt abgeschlossen'
+                  : level.maxWanted > 0
+                    ? 'Flucht abgeschlossen'
+                    : 'Tutorial abgeschlossen'
             }
           >
             <span className="eyebrow">{level.title.toUpperCase()} · GESCHAFFT</span>
             <div className="result-star">✳</div>
             <h2>
-              {level.scenery === 'railway'
-                ? 'Wagen eins erreicht.'
-                : level.scenery === 'street-parade'
-                  ? 'Parade überlebt.'
-                  : 'Buchung bestätigt.'}
+              {level.scenery === 'hippie-house'
+                ? 'Namaste. Und tschüss.'
+                : level.scenery === 'railway'
+                  ? 'Wagen eins erreicht.'
+                  : level.scenery === 'street-parade'
+                    ? 'Parade überlebt.'
+                    : 'Buchung bestätigt.'}
               <br />
               <em>Nerven storniert.</em>
             </h2>

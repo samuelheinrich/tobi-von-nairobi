@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: { dedupe: ['react', 'react-dom'] },
   optimizeDeps: {
-    entries: ['index.html', 'test/physics.html'],
+    entries: ['index.html', 'test/*.html', 'test/*-harness.ts'],
     include: ['react', 'react-dom/client', 'react/jsx-runtime'],
   },
   server: { port: 5173, strictPort: true, proxy: { '/api': 'http://127.0.0.1:3000' } },

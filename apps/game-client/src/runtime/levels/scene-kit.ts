@@ -55,7 +55,11 @@ export function destinationRing(scene: Scene, level: LevelDefinition): Mesh {
     { diameter: level.destination.radius * 2, thickness: 0.08, tessellation: 32 },
     scene,
   );
-  mesh.position.set(level.destination.position.x, 0.09, level.destination.position.z);
+  mesh.position.set(
+    level.destination.position.x,
+    level.destination.position.y + 0.09,
+    level.destination.position.z,
+  );
   const surface = material(scene, 'destination-glow', '#ffdc78');
   surface.emissiveColor.set(0.5, 0.4, 0.1);
   mesh.material = surface;

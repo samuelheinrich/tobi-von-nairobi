@@ -15,6 +15,7 @@ export class GameViewStore {
     tripSeconds: 0,
     tripIntensity: 0,
     crowdCount: 0,
+    interiorFloor: null,
     tauntedCount: 0,
     score: 0,
     elapsedSeconds: 0,

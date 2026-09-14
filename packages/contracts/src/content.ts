@@ -43,12 +43,12 @@ export const levelSchema = z
   .object({
     schemaVersion: z.literal(1),
     id: z.string().min(1),
-    worldId: z.enum(['bali', 'bangkok', 'zurich']),
+    worldId: z.enum(['bali', 'bangkok', 'zurich', 'arlesheim']),
     title: z.string(),
     subtitle: z.string(),
     atmosphere: z.enum(['day', 'sunset', 'night']).default('day'),
     scenery: z
-      .enum(['village', 'beach-bar', 'night-market', 'railway', 'street-parade'])
+      .enum(['village', 'beach-bar', 'night-market', 'railway', 'street-parade', 'hippie-house'])
       .default('village'),
     maxWanted: z.number().int().min(0).max(5),
     chaosPerBottle: z.number().positive().max(30).default(16),
