@@ -36,3 +36,30 @@ test('the shipped CC0 recordings decode, register as variants and rotate', async
   // A cue without files stays synthesized rather than falling silent.
   expect(result.synthesizedCue, detail).toBe(0);
 });
+
+test('spoken lines use the browser synthesiser, respect mute and never block on failure', async ({
+  page,
+}) => {
+  await page.goto('/test/physics.html');
+  await page.locator('body').click();
+  const result = await page.evaluate(async () => {
+    const path = '/test/audio-harness.ts';
+    const module = await import(path);
+    return {
+      live: await module.exerciseSpokenLines(),
+      fallback: await module.exerciseSpokenFallback(),
+    };
+  });
+  const detail = JSON.stringify(result);
+  // Voice availability depends on the operating system, so speaking is never asserted outright.
+  if (result.live.available) {
+    expect(result.live.german, detail).toBe(true);
+    expect(result.live.english, detail).toBe(true);
+    // Two lines in the same instant would drift behind the plates; only the first is spoken.
+    expect(result.live.throttled, detail).toBe(false);
+  }
+  expect(result.live.muted, detail).toBe(false);
+  // A browser without speech support degrades quietly instead of throwing.
+  expect(result.fallback.available, detail).toBe(false);
+  expect(result.fallback.spoke, detail).toBe(false);
+});

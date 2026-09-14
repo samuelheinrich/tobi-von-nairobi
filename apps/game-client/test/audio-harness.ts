@@ -80,3 +80,39 @@ export async function exerciseSamples() {
     if (context.state !== 'closed') await context.close();
   }
 }
+
+/** Exercises the real Web Speech API: voice lookup, language choice, mute and throttling.
+ * Speech is an enhancement, so the interesting assertion is that it never throws and never
+ * blocks — the plates on screen carry the line either way.
+ */
+export async function exerciseSpokenLines() {
+  const { SpokenLines } = await import('../src/runtime/audio/spoken-lines.js');
+  // Voice lists arrive asynchronously in Chrome; give them a moment before asking.
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  const spoken = new SpokenLines();
+  await new Promise((resolve) => setTimeout(resolve, 400));
+  try {
+    const available = spoken.available;
+    const german = spoken.say('«ICH KENNE KARL!»', 'de', 0, 1000);
+    // Immediately after, a second speaker is throttled rather than queued.
+    const throttled = spoken.say('Hey sexy!', 'en', 3, 1100);
+    const english = spoken.say('Hey sexy!', 'en', 3, 5000);
+    spoken.enabled = false;
+    const muted = spoken.say('«Ruhe da drin!»', 'de', 1, 9000);
+    spoken.enabled = true;
+    spoken.silence();
+    return { available, german, throttled, english, muted };
+  } finally {
+    spoken.dispose();
+  }
+}
+
+/** A browser with no voices at all must stay silent without throwing. */
+export async function exerciseSpokenFallback() {
+  const { SpokenLines } = await import('../src/runtime/audio/spoken-lines.js');
+  const spoken = new SpokenLines(null);
+  const spoke = spoken.say('«Test»', 'de', 0);
+  spoken.silence();
+  spoken.dispose();
+  return { available: spoken.available, spoke };
+}

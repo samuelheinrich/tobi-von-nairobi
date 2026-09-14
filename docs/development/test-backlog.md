@@ -10,7 +10,7 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 
 | Datum      | Offen | Erledigt |
 | ---------- | ----- | -------- |
-| 2026-09-14 | 1     | —        |
+| 2026-09-14 | 2     | —        |
 
 ## Offen
 
@@ -20,6 +20,14 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 - **Fehlender Test:** E2E, das **R** mehrfach drückt und prüft, dass (a) über Tobi eine Sprechblase erscheint, (b) ihr Text zwischen zwei Zurufen wechselt, (c) bei reagierender Menge eine zweite Blase an der Position eines Tänzers erscheint und (d) ab dem dritten Zuruf die genervte Variante kommt. Die reine Datenebene ist bereits unit-getestet (`npc-speech.test.ts`).
 - **Aufwand:** M — braucht ein Level mit Menge (Street Parade) und Warten auf die 3-Sekunden-Abklingzeit.
 - **Risiko solange offen:** Eine falsch verdrahtete Ankerposition liesse die Antwortblase im Boden oder hinter der Kamera erscheinen. Die Daten stimmen dann trotzdem.
+- **Commit:** folgt in diesem Branch
+
+### Sprachausgabe im laufenden Spiel
+
+- **Betrifft:** `SpokenLines`, `SpeechBubbles.onSay`, `GameHost`
+- **Fehlender Test:** E2E, das im Spiel prüft, dass eine erscheinende Sprechblase auch eine Äusserung auslöst und dass der Stumm-Schalter sie abbricht. Die Einheit selbst ist im Browser getestet (`audio.spec.ts`), die Verdrahtung über `onSay` noch nicht.
+- **Aufwand:** M — `speechSynthesis.speak` lässt sich in Playwright nur indirekt beobachten, am ehesten über einen Stub auf `window.speechSynthesis` vor dem Laden.
+- **Risiko solange offen:** Wäre `onSay` nicht gesetzt, bliebe alles stumm, ohne dass ein Test anschlägt.
 - **Commit:** folgt in diesem Branch
 
 ## Erledigt

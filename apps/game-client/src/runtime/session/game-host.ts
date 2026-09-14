@@ -14,6 +14,7 @@ import {
   BottleHands,
   ColorTrip,
   NpcVoices,
+  speechLanguage,
 } from '@tobi/game-core';
 import {
   movement,
@@ -34,6 +35,7 @@ import { createLevelScene } from '../levels/create-level-scene.js';
 import type { LevelScene } from '../levels/create-level-scene.js';
 import { ParadeCrowd } from '../levels/parade-crowd.js';
 import { SpeechBubbles } from '../levels/speech-bubbles.js';
+import { SpokenLines } from '../audio/spoken-lines.js';
 import { createLevelNpcs } from '../levels/create-level-npcs.js';
 import type { LevelNpcs } from '../levels/level-npcs.js';
 import { ColorPickups } from '../items/color-pickups.js';
@@ -67,6 +69,7 @@ export class GameHost {
   private readonly parade: ParadeCrowd | null;
   private readonly bubbles: SpeechBubbles;
   private readonly voices = new NpcVoices();
+  private readonly spoken = new SpokenLines();
   private tauntCount = 0;
   private readonly npcs: LevelNpcs | null;
   private readonly environment: LevelScene;
@@ -137,6 +140,8 @@ export class GameHost {
         ? new ParadeCrowd(this.scene, level, environment.colliders, zurichLayout.route)
         : null;
     this.bubbles = new SpeechBubbles(this.scene);
+    // Every plate that appears is also read aloud, when the browser has a voice for it.
+    this.bubbles.onSay = (text, voice) => this.spoken.say(text, voice.language, voice.speaker);
     this.npcs = createLevelNpcs(this.scene, level, environment, this.bubbles);
     this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
@@ -215,11 +220,16 @@ export class GameHost {
     this.clock.reset();
     this.store.update({ phase: 'paused' });
     this.audio.pause();
+    this.spoken.silence();
     if (document.pointerLockElement === this.canvas) document.exitPointerLock();
   };
 
   public setMuted(muted: boolean): void {
     this.audio.muted = muted;
+    // Spoken lines run through the browser's synthesiser, not the AudioContext, so muting the
+    // master gain would leave them talking. They have to be stopped separately.
+    this.spoken.enabled = !muted;
+    if (muted) this.spoken.silence();
   }
   private onResize = (): void => {
     this.engine.resize();
@@ -481,6 +491,7 @@ export class GameHost {
         new Vector3(position.x, position.y + 1.35, position.z),
         shout,
         socialBalance.replySeconds,
+        { language: 'de', speaker: 0 },
       );
       // After a few rounds the crowd stops finding it charming.
       const responder = this.parade?.responder ?? this.crowd.responder;
@@ -489,6 +500,7 @@ export class GameHost {
           new Vector3(responder.x, responder.y, responder.z),
           this.voices.next(this.tauntCount > 2 ? 'crowdAnnoyed' : 'crowd', count),
           socialBalance.replySeconds,
+          { language: speechLanguage('crowd'), speaker: count },
         );
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({
@@ -781,6 +793,7 @@ export class GameHost {
     this.removeDebug?.();
     this.input.dispose();
     this.audio.dispose();
+    this.spoken.dispose();
     this.flight?.dispose();
     this.npcs?.dispose();
     this.bubbles.dispose();

@@ -69,6 +69,34 @@ Zusammen 92 KiB. Alles andere — Trinken, Schluckauf, Sirene, Rufe, Jubel und s
 
 `SoundBank` wählt pro Cue reihum eine andere Aufnahme, damit ein oft wiederholter Klang nicht als identische Wellenform hämmert. `AudioFeedback` setzt die Abspiellautstärke **pro Cue**: Pakete sind deutlich heisser gemastert als die synthetischen Cues, und ein Schritt alle 1,6 Meter muss klar unter einer zerspringenden Flasche liegen. Ein Browsertest prüft, dass die Dateien tatsächlich dekodieren, als Varianten registriert sind und rotieren — sonst fiele ein Tippfehler im Dateinamen nur auf die Synthese zurück und bliebe unbemerkt.
 
+## NPCs sprechen ihre Zeilen — Web Speech API
+
+Die Figuren lesen ihre Sprechblasen jetzt vor. Dafür wurde die **Web Speech API** des Browsers gewählt, nicht vorgenerierte Audiodateien und kein Online-Dienst.
+
+### Warum diese Variante
+
+| Ansatz                                             | Kosten                               | Bewertung                                                                                                        |
+| -------------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| **Web Speech API** (gewählt)                       | 0 Byte, keine Lizenz, kein Schlüssel | In jedem aktuellen Browser vorhanden, läuft offline auf dem Gerät des Spielers. Stimmenqualität hängt vom OS ab. |
+| Vorgeneriert mit Piper/Coqui und als OGG committen | grob 130 Zeilen × ~15 KiB ≈ 2 MiB    | Gleichbleibende Qualität, aber jede Textänderung erzwingt einen neuen Renderlauf und eine neue Lizenzprüfung.    |
+| Online-TTS (ElevenLabs, Google, Azure)             | API-Schlüssel, Kosten, Netz pro Satz | Für ein Gastspiel ohne Backend unpassend: Schlüssel im Client, Latenz, Datenschutz und laufende Kosten.          |
+
+Bei 180 verfügbaren Stimmen im Testbrowser — darunter mehrere de-DE und en-US — ist der eingebaute Weg deutlich das beste Verhältnis. Ein Messlauf ist in `spoken-lines` dokumentiert.
+
+### Verhalten
+
+- **Sprache steht in den Daten.** `speechLanguage(topic)` liefert `de` oder `en`; nur die Bar-Mädchen sprechen Englisch. So liest keine deutsche Stimme «Handsome man!» vor.
+- **Stimme pro Figur.** Ein stabiler Index über die verfügbaren Stimmen plus eine Tonhöhe pro Sprecher lassen zwei benachbarte NPCs unterschiedlich klingen, und dieselbe Figur über einen Durchlauf hinweg gleich.
+- **Kein Rückstau.** Eine neue Zeile bricht die laufende ab, und zwei Zeilen innerhalb einer Drittelsekunde ergeben nur eine gesprochene: in einer Menge liefe die Sprachausgabe sonst Sekunden hinter den Sprechblasen her.
+- **Stumm und Pause schalten sie ab.** Die Sprachsynthese läuft **nicht** über den `AudioContext`, deshalb würde der Master-Gain sie nicht erreichen; sie wird getrennt gestoppt.
+- **Reine Verbesserung.** Kein Sprachausgabe-Support, keine passende Stimme, ein verweigernder Browser oder ein Fehler enden damit, dass die Zeile eben nicht gesprochen wird. Die Sprechblase trägt den Text ohnehin.
+
+Ein Browsertest prüft Stimmenwahl, Sprache, Drosselung, Stummschaltung und ausdrücklich den Fall ganz ohne Sprachsynthese.
+
+### Offen
+
+Die Stimmen sind Systemstimmen und klingen entsprechend synthetisch — für Tobis Rufe ist das komisch, für die Yogagruppe eher nicht. Ob das Ergebnis insgesamt trägt, ist eine Hörentscheidung am echten Gerät; Linux-Installationen ohne installierte Stimmen bleiben stumm. Falls es nicht überzeugt: Der Schalter sitzt in `GameHost.setMuted` beziehungsweise an `SpokenLines.enabled`, und eine getrennte Einstellung «Sprachausgabe» wäre der nächste Schritt.
+
 ### Noch nicht eingebaut
 
 Freesound verlangt für die geprüften Kandidaten (Glasbruch von avrahamy, Cartoon-Schluckauf von NicknameLarry, beide CC0) einen Login zum Download; seine [Lizenzübersicht](https://freesound.org/help/faq/#licenses) unterscheidet CC0, CC-BY und CC-BY-NC, eine Suchtreffer-Erwähnung ist kein Lizenznachweis für den Treffer selbst.

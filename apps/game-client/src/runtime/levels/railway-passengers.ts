@@ -2,7 +2,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { Blocker, NpcVoices } from '@tobi/game-core';
+import { Blocker, NpcVoices, speechLanguage } from '@tobi/game-core';
 import { railwayLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
@@ -186,6 +186,7 @@ export class RailwayPassengers implements LevelNpcs {
       rig.root.position.add(new Vector3(0, 2.5, 0)),
       line,
       socialBalance.replySeconds,
+      { language: speechLanguage(topic), speaker: 1 },
     );
   }
 

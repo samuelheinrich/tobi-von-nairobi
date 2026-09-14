@@ -6,6 +6,12 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 
+/** Which voice should read a line aloud: its language, and who is speaking. */
+export interface SpeechVoice {
+  language: 'de' | 'en';
+  speaker: number;
+}
+
 interface Bubble {
   mesh: Mesh;
   texture: DynamicTexture;
@@ -23,6 +29,8 @@ interface Bubble {
 export class SpeechBubbles {
   private readonly pool: Bubble[] = [];
   private cursor = 0;
+  /** Set by the host to also speak whatever gets shown. Optional: the plate is the primary form. */
+  public onSay: ((text: string, voice: SpeechVoice) => void) | undefined;
   public constructor(scene: Scene, capacity = 6) {
     for (let i = 0; i < capacity; i++) {
       const texture = new DynamicTexture(`speech-${i}`, { width: 512, height: 160 }, scene, false);
@@ -45,7 +53,8 @@ export class SpeechBubbles {
     }
   }
 
-  public say(anchor: Vector3, text: string, seconds = 3.2): void {
+  public say(anchor: Vector3, text: string, seconds = 3.2, voice?: SpeechVoice): void {
+    if (voice) this.onSay?.(text, voice);
     const bubble = this.pool[this.cursor % this.pool.length]!;
     this.cursor++;
     const context = bubble.texture.getContext() as CanvasRenderingContext2D;

@@ -183,6 +183,14 @@ const lines: Record<SpeechTopic, readonly string[]> = {
   ],
 };
 
+/** Which language a topic is written in. The bar girls speak English; everyone else de-CH.
+ * Kept as data rather than guessed from the text, so a speech synthesiser picks the right voice
+ * instead of reading «Handsome man!» with a German one.
+ */
+export function speechLanguage(topic: SpeechTopic): 'de' | 'en' {
+  return topic === 'flirt' || topic === 'flirtRejected' || topic === 'bargirlTaunt' ? 'en' : 'de';
+}
+
 export function speechOptions(topic: SpeechTopic): readonly string[] {
   return lines[topic];
 }

@@ -14,7 +14,12 @@ export { ReactiveCrowd } from './character/reactive-crowd.js';
 export type { CrowdPerson } from './character/reactive-crowd.js';
 export { Blocker } from './character/blocker.js';
 export type { BlockerConfig } from './character/blocker.js';
-export { NpcVoices, speechOptions } from './character/npc-speech.js';
+export {
+  NpcVoices,
+  speechOptions,
+  speechLanguage,
+  allSpeechTopics,
+} from './character/npc-speech.js';
 export type { SpeechTopic } from './character/npc-speech.js';
 
 export { Seating, type RestSpot } from './character/seating.js';

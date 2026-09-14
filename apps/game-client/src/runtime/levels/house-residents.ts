@@ -3,7 +3,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { NpcVoices } from '@tobi/game-core';
+import { NpcVoices, speechLanguage } from '@tobi/game-core';
 import { hippieHouseLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { material } from './materials.js';
@@ -153,6 +153,7 @@ export class HouseResidents implements LevelNpcs {
         speaker.rig.root.position.add(new Vector3(0, 2.4, 0)),
         line,
         socialBalance.replySeconds,
+        { language: speechLanguage(topic), speaker: speaker.id },
       );
     }
     return count;
