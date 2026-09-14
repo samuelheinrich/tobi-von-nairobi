@@ -10,7 +10,7 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 
 | Datum      | Offen | Erledigt |
 | ---------- | ----- | -------- |
-| 2026-09-14 | 3     | —        |
+| 2026-09-14 | 4     | —        |
 
 ## Offen
 
@@ -37,6 +37,15 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 - **Aufwand:** M — braucht echte Windows-/Linux-Läufe; in Headless-CI sind keine Systemstimmen installiert.
 - **Risiko solange offen:** Auf einem fremden System klingt die Besetzung einheitlich oder bleibt stumm. Beides fällt nicht auf die Spielbarkeit zurück, aber die Profile tragen dort nicht.
 - **Commit:** folgt in diesem Branch
+
+### Flackernder Audiographen-Test
+
+- **Betrifft:** `tests/browser-integration/audio.spec.ts`, erster Fall («real audio graph emits cues …»)
+- **Beobachtung:** Fiel bei einem von acht Läufen ohne Codebezug durch. Er misst echte Ausgabeenergie nach festen `setTimeout`-Wartezeiten; unter Last reicht das Fenster gelegentlich nicht.
+- **Fehlender Test:** Nicht ein fehlender Test, sondern ein zu strammer. Sinnvoller wäre, auf Energie **zu warten** (Polling mit Frist) statt einmalig nach fester Zeit zu messen.
+- **Aufwand:** S
+- **Risiko solange offen:** Rote CI ohne echten Fehler; im schlimmsten Fall gewöhnt man sich an rote Läufe.
+- **Commit:** vorbestehend, nicht durch diese Arbeit verursacht
 
 ## Erledigt
 

@@ -56,17 +56,28 @@ export class SpokenLines {
   /** The best voice for this profile, or undefined when the language has none at all. */
   private pick(
     language: 'de' | 'en',
-    profile: { prefer: readonly string[] },
+    profile: { prefer: readonly string[]; spread?: boolean },
     speaker: number,
   ): SpeechSynthesisVoice | undefined {
     const pool = this.candidates(language);
     if (!pool.length) return undefined;
-    for (const wanted of profile.prefer) {
-      const named = pool.filter((voice) =>
-        voice.name.toLowerCase().startsWith(wanted.toLowerCase()),
-      );
-      // Several speakers of one kind spread across the matching voices instead of stacking up.
-      if (named.length) return named[Math.abs(speaker) % named.length];
+    const named = (wanted: string): SpeechSynthesisVoice[] =>
+      pool.filter((voice) => voice.name.toLowerCase().startsWith(wanted.toLowerCase()));
+    if (profile.spread) {
+      // A role played by many people uses its whole preference list, so a row of NPCs does not
+      // share one throat. Only voices actually installed on this machine take part.
+      // One preferred name can match several installed variants of the same voice; without
+      // dedupe those would take two slots and crowd out the rest of the list.
+      const installed = [
+        ...new Map(profile.prefer.flatMap(named).map((v) => [v.name, v])).values(),
+      ];
+      if (installed.length) return installed[Math.abs(speaker) % installed.length];
+    } else {
+      // A single character keeps one voice: the best one available, every time.
+      for (const wanted of profile.prefer) {
+        const matches = named(wanted);
+        if (matches.length) return matches[0];
+      }
     }
     // No preferred voice installed: any real voice for the language beats staying silent.
     return pool[Math.abs(speaker) % pool.length];

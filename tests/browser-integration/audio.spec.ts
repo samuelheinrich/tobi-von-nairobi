@@ -77,3 +77,21 @@ test('spoken lines use the browser synthesiser, respect mute and never block on 
   expect(result.fallback.available, detail).toBe(false);
   expect(result.fallback.spoke, detail).toBe(false);
 });
+
+test('a crowd spreads over many voices while a named character keeps one', async ({ page }) => {
+  await page.goto('/test/physics.html');
+  await page.locator('body').click();
+  const result = await page.evaluate(async () => {
+    const path = '/test/audio-harness.ts';
+    return (await import(path)).exerciseVoiceSpread();
+  });
+  const detail = JSON.stringify(result);
+  if (!result.available) return;
+  // Six dancers must not sound like one person repeating themselves.
+  expect(result.crowd, detail).toBeGreaterThanOrEqual(4);
+  expect(result.greeting, detail).toBeGreaterThanOrEqual(4);
+  expect(result.police, detail).toBeGreaterThanOrEqual(2);
+  // Tobi and the conductor are individuals and always sound like themselves.
+  expect(result.tobi, detail).toBe(1);
+  expect(result.conductor, detail).toBe(1);
+});

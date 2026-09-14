@@ -129,3 +129,44 @@ export async function exerciseSpokenFallback() {
   spoken.dispose();
   return { available: spoken.available, spoke };
 }
+
+/** Checks that a role played by many people spreads over several voices, while a single
+ * character keeps one. Without this, every dancer in a crowd sounded like the same person.
+ */
+export async function exerciseVoiceSpread() {
+  const { SpokenLines } = await import('../src/runtime/audio/spoken-lines.js');
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  const spoken = new SpokenLines();
+  await new Promise((resolve) => setTimeout(resolve, 400));
+  const synth = window.speechSynthesis;
+  const original = synth.speak.bind(synth);
+  const seen: string[] = [];
+  synth.speak = (utterance: SpeechSynthesisUtterance) => {
+    seen.push(utterance.voice?.name ?? '?');
+  };
+  // The throttle compares against the last spoken time, so this clock must only ever go forward.
+  let clock = 1000;
+  const voicesFor = (topic: Parameters<typeof spoken.say>[0]): string[] => {
+    const names: string[] = [];
+    for (let speaker = 0; speaker < 6; speaker++) {
+      seen.length = 0;
+      clock += 1000;
+      spoken.say(topic, 'x', speaker, clock);
+      names.push(seen[0] ?? '');
+    }
+    return names;
+  };
+  try {
+    return {
+      available: spoken.available,
+      crowd: new Set(voicesFor('crowd')).size,
+      greeting: new Set(voicesFor('greeting')).size,
+      police: new Set(voicesFor('policeChase')).size,
+      tobi: new Set(voicesFor('tobiTaunt')).size,
+      conductor: new Set(voicesFor('conductor')).size,
+    };
+  } finally {
+    synth.speak = original;
+    spoken.dispose();
+  }
+}

@@ -54,6 +54,14 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«ICH RED MIT DEM CHEF!»',
     '«HABT IHR KARL GESEHEN?»',
     '«DAS HIER IST EIN MISSVERSTÄNDNIS!»',
+    '«ICH BIN IM URLAUB, VERDAMMT!»',
+    '«SCHAUT MICH NICHT SO AN!»',
+    '«ICH HAB NUR GEFRAGT!»',
+    '«DAS IST DOCH NORMAL!»',
+    '«BEI UNS MACHT MAN DAS SO!»',
+    '«WO IST DAS PROBLEM?!»',
+    '«ICH BIN DER RUHIGSTE HIER!»',
+    '«JETZT ABER MAL LANGSAM!»',
   ],
   /** In the cell the same confidence keeps running, with nobody left to impress. */
   tobiCellTaunt: [
@@ -69,6 +77,10 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«ICH WAR DAS GAR NICHT!»',
     '«GIBT ES HIER FRÜHSTÜCK?»',
     '«ICH BESCHWERE MICH!»',
+    '«HÖRT MICH JEMAND?!»',
+    '«ICH HAB RECHTE!»',
+    '«DAS WAR NOTWEHR!»',
+    '«EINMAL TELEFONIEREN!»',
   ],
   /** Shouting on a plane is a different kind of bad idea. */
   tobiFlightTaunt: [
@@ -78,6 +90,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«WO BLEIBT DAS GETRÄNK?»',
     '«ICH KENNE DEN PILOTEN!»',
     '«IST DAS DIE BUSINESS CLASS?»',
+    '«MEIN SITZ KLEMMT!»',
+    '«NOCH LANGE?»',
+    '«DARF ICH MAL DURCH?»',
     '«NUR EINE FRAGE!»',
   ],
   /** Parade dancers and holiday bystanders shouting back. Cheerful, not hostile. */
@@ -96,6 +111,16 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Sali!»',
     '«Ist das im Line-up?»',
     '«Der hat Energie.»',
+    '«Wer isch dää?»',
+    '«Läck du!»',
+    '«Hesch es guet?»',
+    '«Sicher, sicher.»',
+    '«Der meint das ernst.»',
+    '«Foto! Foto!»',
+    '«Guet gsi!»',
+    '«Ist das der von vorhin?»',
+    '«Mega Typ.»',
+    '«Lass ihn doch.»',
   ],
   /** Same crowd, once Tobi has been shouting for a while. */
   crowdAnnoyed: [
@@ -105,6 +130,11 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Geh doch heim, Kollege.»',
     '«Niemand kennt Karl!»',
     '«Ruhig, ja?»',
+    '«Es reicht jetzt.»',
+    '«Immer der Gleiche.»',
+    '«Nimm dich zäme.»',
+    '«Sag das nochmal, dann …»',
+    '«Hör auf zu brüllen.»',
   ],
   flirt: [
     'Hey sexy!',
@@ -121,6 +151,12 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     'You stay long time in Bangkok?',
     'You have nice smile, handsome man!',
     'Come come, I show you good drink na!',
+    'You look like movie star, ka!',
+    'One photo together na?',
+    'You dance with me later, ka?',
+    'Your friend Karl, he come too?',
+    'You make me laugh, handsome man!',
+    'Why you so serious na?',
   ],
   flirtRejected: [
     'Maybe later na?',
@@ -129,6 +165,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     'You already have many bottle, ka!',
     'My friend like you more na!',
     'Later later, handsome man!',
+    'You ask everybody, ka!',
+    'Go drink some water na.',
+    'Come back when you can walk, ka!',
   ],
   bargirlTaunt: [
     'Hey! No shouting, ka!',
@@ -137,6 +176,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     'Who is Karl na?',
     'You scare my customer, ka!',
     'Shhh! Music already loud!',
+    'You break my ear, ka!',
+    'Sit down, handsome man!',
+    'Enough enough na!',
   ],
   conductor: [
     '«Ticket! TICKET!»',
@@ -149,6 +191,11 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Setzen Sie sich einfach hin.»',
     '«Ich mache das seit zwanzig Jahren.»',
     '«Der Zug fährt auch ohne Sie vorwärts.»',
+    '«Fahrausweise, die Herrschaften.»',
+    '«Nein, das gilt hier nicht.»',
+    '«Sie halten den ganzen Wagen auf.»',
+    '«Ich frage ein letztes Mal.»',
+    '«Wir haben Vorschriften.»',
   ],
   cellGuard: [
     '«Ruhe da drin!»',
@@ -159,6 +206,10 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Das sagen sie alle.»',
     '«Legen Sie sich einfach hin.»',
     '«Ihr Anruf ist notiert. Morgen.»',
+    '«Trinken Sie erst mal Wasser.»',
+    '«Name? Richtiger Name?»',
+    '«Sie sind nicht der Erste heute.»',
+    '«Ruhe, oder es wird länger.»',
   ],
   resident: [
     '«Namasteee.»',
@@ -171,6 +222,11 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Alles fliesst, Tobi.»',
     '«Magst du Kombucha?»',
     '«Karl hat auch nie abgewaschen.»',
+    '«Nimm dir ein Kissen.»',
+    '«Die Küche ist unten.»',
+    '«Wir essen um sieben.»',
+    '«Bist du der Neue?»',
+    '«Mach die Tür zu, bitte.»',
   ],
   yoga: [
     '«Und einatmen …»',
@@ -180,6 +236,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Atme durch die Nase, nicht durchs Gesicht.»',
     '«Wir halten das noch drei Atemzüge.»',
     '«Dein Becken ist sehr verspannt.»',
+    '«Der Atem kommt von unten.»',
+    '«Nicht drücken, fliessen lassen.»',
+    '«Schuhe bitte draussen.»',
   ],
   /** Seated travellers in the train, startled out of a long journey. */
   passenger: [
@@ -189,6 +248,10 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Setz dich doch einfach.»',
     '«Nicht schon wieder einer.»',
     '«Ist das der richtige Zug?»',
+    '«Meine Tasche, bitte!»',
+    '«Wie spät ist es?»',
+    '«Ich steig gleich aus.»',
+    '«Ruhe, bitte.»',
   ],
   /** Shouted the moment a patrol gets eyes on Tobi. */
   policeSpotted: [
@@ -211,6 +274,10 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Das wird teuer, mein Herr!»',
     '«Sie machen das schlimmer als es ist!»',
     '«Stehen bleiben, letzte Warnung!»',
+    '«Bleiben Sie, wo Sie sind!»',
+    '«Nicht weglaufen!»',
+    '«Er geht Richtung Wasser!»',
+    '«Absperren!»',
   ],
   /** Muttered once the sightline breaks and the patrol is guessing. */
   policeSearch: [
@@ -222,6 +289,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Der kann nicht weit sein.»',
     '«Kollege, Sichtkontakt?»',
     '«Alles absuchen, langsam.»',
+    '«Nichts zu sehen.»',
+    '«Prüf mal da hinten.»',
+    '«Weitersuchen.»',
   ],
   policeCaught: [
     '«Sie kommen jetzt mit.»',
@@ -230,6 +300,8 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Ruhig bleiben, es ist vorbei.»',
     '«Ab in den Wagen.»',
     '«Wir kennen keinen Karl.»',
+    '«Sie erzählen das gleich nochmal.»',
+    '«Alles Weitere auf dem Posten.»',
   ],
   /** Said unprompted when Tobi wanders into someone's personal space. */
   greeting: [
@@ -245,6 +317,12 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Pass auf, wo du hinläufst!»',
     '«Hoppla.»',
     '«Hey, nicht so nah.»',
+    '«Suchst du wen?»',
+    '«Brauchst du was?»',
+    '«Alles in Ordnung bei dir?»',
+    '«Tag zäme.»',
+    '«Vorsicht!»',
+    '«Du siehst durstig aus.»',
   ],
   greetingBar: [
     'Hello handsome man!',
@@ -254,6 +332,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     'First time here na?',
     'Sit sit, plenty space!',
     'Hello! You look thirsty, ka!',
+    'Hello hello, come in na!',
+    'Best bar here, ka!',
+    'You looking for someone na?',
   ],
   greetingYoga: [
     '«Schhh.»',
@@ -262,6 +343,8 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Leise, bitte.»',
     '«Atme erst mal durch.»',
     '«Da hinten ist noch eine Matte.»',
+    '«Wir sind gleich fertig.»',
+    '«Setz dich einfach dazu.»',
   ],
   greetingTrain: [
     '«Ist da noch frei?»',
@@ -270,6 +353,9 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Vorsicht, mein Gepäck.»',
     '«Fährt der pünktlich?»',
     '«Willst du auch was trinken?»',
+    '«Der Barwagen ist vorne.»',
+    '«Halt dich fest, gleich kommt die Kurve.»',
+    '«Schon lange unterwegs?»',
   ],
   /** Standing drinkers in the bar carriage and on the Nana stools. */
   barGuest: [
@@ -279,6 +365,10 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Erzähl das dem Schaffner.»',
     '«Wer ist jetzt Karl?»',
     '«Setz dich, Kollege.»',
+    '«Zwei Bier, bitte!»',
+    '«Auf Karl!»',
+    '«Was trinkst du?»',
+    '«Läuft bei dir, hm?»',
   ],
 };
 

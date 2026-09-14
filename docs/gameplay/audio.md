@@ -103,6 +103,12 @@ Bei 180 verfügbaren Stimmen im Testbrowser — darunter mehrere de-DE und en-US
 
   Zusätzlich verstimmt ein kleiner Versatz pro Sprecher Tonhöhe und Tempo, damit eine Reihe gleichartiger NPCs nicht wie Klone klingt.
 
+- **Viele Leute, viele Stimmen.** Rollen, die von vielen Figuren gespielt werden — Menge, Bewohner, Reisende, Bargäste, Polizei, Begrüssungen — verteilen sich über ihre **ganze** Wunschliste: gemessen sechs verschiedene Stimmen über sechs Sprecher. Einzelfiguren wie Tobi oder der Schaffner behalten dagegen immer dieselbe Stimme. Ein Browsertest hält beides fest.
+- **Polizei spricht.** Beim ersten Sichtkontakt «HALT! STEHEN BLEIBEN!», dann laufende Zurufe während der Verfolgung und gemurmelte Suche, sobald der Sichtkontakt abreisst. Die Festnahme hat eine eigene Zeile. `PoliceRuntime` gibt die Zeilen nur aus; gezeichnet werden sie vom Host, damit die Verfolgungslogik ohne Szene testbar bleibt.
+- **Begrüssung bei Annäherung.** Wer Tobi auf 3,6 Meter nahe kommt, sagt von sich aus etwas. `ProximityGreeter` in `game-core` hält die Regeln: einmal pro Person, danach 25 Sekunden Ruhe, höchstens eine Begrüssung alle 3,5 Sekunden, und man muss tatsächlich **ankommen** — Herumstehen löst nichts aus.
+
+Insgesamt stehen **286 Zeilen** in 22 Themen bereit.
+
 - **Kein Rückstau.** Eine neue Zeile bricht die laufende ab, und zwei Zeilen innerhalb einer Drittelsekunde ergeben nur eine gesprochene: in einer Menge liefe die Sprachausgabe sonst Sekunden hinter den Sprechblasen her.
 - **Stumm und Pause schalten sie ab.** Die Sprachsynthese läuft **nicht** über den `AudioContext`, deshalb würde der Master-Gain sie nicht erreichen; sie wird getrennt gestoppt.
 - **Reine Verbesserung.** Kein Sprachausgabe-Support, keine passende Stimme, ein verweigernder Browser oder ein Fehler enden damit, dass die Zeile eben nicht gesprochen wird. Die Sprechblase trägt den Text ohnehin.
