@@ -6,18 +6,31 @@ import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { LevelDefinition } from '@tobi/contracts';
-import { NavigationGrid, PursuitSystem } from '@tobi/game-core';
+import { NavigationGrid, NpcVoices, PursuitSystem, type SpeechTopic } from '@tobi/game-core';
 import { pursuitBalance } from '@tobi/game-data';
 import { box, material } from '../levels/materials.js';
 import { navigationObstacles, sightBlockers } from '../levels/nav-obstacles.js';
 
 /** Babylon projection of portable pursuit rules. Ground navigation comes from real static colliders. */
+export interface PoliceCallout {
+  topic: SpeechTopic;
+  text: string;
+  position: { x: number; y: number; z: number };
+  /** Which officer spoke, so they do not all share one voice. */
+  speaker: number;
+}
+
 export class PoliceRuntime {
   public readonly system: PursuitSystem;
   private readonly roots: TransformNode[] = [];
   private readonly indicators: Mesh[] = [];
   private readonly limbs: Mesh[][] = [];
   private gait = 0;
+  private readonly voices = new NpcVoices();
+  /** Previous state per officer, to speak on a transition rather than every frame. */
+  private readonly lastState = new Map<number, string>();
+  private chaseChatter = 0;
+  private pending: PoliceCallout | null = null;
   public constructor(
     scene: Scene,
     level: LevelDefinition,
@@ -89,8 +102,49 @@ export class PoliceRuntime {
       root.setEnabled(false);
     }
   }
+  /** Pops the line an officer shouted since the last call, for the speech plates. */
+  public takeCallout(): PoliceCallout | null {
+    const callout = this.pending;
+    this.pending = null;
+    return callout;
+  }
+
+  private callOut(topic: SpeechTopic, agentId: number, at: { x: number; z: number }): void {
+    // One line at a time: three officers shouting over each other reads as noise.
+    this.pending = {
+      topic,
+      text: this.voices.next(topic, agentId),
+      position: { x: at.x, y: 2.15, z: at.z },
+      speaker: agentId,
+    };
+  }
+
   public sync(delta = 0): void {
     this.gait += delta * 11;
+    this.chaseChatter = Math.max(0, this.chaseChatter - delta);
+    for (const agent of this.system.activeAgents) {
+      const previous = this.lastState.get(agent.id);
+      this.lastState.set(agent.id, agent.state);
+      if (previous === agent.state) continue;
+      // Only the transitions worth hearing; PATROL and RETURN_TO_PATROL stay silent.
+      if (agent.state === 'CHASE') {
+        this.callOut('policeSpotted', agent.id, agent.position);
+        this.chaseChatter = 2.5;
+      } else if (agent.state === 'SEARCH' && previous === 'CHASE') {
+        this.callOut('policeSearch', agent.id, agent.position);
+        this.chaseChatter = 3;
+      }
+    }
+    // While the chase runs, keep one officer talking on a slow cadence.
+    if (delta > 0 && this.chaseChatter === 0) {
+      const chasing = this.system.activeAgents.filter((agent) => agent.state === 'CHASE');
+      const searching = this.system.activeAgents.filter((agent) => agent.state === 'SEARCH');
+      const speaker = chasing[0] ?? searching[0];
+      if (speaker) {
+        this.callOut(chasing.length ? 'policeChase' : 'policeSearch', speaker.id, speaker.position);
+        this.chaseChatter = chasing.length ? 3.5 : 7;
+      }
+    }
     for (const agent of this.system.agents) {
       const root = this.roots[agent.id],
         marker = this.indicators[agent.id];

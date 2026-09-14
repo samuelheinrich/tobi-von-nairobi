@@ -60,6 +60,14 @@ const TOBI: VoiceProfile = {
   volume: 1,
 };
 
+/** Uniformed, clipped and loud. The first shout is the loudest thing in the level. */
+const POLICE: VoiceProfile = {
+  prefer: ['Reed', 'Grandpa', 'Rocko', 'Eddy'],
+  pitch: 0.78,
+  rate: 1.12,
+  volume: 1,
+};
+
 const profiles: Record<SpeechTopic, VoiceProfile> = {
   tobiTaunt: TOBI,
   tobiCellTaunt: { ...TOBI, rate: 1.1 },
@@ -77,6 +85,16 @@ const profiles: Record<SpeechTopic, VoiceProfile> = {
   yoga: { prefer: ['Shelley', 'Sandy', 'Anna'], pitch: 1.12, rate: 0.78, volume: 0.72 },
   passenger: { prefer: ['Grandma', 'Anna', 'Sandy'], pitch: 0.98, rate: 0.9, volume: 0.72 },
   barGuest: { prefer: ['Eddy', 'Rocko', 'Flo'], pitch: 0.95, rate: 1.06, volume: 0.8 },
+  policeSpotted: { ...POLICE, pitch: 0.74, rate: 1.22 },
+  policeChase: POLICE,
+  // Searching is muttered to a colleague, not shouted across a square.
+  policeSearch: { ...POLICE, pitch: 0.82, rate: 0.98, volume: 0.8 },
+  policeCaught: { ...POLICE, pitch: 0.8, rate: 0.92, volume: 0.95 },
+  // Greetings are offhand: quieter and a touch slower than a reaction to being shouted at.
+  greeting: { prefer: ['Sandy', 'Flo', 'Anna', 'Shelley'], pitch: 1.04, rate: 0.98, volume: 0.66 },
+  greetingBar: { prefer: ['Samantha', 'Shelley', 'Flo'], pitch: 1.3, rate: 1.06, volume: 0.72 },
+  greetingYoga: { prefer: ['Shelley', 'Sandy'], pitch: 1.12, rate: 0.8, volume: 0.6 },
+  greetingTrain: { prefer: ['Grandma', 'Eddy', 'Anna'], pitch: 0.97, rate: 0.94, volume: 0.66 },
 };
 
 export function voiceProfile(topic: SpeechTopic): VoiceProfile {

@@ -15,7 +15,15 @@ export type SpeechTopic =
   | 'resident'
   | 'yoga'
   | 'passenger'
-  | 'barGuest';
+  | 'barGuest'
+  | 'policeSpotted'
+  | 'policeChase'
+  | 'policeSearch'
+  | 'policeCaught'
+  | 'greeting'
+  | 'greetingBar'
+  | 'greetingYoga'
+  | 'greetingTrain';
 
 /** Bar-girl English keeps the affectionate Thai sentence particles «na» and «ka».
  * German lines are de-CH: «ss» instead of «ß», and the guillemets the rest of the UI uses.
@@ -182,6 +190,87 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Nicht schon wieder einer.»',
     '«Ist das der richtige Zug?»',
   ],
+  /** Shouted the moment a patrol gets eyes on Tobi. */
+  policeSpotted: [
+    '«HALT! STEHEN BLEIBEN!»',
+    '«STOPP! POLIZEI!»',
+    '«HALT! KEINEN SCHRITT WEITER!»',
+    '«SIE DA! STEHEN BLEIBEN!»',
+    '«POLIZEI! NICHT BEWEGEN!»',
+    '«STOPP! SOFORT STEHEN BLEIBEN!»',
+  ],
+  /** Kept up while the chase runs, at a slower cadence than the first shout. */
+  policeChase: [
+    '«Bleiben Sie stehen!»',
+    '«Das macht es nur schlimmer!»',
+    '«Sie kommen da nicht durch!»',
+    '«Ich sehe Sie!»',
+    '«Hinterher!»',
+    '«Er läuft nach da vorne!»',
+    '«Verstärkung anfordern!»',
+    '«Das wird teuer, mein Herr!»',
+    '«Sie machen das schlimmer als es ist!»',
+    '«Stehen bleiben, letzte Warnung!»',
+  ],
+  /** Muttered once the sightline breaks and the patrol is guessing. */
+  policeSearch: [
+    '«Wo ist er hin?»',
+    '«Haben Sie ihn noch?»',
+    '«Er muss hier irgendwo sein.»',
+    '«Ich hab ihn verloren.»',
+    '«Abschnitt absuchen!»',
+    '«Der kann nicht weit sein.»',
+    '«Kollege, Sichtkontakt?»',
+    '«Alles absuchen, langsam.»',
+  ],
+  policeCaught: [
+    '«Sie kommen jetzt mit.»',
+    '«Das war es für heute.»',
+    '«Hände sichtbar lassen.»',
+    '«Ruhig bleiben, es ist vorbei.»',
+    '«Ab in den Wagen.»',
+    '«Wir kennen keinen Karl.»',
+  ],
+  /** Said unprompted when Tobi wanders into someone's personal space. */
+  greeting: [
+    '«Oh, hallo.»',
+    '«Hoi.»',
+    '«Ja bitte?»',
+    '«Kann ich helfen?»',
+    '«Alles guet?»',
+    '«Du bist neu hier, oder?»',
+    '«Sali zäme.»',
+    '«Grüezi.»',
+    '«Schön, dich zu sehen.»',
+    '«Pass auf, wo du hinläufst!»',
+    '«Hoppla.»',
+    '«Hey, nicht so nah.»',
+  ],
+  greetingBar: [
+    'Hello handsome man!',
+    'Welcome, welcome na!',
+    'You want drink, ka?',
+    'Come in, come in!',
+    'First time here na?',
+    'Sit sit, plenty space!',
+    'Hello! You look thirsty, ka!',
+  ],
+  greetingYoga: [
+    '«Schhh.»',
+    '«Wir sind mitten drin.»',
+    '«Magst du mitmachen?»',
+    '«Leise, bitte.»',
+    '«Atme erst mal durch.»',
+    '«Da hinten ist noch eine Matte.»',
+  ],
+  greetingTrain: [
+    '«Ist da noch frei?»',
+    '«Setz dich doch.»',
+    '«Lange Fahrt, hm?»',
+    '«Vorsicht, mein Gepäck.»',
+    '«Fährt der pünktlich?»',
+    '«Willst du auch was trinken?»',
+  ],
   /** Standing drinkers in the bar carriage and on the Nana stools. */
   barGuest: [
     '«Prost!»',
@@ -197,8 +286,15 @@ const lines: Record<SpeechTopic, readonly string[]> = {
  * Kept as data rather than guessed from the text, so a speech synthesiser picks the right voice
  * instead of reading «Handsome man!» with a German one.
  */
+const ENGLISH: ReadonlySet<SpeechTopic> = new Set<SpeechTopic>([
+  'flirt',
+  'flirtRejected',
+  'bargirlTaunt',
+  'greetingBar',
+]);
+
 export function speechLanguage(topic: SpeechTopic): 'de' | 'en' {
-  return topic === 'flirt' || topic === 'flirtRejected' || topic === 'bargirlTaunt' ? 'en' : 'de';
+  return ENGLISH.has(topic) ? 'en' : 'de';
 }
 
 export function speechOptions(topic: SpeechTopic): readonly string[] {

@@ -44,6 +44,7 @@ export async function exerciseEscapeRoute(
   const bottles = new BottlePickups(scene, level, environment.shadows);
   const session = new PrototypeSession(level, prototypeBalance);
   const states = new Set<string>();
+  const callouts: { topic: string; text: string }[] = [];
   let maxChaos = 0,
     ticks = 0;
   const tick = (x = 0, z = 0, sprint = false): void => {
@@ -79,6 +80,9 @@ export async function exerciseEscapeRoute(
     }
     maxChaos = Math.max(maxChaos, police.system.chaos.value);
     for (const a of police.system.activeAgents) states.add(a.state);
+    police.sync(delta);
+    const callout = police.takeCallout();
+    if (callout) callouts.push({ topic: callout.topic, text: callout.text });
     ticks++;
   };
   const walk = (x: number, z: number, sprint = false): void => {
@@ -107,6 +111,8 @@ export async function exerciseEscapeRoute(
       for (let i = 0; i < 3600 && !police.system.caught; i++) tick();
       return {
         caught: police.system.caught,
+        callouts,
+        calloutTopics: [...new Set(callouts.map((c) => c.topic))],
         position: motor.position.asArray(),
         police: police.system.agents.map((a) => ({
           state: a.state,
@@ -162,6 +168,8 @@ export async function exerciseEscapeRoute(
       wanted: police.system.wanted.maximum,
       blockedCheckIn,
       states: [...states],
+      callouts,
+      calloutTopics: [...new Set(callouts.map((c) => c.topic))],
       position: motor.position.asArray(),
       ticks,
       police: police.system.agents.map((a) => ({

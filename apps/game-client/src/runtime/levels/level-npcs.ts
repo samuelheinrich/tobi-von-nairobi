@@ -46,6 +46,14 @@ const cues: Record<SpeechTopic, SoundCue> = {
   yoga: 'flirt',
   passenger: 'grumble',
   barGuest: 'cheer',
+  policeSpotted: 'alert',
+  policeChase: 'alert',
+  policeSearch: 'grumble',
+  policeCaught: 'caught',
+  greeting: 'flirt',
+  greetingBar: 'flirt',
+  greetingYoga: 'flirt',
+  greetingTrain: 'flirt',
 };
 
 export function replyCue(topic: SpeechTopic): SoundCue {

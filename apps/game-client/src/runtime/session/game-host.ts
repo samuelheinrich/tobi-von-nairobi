@@ -565,6 +565,12 @@ export class GameHost {
       this.input.reset();
       if (document.pointerLockElement === this.canvas) document.exitPointerLock();
       this.audio.play('caught');
+      this.bubbles.say(
+        new Vector3(position.x, position.y + 1.6, position.z),
+        this.voices.next('policeCaught', 'arrest'),
+        socialBalance.replySeconds,
+        { topic: 'policeCaught', speaker: 1 },
+      );
       this.store.update({ phase: 'caught', pursuit: this.police?.system.snapshot() ?? null });
       return;
     }
@@ -692,6 +698,14 @@ export class GameHost {
         this.mood.amount,
       );
       this.police?.sync(this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0);
+      const callout = this.police?.takeCallout();
+      if (callout)
+        this.bubbles.say(
+          new Vector3(callout.position.x, callout.position.y, callout.position.z),
+          callout.text,
+          socialBalance.replySeconds,
+          { topic: callout.topic, speaker: callout.speaker },
+        );
       if (this.store.getSnapshot().phase !== 'paused') this.bottles.update(Math.min(delta, 0.1));
       this.bubbles.update(
         this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
