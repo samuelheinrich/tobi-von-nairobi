@@ -1,7 +1,7 @@
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
-import { NpcVoices, speechLanguage } from '@tobi/game-core';
+import { NpcVoices } from '@tobi/game-core';
 import { socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
@@ -65,7 +65,7 @@ export class CellGuard implements LevelNpcs {
       const line = this.voices.next('cellGuard', 'guard');
       this.reply = { text: line, cue: replyCue('cellGuard') };
       this.bubbles.say(at.add(new Vector3(0, 2.5, 0)), line, socialBalance.replySeconds, {
-        language: speechLanguage('cellGuard'),
+        topic: 'cellGuard',
         speaker: 3,
       });
     } else if (this.state === 'COMPLAINING') {

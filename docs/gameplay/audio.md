@@ -85,8 +85,24 @@ Bei 180 verfügbaren Stimmen im Testbrowser — darunter mehrere de-DE und en-US
 
 ### Verhalten
 
-- **Sprache steht in den Daten.** `speechLanguage(topic)` liefert `de` oder `en`; nur die Bar-Mädchen sprechen Englisch. So liest keine deutsche Stimme «Handsome man!» vor.
-- **Stimme pro Figur.** Ein stabiler Index über die verfügbaren Stimmen plus eine Tonhöhe pro Sprecher lassen zwei benachbarte NPCs unterschiedlich klingen, und dieselbe Figur über einen Durchlauf hinweg gleich.
+- **Das Thema entscheidet alles.** Eine Sprechblase trägt ihr `SpeechTopic` bis zur Sprachausgabe. Daraus kommen Sprache _und_ Stimmprofil, sie können also nicht auseinanderlaufen.
+- **Nie eine Sprache ohne Stimme.** Findet sich keine Stimme für die Sprache, wird **nicht** gesprochen. Ein blosses `utterance.lang` zu setzen war der Fehler, der deutsche Sätze englisch klingen liess: für `de-CH` gibt es auf macOS keine Stimme, und der Browser griff zu seiner Standardstimme — _Albert (en-US)_.
+- **Keine Scherzstimmen.** macOS liefert «Bells», «Zarvox», «Boing», «Albert» und ein Dutzend weitere Spassstimmen in derselben Liste wie die echten, ohne unterscheidendes Merkmal. Sie stehen auf einer Sperrliste; «Bells» hatte zuvor die englischen Zeilen gelesen.
+- **Ein eigenes Profil je Rolle.** `voice-profiles.ts` hält Wunschstimmen, Tonhöhe, Tempo und Lautstärke pro Thema. Gemessen auf macOS verteilt sich die Besetzung auf sieben Stimmen:
+
+  | Rolle             | Stimme   | Tonhöhe / Tempo                      |
+  | ----------------- | -------- | ------------------------------------ |
+  | Tobi (Pöbeln)     | Rocko    | 0,52 / 1,15 — tief, zu schnell, laut |
+  | Menge             | Flo      | 1,01 / 1,08                          |
+  | Schaffner, Wärter | Grandpa  | 0,68 / 0,85–0,95                     |
+  | Yogagruppe        | Shelley  | 1,12 / 0,81 — langsam                |
+  | WG-Bewohner       | Sandy    | 1,16 / 0,95                          |
+  | Reisende          | Grandma  | 0,90 / 0,93                          |
+  | Bargäste          | Eddy     | 0,91 / 1,03                          |
+  | Bar-Mädchen (en)  | Samantha | 1,26–1,39 / 1,09–1,18                |
+
+  Zusätzlich verstimmt ein kleiner Versatz pro Sprecher Tonhöhe und Tempo, damit eine Reihe gleichartiger NPCs nicht wie Klone klingt.
+
 - **Kein Rückstau.** Eine neue Zeile bricht die laufende ab, und zwei Zeilen innerhalb einer Drittelsekunde ergeben nur eine gesprochene: in einer Menge liefe die Sprachausgabe sonst Sekunden hinter den Sprechblasen her.
 - **Stumm und Pause schalten sie ab.** Die Sprachsynthese läuft **nicht** über den `AudioContext`, deshalb würde der Master-Gain sie nicht erreichen; sie wird getrennt gestoppt.
 - **Reine Verbesserung.** Kein Sprachausgabe-Support, keine passende Stimme, ein verweigernder Browser oder ein Fehler enden damit, dass die Zeile eben nicht gesprochen wird. Die Sprechblase trägt den Text ohnehin.

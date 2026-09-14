@@ -24,6 +24,13 @@ const lines: Record<SpeechTopic, readonly string[]> = {
   /** Tobi shouting at anyone within earshot. The joke is that he is certain this helps. */
   tobiTaunt: [
     '«ICH KENNE KARL!»',
+    '«SO KANN MAN NICHT ARBEITEN!»',
+    '«JEEEPPAAAA!»',
+    '«JA SPINNSCH?!»',
+    '«HALLOOO?!»',
+    '«GAHT NO?!»',
+    '«DAS GIBT ES DOCH NICHT!»',
+    '«ICH FASS ES NICHT!»',
     '«PLATZ DA, ICH KENNE KARL!»',
     '«KARL REGELT DAS!»',
     '«WISST IHR, WER ICH BIN?»',
@@ -43,6 +50,8 @@ const lines: Record<SpeechTopic, readonly string[]> = {
   /** In the cell the same confidence keeps running, with nobody left to impress. */
   tobiCellTaunt: [
     '«ICH KENNE KARL!»',
+    '«SO KANN MAN NICHT ARBEITEN!»',
+    '«JEEEPPAAAA!»',
     '«DAS IST EIN MISSVERSTÄNDNIS!»',
     '«ICH WILL MEINEN ANRUF!»',
     '«DIE FLASCHEN WAREN SCHON LEER!»',
@@ -56,6 +65,7 @@ const lines: Record<SpeechTopic, readonly string[]> = {
   /** Shouting on a plane is a different kind of bad idea. */
   tobiFlightTaunt: [
     '«HALLO? SERVICE?»',
+    '«SO KANN MAN NICHT ARBEITEN!»',
     '«ICH SITZE HIER FALSCH!»',
     '«WO BLEIBT DAS GETRÄNK?»',
     '«ICH KENNE DEN PILOTEN!»',

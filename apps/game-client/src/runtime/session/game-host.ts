@@ -14,7 +14,6 @@ import {
   BottleHands,
   ColorTrip,
   NpcVoices,
-  speechLanguage,
 } from '@tobi/game-core';
 import {
   movement,
@@ -141,7 +140,7 @@ export class GameHost {
         : null;
     this.bubbles = new SpeechBubbles(this.scene);
     // Every plate that appears is also read aloud, when the browser has a voice for it.
-    this.bubbles.onSay = (text, voice) => this.spoken.say(text, voice.language, voice.speaker);
+    this.bubbles.onSay = (text, voice) => this.spoken.say(voice.topic, text, voice.speaker);
     this.npcs = createLevelNpcs(this.scene, level, environment, this.bubbles);
     this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
@@ -479,28 +478,28 @@ export class GameHost {
       if (count > 0) lessonSignals.taunts = 1;
       this.flight?.puzzle.taunt();
       // Tobi says something different every time; the cell and the cabin have their own registers.
-      const shout = this.voices.next(
+      const shoutTopic =
         this.level.scenery === 'drunk-tank'
           ? 'tobiCellTaunt'
           : this.flight
             ? 'tobiFlightTaunt'
-            : 'tobiTaunt',
-        'tobi',
-      );
+            : 'tobiTaunt';
+      const shout = this.voices.next(shoutTopic, 'tobi');
       this.bubbles.say(
         new Vector3(position.x, position.y + 1.35, position.z),
         shout,
         socialBalance.replySeconds,
-        { language: 'de', speaker: 0 },
+        { topic: shoutTopic, speaker: 0 },
       );
       // After a few rounds the crowd stops finding it charming.
+      const crowdTopic = this.tauntCount > 2 ? 'crowdAnnoyed' : 'crowd';
       const responder = this.parade?.responder ?? this.crowd.responder;
       if (responder)
         this.bubbles.say(
           new Vector3(responder.x, responder.y, responder.z),
-          this.voices.next(this.tauntCount > 2 ? 'crowdAnnoyed' : 'crowd', count),
+          this.voices.next(crowdTopic, count),
           socialBalance.replySeconds,
-          { language: speechLanguage('crowd'), speaker: count },
+          { topic: crowdTopic, speaker: count },
         );
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({

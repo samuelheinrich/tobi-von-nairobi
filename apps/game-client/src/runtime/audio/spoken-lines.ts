@@ -1,3 +1,6 @@
+import { speechLanguage, type SpeechTopic } from '@tobi/game-core';
+import { isNoveltyVoice, voiceProfile } from './voice-profiles.js';
+
 /** Speaks NPC lines aloud through the browser's own speech synthesiser.
  *
  * Why the Web Speech API rather than generated audio files: it costs nothing to ship, needs no
@@ -12,7 +15,6 @@
  */
 export class SpokenLines {
   private voices: SpeechSynthesisVoice[] = [];
-  private ready = false;
   private lastSpokenAt = 0;
   public enabled = true;
 
@@ -29,47 +31,72 @@ export class SpokenLines {
 
   private collectVoices = (): void => {
     try {
-      this.voices = this.synth?.getVoices() ?? [];
-      this.ready = this.voices.length > 0;
+      // Novelty voices are dropped here so no later step can accidentally select one.
+      this.voices = (this.synth?.getVoices() ?? []).filter((voice) => !isNoveltyVoice(voice.name));
     } catch {
-      this.ready = false;
+      this.voices = [];
     }
   };
 
   public get available(): boolean {
-    return Boolean(this.synth) && this.ready;
+    if (!this.synth) return false;
+    // The list can still be empty on the first frames; ask again rather than give up for good.
+    if (!this.voices.length) this.collectVoices();
+    return this.voices.length > 0;
   }
 
-  /** Voices for a language, most preferred first: local ones avoid a network round trip. */
-  private pick(language: 'de' | 'en', speaker: number): SpeechSynthesisVoice | undefined {
+  /** Usable voices for a language, most preferred first. */
+  private candidates(language: 'de' | 'en'): SpeechSynthesisVoice[] {
     const matching = this.voices.filter((voice) => voice.lang.toLowerCase().startsWith(language));
-    if (!matching.length) return undefined;
+    // Local voices avoid a network round trip and keep the line in sync with its plate.
     const local = matching.filter((voice) => voice.localService);
-    const pool = local.length ? local : matching;
-    // A stable index per speaker keeps one character sounding like itself across a run.
+    return local.length ? local : matching;
+  }
+
+  /** The best voice for this profile, or undefined when the language has none at all. */
+  private pick(
+    language: 'de' | 'en',
+    profile: { prefer: readonly string[] },
+    speaker: number,
+  ): SpeechSynthesisVoice | undefined {
+    const pool = this.candidates(language);
+    if (!pool.length) return undefined;
+    for (const wanted of profile.prefer) {
+      const named = pool.filter((voice) =>
+        voice.name.toLowerCase().startsWith(wanted.toLowerCase()),
+      );
+      // Several speakers of one kind spread across the matching voices instead of stacking up.
+      if (named.length) return named[Math.abs(speaker) % named.length];
+    }
+    // No preferred voice installed: any real voice for the language beats staying silent.
     return pool[Math.abs(speaker) % pool.length];
   }
 
   /**
-   * Speaks one line. `speaker` only varies pitch and voice choice, so two NPCs standing next to
-   * each other do not sound identical. A new line cancels the previous one rather than queueing:
-   * in a crowd the backlog would otherwise drift seconds behind what is on screen.
+   * Speaks one line in the voice its topic calls for. `speaker` keeps two NPCs of the same kind
+   * from sounding identical. A new line cancels the previous one rather than queueing: in a crowd
+   * the backlog would otherwise drift seconds behind what is on screen.
    */
-  public say(text: string, language: 'de' | 'en', speaker = 0, now = performance.now()): boolean {
+  public say(topic: SpeechTopic, text: string, speaker = 0, now = performance.now()): boolean {
     if (!this.enabled || !this.synth || !this.available) return false;
     // Two lines within a third of a second are a crowd reacting at once; speak only the first.
     if (now - this.lastSpokenAt < 330) return false;
+    const profile = voiceProfile(topic);
+    const voice = this.pick(speechLanguage(topic), profile, speaker);
+    // Never fall back to a bare language tag: with no matching voice the browser reaches for its
+    // own default, which on macOS is English — that is how German lines ended up sounding English.
+    if (!voice) return false;
     try {
       const utterance = new SpeechSynthesisUtterance(
         // Guillemets and ellipses are punctuation for the eye; some voices read them out.
         text.replace(/[«»]/g, '').replace(/…/g, '.').trim(),
       );
-      const voice = this.pick(language, speaker);
-      if (voice) utterance.voice = voice;
-      utterance.lang = voice?.lang ?? (language === 'de' ? 'de-CH' : 'en-US');
-      utterance.rate = 1.08;
-      utterance.pitch = 0.85 + (Math.abs(speaker) % 5) * 0.09;
-      utterance.volume = 0.85;
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+      // A small per-speaker detune on top of the profile keeps a row of NPCs from sounding cloned.
+      utterance.pitch = clamp(profile.pitch + ((Math.abs(speaker) % 5) - 2) * 0.04, 0, 2);
+      utterance.rate = clamp(profile.rate + ((Math.abs(speaker) % 3) - 1) * 0.03, 0.1, 10);
+      utterance.volume = profile.volume;
       this.synth.cancel();
       this.synth.speak(utterance);
       this.lastSpokenAt = now;
@@ -93,3 +120,6 @@ export class SpokenLines {
     this.synth?.removeEventListener?.('voiceschanged', this.collectVoices);
   }
 }
+
+const clamp = (value: number, low: number, high: number): number =>
+  Math.min(high, Math.max(low, value));

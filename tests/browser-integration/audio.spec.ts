@@ -55,8 +55,22 @@ test('spoken lines use the browser synthesiser, respect mute and never block on 
   if (result.live.available) {
     expect(result.live.german, detail).toBe(true);
     expect(result.live.english, detail).toBe(true);
+    expect(result.live.yoga, detail).toBe(true);
     // Two lines in the same instant would drift behind the plates; only the first is spoken.
     expect(result.live.throttled, detail).toBe(false);
+    const [tobi, flirt, calm] = result.live.chosen;
+    // The reported bug: a German line read by an English voice. Language must follow the topic.
+    expect(tobi.lang, detail).toMatch(/^de/i);
+    expect(calm.lang, detail).toMatch(/^de/i);
+    expect(flirt.lang, detail).toMatch(/^en/i);
+    // Tobi and a yoga teacher must not come out of the same voice.
+    expect(tobi.voice, detail).not.toBe(calm.voice);
+    // Novelty voices ("Bells", "Zarvox", "Albert") are never acceptable for dialogue.
+    for (const pick of result.live.chosen)
+      expect(
+        ['bells', 'zarvox', 'albert', 'bad news', 'boing', 'bubbles', 'jester'],
+        detail,
+      ).not.toContain((pick.voice ?? '').toLowerCase().replace(/\s*\(.*\)$/, ''));
   }
   expect(result.live.muted, detail).toBe(false);
   // A browser without speech support degrades quietly instead of throwing.

@@ -1,3 +1,4 @@
+import type { SpeechTopic } from '@tobi/game-core';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -6,9 +7,10 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 
-/** Which voice should read a line aloud: its language, and who is speaking. */
+/** Which voice should read a line aloud. The topic decides both language and character, so the
+ * two can never drift apart; `speaker` only separates two NPCs of the same kind. */
 export interface SpeechVoice {
-  language: 'de' | 'en';
+  topic: SpeechTopic;
   speaker: number;
 }
 

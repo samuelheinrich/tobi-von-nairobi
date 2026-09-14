@@ -10,7 +10,7 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 
 | Datum      | Offen | Erledigt |
 | ---------- | ----- | -------- |
-| 2026-09-14 | 2     | —        |
+| 2026-09-14 | 3     | —        |
 
 ## Offen
 
@@ -28,6 +28,14 @@ Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige B
 - **Fehlender Test:** E2E, das im Spiel prüft, dass eine erscheinende Sprechblase auch eine Äusserung auslöst und dass der Stumm-Schalter sie abbricht. Die Einheit selbst ist im Browser getestet (`audio.spec.ts`), die Verdrahtung über `onSay` noch nicht.
 - **Aufwand:** M — `speechSynthesis.speak` lässt sich in Playwright nur indirekt beobachten, am ehesten über einen Stub auf `window.speechSynthesis` vor dem Laden.
 - **Risiko solange offen:** Wäre `onSay` nicht gesetzt, bliebe alles stumm, ohne dass ein Test anschlägt.
+- **Commit:** folgt in diesem Branch
+
+### Stimmenwahl auf anderen Betriebssystemen
+
+- **Betrifft:** `voice-profiles.ts`, `SpokenLines.pick`
+- **Fehlender Test:** Die Wunschstimmen (Rocko, Grandpa, Samantha …) sind macOS-Namen. Auf Windows und Linux greift der Fallback «irgendeine echte Stimme der Sprache». Ungeprüft ist, ob dort überhaupt deutsche Stimmen vorhanden sind und ob die Sperrliste die dortigen Scherzstimmen erfasst.
+- **Aufwand:** M — braucht echte Windows-/Linux-Läufe; in Headless-CI sind keine Systemstimmen installiert.
+- **Risiko solange offen:** Auf einem fremden System klingt die Besetzung einheitlich oder bleibt stumm. Beides fällt nicht auf die Spielbarkeit zurück, aber die Profile tragen dort nicht.
 - **Commit:** folgt in diesem Branch
 
 ## Erledigt

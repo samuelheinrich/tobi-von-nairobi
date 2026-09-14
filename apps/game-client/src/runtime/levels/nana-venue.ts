@@ -4,7 +4,7 @@ import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
-import { NpcVoices, speechLanguage } from '@tobi/game-core';
+import { NpcVoices } from '@tobi/game-core';
 import { nanaPlazaLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
@@ -186,7 +186,7 @@ export class NanaVenue implements LevelNpcs {
       person.rig.root.position.add(new Vector3(0, 2.5, 0)),
       line,
       socialBalance.replySeconds,
-      { language: speechLanguage(topic), speaker: person.id },
+      { topic, speaker: person.id },
     );
   }
 

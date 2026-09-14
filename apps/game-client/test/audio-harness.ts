@@ -93,15 +93,28 @@ export async function exerciseSpokenLines() {
   await new Promise((resolve) => setTimeout(resolve, 400));
   try {
     const available = spoken.available;
-    const german = spoken.say('«ICH KENNE KARL!»', 'de', 0, 1000);
+    // The voice each line actually gets is what the reported bug was about, so record it.
+    const chosen: { topic: string; voice: string | null; lang: string | null }[] = [];
+    const synth = window.speechSynthesis;
+    const original = synth.speak.bind(synth);
+    synth.speak = (utterance: SpeechSynthesisUtterance) => {
+      chosen.push({
+        topic: utterance.text,
+        voice: utterance.voice?.name ?? null,
+        lang: utterance.voice?.lang ?? null,
+      });
+    };
+    const german = spoken.say('tobiTaunt', '«ICH KENNE KARL!»', 0, 1000);
     // Immediately after, a second speaker is throttled rather than queued.
-    const throttled = spoken.say('Hey sexy!', 'en', 3, 1100);
-    const english = spoken.say('Hey sexy!', 'en', 3, 5000);
+    const throttled = spoken.say('flirt', 'Hey sexy!', 3, 1100);
+    const english = spoken.say('flirt', 'Hey sexy!', 3, 5000);
+    const yoga = spoken.say('yoga', '«Und einatmen …»', 2, 9000);
     spoken.enabled = false;
-    const muted = spoken.say('«Ruhe da drin!»', 'de', 1, 9000);
+    const muted = spoken.say('cellGuard', '«Ruhe da drin!»', 1, 13000);
     spoken.enabled = true;
+    synth.speak = original;
     spoken.silence();
-    return { available, german, throttled, english, muted };
+    return { available, german, throttled, english, yoga, muted, chosen };
   } finally {
     spoken.dispose();
   }
@@ -111,7 +124,7 @@ export async function exerciseSpokenLines() {
 export async function exerciseSpokenFallback() {
   const { SpokenLines } = await import('../src/runtime/audio/spoken-lines.js');
   const spoken = new SpokenLines(null);
-  const spoke = spoken.say('«Test»', 'de', 0);
+  const spoke = spoken.say('tobiTaunt', '«Test»', 0);
   spoken.silence();
   spoken.dispose();
   return { available: spoken.available, spoke };
