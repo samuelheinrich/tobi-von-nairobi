@@ -2,27 +2,28 @@
 
 Stand: 14. September 2026. Branch `feature/fly-high-and-bali`, Stand `460ce77`, gepusht. Diese Übergabe ergänzt [Fly High und Bali-Küste](handover-2026-09-14-fly-high-and-bali.md) und [die erste Übergabe](handover-2026-09-14.md). Der verbindliche Funktionsstand steht in [implementation-status.md](implementation-status.md).
 
-## ⚠️ Zuerst lesen: `main` kann derzeit nichts aufnehmen
+## ⚠️ Zuerst lesen: CI läuft auf `main` in den Timeout
 
-Ein direkter Push auf `main` wird abgelehnt — das ist beabsichtigt und richtig. Aber es gibt darüber hinaus einen **Konfigurationsfehler, der jeden PR dauerhaft blockiert**:
+`main` enthält seit dem 14. September den gesamten Stand (`32bc659`, 26 Commits). Der Schutz wurde auf ausdrückliche Anweisung des Eigentümers entfernt, der Stapel direkt gepusht und die PRs #2–#8 geschlossen (#1 gilt als gemergt). **Branch Protection ist derzeit aus.** Die gesicherte Ursprungskonfiguration liegt unter `/tmp/tobi-backup/main-protection.json` — nur auf diesem Rechner, also bei Bedarf früh sichern.
 
-| Seite                                        | Wert       |
-| -------------------------------------------- | ---------- |
-| Branch Protection fordert Status-Check       | `required` |
-| CI (`​.github/workflows/ci.yml`) liefert Job | `quality`  |
+**Die CI ist rot, und zwar aus einem strukturellen Grund:**
 
-Der Kontext `required` wird von **nichts** gemeldet. Damit erfüllt kein Pull Request je die Pflichtprüfung — weder dieser noch die sieben darunter. `enforce_admins` ist aktiv, ein Umgehen also auch für den Eigentümer nicht möglich (und nicht gewünscht).
-
-**Die Behebung ist eine Zeile**, aber sie ändert eine Schutzregel und braucht deshalb eine bewusste Entscheidung des Eigentümers:
-
-```bash
-gh api -X PATCH repos/samuelheinrich/tobi-von-nairobi/branches/main/protection/required_status_checks \
-  -f 'contexts[]=quality'
+```
+Running 31 tests using 1 worker
+##[error]The operation was canceled.      ← nach 20 Minuten Job-Timeout
 ```
 
-Alternativ den CI-Job in `quality` → `required` umbenennen. Der Agent hat das **nicht** selbst geändert: Schutzregeln sind eine Sicherheitseinstellung, keine Aufräumarbeit.
+Der Job `quality` erledigt Lint, Typecheck, Unit-, Integrationstests und Bundlecheck problemlos und bleibt dann in `pnpm test:e2e` hängen: 31 Playwright-Fälle, **ein** Worker, Software-WebGL. Nach `timeout-minutes: 20` bricht GitHub ab. Der nachgelagerte Job `required` prüft `needs.quality.result == success` und meldet folgerichtig `failure`.
 
-Die acht offenen PRs sind **gestapelt** (`#8 → #7 → #6 → … → main`), keiner hat ein Review. `main` enthält bis heute nur den leeren Bootstrap-Commit `110c1d9`. Wer die Arbeit auf `main` bringen will, braucht: den Status-Check-Fix, dann Reviews, dann Merges von unten nach oben.
+Das ist kein Namensfehler in der Schutzregel — eine frühere Fassung dieser Übergabe behauptete das und lag falsch. Der Job `required` existiert (in `ci.yml` ab Zeile 50) und tut genau das Richtige. Die Pflichtprüfung schlug fehl, weil die E2E-Suite schlicht nicht mehr in ihr Zeitfenster passt.
+
+Sinnvolle Abhilfen, in aufsteigender Gründlichkeit:
+
+1. `timeout-minutes` im Job `quality` anheben (z. B. 45). Kleinste Änderung, verschiebt die Grenze nur.
+2. E2E in einen **eigenen Job** ziehen, damit Lint/Unit/Integration schnell und unabhängig grün melden.
+3. Playwright über mehrere Worker oder Shards verteilen (`--shard=i/n` in einer Matrix). `playwright.config.ts` steht bewusst auf `workers: 1`; wer das ändert, muss prüfen, ob die drei Webserver-Ports das mitmachen.
+
+Vorher wissen: Lokal dauert die volle Suite rund vier Minuten — die CI-Zahlen sind nicht vergleichbar, weil dort ohne GPU gerendert wird.
 
 ## Was in dieser Sitzung entstanden ist
 
