@@ -2,6 +2,8 @@
 
 Dies ist die spielerische Spezifikation für die Umsetzung. Zahlen sind initiales Balancing, keine bereits getesteten Ergebnisse. [Architektur](ARCHITECTURE.md) · [MVP-Abnahme](docs/development/milestones.md)
 
+**Aktualisierung vom 14. September 2026:** Die aktuelle Umsetzung verwendet automatische Trinkgesten nach Flaschenaufnahme, anschliessend werfbares Leergut (G) und Anpöbeln (R). Die zusätzlichen spielbaren Kapitel **Thailand Railway** und **Zürich Street Parade** sind in [Regeln und Leveldesign](docs/gameplay/railway-parade-and-bottles.md) beschrieben. Diese Entscheidungen ersetzen für den aktuellen Stand die manuellen Flaschen-/R-Belegungen im ursprünglichen Zielentwurf unten. Weitere Inventar-/Power-up-Arten bleiben geplant.
+
 ## 1. Erlebnis und Gameplay-Loop
 
 Tobi ist ein männlicher, etwas korpulenter, erstaunlich selbstbewusster Lebemann mit markantem Gang. Seine Erscheinung ist sympathisch und chaotisch, stilisiert in Low-/Mid-Poly. Er hält sich meist für kompetenter, als die Situation rechtfertigt. Gerade bei einer Flucht bewegen sich die Beine überraschend schnell, während Oberkörper und Gesicht verzögert begreifen, was passiert.

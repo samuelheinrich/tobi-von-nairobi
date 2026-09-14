@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "id": "zurich_street_parade",
+  "worldId": "zurich",
+  "title": "Zürich Street Parade",
+  "subtitle": "240 Leute. Ein Tobi. Alle sollen wissen, dass Karl das regelt.",
+  "maxWanted": 3,
+  "spawn": {
+    "x": 0,
+    "y": 1.5,
+    "z": -31
+  },
+  "destination": {
+    "id": "backstage",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 34
+    },
+    "radius": 2.2
+  },
+  "pickups": [
+    {
+      "id": "zurich_street_parade_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -26
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -26
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -20
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -20
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -14
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_06",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -14
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_07",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -8
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_08",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -8
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_09",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": -2
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_10",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": -2
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_11",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 4
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_12",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 4
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_13",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 10
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_14",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 10
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_15",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 16
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_16",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 16
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_17",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 22
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_18",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 22
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_19",
+      "itemId": "bottle",
+      "position": {
+        "x": -1,
+        "y": 0,
+        "z": 28
+      }
+    },
+    {
+      "id": "zurich_street_parade_bottle_20",
+      "itemId": "bottle",
+      "position": {
+        "x": 1,
+        "y": 0,
+        "z": 28
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 20,
+      "after": []
+    },
+    {
+      "id": "escape",
+      "type": "escapePolice",
+      "after": ["collect"]
+    },
+    {
+      "id": "reach",
+      "type": "reach",
+      "targetId": "backstage",
+      "after": ["escape"]
+    }
+  ],
+  "scenery": "street-parade",
+  "atmosphere": "night",
+  "chaosPerBottle": 5,
+  "policeSpeed": 3.8,
+  "navigationBounds": {
+    "minX": -27,
+    "maxX": 27,
+    "minZ": -38,
+    "maxZ": 38
+  },
+  "policeSpawns": [
+    {
+      "x": 8,
+      "y": 0,
+      "z": -2
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 8
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 20
+    }
+  ],
+  "powerups": [
+    {
+      "id": "parade_color_00",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -25
+      }
+    },
+    {
+      "id": "parade_color_01",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -25
+      }
+    },
+    {
+      "id": "parade_color_02",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -20
+      }
+    },
+    {
+      "id": "parade_color_03",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -20
+      }
+    },
+    {
+      "id": "parade_color_04",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -15
+      }
+    },
+    {
+      "id": "parade_color_05",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -15
+      }
+    },
+    {
+      "id": "parade_color_06",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -10
+      }
+    },
+    {
+      "id": "parade_color_07",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -10
+      }
+    },
+    {
+      "id": "parade_color_08",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -5
+      }
+    },
+    {
+      "id": "parade_color_09",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": -5
+      }
+    },
+    {
+      "id": "parade_color_10",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "parade_color_11",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "parade_color_12",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 5
+      }
+    },
+    {
+      "id": "parade_color_13",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 5
+      }
+    },
+    {
+      "id": "parade_color_14",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 10
+      }
+    },
+    {
+      "id": "parade_color_15",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 10
+      }
+    },
+    {
+      "id": "parade_color_16",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 15
+      }
+    },
+    {
+      "id": "parade_color_17",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 15
+      }
+    },
+    {
+      "id": "parade_color_18",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 20
+      }
+    },
+    {
+      "id": "parade_color_19",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 20
+      }
+    },
+    {
+      "id": "parade_color_20",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": 25
+      }
+    },
+    {
+      "id": "parade_color_21",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 25
+      }
+    }
+  ]
+}

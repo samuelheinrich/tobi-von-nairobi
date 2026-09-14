@@ -8,3 +8,6 @@ export * from './police/police-agent.js';
 export * from './police/pursuit.js';
 export * from './navigation/navigation-grid.js';
 export { BottleMood, characterPose } from './character/bottle-mood.js';
+export { BottleHands } from './items/bottle-hands.js';
+export { ColorTrip } from './items/color-trip.js';
+export { ReactiveCrowd } from './character/reactive-crowd.js';

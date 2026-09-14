@@ -1,4 +1,4 @@
-import { playableLevels } from '@tobi/game-data';
+import { playableLevels, worldNames, destinationName } from '@tobi/game-data';
 import type { GameView, LevelDefinition } from '@tobi/contracts';
 import { CompassIcon } from './icons.js';
 import { Controls } from './controls.js';
@@ -36,7 +36,7 @@ export function Landing({
           <em>Grosses Chaos.</em>
         </p>
         <p className="intro">
-          {level.pickups.length} Flaschen. Eine Unterkunft.
+          {level.pickups.length} Flaschen. Ziel: {destinationName(level)}.
           <br />
           Und ein Mann, der alles im Griff hat. Fast.
         </p>
@@ -47,9 +47,11 @@ export function Landing({
         >
           {view.phase === 'loading'
             ? 'KOFFER WIRD GEPACKT …'
-            : view.pursuit
-              ? 'FLUCHT STARTEN'
-              : 'AB NACH BALI'}
+            : level.scenery === 'railway'
+              ? 'EINSTEIGEN'
+              : view.pursuit
+                ? 'FLUCHT STARTEN'
+                : 'AB NACH BALI'}
           <span aria-hidden="true">↗</span>
         </button>
         <button
@@ -69,7 +71,10 @@ export function Landing({
           <CompassIcon />
         </div>
         <div className="destination-name">
-          Bali<span>01 / 04</span>
+          {worldNames[level.worldId]}
+          <span>
+            {level.worldId === 'bali' ? '01' : level.worldId === 'bangkok' ? '02' : '03'} / 04
+          </span>
         </div>
         <div className="destination-rule" />
         <div className="destination-meta">
@@ -104,14 +109,14 @@ export function Landing({
       </div>
       <div className="world-strip">
         <span className="strip-label">DIE REISE</span>
-        <span className="world-current">
+        <span className={level.worldId === 'bali' ? 'world-current' : ''}>
           <b>01</b> BALI <i />
         </span>
         <span>
-          <b>02</b> BANGKOK <small>SPÄTER</small>
+          <b>02</b> THAILAND <small>RAILWAY</small>
         </span>
         <span>
-          <b>03</b> ZÜRICH <small>SPÄTER</small>
+          <b>03</b> ZÜRICH <small>PARADE</small>
         </span>
         <span>
           <b>04</b> ARLESHEIM <small>SPÄTER</small>

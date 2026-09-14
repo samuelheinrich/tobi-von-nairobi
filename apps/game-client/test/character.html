@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tobi – Figurenwerkstatt</title>
+    <style>
+      body {
+        margin: 0;
+        background: #eee6d3;
+        font: 16px system-ui;
+        color: #263f45;
+      }
+      canvas {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+      }
+      aside {
+        position: absolute;
+        top: 32px;
+        left: 40px;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 36px;
+      }
+      button {
+        padding: 10px 16px;
+        cursor: pointer;
+        margin: 12px 6px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas aria-label="Tobi Figurenansicht"></canvas>
+    <aside>
+      <h1>TOBI VON NAIROBI</h1>
+      <div>Comic-Figur · Trägershirt, Locken und grosse Pläne.</div>
+      <button id="pose">Trinkpose</button><button id="turn">Ansicht drehen</button>
+    </aside>
+    <script type="module" src="./character-preview.ts"></script>
+  </body>
+</html>

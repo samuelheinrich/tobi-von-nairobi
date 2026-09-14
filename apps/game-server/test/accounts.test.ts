@@ -5,7 +5,14 @@ import { createApplication } from '../dist/application.js';
 import { createDatabase } from '@tobi/database';
 import type { Database } from '@tobi/database';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { welcomeToBali, baliEscape, beachBar, nightMarket } from '@tobi/game-data';
+import {
+  welcomeToBali,
+  baliEscape,
+  beachBar,
+  nightMarket,
+  streetParade,
+  thailandRailway,
+} from '@tobi/game-data';
 
 if (existsSync('apps/game-server/.env')) process.loadEnvFile('apps/game-server/.env');
 const origin = process.env.CLIENT_URL ?? 'http://localhost:5173';
@@ -214,7 +221,7 @@ describe('authenticated, durable campaign progress', () => {
       ).json().score,
     ).toBe(0);
   });
-  it.each([baliEscape, beachBar, nightMarket])(
+  it.each([baliEscape, beachBar, nightMarket, streetParade])(
     'requires an escape result before awarding $title progress',
     async (level) => {
       const user = await register();
@@ -254,6 +261,40 @@ describe('authenticated, durable campaign progress', () => {
       expect(complete.json().score).toBe(level.pickups.length * 100 + 1000);
     },
   );
+
+  it('stores a railway completion without requiring police and restores its own level result', async () => {
+    const user = await register();
+    const start = await app.inject({
+      method: 'POST',
+      url: '/api/v1/runs',
+      headers: user.headers,
+      payload: { requestId: randomUUID(), levelId: thailandRailway.id },
+    });
+    expect(start.statusCode).toBe(201);
+    const id = start.json().id;
+    await db.gameRun.update({ where: { id }, data: { startedAt: new Date(Date.now() - 40000) } });
+    const complete = await app.inject({
+      method: 'POST',
+      url: `/api/v1/runs/${id}/complete`,
+      headers: user.headers,
+      payload: {
+        pickupIds: thailandRailway.pickups.map((p) => p.id),
+        elapsedMs: 35000,
+        escapes: 0,
+        debugUsed: false,
+      },
+    });
+    expect(complete.statusCode, complete.body).toBe(200);
+    expect(complete.json().score).toBe(1300);
+    const read = await app.inject({
+      method: 'GET',
+      url: '/api/v1/progress',
+      headers: user.headers,
+    });
+    expect(read.json().levels).toEqual([
+      expect.objectContaining({ levelId: thailandRailway.id, bestScore: 1300, completions: 1 }),
+    ]);
+  });
 
   it('rejects expired sessions, weak passwords and invalid credentials', async () => {
     const user = await register();

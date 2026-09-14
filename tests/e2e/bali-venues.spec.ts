@@ -8,7 +8,7 @@ test('selects the new Bali venues, shows bottle totals and increases Tobis carto
   await page.goto('/');
   const levels = page.getByRole('combobox', { name: 'Level wählen' });
   await expect(levels).toBeEnabled({ timeout: 45000 });
-  await expect(levels.locator('option')).toHaveCount(4);
+  await expect(levels.locator('option')).toHaveCount(6);
   await levels.selectOption('bali_beach_bar');
   await expect(page.getByRole('button', { name: 'FLUCHT STARTEN' })).toBeEnabled({
     timeout: 45000,

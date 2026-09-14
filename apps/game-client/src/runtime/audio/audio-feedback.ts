@@ -1,4 +1,8 @@
 export type SoundCue =
+  | 'drink'
+  | 'throw'
+  | 'smash'
+  | 'powerup'
   | 'pickup'
   | 'jump'
   | 'land'
@@ -12,6 +16,19 @@ export type SoundCue =
   | 'victory';
 type Note = readonly [frequency: number, duration: number, delay?: number, endFrequency?: number];
 const cues: Record<SoundCue, readonly Note[]> = {
+  drink: [
+    [160, 0.12, 0, 290],
+    [210, 0.14, 0.12, 140],
+  ],
+  throw: [[500, 0.18, 0, 150]],
+  smash: [
+    [1900, 0.1, 0, 300],
+    [2700, 0.14, 0.025, 700],
+  ],
+  powerup: [
+    [330, 0.15, 0, 660],
+    [660, 0.3, 0.15, 1320],
+  ],
   pickup: [
     [1100, 0.14],
     [1650, 0.18, 0.05],
@@ -68,6 +85,23 @@ export class AudioFeedback {
   private ambienceTime = 0;
   private sirenTime = 0;
   private stepDistance = 0;
+  private beatTime = 0;
+  private beat = 0;
+  public environment(delta: number, scenery: string): void {
+    if (this.paused || this.silent) return;
+    this.beatTime += delta;
+    if (this.beatTime < (scenery === 'street-parade' ? 0.46 : 0.36)) return;
+    this.beatTime = 0;
+    this.beat++;
+    if (scenery === 'street-parade') {
+      this.tone(100, 0.16, 0, 40, 0.065);
+      this.tone(this.beat % 4 < 2 ? 165 : 196, 0.25, 0.12, 165, 0.018, 'triangle');
+    }
+    if (scenery === 'railway') {
+      this.tone(80, 0.07, 0, 45, 0.025);
+      this.tone(120, 0.05, 0.12, 65, 0.018);
+    }
+  }
   public get muted(): boolean {
     return this.silent;
   }

@@ -4,7 +4,7 @@ Repository: [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/
 
 Kleine Pläne. Grosses Chaos. Ein humorvolles 3D-Third-Person-Arcade-Spiel für den Browser.
 
-**Aktueller Stand: vier spielbare Bali-Level mit insgesamt 35 Flaschen.** Neben Tutorial und Bali Escape gibt es **Beach Bar** (10 Flaschen) und **Bali Night Market** (15 Flaschen), auswählbar über **LEVEL WÄHLEN** auf der Zielkarte. Tobi schwankt nach jeder Flasche stärker, bewegt Arme und Beine übertriebener und stolpert sichtbar. Neue Soundeffekte begleiten Schritte, Sprünge, Pickups und Verfolgungen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen.
+**Aktueller Stand: sechs spielbare Level mit insgesamt 63 Flaschen.** Zu den vier Bali-Leveln kommen **Thailand Railway** mit vier offenen Zugwagen und **Zürich Street Parade** mit 240 reagierenden Tänzern, Musik-Trucks und 22 Farb-Power-ups. Auswählbar über **LEVEL WÄHLEN** auf der Zielkarte. Tobis Comic-Figur trägt jetzt Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Flaschen werden automatisch getrunken, bleiben als Leergut in der Hand und lassen sich werfen. Registrierung, Login und dauerhafte Levelergebnisse in PostgreSQL sind angeschlossen. [Neue Levels und Mechaniken](docs/gameplay/railway-parade-and-bottles.md).
 
 ![Tobi von Nairobi: Startbildschirm des Bali-Prototyps](docs/screenshots/tobi-landing.png)
 
@@ -37,18 +37,19 @@ Der Client lädt seine validierten Tutorialdaten aus dem gemeinsamen Package und
 
 ## Steuerung
 
-| Eingabe            | Aktion                                                                     |
-| ------------------ | -------------------------------------------------------------------------- |
-| WASD / Pfeiltasten | bewegen                                                                    |
-| Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                           |
-| Space              | springen                                                                   |
-| Shift              | sprinten; Stamina beachten                                                 |
-| E                  | am Airbnb einchecken, nachdem alle Levelziele erfüllt sind                 |
-| R                  | in Verfolgungslevels: «Ich kenne Karl!» rufen, +20 Chaos (alle 3 Sekunden) |
-| ESC                | Pause                                                                      |
-| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                       |
+| Eingabe            | Aktion                                                                           |
+| ------------------ | -------------------------------------------------------------------------------- |
+| WASD / Pfeiltasten | bewegen                                                                          |
+| Maus               | Kamera; bei fehlender Maussperre gedrückt ziehen                                 |
+| Space              | springen                                                                         |
+| Shift              | sprinten; Stamina beachten                                                       |
+| E                  | Levelziel bestätigen: Airbnb, erster Wagen oder Backstage                        |
+| G                  | leere Flasche in Blickrichtung werfen, nach dem automatischen Trinken            |
+| R                  | Passanten in der Nähe anpöbeln; in Verfolgungslevels +20 Chaos (alle 3 Sekunden) |
+| ESC                | Pause                                                                            |
+| F1                 | Developer-Menü, ausschliesslich im Entwicklungsbuild                             |
 
-Flaschen werden bei Annäherung automatisch aufgenommen. Das Tutorial ist bewusst polizeifrei. In **Bali Escape** muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor der Check-in zählt. Häuser bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. **Vor dem Start anmelden**, damit der Levelabschluss gespeichert wird. Bei einem Verbindungsabbruch werden abgeschlossene Ergebnisse lokal zwischengespeichert und erneut übertragen. Laufende Positionen werden noch nicht wiederhergestellt. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
+Flaschen werden bei Annäherung automatisch aufgenommen und nacheinander getrunken. Tobis Schwanken steigt nach jedem Schluck. Geworfenes Leergut hält getroffene Guards 2,5 Sekunden auf oder verscheucht Passanten. Die ◈-Schaltfläche reduziert den Farbeffekt der Parade; das HUD bleibt stets unverfärbt. Tutorial und Zugfahrt sind polizeifrei. In den Verfolgungslevels muss Tobi nach dem Sammeln zwölf Sekunden ohne Sichtkontakt entkommen, bevor das Ziel zählt. Häuser und Musik-Trucks bieten Deckung; länger andauernder Nahkontakt führt zur Festnahme. Neustart setzt den lokalen Durchlauf zurück. **Vor dem Start anmelden**, damit der Levelabschluss gespeichert wird. Bei einem Verbindungsabbruch werden abgeschlossene Ergebnisse lokal zwischengespeichert und erneut übertragen. Laufende Positionen werden noch nicht wiederhergestellt. [Regeln, Fluchtweg und Modulgrenzen](docs/gameplay/pursuit.md).
 
 ## Checks und Builds
 
@@ -94,6 +95,7 @@ pnpm test:e2e
 
 ## Planung und aktueller Status
 
+- [Tobis Figur, Wurfflaschen, Thailand Railway und Zürich Street Parade](docs/gameplay/railway-parade-and-bottles.md)
 - [Neue Bali-Level, Sounds und Tobis Pegel](docs/gameplay/bali-venues-and-feedback.md)
 - [Bali Escape: Regeln und Technik](docs/gameplay/pursuit.md)
 - [Implementierungsstand und offene Arbeit](docs/development/implementation-status.md)

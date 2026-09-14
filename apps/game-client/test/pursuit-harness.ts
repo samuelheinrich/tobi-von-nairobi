@@ -15,7 +15,7 @@ import {
   HavokCharacterMotor,
   preparePhysics,
 } from '../src/runtime/physics/havok-world.js';
-import { createBaliScene } from '../src/runtime/levels/bali-scene.js';
+import { createLevelScene } from '../src/runtime/levels/create-level-scene.js';
 import { PoliceRuntime } from '../src/runtime/police/police-runtime.js';
 import { BottlePickups } from '../src/runtime/items/bottle-pickups.js';
 
@@ -34,7 +34,7 @@ export async function exerciseEscapeRoute(
   const engine = new Engine(canvas, false),
     scene = new Scene(engine);
   const world = new HavokWorld(scene, module);
-  const environment = createBaliScene(scene, world, level);
+  const environment = createLevelScene(scene, world, level);
   const police = new PoliceRuntime(scene, level, environment.colliders, environment.shadows);
   const motor = new HavokCharacterMotor(scene, level.spawn);
   const locomotion = new Locomotion(movement);
@@ -55,6 +55,7 @@ export async function exerciseEscapeRoute(
         sprintHeld: sprint,
         interactPressed: false,
         specialPressed: false,
+        throwPressed: false,
       },
       0,
       motor.support(delta),
@@ -96,7 +97,8 @@ export async function exerciseEscapeRoute(
       walk(3, 12);
       walk(1, 15);
       walk(0, 18);
-    } else walk(0, 12);
+    } else if (level.scenery === 'street-parade') walk(0, 28);
+    else walk(0, 12);
     const blockedCheckIn = !session.reach(level.destination.id);
     if (mode === 'stand') {
       for (let i = 0; i < 3600 && !police.system.caught; i++) tick();
@@ -111,27 +113,44 @@ export async function exerciseEscapeRoute(
       };
     }
     // North, then around the western bungalow. Its rear wall breaks sightlines.
-    for (const [x, z] of [
-      [-4, level.scenery === 'night-market' ? 18 : 12],
-      [-4, 22],
-      [-15, 22],
-      [-15, 12],
-      [-17, 9],
-    ])
+    for (const [x, z] of level.scenery === 'street-parade'
+      ? [
+          [-6, 32],
+          [-18, 32],
+          [-18, 17],
+          [-8, 17],
+          [-8, 24],
+        ]
+      : [
+          [-4, level.scenery === 'night-market' ? 18 : 12],
+          [-4, 22],
+          [-15, 22],
+          [-15, 12],
+          [-17, 9],
+        ])
       walk(x!, z!, true);
     for (let i = 0; i < 900 && !police.system.caught && police.system.wanted.level > 0; i++) tick();
     const escaped = police.system.escapes > 0;
     if (escaped) {
-      for (const [x, z] of [
-        [-15, 12],
-        [-15, 22],
-        [-4, 22],
-        [0, 19],
-      ])
+      for (const [x, z] of level.scenery === 'street-parade'
+        ? [
+            [-8, 32],
+            [-6, 32],
+            [0, 34],
+          ]
+        : [
+            [-15, 12],
+            [-15, 22],
+            [-4, 22],
+            [0, 19],
+          ])
         walk(x!, z!);
     }
     const nearHome =
-      Vector3.Distance(motor.position, new Vector3(0, 1, 19)) < level.destination.radius;
+      Vector3.Distance(
+        motor.position,
+        new Vector3(level.destination.position.x, 1, level.destination.position.z),
+      ) < level.destination.radius;
     const completed = escaped && nearHome && session.reach(level.destination.id);
     return {
       completed,

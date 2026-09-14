@@ -43,11 +43,13 @@ export const levelSchema = z
   .object({
     schemaVersion: z.literal(1),
     id: z.string().min(1),
-    worldId: z.literal('bali'),
+    worldId: z.enum(['bali', 'bangkok', 'zurich']),
     title: z.string(),
     subtitle: z.string(),
     atmosphere: z.enum(['day', 'sunset', 'night']).default('day'),
-    scenery: z.enum(['village', 'beach-bar', 'night-market']).default('village'),
+    scenery: z
+      .enum(['village', 'beach-bar', 'night-market', 'railway', 'street-parade'])
+      .default('village'),
     maxWanted: z.number().int().min(0).max(5),
     chaosPerBottle: z.number().positive().max(30).default(16),
     policeSpeed: z.number().min(2).max(8).default(4.6),
@@ -66,6 +68,10 @@ export const levelSchema = z
       .object({ id: z.string(), position: positionSchema, radius: z.number().positive() })
       .strict(),
     pickups: z.array(pickupSchema).min(1),
+    powerups: z
+      .array(z.object({ id: z.string().min(1), position: positionSchema }).strict())
+      .max(100)
+      .default([]),
     objectives: z.array(objectiveSchema).min(1),
   })
   .strict()
@@ -103,6 +109,11 @@ export const levelSchema = z
       if (ids.has(pickup.id))
         ctx.addIssue({ code: 'custom', message: `Duplicate pickup: ${pickup.id}` });
       ids.add(pickup.id);
+    }
+    for (const powerup of level.powerups) {
+      if (ids.has(powerup.id))
+        ctx.addIssue({ code: 'custom', message: 'Duplicate pickup or powerup ID' });
+      ids.add(powerup.id);
     }
     const objectiveIds = new Set(level.objectives.map((objective) => objective.id));
     if (objectiveIds.size !== level.objectives.length)

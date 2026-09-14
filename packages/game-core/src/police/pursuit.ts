@@ -31,6 +31,16 @@ export class PursuitSystem {
   public readonly agents: PoliceAgent[];
   public caught = false;
   public escapes = 0;
+  private readonly staggered = new Map<number, number>();
+  public stagger(id: number): void {
+    if (!this.activeAgents.some((a) => a.id === id)) return;
+    this.staggered.set(id, 2.5);
+    this.captureSeconds = 0;
+    this.provoke();
+  }
+  public isStaggered(id: number): boolean {
+    return (this.staggered.get(id) ?? 0) > 0;
+  }
   private visible = false;
   private provokeSeconds = 0;
   private captureSeconds = 0;
@@ -65,6 +75,10 @@ export class PursuitSystem {
   }
   public step(delta: number, player: Point2 & { y: number }): 'escaped' | 'caught' | null {
     if (this.caught) return null;
+    for (const [id, remaining] of this.staggered) {
+      if (remaining <= delta) this.staggered.delete(id);
+      else this.staggered.set(id, remaining - delta);
+    }
     this.provokeSeconds = Math.max(0, this.provokeSeconds - delta);
     this.aiTime += delta;
     this.routeTime += delta;
@@ -84,7 +98,7 @@ export class PursuitSystem {
       if (this.routeTime >= this.rules.repathInterval) this.routeTime = 0;
     }
     for (const agent of this.activeAgents) {
-      if (agent.state === 'SUSPICIOUS') continue;
+      if (agent.state === 'SUSPICIOUS' || this.isStaggered(agent.id)) continue;
       const route = this.routes.get(agent.id);
       const next = route?.[0];
       if (!next) continue;
@@ -105,6 +119,7 @@ export class PursuitSystem {
       this.activeAgents.some(
         (a) =>
           a.state === 'CHASE' &&
+          !this.isStaggered(a.id) &&
           distance2(a.position, player) < this.rules.captureRadius &&
           this.nav.canSee(a.position, player),
       );

@@ -14,3 +14,6 @@ packages/database/src/generated/
 
 # Local coding-session metadata is not part of the public repository.
 codex-session
+
+# Local character reference photos supplied by the owner.
+/tmp/

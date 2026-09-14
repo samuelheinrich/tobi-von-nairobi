@@ -23,7 +23,9 @@ async function walk(directory) {
         errors.push(`${path}: forbidden browser import ${specifier}`);
       if (
         /^packages\/(game-core|contracts)\//.test(path) &&
-        /@babylonjs|react|@nestjs|@prisma|node:/.test(specifier)
+        /^(?:@babylonjs(?:\/|$)|react(?:-dom)?(?:\/|$)|@nestjs(?:\/|$)|@prisma(?:\/|$)|node:)/.test(
+          specifier,
+        )
       )
         errors.push(`${path}: non-portable rule import ${specifier}`);
       if (specifier.includes('/src/') && specifier.startsWith('@tobi/'))

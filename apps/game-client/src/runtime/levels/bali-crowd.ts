@@ -1,3 +1,4 @@
+import { NavigationGrid } from '@tobi/game-core';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -8,8 +9,52 @@ import { box, material } from './materials.js';
 /** Decorative bystanders react visually; they have no mission or navigation authority. */
 export class BaliCrowd {
   private readonly people: { root: TransformNode; arms: Mesh[]; head: Mesh }[] = [];
+  private readonly nav: NavigationGrid;
   private time = 0;
-  public constructor(scene: Scene, level: LevelDefinition, shadows: ShadowGenerator) {
+  private readonly frightened = new Map<number, number>();
+  public get targets() {
+    return this.people.map((p, id) => ({
+      position: { x: p.root.position.x, y: 1.2, z: p.root.position.z },
+      radius: 0.65,
+      hit: () => {
+        this.frightened.set(id, 3);
+      },
+    }));
+  }
+  public taunt(position: Position3): number {
+    let count = 0;
+    for (const [id, p] of this.people.entries())
+      if (
+        Math.hypot(p.root.position.x - position.x, p.root.position.z - position.z) < 8 &&
+        this.nav.clear(position, p.root.position)
+      ) {
+        this.frightened.set(id, 3);
+        count++;
+      }
+    return count;
+  }
+  public constructor(
+    scene: Scene,
+    level: LevelDefinition,
+    shadows: ShadowGenerator,
+    colliders: Mesh[] = [],
+  ) {
+    this.nav = new NavigationGrid(
+      level.navigationBounds ?? { minX: -30, maxX: 30, minZ: -34, maxZ: 34 },
+      colliders
+        .filter((m) => m.name !== 'island-ground' && m.isVisible)
+        .map((m) => {
+          m.computeWorldMatrix(true);
+          const b = m.getBoundingInfo().boundingBox;
+          return {
+            minX: b.minimumWorld.x,
+            maxX: b.maximumWorld.x,
+            minZ: b.minimumWorld.z,
+            maxZ: b.maximumWorld.z,
+          };
+        }),
+      0.3,
+    );
     const positions =
       level.scenery === 'beach-bar'
         ? [
@@ -66,13 +111,27 @@ export class BaliCrowd {
     for (const [index, person] of this.people.entries()) {
       const dx = player.x - person.root.position.x,
         dz = player.z - person.root.position.z;
+      const scared = this.frightened.get(index) ?? 0;
+      this.frightened.set(index, Math.max(0, scared - delta));
+      if (scared > 0) {
+        const distance = Math.hypot(dx, dz) || 1;
+        const next = {
+          x: person.root.position.x - (dx / distance) * delta * 2,
+          z: person.root.position.z - (dz / distance) * delta * 2,
+        };
+        if (this.nav.clear(person.root.position, next)) {
+          person.root.position.x = next.x;
+          person.root.position.z = next.z;
+        }
+      }
       const reacting = Math.hypot(dx, dz) < 9;
       if (reacting) person.root.rotation.y = Math.atan2(dx, dz);
       const dance = Math.sin(this.time * 3 + index);
       person.head.rotation.z = dance * 0.06;
       person.arms.forEach((arm, side) => {
         arm.rotation.z =
-          (side === 0 ? 1 : -1) * (reacting && mood > 0.2 ? 1.4 + dance * 0.3 : 0.12);
+          (side === 0 ? 1 : -1) *
+          ((reacting && mood > 0.2) || scared > 0 ? 1.4 + dance * 0.3 : 0.12);
         arm.rotation.x = dance * 0.16;
       });
     }

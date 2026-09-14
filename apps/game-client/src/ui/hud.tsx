@@ -1,4 +1,4 @@
-import { playableLevels } from '@tobi/game-data';
+import { playableLevels, worldNames, destinationName } from '@tobi/game-data';
 import type { GameView } from '@tobi/contracts';
 import { PursuitHud } from './pursuit-hud.js';
 import { BottleIcon } from './icons.js';
@@ -10,22 +10,23 @@ export function formatTime(seconds: number): string {
 }
 
 export function Hud({ view }: { view: GameView }) {
+  const level = playableLevels.find((entry) => entry.id === view.levelId) ?? playableLevels[0];
   return (
     <div className="hud" aria-label="Spielstatus">
       <section className="mission-card">
         <div className="eyebrow">
-          01 / BALI{' '}
-          <span className="mission-type">
-            {playableLevels.find((entry) => entry.id === view.levelId)?.title.toUpperCase()}
-          </span>
+          {worldNames[level.worldId].toUpperCase()}{' '}
+          <span className="mission-type">{level.title.toUpperCase()}</span>
         </div>
         <h2>{view.objective}</h2>
         <p>
           {view.collected < view.total
-            ? 'Folge dem Weg. Tobi kennt sich aus.'
+            ? level.scenery === 'railway'
+              ? 'Durch die offenen Wagen nach vorne. G: leere Flasche werfen.'
+              : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
             : view.pursuit && !view.canCheckIn
-              ? 'Nutze die Rückseiten der Häuser. Zwölf Sekunden ohne Sichtkontakt!'
-              : 'Die Casa Tobi wartet am Ende des Wegs.'}
+              ? 'Nutze Gebäude oder Musikfahrzeuge als Deckung. Zwölf Sekunden ohne Sichtkontakt!'
+              : `${destinationName(level)} wartet am Ende des Wegs.`}
         </p>
         <div className="bottle-progress">
           <BottleIcon />
@@ -54,6 +55,31 @@ export function Hud({ view }: { view: GameView }) {
         </div>
         <small>«Ich laufe noch absolut gerade.»</small>
       </div>
+      <div className="hands-card">
+        <strong data-testid="bottle-hand">
+          {view.drinking
+            ? 'TOBI TRINKT …'
+            : view.emptyBottles
+              ? 'FLASCHE IN DER HAND'
+              : 'HÄNDE FREI'}
+        </strong>
+        <span>
+          <kbd>G</kbd> Werfen · <b data-testid="empty-bottles">{view.emptyBottles}</b> leer
+        </span>
+        {view.crowdCount > 0 && (
+          <span data-testid="crowd-count">
+            <kbd>R</kbd> Anpöbeln · {view.tauntedCount} / {view.crowdCount} reagieren
+          </span>
+        )}
+        {view.tripSeconds > 0 && (
+          <span data-testid="color-trip">FARBRAUSCH · {view.tripSeconds}s</span>
+        )}
+      </div>
+      {view.phase === 'playing' && view.emptyBottles > 0 && (
+        <div className="throw-reticle" aria-label="Wurfrichtung">
+          +
+        </div>
+      )}
       <div className="score-card">
         <span>TOBI SCORE</span>
         <strong data-testid="score">{view.score.toLocaleString('de-CH')}</strong>
@@ -93,7 +119,12 @@ export function Hud({ view }: { view: GameView }) {
             <>ERST DIE POLIZEI ABHÄNGEN.</>
           ) : view.collected === view.total ? (
             <>
-              <kbd>E</kbd> EINCHECKEN
+              <kbd>E</kbd>{' '}
+              {level.scenery === 'railway'
+                ? 'WAGEN 1 ERREICHT'
+                : level.scenery === 'street-parade'
+                  ? 'BACKSTAGE BETRETEN'
+                  : 'EINCHECKEN'}
             </>
           ) : (
             <>ERST DIE FLASCHEN, DANN DER CHECK-IN.</>
@@ -101,7 +132,10 @@ export function Hud({ view }: { view: GameView }) {
         </div>
       )}
       <div className="location-chip">
-        <span>◉</span> CASA TOBI <small>BUCHUNG BESTÄTIGT.</small>
+        <span>◉</span> {destinationName(level).toUpperCase()}{' '}
+        <small>
+          {level.scenery === 'railway' ? 'BITTE NICHT AUSSTEIGEN.' : 'KARL HAT EINEN PLAN.'}
+        </small>
       </div>
       {view.debug && <div className="debug-badge">DEBUG RUN · {view.fps} FPS</div>}
     </div>

@@ -1,7 +1,7 @@
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
-import type { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
+import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 
@@ -45,8 +45,8 @@ export function cylinderBetween(
     scene,
   );
   mesh.position.copyFrom(start.add(end).scale(0.5));
-  mesh.rotation.z = -Math.atan2(delta.x, delta.y);
-  mesh.rotation.x = Math.atan2(delta.z, Math.hypot(delta.x, delta.y));
+  mesh.rotationQuaternion = Quaternion.Identity();
+  Quaternion.FromUnitVectorsToRef(Vector3.Up(), delta.normalize(), mesh.rotationQuaternion);
   mesh.material = surface;
   return mesh;
 }

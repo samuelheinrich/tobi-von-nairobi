@@ -1,14 +1,31 @@
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
-import { FixedClock, Locomotion, PrototypeSession, BottleMood } from '@tobi/game-core';
-import { movement, prototypeBalance, welcomeToBali, pursuitBalance } from '@tobi/game-data';
+import {
+  FixedClock,
+  Locomotion,
+  PrototypeSession,
+  BottleMood,
+  BottleHands,
+  ColorTrip,
+} from '@tobi/game-core';
+import {
+  movement,
+  prototypeBalance,
+  welcomeToBali,
+  pursuitBalance,
+  destinationName,
+} from '@tobi/game-data';
 import type { LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
 import type { GameViewStore } from '../../app/game-view-store.js';
 import { KeyboardInput } from '../input/keyboard-input.js';
 import { HavokCharacterMotor, HavokWorld, preparePhysics } from '../physics/havok-world.js';
-import { createBaliScene } from '../levels/bali-scene.js';
+import { createLevelScene } from '../levels/create-level-scene.js';
+import type { LevelScene } from '../levels/create-level-scene.js';
+import { ParadeCrowd } from '../levels/parade-crowd.js';
+import { ColorPickups } from '../items/color-pickups.js';
+import { ThrownBottles } from '../items/thrown-bottles.js';
 import { TobiVisual } from '../character/tobi-visual.js';
 import { BottlePickups } from '../items/bottle-pickups.js';
 import { ThirdPersonCamera } from '../camera/third-person-camera.js';
@@ -31,6 +48,13 @@ export class GameHost {
   private readonly police: PoliceRuntime | null;
   private readonly audio = new AudioFeedback();
   private readonly mood = new BottleMood();
+  private readonly hands = new BottleHands();
+  private readonly trip = new ColorTrip();
+  private readonly pills: ColorPickups;
+  private readonly projectiles: ThrownBottles;
+  private readonly parade: ParadeCrowd | null;
+  private readonly environment: LevelScene;
+  private tauntCooldown = 0;
   private wasGrounded = true;
   private lastWanted = 0;
   private disposed = false;
@@ -76,16 +100,28 @@ export class GameHost {
     this.session = new PrototypeSession(level, prototypeBalance);
     this.scene = new Scene(engine);
     this.world = new HavokWorld(this.scene, module);
-    const environment = createBaliScene(this.scene, this.world, level);
+    const environment = createLevelScene(this.scene, this.world, level);
+    this.environment = environment;
+    this.pills = new ColorPickups(this.scene, level);
+    this.projectiles = new ThrownBottles(this.scene, environment.colliders, () =>
+      this.audio.play('smash'),
+    );
+    this.parade =
+      level.scenery === 'street-parade'
+        ? new ParadeCrowd(this.scene, level, environment.colliders)
+        : null;
     this.motor = new HavokCharacterMotor(this.scene, level.spawn);
     this.visual = new TobiVisual(this.scene, environment.shadows);
-    this.crowd = new BaliCrowd(this.scene, level, environment.shadows);
+    this.crowd = new BaliCrowd(this.scene, level, environment.shadows, environment.colliders);
     this.bottles = new BottlePickups(this.scene, level, environment.shadows);
     this.police =
       level.maxWanted > 0
         ? new PoliceRuntime(this.scene, level, environment.colliders, environment.shadows)
         : null;
-    this.camera = new ThirdPersonCamera(this.scene);
+    this.camera = new ThirdPersonCamera(
+      this.scene,
+      level.scenery === 'railway' ? 'railway' : 'follow',
+    );
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
     for (let i = 0; i < 60; i++) {
@@ -247,28 +283,73 @@ export class GameHost {
     const position = this.motor.position;
     if (position.y < -8) this.respawn();
     this.session.elapsedSeconds += delta;
+    this.parade?.update(delta);
     for (const id of this.bottles.nearby(position)) {
       if (!this.session.collect(id)) continue;
       this.bottles.collect(id);
       this.police?.system.disrupt();
-      this.mood.collect();
+      this.hands.collect();
       this.visual.celebratePickup();
       this.audio.pickup();
-      if (this.session.collected.size % 3 === 0) this.audio.play('hiccup');
+
       this.toastUntil = this.session.elapsedSeconds + 2;
       this.store.update({
         toast:
           this.session.collected.size === this.level.pickups.length
             ? this.police
               ? 'Flaschen vollzählig. Jetzt die Polizei abhängen!'
-              : 'Flaschen vollzählig. Ab ins Airbnb!'
+              : `Flaschen vollzählig. Auf zu ${destinationName(this.level)}!`
             : `+100 · ${this.mood.label}`,
       });
     }
-    if (actions.specialPressed && this.police?.system.provoke()) {
+    const drinks = this.hands.step(delta);
+    for (let i = 0; i < drinks; i++) {
+      this.mood.collect();
+      this.audio.play('drink');
+      if (this.session.collected.size % 3 === 0) this.audio.play('hiccup');
+    }
+    this.trip.step(delta);
+    this.audio.environment(delta, this.level.scenery);
+    for (const id of this.pills.nearby(position))
+      if (this.trip.collect(id)) {
+        this.pills.collect(id);
+        this.audio.play('powerup');
+        this.toastUntil = this.session.elapsedSeconds + 3;
+        this.store.update({ toast: 'FARBRAUSCH · Die Parade hat jetzt noch mehr Farben.' });
+      }
+    if (actions.throwPressed && this.projectiles.count < 8 && this.hands.throw()) {
+      this.projectiles.launch(position, this.camera.yaw);
+      this.visual.throwBottle();
+      this.audio.play('throw');
+      this.police?.system.disrupt();
+    }
+    if (this.projectiles.count > 0)
+      this.projectiles.update(delta, [
+        ...(this.police?.system.activeAgents.map((a) => ({
+          position: { x: a.position.x, y: 1.25, z: a.position.z },
+          radius: 0.75,
+          hit: () => this.police?.system.stagger(a.id),
+        })) ?? []),
+        ...(this.parade?.system.people.map((p) => ({
+          position: { x: p.position.x, y: 1.25, z: p.position.z },
+          radius: 0.65,
+          hit: () => {
+            this.parade?.system.frighten(p.id, position);
+          },
+        })) ?? this.crowd.targets),
+      ]);
+    this.tauntCooldown = Math.max(0, this.tauntCooldown - delta);
+    if (actions.specialPressed && this.tauntCooldown === 0) {
+      this.tauntCooldown = 3;
+      const count = this.parade?.taunt(position) ?? this.crowd.taunt(position);
+      this.police?.system.provoke();
       this.audio.play('provoke');
       this.toastUntil = this.session.elapsedSeconds + 3;
-      this.store.update({ toast: '«ICH KENNE KARL!» · +20 CHAOS' });
+      this.store.update({
+        toast: count
+          ? `«PLATZ DA, ICH KENNE KARL!» · ${count} Leute reagieren.`
+          : '«ICH KENNE KARL!»',
+      });
     }
     const outcome = this.police?.system.step(delta, position);
     const wanted = this.police?.system.wanted.level ?? 0;
@@ -289,8 +370,9 @@ export class GameHost {
       this.store.update({ toast: '+500 · ABGEHÄNGT. Karl war’s diesmal nicht.' });
     }
     if (outcome === 'caught') {
-      this.pause();
-      this.audio.start();
+      this.input.enabled = false;
+      this.input.reset();
+      if (document.pointerLockElement === this.canvas) document.exitPointerLock();
       this.audio.play('caught');
       this.store.update({ phase: 'caught', pursuit: this.police?.system.snapshot() ?? null });
       return;
@@ -349,6 +431,8 @@ export class GameHost {
       this.store.getSnapshot().phase === 'complete',
       this.mood.amount,
       this.locomotion.stamina,
+      this.hands.holding,
+      this.hands.drinkPose,
     );
     if (tripped) this.audio.play('stumble');
   }
@@ -361,6 +445,10 @@ export class GameHost {
     try {
       if (this.store.getSnapshot().phase === 'playing') this.clock.advance(delta, this.step);
       this.syncVisual(Math.min(delta, 0.1));
+      if (this.store.getSnapshot().phase === 'playing') {
+        this.environment.update?.(Math.min(delta, 0.1));
+        this.pills.update(Math.min(delta, 0.1));
+      }
       this.crowd.update(
         this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
         this.motor.position,
@@ -376,6 +464,12 @@ export class GameHost {
           collected: this.session.collected.size,
           mood: Math.round(this.mood.amount * 100),
           moodLabel: this.mood.label,
+          emptyBottles: this.hands.empties,
+          drinking: this.hands.drinking,
+          tripSeconds: Math.ceil(this.trip.remaining),
+          tripIntensity: this.trip.intensity,
+          crowdCount: this.parade?.system.people.length ?? 0,
+          tauntedCount: this.parade?.system.taunted.size ?? 0,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
           elapsedSeconds: Math.floor(this.session.elapsedSeconds),
@@ -385,7 +479,7 @@ export class GameHost {
               ? `Sammle ${this.level.pickups.length} Flaschen`
               : this.session.mission.active?.type === 'escapePolice'
                 ? 'Hänge die Polizei ab'
-                : 'Erreiche das Airbnb',
+                : `Erreiche ${this.level.scenery === 'railway' ? 'Wagen 1' : this.level.scenery === 'street-parade' ? 'Backstage' : 'das Airbnb'}`,
           pursuit: this.police?.system.snapshot() ?? null,
           canCheckIn:
             this.session.mission.active?.type === 'reach' && !this.police?.system.wanted.level,
@@ -420,6 +514,9 @@ export class GameHost {
     this.removeDebug?.();
     this.input.dispose();
     this.audio.dispose();
+    this.projectiles.dispose();
+    this.pills.dispose();
+    this.parade?.dispose();
     this.police?.dispose();
     this.bottles.dispose();
     this.motor.dispose();

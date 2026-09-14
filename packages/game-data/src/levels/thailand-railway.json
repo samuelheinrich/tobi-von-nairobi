@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "id": "thailand_railway",
+  "worldId": "bangkok",
+  "title": "Thailand Railway",
+  "subtitle": "Letzter Wagen. Falsches Ticket. Ganz vorne weiss jemand Bescheid.",
+  "maxWanted": 0,
+  "spawn": {
+    "x": 0,
+    "y": 1.5,
+    "z": -35
+  },
+  "destination": {
+    "id": "first_wagon",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 34
+    },
+    "radius": 2.2
+  },
+  "pickups": [
+    {
+      "id": "thailand_railway_bottle_01",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -31
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_02",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -24
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_03",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -15
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_04",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": -7
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_05",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 2
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_06",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 11
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_07",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 21
+      }
+    },
+    {
+      "id": "thailand_railway_bottle_08",
+      "itemId": "bottle",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 30
+      }
+    }
+  ],
+  "objectives": [
+    {
+      "id": "collect",
+      "type": "collect",
+      "itemId": "bottle",
+      "amount": 8,
+      "after": []
+    },
+    {
+      "id": "reach",
+      "type": "reach",
+      "targetId": "first_wagon",
+      "after": ["collect"]
+    }
+  ],
+  "scenery": "railway",
+  "atmosphere": "sunset",
+  "chaosPerBottle": 16,
+  "policeSpeed": 4,
+  "navigationBounds": {
+    "minX": -4,
+    "maxX": 4,
+    "minZ": -38,
+    "maxZ": 38
+  }
+}

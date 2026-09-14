@@ -17,6 +17,12 @@ export interface GameView {
   stamina: number;
   mood: number;
   moodLabel: string;
+  emptyBottles: number;
+  drinking: boolean;
+  tripSeconds: number;
+  tripIntensity: number;
+  crowdCount: number;
+  tauntedCount: number;
   score: number;
   elapsedSeconds: number;
   objective: string;

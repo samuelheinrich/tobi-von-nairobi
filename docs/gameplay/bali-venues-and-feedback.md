@@ -1,6 +1,6 @@
 # Bali: neue Levels, Sound und Tobis Pegel
 
-Über **LEVEL WÄHLEN** auf der Zielkarte sind vier eigenständig startbare Level verfügbar. Nach einem Abschluss führt **NÄCHSTES LEVEL →** zur nächsten Auswahl; offene Speicherergebnisse müssen vorher bestätigt werden. Für gespeicherte Durchläufe vor dem Start anmelden.
+Die vier hier beschriebenen Bali-Level sind über **LEVEL WÄHLEN** eigenständig startbar. Zwei weitere Kapitel beschreibt [Railway und Parade](railway-parade-and-bottles.md). Nach einem Abschluss führt **NÄCHSTES LEVEL →** zur nächsten Auswahl; offene Speicherergebnisse müssen vorher bestätigt werden. Für gespeicherte Durchläufe vor dem Start anmelden.
 
 | Level             | Flaschen | Fahndung maximal | Kulisse                      | Punkte mit einer Flucht |
 | ----------------- | -------: | ---------------: | ---------------------------- | ----------------------: |
@@ -21,13 +21,13 @@ Die neuen Level geben acht Chaos pro Flasche, statt die bisherigen 16 unverände
 
 ## Tobis Pegel und Figurenbewegung
 
-Jede erstmals eingesammelte Flasche erhöht `BottleMood` um 1/12, begrenzt auf 100 %. Die Anzeige verwendet vier humorvolle Zustände: **NOCH GANZ GERADE**, **LEICHT ANGESCHICKERT**, **ORDENTLICH SCHWANKEND**, **VOLLE SCHLAGSEITE**. Es gibt keine Promilleberechnung. Der Pegel gilt nur für diesen Durchlauf und beginnt beim Neustart oder Levelwechsel wieder bei null.
+Seit der Erweiterung vom 14. September erhöht jede abgeschlossene automatische Trinkgeste `BottleMood` um 1/12, begrenzt auf 100 %. Die Anzeige verwendet vier humorvolle Zustände: **NOCH GANZ GERADE**, **LEICHT ANGESCHICKERT**, **ORDENTLICH SCHWANKEND**, **VOLLE SCHLAGSEITE**. Es gibt keine Promilleberechnung. Der Pegel gilt nur für diesen Durchlauf und beginnt beim Neustart oder Levelwechsel wieder bei null.
 
 Der Pegel verstärkt seitliches Schwanken, Kopfbewegungen, asymmetrische Schritte und ausgleichende Arme. Ab rund 40 % kommen beim Laufen periodische Stolperposen hinzu. Pickups lösen eine kurze Armbewegung aus; Sprünge haben eigene Bein-/Armhaltungen, Erschöpfung neigt den Körper nach vorne, und beim Sieg tanzt Tobi mit Beinen, Armen, Wippen und Drehung.
 
 Die hierarchischen Hüft- und Schultergelenke bewegen Schuhe und Hände mit. Nur der sichtbare Körper unterhalb des stabilen Spieler-Roots schwankt: Richtungseingabe, Geschwindigkeit, Kollision, Stamina, Kamera und Wertung bleiben unverändert. Die Bewegung wird in Pause eingefroren. Die reine Poseberechnung und der Pegel liegen im enginefreien `game-core`; das Babylon-Rig setzt die Pose um.
 
-Beach Bar hat drei, Night Market vier dekorative Passanten. Sie bewegen Kopf und Arme und winken dem schwankenden Tobi in ihrer Nähe zu. Guards schwingen beim Laufen Arme und Beine. Die Passanten sind Kulissenfiguren ohne Dialog-, Kollisions- oder Quest-AI.
+Beach Bar hat drei, Night Market vier dekorative Passanten. Sie bewegen Kopf und Arme und winken dem schwankenden Tobi in ihrer Nähe zu. Guards schwingen beim Laufen Arme und Beine. R und Flaschenwürfe verscheuchen sie inzwischen kurz, mit Hindernisprüfung. Sie besitzen weiterhin keine Dialog-/Quest-AI oder eigenen Physikkörper.
 
 ## Sound
 

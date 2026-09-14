@@ -116,6 +116,7 @@ export class PoliceRuntime {
               (index % 2 === 0 ? 1 : -1) *
               (index < 2 ? 1 : -1)
             : 0;
+      root.rotation.z = this.system.isStaggered(agent.id) ? Math.sin(this.gait * 2) * 0.25 : 0;
       root.position.set(agent.position.x, 0, agent.position.z);
       const dx = agent.target.x - agent.position.x,
         dz = agent.target.z - agent.position.z;

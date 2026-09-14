@@ -20,6 +20,9 @@ export function App() {
   const host = useRef<GameHost | null>(null);
   const [muted, setMuted] = useState(false);
   const [help, setHelp] = useState(false);
+  const [reducedEffects, setReducedEffects] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
   const mutedRef = useRef(muted);
   mutedRef.current = muted;
 
@@ -80,6 +83,12 @@ export function App() {
       <canvas
         ref={canvas}
         className="game-canvas"
+        style={{
+          filter:
+            !reducedEffects && view.tripIntensity > 0 && view.phase === 'playing'
+              ? `hue-rotate(${view.elapsedSeconds * 16}deg) saturate(${1 + view.tripIntensity * 1.7})`
+              : 'none',
+        }}
         tabIndex={0}
         aria-label={`3D-Spielwelt: ${level.title}`}
         data-testid="game-canvas"
@@ -96,6 +105,14 @@ export function App() {
           THE GAME <span>✳</span> ZERO PLANS. FULL SEND.
         </div>
         <div className="topbar-actions">
+          <button
+            className="effects-button"
+            aria-label="Farbeffekte reduzieren"
+            aria-pressed={reducedEffects}
+            onClick={() => setReducedEffects((value) => !value)}
+          >
+            ◈
+          </button>
           <button
             className="account-button"
             disabled={account.busy || view.phase === 'playing' || view.phase === 'paused'}
@@ -161,6 +178,14 @@ export function App() {
               Maustaste ziehen.
             </p>
             <button
+              className="text-button"
+              aria-label="Farbeffekte reduzieren"
+              aria-pressed={reducedEffects}
+              onClick={() => setReducedEffects((value) => !value)}
+            >
+              ◈ FARBEFFEKTE: {reducedEffects ? 'REDUZIERT' : 'AN'}
+            </button>
+            <button
               className="primary-button"
               onClick={() => {
                 setHelp(false);
@@ -203,12 +228,22 @@ export function App() {
             className="dialog results"
             role="dialog"
             aria-modal="true"
-            aria-label={level.maxWanted > 0 ? 'Flucht abgeschlossen' : 'Tutorial abgeschlossen'}
+            aria-label={
+              level.scenery === 'railway'
+                ? 'Zugfahrt abgeschlossen'
+                : level.maxWanted > 0
+                  ? 'Flucht abgeschlossen'
+                  : 'Tutorial abgeschlossen'
+            }
           >
             <span className="eyebrow">{level.title.toUpperCase()} · GESCHAFFT</span>
             <div className="result-star">✳</div>
             <h2>
-              Buchung bestätigt.
+              {level.scenery === 'railway'
+                ? 'Wagen eins erreicht.'
+                : level.scenery === 'street-parade'
+                  ? 'Parade überlebt.'
+                  : 'Buchung bestätigt.'}
               <br />
               <em>Nerven storniert.</em>
             </h2>
