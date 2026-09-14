@@ -283,17 +283,19 @@ export function App() {
             role="dialog"
             aria-modal="true"
             aria-label={
-              level.scenery === 'hippie-house'
-                ? 'WG verlassen'
-                : level.scenery === 'railway'
-                  ? 'Zugfahrt abgeschlossen'
-                  : level.scenery === 'nana-plaza'
-                    ? 'Nana Plaza verlassen'
-                    : level.scenery === 'drunk-tank'
-                      ? 'Nacht beendet'
-                      : level.maxWanted > 0
-                        ? 'Flucht abgeschlossen'
-                        : 'Tutorial abgeschlossen'
+              level.scenery === 'aircraft'
+                ? 'Fly High abgeschlossen'
+                : level.scenery === 'hippie-house'
+                  ? 'WG verlassen'
+                  : level.scenery === 'railway'
+                    ? 'Zugfahrt abgeschlossen'
+                    : level.scenery === 'nana-plaza'
+                      ? 'Nana Plaza verlassen'
+                      : level.scenery === 'drunk-tank'
+                        ? 'Nacht beendet'
+                        : level.maxWanted > 0
+                          ? 'Flucht abgeschlossen'
+                          : 'Tutorial abgeschlossen'
             }
           >
             <span className="eyebrow">
@@ -301,25 +303,27 @@ export function App() {
             </span>
             <div className="result-star">✳</div>
             <h2>
-              {level.scenery === 'hippie-house'
-                ? 'Namaste. Und tschüss.'
-                : level.scenery === 'railway'
-                  ? 'Wagen eins erreicht.'
-                  : level.scenery === 'street-parade'
-                    ? 'Parade überlebt.'
-                    : level.scenery === 'nana-plaza'
-                      ? 'Soi vier überstanden.'
-                      : level.scenery === 'drunk-tank'
-                        ? 'Nacht beendet.'
-                        : 'Buchung bestätigt.'}
+              {level.scenery === 'aircraft'
+                ? 'Economy gebucht. Lounge erreicht.'
+                : level.scenery === 'hippie-house'
+                  ? 'Namaste. Und tschüss.'
+                  : level.scenery === 'railway'
+                    ? 'Wagen eins erreicht.'
+                    : level.scenery === 'street-parade'
+                      ? 'Parade überlebt.'
+                      : level.scenery === 'nana-plaza'
+                        ? 'Soi vier überstanden.'
+                        : level.scenery === 'drunk-tank'
+                          ? 'Nacht beendet.'
+                          : 'Buchung bestätigt.'}
               <br />
               <em>{custody ? 'Würde storniert.' : 'Nerven storniert.'}</em>
             </h2>
             <div className="result-stats">
               <div>
-                <span>FLASCHEN</span>
+                <span>{view.cabin ? 'ZURÜCKGESCHICKT' : 'FLASCHEN'}</span>
                 <strong>
-                  {view.collected}/{view.total}
+                  {view.cabin ? view.cabin.returns : `${view.collected}/${view.total}`}
                 </strong>
               </div>
               <div>

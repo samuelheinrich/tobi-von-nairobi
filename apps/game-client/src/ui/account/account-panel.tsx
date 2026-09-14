@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { AccountState } from '../../persistence/use-account.js';
-import { playableLevels } from '@tobi/game-data';
+import { levelById } from '@tobi/game-data';
 
 export function AccountPanel({ account, onClose }: { account: AccountState; onClose(): void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login');
@@ -46,10 +46,7 @@ export function AccountPanel({ account, onClose }: { account: AccountState; onCl
             <ul className="saved-levels">
               {account.progress?.levels.map((level) => (
                 <li key={level.levelId}>
-                  <strong>
-                    {playableLevels.find((entry) => entry.id === level.levelId)?.title ??
-                      level.levelId}
-                  </strong>
+                  <strong>{levelById(level.levelId)?.title ?? level.levelId}</strong>
                   <span>
                     {level.bestScore.toLocaleString('de-CH')} Punkte · {level.completions}×
                     geschafft

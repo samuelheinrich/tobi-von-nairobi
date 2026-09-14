@@ -29,6 +29,19 @@ export interface GameView {
   flirts: number;
   /** A non-police NPC is physically standing in Tobi's way right now. */
   blocked: boolean;
+  lesson: {
+    id: string;
+    title: string;
+    body: string;
+    key: string;
+    index: number;
+    total: number;
+    distance: number | null;
+    bearing: string;
+  } | null;
+  posture: 'standing' | 'sitting' | 'hidden';
+  interaction: string;
+  cabin: { stage: number; strikes: number; returns: number; ready: boolean } | null;
   score: number;
   elapsedSeconds: number;
   objective: string;

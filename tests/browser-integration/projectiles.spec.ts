@@ -23,3 +23,14 @@ test('swept bottles hit and stagger guards once; a wall blocks the hit and stun 
     impacts: 1,
   });
 });
+
+test('bottles hit all four directions when Tobi turns, even with a fixed camera', async ({
+  page,
+}) => {
+  await page.goto('/test/physics.html');
+  const hits = await page.evaluate(async () => {
+    const path = '/test/projectile-harness.ts';
+    return (await import(path)).exerciseThrowDirections();
+  });
+  expect(hits).toEqual([0, 1, 2, 3]);
+});

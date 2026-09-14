@@ -53,3 +53,44 @@ export function exerciseProjectiles(blocked: boolean) {
     canvas.remove();
   }
 }
+
+/** Exercise the exact heading source used by GameHost, with the orbit camera held fixed. */
+export async function exerciseThrowDirections() {
+  const { CharacterFacing } = await import('@tobi/game-core');
+  const canvas = document.createElement('canvas');
+  document.body.append(canvas);
+  const engine = new Engine(canvas),
+    scene = new Scene(engine);
+  new FreeCamera('fixed-camera', new Vector3(0, 5, -5), scene);
+  const projectiles = new ThrownBottles(scene, [], () => undefined);
+  const facing = new CharacterFacing(),
+    hits: number[] = [];
+  try {
+    for (const [index, [x, z]] of [
+      [0, 1],
+      [1, 0],
+      [0, -1],
+      [-1, 0],
+    ].entries()) {
+      facing.update({ x: x!, z: z! });
+      facing.update({ x: 0, z: 0 });
+      projectiles.launch({ x: 0, y: 1.1, z: 0 }, facing.yaw);
+      for (let i = 0; i < 180; i++)
+        projectiles.update(1 / 60, [
+          {
+            position: { x: x! * 5, y: 1.4, z: z! * 5 },
+            radius: 0.8,
+            hit: () => {
+              hits.push(index);
+            },
+          },
+        ]);
+    }
+    return hits;
+  } finally {
+    projectiles.dispose();
+    scene.dispose();
+    engine.dispose();
+    canvas.remove();
+  }
+}

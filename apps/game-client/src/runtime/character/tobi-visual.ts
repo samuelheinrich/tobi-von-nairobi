@@ -16,6 +16,7 @@ export class TobiVisual {
   private readonly body: TransformNode;
   private readonly head: TransformNode;
   private readonly legs: TransformNode[] = [];
+  private readonly knees: TransformNode[] = [];
   private readonly arms: TransformNode[] = [];
   private readonly heldBottle: TransformNode;
   private readonly smoke: CigaretteSmoke;
@@ -67,8 +68,11 @@ export class TobiVisual {
     part('tobi-nose', 0.15, [1, 0.9, 1.2], [0, -0.02, 0.31], skin, this.head);
     for (const side of [-1, 1]) {
       const leg = pivot('tobi-hip', this.body, side * 0.24, 0.76);
-      part('leg', 0.4, [0.8, 1.6, 0.8], [0, -0.32, 0], shorts, leg);
-      part('shoe', 0.4, [0.9, 0.5, 1.5], [0, -0.64, 0.1], shoes, leg);
+      part('thigh', 0.4, [0.8, 0.9, 0.8], [0, -0.16, 0], shorts, leg);
+      const knee = pivot('tobi-knee', leg, 0, -0.32);
+      part('shin', 0.4, [0.7, 0.8, 0.7], [0, -0.14, 0], skin, knee);
+      part('shoe', 0.4, [0.9, 0.5, 1.5], [0, -0.32, 0.1], shoes, knee);
+      this.knees.push(knee);
       this.legs.push(leg);
       const arm = pivot('tobi-shoulder', this.body, side * 0.58, 1.4);
       part('arm', 0.32, [0.9, 2, 0.9], [side * 0.06, -0.3, 0], skin, arm);
@@ -100,6 +104,7 @@ export class TobiVisual {
     stamina = 100,
     holding = false,
     drinking = 0,
+    sitting = false,
   ): boolean {
     this.time += delta;
     this.smoke.update(delta);
@@ -145,6 +150,13 @@ export class TobiVisual {
         (index === 0 ? 1 : -1) * pose.armSpread + (index === 0 ? drinking * 0.9 : 0),
       );
     });
+    if (sitting) {
+      this.body.position.set(0, -0.68, 0);
+      this.body.rotation.set(-0.08, 0, 0);
+      for (const leg of this.legs) leg.rotation.set(-Math.PI / 2, 0, 0);
+      for (const arm of this.arms) arm.rotation.x = -0.4;
+    }
+    for (const knee of this.knees) knee.rotation.x = sitting ? Math.PI / 2 : 0;
     // Aim the bottle neck at the mouth in hand space, including head/body sway.
     if (drinking > 0) {
       const mouth = Vector3.TransformCoordinates(

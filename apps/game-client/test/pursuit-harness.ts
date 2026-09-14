@@ -5,7 +5,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Locomotion, NavigationGrid, PrototypeSession } from '@tobi/game-core';
 import {
   baliEscape,
-  playableLevels,
+  allLevels,
   movement,
   prototypeBalance,
   pursuitBalance,
@@ -29,7 +29,7 @@ export async function exerciseEscapeRoute(
   mode: 'escape' | 'stand' = 'escape',
   levelId = baliEscape.id,
 ) {
-  const level = playableLevels.find((entry) => entry.id === levelId);
+  const level = allLevels.find((entry) => entry.id === levelId);
   if (!level) throw new Error('Unknown level');
   const module = await preparePhysics();
   const canvas = document.createElement('canvas');

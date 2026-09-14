@@ -28,7 +28,8 @@ export const runSchema = z
   .strict();
 export const completionSchema = z
   .object({
-    pickupIds: z.array(z.string().min(1).max(80)).min(1).max(100),
+    // Puzzle-only levels have no pickups. The server verifies the exact level-specific set.
+    pickupIds: z.array(z.string().min(1).max(80)).max(100),
     elapsedMs: z.number().int().min(1000).max(900000),
     escapes: z.number().int().min(0).max(50),
     debugUsed: z.boolean(),

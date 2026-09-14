@@ -54,15 +54,17 @@ export class AudioFeedback {
     if (this.paused || this.silent) return;
     this.beatTime += delta;
     const interval =
-      scenery === 'hippie-house'
-        ? 1.2
-        : scenery === 'street-parade'
-          ? 0.46
-          : scenery === 'nana-plaza'
-            ? 0.42
-            : scenery === 'drunk-tank'
-              ? 2.6
-              : 0.36;
+      scenery === 'aircraft'
+        ? 3.2
+        : scenery === 'hippie-house'
+          ? 1.2
+          : scenery === 'street-parade'
+            ? 0.46
+            : scenery === 'nana-plaza'
+              ? 0.42
+              : scenery === 'drunk-tank'
+                ? 2.6
+                : 0.36;
     if (this.beatTime < interval) return;
     this.beatTime = 0;
     this.beat++;
@@ -83,6 +85,14 @@ export class AudioFeedback {
       this.noise({ duration: 0.05, delay: 0.21, volume: 0.016, type: 'highpass', from: 6800 });
       if (this.beat % 4 === 2)
         this.tone({ frequency: 220, duration: 0.2, delay: 0.1, volume: 0.014, type: 'sawtooth' });
+    }
+    if (scenery === 'aircraft') {
+      this.noise({ duration: 3.5, volume: 0.018, type: 'lowpass', from: 650, to: 750 });
+      this.tone({ frequency: 72, duration: 3.5, volume: 0.008 });
+      if (this.beat % 8 === 0) {
+        this.tone({ frequency: 784, duration: 0.35, volume: 0.02 });
+        this.tone({ frequency: 659, duration: 0.45, delay: 0.3, volume: 0.018 });
+      }
     }
     if (scenery === 'railway') {
       this.tone({ frequency: 80, duration: 0.07, end: 45, volume: 0.025 });
@@ -165,6 +175,7 @@ export class AudioFeedback {
     grounded: boolean,
     wanted: number,
     night: boolean,
+    outdoorAmbience = true,
   ): void {
     if (this.paused || this.silent) return;
     if (grounded && speed > 0.5) {
@@ -189,7 +200,7 @@ export class AudioFeedback {
         });
     }
     this.ambienceTime += delta;
-    if (this.ambienceTime >= 5) {
+    if (outdoorAmbience && this.ambienceTime >= 5) {
       this.ambienceTime = 0;
       if (night) {
         for (let i = 0; i < 3; i++)

@@ -1,3 +1,4 @@
+import { createRailwayLandscape } from './railway-landscape.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -103,25 +104,32 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
   const luggage = material(scene, 'luggage', '#956ba8');
   for (const z of [-33, -14, 24, 42])
     kit.solid(box(scene, 'luggage-stack', [1.1, 0.8, 1.2], [2.5, 0.4, z], luggage));
-  // Fixed landscape landmarks make the train setting readable through its open sides.
-  for (let i = 0; i < 24; i++) {
-    const x = (i % 2 ? 1 : -1) * (11 + (i % 4) * 3),
-      z = i * 7 - 75;
-    box(scene, 'thai-hut', [3, 2, 3], [x, -0.3, z], cream);
-    const roof = MeshBuilder.CreateCylinder(
-      'hut-roof',
-      { height: 1.5, diameterBottom: 5, diameterTop: 0, tessellation: 4 },
-      scene,
-    );
-    roof.position.set(x, 1.3, z);
-    roof.material = seats;
-    roof.isPickable = false;
-  }
+  const landscape = createRailwayLandscape(scene, kit.shadows);
   let offset = 0;
   return {
     ...kit,
     destination: destinationRing(scene, level),
+    // These are the deterministic empty benches skipped by RailwayPassengers.
+    restSpots: [
+      {
+        id: 'train-rear-seat',
+        label: 'FREIER SITZ',
+        kind: 'seat' as const,
+        position: { x: -2.8, y: 1.45, z: -44 },
+        exit: { x: -1.3, y: 1.1, z: -44 },
+        yaw: Math.PI,
+      },
+      {
+        id: 'train-rear-seat-2',
+        label: 'FREIER SITZ',
+        kind: 'seat' as const,
+        position: { x: 2.8, y: 1.45, z: -36 },
+        exit: { x: 1.3, y: 1.1, z: -36 },
+        yaw: Math.PI,
+      },
+    ],
     update(delta: number) {
+      landscape.update(delta);
       offset = (offset + delta * 8) % 3;
       for (const [i, sleeper] of sleepers.entries()) sleeper.position.z = i * 3 - 80 - offset;
     },

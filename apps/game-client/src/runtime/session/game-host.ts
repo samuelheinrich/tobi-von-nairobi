@@ -1,3 +1,8 @@
+import { Tutorial, type LessonSignals } from '@tobi/game-core';
+import { tutorialLessons, tutorialLayout } from '@tobi/game-data';
+import { Ray } from '@babylonjs/core/Culling/ray.js';
+import { FlightRuntime } from '../flight/flight-runtime.js';
+import { Seating, CharacterFacing } from '@tobi/game-core';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
@@ -18,7 +23,7 @@ import {
   hippieHouseLayout,
   zurichLayout,
 } from '@tobi/game-data';
-import type { LevelDefinition } from '@tobi/contracts';
+import type { GameView, LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
 import type { GameViewStore } from '../../app/game-view-store.js';
 import { KeyboardInput } from '../input/keyboard-input.js';
@@ -30,7 +35,7 @@ import { SpeechBubbles } from '../levels/speech-bubbles.js';
 import { createLevelNpcs } from '../levels/create-level-npcs.js';
 import type { LevelNpcs } from '../levels/level-npcs.js';
 import { ColorPickups } from '../items/color-pickups.js';
-import { ThrownBottles, throwElevation } from '../items/thrown-bottles.js';
+import { ThrownBottles } from '../items/thrown-bottles.js';
 import { TobiVisual } from '../character/tobi-visual.js';
 import { BottlePickups } from '../items/bottle-pickups.js';
 import { ThirdPersonCamera } from '../camera/third-person-camera.js';
@@ -61,6 +66,12 @@ export class GameHost {
   private readonly bubbles: SpeechBubbles;
   private readonly npcs: LevelNpcs | null;
   private readonly environment: LevelScene;
+  private readonly seating = new Seating();
+  private readonly facing = new CharacterFacing();
+  private readonly tutorial: Tutorial | null;
+  private coverRouteIndex = 0;
+  private seatRouteIndex = 0;
+  private readonly flight: FlightRuntime | null;
   private flirts = 0;
   private tauntCooldown = 0;
   private wasGrounded = true;
@@ -106,11 +117,13 @@ export class GameHost {
     private readonly level: LevelDefinition,
   ) {
     // A level may run without a score economy; the drunk tank hands out neither points nor bonus.
+    this.tutorial = level.scenery === 'tutorial' ? new Tutorial(tutorialLessons) : null;
     this.session = new PrototypeSession(level, level.scoring ?? prototypeBalance);
     this.scene = new Scene(engine);
     this.world = new HavokWorld(this.scene, module);
     const environment = createLevelScene(this.scene, this.world, level);
     this.environment = environment;
+    this.flight = level.scenery === 'aircraft' ? new FlightRuntime(this.scene, environment) : null;
     this.pills = new ColorPickups(this.scene, level);
     this.projectiles = new ThrownBottles(this.scene, environment.colliders, () =>
       this.audio.play('smash'),
@@ -131,19 +144,25 @@ export class GameHost {
         : null;
     this.camera = new ThirdPersonCamera(
       this.scene,
-      level.scenery === 'railway'
-        ? 'railway'
-        : level.scenery === 'drunk-tank'
-          ? 'cell'
-          : level.scenery === 'hippie-house'
-            ? 'interior'
-            : 'follow',
+      level.scenery === 'aircraft'
+        ? 'interior'
+        : level.scenery === 'railway'
+          ? 'railway'
+          : level.scenery === 'drunk-tank'
+            ? 'cell'
+            : level.scenery === 'hippie-house'
+              ? 'interior'
+              : 'follow',
     );
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
     for (let i = 0; i < 60; i++) {
       this.world.step(1 / 60);
       this.motor.move({ x: 0, y: -2, z: 0 }, 1 / 60);
+    }
+    if (this.flight) {
+      const home = environment.restSpots?.find((spot) => spot.id === 'tobi-seat');
+      if (home) this.motor.teleport(this.seating.enter(home));
     }
     this.motor.support(1 / 60);
     this.syncVisual(0);
@@ -273,7 +292,34 @@ export class GameHost {
     }
   }
 
+  private tutorialView(): GameView['lesson'] {
+    const lesson = this.tutorial?.active;
+    if (!lesson || !this.tutorial) return null;
+    const target =
+      lesson.metric === 'cover'
+        ? (tutorialLayout.coverRoute[this.coverRouteIndex] ?? tutorialLayout.cover)
+        : lesson.metric === 'seated'
+          ? (tutorialLayout.seatRoute[this.seatRouteIndex] ?? tutorialLayout.seat.exit)
+          : lesson.metric === 'taunts'
+            ? tutorialLayout.trainer
+            : lesson.metric === 'bottles'
+              ? this.level.pickups.find((p) => !this.session.collected.has(p.id))?.position
+              : null;
+    const dx = target ? target.x - this.motor.position.x : 0;
+    const dz = target ? target.z - this.motor.position.z : 0;
+    const bearing = `${Math.abs(dz) > 0.35 ? (dz > 0 ? 'N' : 'S') : ''}${Math.abs(dx) > 0.35 ? (dx > 0 ? 'E' : 'W') : ''}`;
+    return {
+      ...lesson,
+      index: this.tutorial.index,
+      total: tutorialLessons.length,
+      distance: target ? Math.hypot(dx, dz) : null,
+      bearing,
+    };
+  }
+
   private objectiveText(): string {
+    if (this.tutorial?.active) return this.tutorial.active.title;
+    if (this.flight) return this.flight.puzzle.hint;
     if (this.level.scenery === 'drunk-tank') return 'Ausnüchtern und die Nacht beenden';
     const active = this.session.mission.active?.type;
     if (active === 'collect') return `Sammle ${this.level.pickups.length} Flaschen`;
@@ -282,6 +328,7 @@ export class GameHost {
   }
 
   private respawn(): void {
+    this.seating.leave();
     this.motor.teleport(this.level.spawn);
     this.locomotion.reset();
     this.camera.reset();
@@ -291,24 +338,56 @@ export class GameHost {
   private step = (delta: number): void => {
     if (this.store.getSnapshot().phase !== 'playing') return;
     const actions = this.input.sample();
+    const lessonSignals: Partial<LessonSignals> = {};
     this.camera.look(actions.lookX, actions.lookY);
+    if (this.seating.active) this.facing.yaw = this.seating.active.yaw;
+    let usedInteraction = false;
+    if (actions.interactPressed) {
+      const exit = this.seating.leave();
+      const spot = exit
+        ? null
+        : this.seating.nearest(this.motor.position, this.environment.restSpots ?? []);
+      const target = exit ?? (spot ? this.seating.enter(spot) : null);
+      if (target) {
+        if (exit) lessonSignals.stoodUp = 1;
+        this.motor.teleport(target);
+        this.locomotion.halt();
+        usedInteraction = true;
+      }
+    }
+    const sitting = this.seating.active !== null;
+    const movementActions = sitting
+      ? { ...actions, moveX: 0, moveZ: 0, jumpPressed: false, sprintHeld: false }
+      : this.flight
+        ? { ...actions, jumpPressed: false }
+        : actions;
     const velocity = this.locomotion.step(
-      actions,
+      movementActions,
       this.camera.yaw,
       this.motor.support(delta),
       delta,
     );
-    if (velocity.y > 0 && this.motor.grounded && this.wasGrounded) this.audio.play('jump');
+    if (velocity.y > 0 && this.motor.grounded && this.wasGrounded) {
+      this.audio.play('jump');
+      lessonSignals.jumps = 1;
+    }
     if (this.motor.grounded && !this.wasGrounded) this.audio.play('land');
     this.wasGrounded = this.motor.grounded;
+    this.facing.update(velocity);
     this.world.step(delta);
-    this.motor.move(velocity, delta);
+    if (this.flight) {
+      velocity.x *= 0.5;
+      velocity.z *= 0.5;
+    }
+    if (this.seating.active) this.motor.teleport(this.seating.active.position);
+    else this.motor.move(velocity, delta);
     if (velocity.y > 0 && this.motor.velocity.y < velocity.y)
       this.locomotion.velocity.y = this.motor.velocity.y;
     const position = this.motor.position;
     if (position.y < -8) this.respawn();
     this.session.elapsedSeconds += delta;
     this.parade?.update(delta);
+    const beforeBottles = this.session.collected.size;
     for (const id of this.bottles.nearby(position)) {
       if (!this.session.collect(id)) continue;
       this.bottles.collect(id);
@@ -331,6 +410,9 @@ export class GameHost {
             : `+${prototypeBalance.bottlePoints} · ENERGIE VOLL · ${this.mood.label}`,
       });
     }
+    // An early practice throw can never strand the later throwing lesson without a bottle.
+    if (this.tutorial?.active?.metric === 'throws' && !this.hands.holding && !this.hands.drinking)
+      this.hands.collect();
     const drinks = this.hands.step(delta);
     for (let i = 0; i < drinks; i++) {
       this.mood.collect();
@@ -346,9 +428,11 @@ export class GameHost {
         this.toastUntil = this.session.elapsedSeconds + 3;
         this.store.update({ toast: 'FARBRAUSCH · Die Parade hat jetzt noch mehr Farben.' });
       }
-    if (actions.throwPressed && this.projectiles.count < 8 && this.hands.throw()) {
-      // Yaw and pitch both come from the camera, so any direction Tobi faces is reachable.
-      this.projectiles.launch(position, this.camera.yaw, throwElevation(this.camera.pitch));
+    if (!sitting && actions.throwPressed && this.projectiles.count < 8 && this.hands.throw()) {
+      // The visible character leads the throw; orbiting the camera never changes its direction.
+      this.visual.root.rotation.y = this.facing.yaw;
+      this.projectiles.launch(position, this.facing.yaw);
+      lessonSignals.throws = 1;
       this.visual.throwBottle();
       this.audio.play('throw');
       this.police?.system.disrupt();
@@ -377,11 +461,15 @@ export class GameHost {
         (this.npcs?.taunt(position) ?? 0);
       this.police?.system.provoke();
       this.audio.play('provoke');
+      if (count > 0) lessonSignals.taunts = 1;
+      this.flight?.puzzle.taunt();
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({
-        toast: count
-          ? `«PLATZ DA, ICH KENNE KARL!» · ${count} Leute reagieren.`
-          : '«ICH KENNE KARL!»',
+        toast: this.flight
+          ? `«Bitte leise sein!» · Beschwerde ${this.flight.puzzle.strikes}/3`
+          : count
+            ? `«PLATZ DA, ICH KENNE KARL!» · ${count} Leute reagieren.`
+            : '«ICH KENNE KARL!»',
       });
     }
     if (actions.flirtPressed && this.npcs?.flirt(position)) this.flirts++;
@@ -398,6 +486,22 @@ export class GameHost {
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({ speech: reply.text, toast: reply.text });
     }
+    const cabinOutcome = this.flight?.step(delta, position, this.seating.active);
+    if (cabinOutcome) {
+      const home = this.environment.restSpots?.find((spot) => spot.id === 'tobi-seat');
+      if (home) this.motor.teleport(this.seating.enter(home));
+      this.locomotion.reset();
+      this.camera.reset();
+      this.audio.play('grumble');
+      this.toastUntil = this.session.elapsedSeconds + 5;
+      this.store.update({
+        toast:
+          cabinOutcome === 'disruptive'
+            ? 'DREI BESCHWERDEN. Zurück auf Platz 42C! E zum Aufstehen.'
+            : '«Bitte zurück auf Ihren Platz!» E zum Aufstehen.',
+      });
+      return;
+    }
     const outcome = this.police?.system.step(delta, position);
     const wanted = this.police?.system.wanted.level ?? 0;
     if (wanted > this.lastWanted) this.audio.play('alert');
@@ -408,6 +512,7 @@ export class GameHost {
       this.motor.grounded,
       wanted,
       this.level.atmosphere === 'night',
+      !this.flight,
     );
     if (outcome === 'escaped') {
       this.audio.play('escape');
@@ -424,6 +529,42 @@ export class GameHost {
       this.store.update({ phase: 'caught', pursuit: this.police?.system.snapshot() ?? null });
       return;
     }
+    if (this.tutorial) {
+      if (this.tutorial.active?.metric === 'seated') {
+        const waypoint = tutorialLayout.seatRoute[this.seatRouteIndex];
+        if (waypoint && Math.hypot(position.x - waypoint.x, position.z - waypoint.z) < 0.8)
+          this.seatRouteIndex++;
+      }
+      if (this.tutorial.active?.metric === 'cover') {
+        const waypoint = tutorialLayout.coverRoute[this.coverRouteIndex];
+        if (waypoint && Math.hypot(position.x - waypoint.x, position.z - waypoint.z) < 0.8)
+          this.coverRouteIndex++;
+      }
+      const trainer = new Vector3(
+        tutorialLayout.trainer.x,
+        tutorialLayout.trainer.y,
+        tutorialLayout.trainer.z,
+      );
+      const sight = position.subtract(trainer),
+        distance = sight.length();
+      const hidden =
+        position.x > 3.5 &&
+        Math.abs(position.z - tutorialLayout.cover.z) < 2 &&
+        this.scene.pickWithRay(
+          new Ray(trainer, sight.normalize(), distance),
+          (mesh) => mesh.name === 'tutorial-cover',
+        )?.hit;
+      this.tutorial.observe({
+        ...lessonSignals,
+        distance: Math.hypot(this.motor.velocity.x, this.motor.velocity.z) * delta,
+        camera: Math.abs(actions.lookX) + Math.abs(actions.lookY),
+        sprint: this.locomotion.sprinting ? delta : 0,
+        bottles: this.session.collected.size - beforeBottles,
+        drinks,
+        cover: hidden ? delta : 0,
+        seated: this.seating.active?.kind === 'seat' ? delta : 0,
+      });
+    }
     const destination = this.level.destination;
     const nearDestination =
       Vector3.Distance(
@@ -432,6 +573,9 @@ export class GameHost {
       ) < destination.radius;
     if (
       actions.interactPressed &&
+      !usedInteraction &&
+      (!this.flight || this.flight.puzzle.ready) &&
+      (!this.tutorial || this.tutorial.complete) &&
       nearDestination &&
       !this.police?.system.wanted.level &&
       this.session.reach(destination.id)
@@ -475,6 +619,8 @@ export class GameHost {
       );
       this.visual.root.rotation.y += difference * Math.min(1, delta * 14);
     }
+    if (this.seating.active) this.visual.root.rotation.y = this.seating.active.yaw;
+    this.visual.root.setEnabled(this.seating.active?.kind !== 'toilet');
     const tripped = this.visual.animate(
       ['paused', 'caught'].includes(this.store.getSnapshot().phase) ? 0 : delta,
       this.store.getSnapshot().phase === 'playing' ? speed : 0,
@@ -484,6 +630,7 @@ export class GameHost {
       this.locomotion.stamina,
       this.hands.holding,
       this.hands.drinkPose,
+      this.seating.active?.kind === 'seat',
     );
     if (tripped) this.audio.play('stumble');
   }
@@ -524,8 +671,11 @@ export class GameHost {
           tripSeconds: Math.ceil(this.trip.remaining),
           tripIntensity: this.trip.intensity,
           crowdCount: this.parade?.system.people.length ?? 0,
-          interiorFloor:
-            this.level.scenery === 'hippie-house'
+          interiorFloor: this.flight
+            ? this.motor.position.y > 4.4
+              ? 1
+              : 0
+            : this.level.scenery === 'hippie-house'
               ? Math.max(
                   0,
                   Math.min(
@@ -537,6 +687,30 @@ export class GameHost {
           tauntedCount: this.parade?.system.taunted.size ?? 0,
           flirts: this.flirts,
           blocked: this.npcs?.blocked ?? false,
+          posture:
+            this.seating.active?.kind === 'seat'
+              ? 'sitting'
+              : this.seating.active
+                ? 'hidden'
+                : 'standing',
+          interaction: this.seating.active
+            ? 'E · AUFSTEHEN / VERSTECK VERLASSEN'
+            : (() => {
+                const spot = this.seating.nearest(
+                  this.motor.position,
+                  this.environment.restSpots ?? [],
+                );
+                return spot ? `E · ${spot.label}` : '';
+              })(),
+          lesson: this.tutorialView(),
+          cabin: this.flight
+            ? {
+                stage: this.flight.puzzle.stage,
+                strikes: this.flight.puzzle.strikes,
+                returns: this.flight.puzzle.returns,
+                ready: this.flight.puzzle.ready,
+              }
+            : null,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
           elapsedSeconds: Math.floor(this.session.elapsedSeconds),
@@ -544,7 +718,10 @@ export class GameHost {
           objective: this.objectiveText(),
           pursuit: this.police?.system.snapshot() ?? null,
           canCheckIn:
-            this.session.mission.active?.type === 'reach' && !this.police?.system.wanted.level,
+            this.session.mission.active?.type === 'reach' &&
+            !this.police?.system.wanted.level &&
+            (!this.flight || this.flight.puzzle.ready) &&
+            (!this.tutorial || this.tutorial.complete),
           ...(this.session.elapsedSeconds > this.toastUntil ? { toast: '', speech: '' } : {}),
         });
       }
@@ -576,6 +753,7 @@ export class GameHost {
     this.removeDebug?.();
     this.input.dispose();
     this.audio.dispose();
+    this.flight?.dispose();
     this.npcs?.dispose();
     this.bubbles.dispose();
     this.projectiles.dispose();

@@ -1,3 +1,4 @@
+import { finishTutorialLessons } from '../helpers/tutorial.js';
 import { randomUUID } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
@@ -8,6 +9,7 @@ if (existsSync('apps/game-server/.env')) process.loadEnvFile('apps/game-server/.
 test('registers, finishes a real level, survives a lost save response and restores progress on reload', async ({
   page,
 }) => {
+  test.setTimeout(240000);
   const username = `browser-${randomUUID().slice(0, 12)}`;
   const password = 'Das ist nur ein Browser-Testpasswort!';
   const db = createDatabase(process.env.DATABASE_URL!);
@@ -24,11 +26,7 @@ test('registers, finishes a real level, survives a lost save response and restor
       timeout: 45000,
     });
     await page.getByRole('button', { name: 'TUTORIAL STARTEN' }).press('Enter');
-    await expect(page.getByRole('heading', { name: 'Sammle 5 Flaschen' })).toBeVisible();
-    await page.keyboard.down('KeyW');
-    await expect(page.getByTestId('bottle-count')).toContainText('5 / 5', { timeout: 60000 });
-    await expect(page.getByText('EINCHECKEN', { exact: false })).toBeVisible({ timeout: 20000 });
-    await page.keyboard.up('KeyW');
+    await finishTutorialLessons(page);
     let sent = false;
     await page.route('**/api/v1/runs/*/complete', async (route) => {
       if (!sent) {

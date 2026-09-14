@@ -1,11 +1,13 @@
+import { finishTutorialLessons } from '../helpers/tutorial.js';
 import { expect, test } from '@playwright/test';
 
 // Software rendering on CI advances the bounded simulation more slowly than wall time.
 // Keep checking real gameplay outcomes, with extra time for those frames to render.
-const collectTimeoutMs = process.env.CI ? 60000 : 30000;
+
 const recoveryTimeoutMs = process.env.CI ? 30000 : 10000;
 
 test('loads the scene, pauses safely, collects real pickups and checks in', async ({ page }) => {
+  test.setTimeout(240000);
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
@@ -14,18 +16,13 @@ test('loads the scene, pauses safely, collects real pickups and checks in', asyn
   });
   await page.screenshot({ path: '.artifacts/screenshots/landing.png' });
   await page.getByRole('button', { name: 'TUTORIAL STARTEN' }).click();
-  await expect(page.getByRole('heading', { name: 'Sammle 5 Flaschen' })).toBeVisible();
+  await expect(page.getByTestId('tutorial-coach')).toHaveAttribute('data-lesson', 'walk');
+  await page.screenshot({ path: '.artifacts/screenshots/tutorial-guide.png' });
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Pause und Steuerung' })).toBeVisible();
   // Keyboard activation avoids synthetic cursor movement during pointer-lock transitions.
   await page.getByRole('button', { name: 'WEITER GEHT’S' }).press('Enter');
-  // Movement follows the actual authored path; no teleport or completion test hook.
-  await page.keyboard.down('KeyW');
-  await expect(page.getByTestId('bottle-count')).toContainText('5 / 5', {
-    timeout: collectTimeoutMs,
-  });
-  await expect(page.getByText('EINCHECKEN', { exact: false })).toBeVisible({ timeout: 10000 });
-  await page.keyboard.up('KeyW');
+  await finishTutorialLessons(page);
   await page.screenshot({ path: '.artifacts/screenshots/gameplay.png' });
   await page.keyboard.press('KeyE');
   await expect(page.getByRole('dialog', { name: 'Tutorial abgeschlossen' })).toBeVisible();
@@ -44,15 +41,15 @@ test('sprint drains stamina and pause releases held movement keys', async ({ pag
   await page.goto('/');
   await page.getByRole('button', { name: 'TUTORIAL STARTEN' }).click({ timeout: 45000 });
   const stamina = page.getByRole('progressbar', { name: 'Stamina' });
-  await page.keyboard.down('KeyW');
+  await page.keyboard.down('KeyA');
   await page.keyboard.down('ShiftLeft');
   await expect
-    .poll(async () => Number(await stamina.getAttribute('aria-valuenow')))
+    .poll(async () => Number(await stamina.getAttribute('aria-valuenow')), { timeout: 15000 })
     .toBeLessThan(85);
   await page.keyboard.press('Space');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Pause und Steuerung' })).toBeVisible();
-  await page.keyboard.up('KeyW');
+  await page.keyboard.up('KeyA');
   await page.keyboard.up('ShiftLeft');
   // Keyboard activation avoids synthetic cursor movement during pointer-lock transitions.
   await page.getByRole('button', { name: 'WEITER GEHT’S' }).press('Enter');

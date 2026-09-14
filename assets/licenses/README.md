@@ -11,3 +11,5 @@ Fonts are self-hosted from `@fontsource/barlow-condensed` and `@fontsource/dm-sa
 Babylon.js and the Havok web package retain their upstream notices in installed dependencies and generated artifacts. Future imported assets must include source URL, author, license, attribution requirements and allowed modifications here before use.
 
 Level thumbnails in `apps/game-client/src/assets/level-previews/` are original 640 × 360 WebP captures of those procedural scenes. `tools/assets/capture-level-previews.mjs` regenerates them through the development-only preview entry. They contain no external images or owner-supplied reference photos.
+
+Fly High uses original procedural A380-inspired cabin geometry, seat groupings and cloud meshes. No Airbus/airline artwork, logos, seat-map images or 3D assets are distributed. Reference links and the intentional departures in scale and seating capacity are documented in [Fly High](../../docs/gameplay/fly-high.md). Aircraft ambience is synthesized locally.

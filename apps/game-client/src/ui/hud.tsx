@@ -1,3 +1,4 @@
+import { TutorialCoach } from './tutorial-coach.js';
 import {
   levelById,
   playableLevels,
@@ -19,6 +20,7 @@ export function Hud({ view }: { view: GameView }) {
   const level = levelById(view.levelId) ?? playableLevels[0];
   return (
     <div className="hud" aria-label="Spielstatus">
+      <TutorialCoach lesson={view.lesson} />
       <section className="mission-card">
         <div className="eyebrow">
           {worldNames[level.worldId].toUpperCase()}{' '}
@@ -26,19 +28,21 @@ export function Hud({ view }: { view: GameView }) {
         </div>
         <h2>{view.objective}</h2>
         <p>
-          {level.scenery === 'drunk-tank'
-            ? 'R: rumpöbeln, bis der Wärter vorbeischaut. E auf der Pritsche beendet die Nacht.'
-            : view.collected < view.total
-              ? level.scenery === 'hippie-house'
-                ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
-                : level.scenery === 'railway'
-                  ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
-                  : level.scenery === 'nana-plaza'
-                    ? 'Jede Flasche füllt die Energie. F: anflirten, R: anpöbeln.'
-                    : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
-              : view.pursuit && !view.canCheckIn
-                ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
-                : `${destinationName(level)} wartet am Ende des Wegs.`}
+          {level.scenery === 'aircraft'
+            ? 'E: sitzen / verstecken / aufstehen. Crew beobachten. Drei Pöbeleien schicken dich zurück. Kein Springen in der Kabine.'
+            : level.scenery === 'drunk-tank'
+              ? 'R: rumpöbeln, bis der Wärter vorbeischaut. E auf der Pritsche beendet die Nacht.'
+              : view.collected < view.total
+                ? level.scenery === 'hippie-house'
+                  ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
+                  : level.scenery === 'railway'
+                    ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
+                    : level.scenery === 'nana-plaza'
+                      ? 'Jede Flasche füllt die Energie. F: anflirten, R: anpöbeln.'
+                      : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
+                : view.pursuit && !view.canCheckIn
+                  ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
+                  : `${destinationName(level)} wartet am Ende des Wegs.`}
         </p>
         {view.total > 0 && (
           <div className="bottle-progress">
@@ -70,11 +74,27 @@ export function Hud({ view }: { view: GameView }) {
         <small>«Ich laufe noch absolut gerade.»</small>
       </div>
       <div className="hands-card">
+        {view.cabin && (
+          <span data-testid="cabin-status">
+            KABINEN-RÄTSEL {Math.min(3, view.cabin.stage + 1)}/3 · BESCHWERDEN {view.cabin.strikes}
+            /3 · ZURÜCKGESCHICKT {view.cabin.returns}
+          </span>
+        )}
+        {view.posture !== 'standing' && (
+          <strong data-testid="posture">
+            {view.posture === 'sitting' ? 'TOBI SITZT · UNAUFFÄLLIG' : 'IM WC VERSTECKT'}
+          </strong>
+        )}
+        {view.interaction && <span data-testid="seat-interaction">{view.interaction}</span>}
         {view.interiorFloor !== null && (
           <strong data-testid="interior-floor">
-            {view.interiorFloor === 0
-              ? 'ERDGESCHOSS · AUSGANG IM SÜDEN'
-              : `${view.interiorFloor}. OBERGESCHOSS · 6 ZIMMER`}
+            {view.cabin
+              ? view.interiorFloor === 0
+                ? 'A380 · HAUPTDECK · ECONOMY'
+                : 'A380 · OBERDECK · BUSINESS'
+              : view.interiorFloor === 0
+                ? 'ERDGESCHOSS · AUSGANG IM SÜDEN'
+                : `${view.interiorFloor}. OBERGESCHOSS · 6 ZIMMER`}
           </strong>
         )}
         <strong data-testid="bottle-hand">
@@ -85,7 +105,8 @@ export function Hud({ view }: { view: GameView }) {
               : 'HÄNDE FREI'}
         </strong>
         <span>
-          <kbd>G</kbd> Werfen · <b data-testid="empty-bottles">{view.emptyBottles}</b> leer
+          <kbd>G</kbd> In Tobis Blickrichtung werfen ·{' '}
+          <b data-testid="empty-bottles">{view.emptyBottles}</b> leer
         </span>
         {view.crowdCount > 0 && (
           <span data-testid="crowd-count">
@@ -102,11 +123,6 @@ export function Hud({ view }: { view: GameView }) {
           <span data-testid="color-trip">FARBRAUSCH · {view.tripSeconds}s</span>
         )}
       </div>
-      {view.phase === 'playing' && view.emptyBottles > 0 && (
-        <div className="throw-reticle" aria-label="Wurfrichtung">
-          +
-        </div>
-      )}
       <div className="score-card">
         <span>TOBI SCORE</span>
         <strong data-testid="score">{view.score.toLocaleString('de-CH')}</strong>
@@ -147,22 +163,28 @@ export function Hud({ view }: { view: GameView }) {
       )}
       {view.nearDestination && (
         <div className="interact-prompt">
-          {view.pursuit && view.collected === view.total && !view.canCheckIn ? (
+          {view.lesson ? (
+            <>ERST DIE ÜBUNGEN ABSCHLIESSEN.</>
+          ) : view.cabin && !view.canCheckIn ? (
+            <>ERST SITZ UND WC, DANN ZUR LOUNGE.</>
+          ) : view.pursuit && view.collected === view.total && !view.canCheckIn ? (
             <>ERST DIE POLIZEI ABHÄNGEN.</>
           ) : view.collected === view.total ? (
             <>
               <kbd>E</kbd>{' '}
-              {level.scenery === 'hippie-house'
-                ? 'WG VERLASSEN'
-                : level.scenery === 'railway'
-                  ? 'WAGEN 1 ERREICHT'
-                  : level.scenery === 'street-parade'
-                    ? 'BACKSTAGE BETRETEN'
-                    : level.scenery === 'nana-plaza'
-                      ? 'SOI 4 VERLASSEN'
-                      : level.scenery === 'drunk-tank'
-                        ? 'HINLEGEN UND AUSNÜCHTERN'
-                        : 'EINCHECKEN'}
+              {level.scenery === 'aircraft'
+                ? 'LOUNGE ERREICHT'
+                : level.scenery === 'hippie-house'
+                  ? 'WG VERLASSEN'
+                  : level.scenery === 'railway'
+                    ? 'WAGEN 1 ERREICHT'
+                    : level.scenery === 'street-parade'
+                      ? 'BACKSTAGE BETRETEN'
+                      : level.scenery === 'nana-plaza'
+                        ? 'SOI 4 VERLASSEN'
+                        : level.scenery === 'drunk-tank'
+                          ? 'HINLEGEN UND AUSNÜCHTERN'
+                          : 'EINCHECKEN'}
             </>
           ) : (
             <>ERST DIE FLASCHEN, DANN DER CHECK-IN.</>

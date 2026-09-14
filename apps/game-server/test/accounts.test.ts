@@ -10,6 +10,9 @@ import {
   baliEscape,
   beachBar,
   nightMarket,
+  baliAdventure,
+  nanaPlaza,
+  flyHigh,
   streetParade,
   thailandRailway,
   hippieHouse,
@@ -224,7 +227,7 @@ describe('authenticated, durable campaign progress', () => {
       ).json().score,
     ).toBe(0);
   });
-  it.each([baliEscape, beachBar, nightMarket, streetParade])(
+  it.each([baliAdventure, nanaPlaza, streetParade])(
     'requires an escape result before awarding $title progress',
     async (level) => {
       const user = await register();
@@ -265,7 +268,38 @@ describe('authenticated, durable campaign progress', () => {
     },
   );
 
-  it.each([thailandRailway, hippieHouse])(
+  it('retains legacy Bali progress while refusing fresh runs of the retired courses', async () => {
+    const user = await register();
+    for (const level of [baliEscape, beachBar, nightMarket]) {
+      const start = await app.inject({
+        method: 'POST',
+        url: '/api/v1/runs',
+        headers: user.headers,
+        payload: { requestId: randomUUID(), levelId: level.id },
+      });
+      expect(start.statusCode).toBe(422);
+    }
+    const before = await app.inject({
+      method: 'GET',
+      url: '/api/v1/progress',
+      headers: user.headers,
+    });
+    const saveId: string = before.json().saveId;
+    await db.levelProgress.create({
+      data: { saveId, levelId: beachBar.id, bestScore: 2000, bestTimeMs: 45000 },
+    });
+    const after = await app.inject({
+      method: 'GET',
+      url: '/api/v1/progress',
+      headers: user.headers,
+    });
+    expect(after.json()).toMatchObject({
+      activeRun: null,
+      levels: [{ levelId: beachBar.id, bestScore: 2000, completions: 1 }],
+    });
+  });
+
+  it.each([thailandRailway, hippieHouse, flyHigh])(
     'stores $title without requiring police and restores its own result',
     async (level) => {
       const user = await register();

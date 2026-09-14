@@ -25,12 +25,17 @@ test('Nana Plaza: bottles refill the energy and the dancers answer a compliment'
   await expect(page.getByTestId('tobi-mood')).toContainText('ANGESCHICKERT', { timeout: 15000 });
 
   // F is the new compliment; somebody at the poles or behind the bar answers in kind.
-  for (let i = 0; i < 6; i++) {
-    await page.keyboard.press('KeyF');
-    if (await page.getByTestId('npc-speech').isVisible()) break;
-    await page.waitForTimeout(400);
+  // The bottles have a pickup radius: stopping at bottle two does not guarantee flirt range.
+  // Approach the right-hand bar and ask until an actual visible NPC answers.
+  await page.keyboard.down('KeyD');
+  try {
+    await expect(async () => {
+      await page.keyboard.press('KeyF');
+      await expect(page.getByTestId('npc-speech')).toBeVisible({ timeout: 500 });
+    }).toPass({ timeout: 20000, intervals: [300] });
+  } finally {
+    await page.keyboard.up('KeyD');
   }
-  await expect(page.getByTestId('npc-speech')).toBeVisible();
   await expect(page.getByTestId('flirt-count')).toContainText('Komplimente');
   await page.screenshot({ path: '.artifacts/screenshots/bangkok-nana-plaza.png' });
 

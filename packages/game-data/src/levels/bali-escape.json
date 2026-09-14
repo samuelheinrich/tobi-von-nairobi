@@ -109,5 +109,6 @@
     "minZ": -34,
     "maxZ": 34
   },
-  "policeSpeed": 6.1
+  "policeSpeed": 6.1,
+  "selectable": false
 }

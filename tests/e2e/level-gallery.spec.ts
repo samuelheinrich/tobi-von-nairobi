@@ -1,3 +1,4 @@
+import { finishTutorialLessons } from '../helpers/tutorial.js';
 import { expect, test } from '@playwright/test';
 
 test('guests can browse every illustrated level and start the WG with the API offline', async ({
@@ -11,8 +12,8 @@ test('guests can browse every illustrated level and start the WG with the API of
   await page.goto('/');
   const gallery = page.getByRole('region', { name: 'Levelauswahl' });
   const cards = gallery.getByRole('button');
-  await expect(cards).toHaveCount(8);
-  await expect(cards.first()).toHaveAccessibleName('Level 1: Tutorial · Welcome to Bali');
+  await expect(cards).toHaveCount(7);
+  await expect(cards.first()).toHaveAccessibleName('Level 1: Tutorial');
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'true');
   await expect(gallery).toContainText('Kein Login nötig.');
   await expect
@@ -33,7 +34,7 @@ test('guests can browse every illustrated level and start the WG with the API of
     await expect(gallery.locator('[aria-pressed="true"]')).toHaveCount(1);
   }
   // Browsing ends on the last card, so pick the WG again before starting it.
-  await page.getByRole('button', { name: 'Level 7: Arlesheim Hippie-WG' }).press('Enter');
+  await page.getByRole('button', { name: 'Level 5: Arlesheim Hippie-WG' }).press('Enter');
   const start = page.getByRole('button', { name: 'REIN IN DIE WG' });
   await expect(start).toBeEnabled({ timeout: 45000 });
   await page.screenshot({ path: '.artifacts/screenshots/level-gallery.png' });
@@ -52,7 +53,7 @@ test('guests can browse every illustrated level and start the WG with the API of
 test('level cards stay reachable on a narrow screen', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  const card = page.getByRole('button', { name: 'Level 5: Thailand Railway' });
+  const card = page.getByRole('button', { name: 'Level 3: Thailand Railway' });
   await card.click();
   await expect(card).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: 'EINSTEIGEN' })).toBeEnabled({ timeout: 45000 });
@@ -66,6 +67,7 @@ test('level cards stay reachable on a narrow screen', async ({ page }) => {
 test('guest start ignores a pending session lookup and a late login does not claim that run', async ({
   page,
 }) => {
+  test.setTimeout(240000);
   // Hold just the session response, independently of software-renderer speed and HTTP timeout.
   await page.addInitScript(() => {
     const request = window.fetch.bind(window);
@@ -112,14 +114,11 @@ test('guest start ignores a pending session lookup and a late login does not cla
     const start = page.getByRole('button', { name: 'TUTORIAL STARTEN' });
     await expect(start).toBeEnabled({ timeout: 45000 });
     await start.press('Enter');
-    await expect(page.getByRole('heading', { name: 'Sammle 5 Flaschen' })).toBeVisible();
+    await expect(page.getByTestId('tutorial-coach')).toHaveAttribute('data-lesson', 'walk');
     await expect(page.getByRole('dialog', { name: 'Konto und Fortschritt' })).not.toBeVisible();
     release();
     await expect(page.getByRole('button', { name: 'KONTO · late_login' })).toBeVisible();
-    await page.keyboard.down('KeyW');
-    await expect(page.getByTestId('bottle-count')).toContainText('5 / 5', { timeout: 60000 });
-    await expect(page.getByText('EINCHECKEN', { exact: false })).toBeVisible({ timeout: 20000 });
-    await page.keyboard.up('KeyW');
+    await finishTutorialLessons(page);
     await page.keyboard.press('KeyE');
     const result = page.getByRole('dialog', { name: 'Tutorial abgeschlossen' });
     await expect(result).toBeVisible();

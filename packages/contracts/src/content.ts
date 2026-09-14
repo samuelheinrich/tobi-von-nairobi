@@ -57,6 +57,9 @@ export const levelSchema = z
         'hippie-house',
         'nana-plaza',
         'drunk-tank',
+        'aircraft',
+        'tutorial',
+        'bali-adventure',
       ])
       .default('village'),
     /** Levels reachable only through a gameplay outcome stay out of the menu gallery. */

@@ -36,7 +36,7 @@ export class ThrownBottles {
   public get count(): number {
     return this.active.length;
   }
-  /** Yaw and elevation come from the camera rig, so Tobi throws wherever he is actually looking. */
+  /** Yaw is the character heading. Elevation defaults to a readable forward arcade arc. */
   public launch(position: Position3, yaw: number, elevation = 0.17): boolean {
     if (this.active.length >= 8) return false;
     const node = createBottleModel(this.scene, 'thrown-bottle');

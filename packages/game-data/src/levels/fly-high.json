@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "fly_high",
+  "worldId": "bangkok",
+  "title": "Fly High",
+  "subtitle": "A380 über den Wolken. Ganz hinten gebucht, ganz vorne erwartet.",
+  "scenery": "aircraft",
+  "atmosphere": "day",
+  "maxWanted": 0,
+  "spawn": { "x": -3.05, "y": 1.5, "z": -35 },
+  "destination": { "id": "front_lounge", "position": { "x": 3.2, "y": 4.4, "z": 32 }, "radius": 2 },
+  "pickups": [],
+  "objectives": [{ "id": "reach_front", "type": "reach", "targetId": "front_lounge" }]
+}

@@ -16,3 +16,15 @@ export { Blocker } from './character/blocker.js';
 export type { BlockerConfig } from './character/blocker.js';
 export { NpcVoices, speechOptions } from './character/npc-speech.js';
 export type { SpeechTopic } from './character/npc-speech.js';
+
+export { Seating, type RestSpot } from './character/seating.js';
+export { CabinPuzzle, type CabinPuzzleConfig, type CabinCrew } from './flight/cabin-puzzle.js';
+
+export { CharacterFacing } from './character/facing.js';
+
+export {
+  Tutorial,
+  type TutorialLesson,
+  type LessonMetric,
+  type LessonSignals,
+} from './tutorial/tutorial.js';

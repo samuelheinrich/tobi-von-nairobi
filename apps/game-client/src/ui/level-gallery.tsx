@@ -9,7 +9,7 @@ export function levelPreview(id: string): string | undefined {
   return previews[`../assets/level-previews/${id}.webp`];
 }
 export function levelTitle(id: string, title: string): string {
-  return id === welcomeToBali.id ? `Tutorial · ${title}` : title;
+  return id === welcomeToBali.id ? `Tutorial` : title;
 }
 
 /** Static thumbnails keep the menu cheap: only the selected level owns a Babylon scene. */
@@ -79,11 +79,15 @@ export function LevelGallery({
                 </span>
                 <strong>{level.title}</strong>
                 <span className="level-card-details">
-                  {level.pickups.length} Flaschen{' '}
+                  {level.scenery === 'aircraft'
+                    ? '2 Decks · Sitzverstecke'
+                    : `${level.pickups.length} Flaschen`}{' '}
                   <span>
-                    {level.maxWanted
-                      ? `${'★'.repeat(level.maxWanted)} Verfolgung`
-                      : 'In Ruhe erkunden'}
+                    {level.scenery === 'aircraft'
+                      ? 'Crew austricksen'
+                      : level.maxWanted
+                        ? `${'★'.repeat(level.maxWanted)} Verfolgung`
+                        : 'In Ruhe erkunden'}
                   </span>
                 </span>
               </div>

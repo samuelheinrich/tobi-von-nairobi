@@ -50,11 +50,14 @@ export function Landing({
             <h2>{levelTitle(level.id, level.title)}</h2>
             <p>
               {tutorial
-                ? 'Bewegen, springen, fünf Flaschen sammeln und das Airbnb finden. Ganz entspannt, ohne Polizei.'
+                ? 'Geführte Übungen: bewegen, Kamera, springen, sprinten, trinken, werfen, pöbeln, verstecken und sitzen. Ohne Polizei.'
                 : level.subtitle}
             </p>
             <div className="selected-mission">
-              {level.pickups.length} Flaschen <span>→ {destinationName(level)}</span>
+              {level.scenery === 'aircraft'
+                ? 'Kabinen-Rätsel · 2 Decks'
+                : `${level.pickups.length} Flaschen`}{' '}
+              <span>→ {destinationName(level)}</span>
             </div>
             <button
               className="primary-button gallery-start"
@@ -65,11 +68,13 @@ export function Landing({
                 ? 'LEVEL WIRD GELADEN …'
                 : tutorial
                   ? 'TUTORIAL STARTEN'
-                  : level.scenery === 'hippie-house'
-                    ? 'REIN IN DIE WG'
-                    : level.scenery === 'railway'
-                      ? 'EINSTEIGEN'
-                      : 'FLUCHT STARTEN'}
+                  : level.scenery === 'aircraft'
+                    ? 'ABHEBEN'
+                    : level.scenery === 'hippie-house'
+                      ? 'REIN IN DIE WG'
+                      : level.scenery === 'railway'
+                        ? 'EINSTEIGEN'
+                        : 'FLUCHT STARTEN'}
               <span aria-hidden="true">↗</span>
             </button>
             <p className="guest-note">

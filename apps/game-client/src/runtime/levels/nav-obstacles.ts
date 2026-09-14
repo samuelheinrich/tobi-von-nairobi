@@ -7,7 +7,10 @@ import type { Obstacle } from '@tobi/game-core';
  */
 export function navigationObstacles(colliders: readonly Mesh[]): Obstacle[] {
   return colliders
-    .filter((mesh) => mesh.name !== 'island-ground' && mesh.isVisible)
+    .filter(
+      (mesh) =>
+        mesh.metadata?.navigationObstacle ?? (mesh.name !== 'island-ground' && mesh.isVisible),
+    )
     .map((mesh) => {
       mesh.computeWorldMatrix(true);
       const bounds = mesh.getBoundingInfo().boundingBox;
@@ -22,5 +25,10 @@ export function navigationObstacles(colliders: readonly Mesh[]): Obstacle[] {
 
 /** Sight-blocking meshes, matched to the same set the navigation grid treats as solid. */
 export function sightBlockers(colliders: readonly Mesh[]): Set<Mesh> {
-  return new Set(colliders.filter((mesh) => mesh.name !== 'island-ground' && mesh.isVisible));
+  return new Set(
+    colliders.filter(
+      (mesh) =>
+        mesh.metadata?.navigationObstacle ?? (mesh.name !== 'island-ground' && mesh.isVisible),
+    ),
+  );
 }

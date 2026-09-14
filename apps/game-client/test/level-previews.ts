@@ -1,3 +1,4 @@
+import { FlightRuntime } from '../src/runtime/flight/flight-runtime.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera.js';
@@ -21,6 +22,9 @@ const poses: Record<string, { eye: [number, number, number]; target: [number, nu
   village: { eye: [17, 20, -28], target: [0, 0, 1] },
   'beach-bar': { eye: [41, 15, -41], target: [22, 1, -18] },
   'night-market': { eye: [16, 17, -31], target: [0, 1, -8] },
+  'bali-adventure': { eye: [95, 120, -100], target: [5, 0, 20] },
+  tutorial: { eye: [15, 18, -12], target: [0, 0, 7] },
+  aircraft: { eye: [15, 21, -42], target: [0, 0, -13] },
   railway: { eye: [12, 23, -38], target: [0, 0, -19] },
   'street-parade': { eye: [23, 20, -37], target: [0, 1, -3] },
   'hippie-house': { eye: [22, 42, -28], target: [0, 9, 4] },
@@ -57,6 +61,8 @@ const police =
 police?.system.provoke();
 // The resident cast belongs in the thumbnail: a carriage without passengers sells nothing.
 const bubbles = new SpeechBubbles(scene, 2);
+const flight = level.scenery === 'aircraft' ? new FlightRuntime(scene, environment) : null;
+flight?.step(0.4, level.spawn, null);
 const npcs = createLevelNpcs(scene, level, environment, bubbles);
 npcs?.update(0.4, level.spawn);
 bubbles.update(0, new Vector3(...pose.eye));
@@ -71,6 +77,7 @@ window.addEventListener(
   'pagehide',
   () => {
     police?.dispose();
+    flight?.dispose();
     npcs?.dispose();
     bubbles.dispose();
     crowd?.dispose();

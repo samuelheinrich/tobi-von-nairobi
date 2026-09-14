@@ -1,3 +1,4 @@
+import { LocalBystanders } from './local-bystanders.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
 import type { LevelScene } from './create-level-scene.js';
@@ -15,6 +16,31 @@ export function createLevelNpcs(
   environment: LevelScene,
   bubbles: SpeechBubbles,
 ): LevelNpcs | null {
+  if (level.scenery === 'tutorial')
+    return new LocalBystanders(
+      scene,
+      environment.shadows,
+      bubbles,
+      [[0, 7]],
+      'Gut gepöbelt! Jetzt hinter die grüne Wand.',
+    );
+  if (level.scenery === 'bali-adventure')
+    return new LocalBystanders(
+      scene,
+      environment.shadows,
+      bubbles,
+      [
+        [-18, -36],
+        [-10, -36],
+        [5, -20],
+        [10, 18],
+        [22, 18],
+        [46, 27],
+        [36, 38],
+        [50, 70],
+      ],
+      'He! Karl bezahlt deine Rechnung auch nicht!',
+    );
   if (level.scenery === 'railway')
     return new RailwayPassengers(scene, environment.shadows, bubbles);
   if (level.scenery === 'hippie-house')

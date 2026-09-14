@@ -77,6 +77,14 @@ export class Locomotion {
     return { ...this.velocity };
   }
 
+  /** Stops movement for a seat interaction without refilling energy or clearing exhaustion. */
+  public halt(): void {
+    this.velocity = { x: 0, y: 0, z: 0 };
+    this.sprinting = false;
+    this.coyote = this.jumpBuffer = 0;
+    this.jumpConsumed = false;
+  }
+
   public reset(): void {
     this.velocity = { x: 0, y: 0, z: 0 };
     this.stamina = this.config.maxStamina;
