@@ -130,6 +130,11 @@ export class ParadeCrowd {
   public taunt(position: Position3): number {
     return this.system.taunt(position, this.canSee);
   }
+  /** Head height of the nearest dancer who reacted, for a speech plate. */
+  public get responder(): Position3 | null {
+    const person = this.system.lastResponder;
+    return person ? { x: person.position.x, y: 1.9, z: person.position.z } : null;
+  }
   public update(delta: number): void {
     if (delta <= 0) return;
     this.time += delta;

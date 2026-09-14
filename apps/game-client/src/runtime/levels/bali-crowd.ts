@@ -22,16 +22,26 @@ export class BaliCrowd {
       },
     }));
   }
+  private lastResponder: TransformNode | null = null;
+  /** Head height of the nearest bystander who reacted, for a speech plate. */
+  public get responder(): Position3 | null {
+    const at = this.lastResponder?.position;
+    return at ? { x: at.x, y: 1.9, z: at.z } : null;
+  }
   public taunt(position: Position3): number {
     let count = 0;
-    for (const [id, p] of this.people.entries())
-      if (
-        Math.hypot(p.root.position.x - position.x, p.root.position.z - position.z) < 8 &&
-        this.nav.clear(position, p.root.position)
-      ) {
-        this.frightened.set(id, 3);
-        count++;
+    let nearest = Infinity;
+    this.lastResponder = null;
+    for (const [id, p] of this.people.entries()) {
+      const distance = Math.hypot(p.root.position.x - position.x, p.root.position.z - position.z);
+      if (distance >= 8 || !this.nav.clear(position, p.root.position)) continue;
+      this.frightened.set(id, 3);
+      count++;
+      if (distance < nearest) {
+        nearest = distance;
+        this.lastResponder = p.root;
       }
+    }
     return count;
   }
   public constructor(

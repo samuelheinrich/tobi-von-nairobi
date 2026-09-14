@@ -32,16 +32,23 @@ export class ReactiveCrowd {
     this.taunted.add(id);
     return true;
   }
+  /** The closest person who reacted to the last taunt, so a caller can anchor a reply. */
+  public lastResponder: CrowdPerson | undefined;
+
   public taunt(source: Point2, canSee: (a: Point2, b: Point2) => boolean): number {
     let count = 0;
-    for (const p of this.people)
-      if (
-        Math.hypot(p.position.x - source.x, p.position.z - source.z) <= 8 &&
-        canSee(source, p.position)
-      ) {
-        this.frighten(p.id, source);
-        count++;
+    let nearest = Infinity;
+    this.lastResponder = undefined;
+    for (const p of this.people) {
+      const distance = Math.hypot(p.position.x - source.x, p.position.z - source.z);
+      if (distance > 8 || !canSee(source, p.position)) continue;
+      this.frighten(p.id, source);
+      count++;
+      if (distance < nearest) {
+        nearest = distance;
+        this.lastResponder = p;
       }
+    }
     return count;
   }
   /** Closest person Tobi can actually see, used for one-to-one interactions such as flirting. */

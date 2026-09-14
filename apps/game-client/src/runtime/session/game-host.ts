@@ -13,6 +13,7 @@ import {
   BottleMood,
   BottleHands,
   ColorTrip,
+  NpcVoices,
 } from '@tobi/game-core';
 import {
   movement,
@@ -22,6 +23,7 @@ import {
   destinationName,
   hippieHouseLayout,
   zurichLayout,
+  socialBalance,
 } from '@tobi/game-data';
 import type { GameView, LevelDefinition } from '@tobi/contracts';
 import { PoliceRuntime } from '../police/police-runtime.js';
@@ -64,6 +66,8 @@ export class GameHost {
   private readonly projectiles: ThrownBottles;
   private readonly parade: ParadeCrowd | null;
   private readonly bubbles: SpeechBubbles;
+  private readonly voices = new NpcVoices();
+  private tauntCount = 0;
   private readonly npcs: LevelNpcs | null;
   private readonly environment: LevelScene;
   private readonly seating = new Seating();
@@ -456,6 +460,7 @@ export class GameHost {
     this.tauntCooldown = Math.max(0, this.tauntCooldown - delta);
     if (actions.specialPressed && this.tauntCooldown === 0) {
       this.tauntCooldown = 3;
+      this.tauntCount++;
       const count =
         (this.parade?.taunt(position) ?? this.crowd.taunt(position)) +
         (this.npcs?.taunt(position) ?? 0);
@@ -463,13 +468,36 @@ export class GameHost {
       this.audio.play('provoke');
       if (count > 0) lessonSignals.taunts = 1;
       this.flight?.puzzle.taunt();
+      // Tobi says something different every time; the cell and the cabin have their own registers.
+      const shout = this.voices.next(
+        this.level.scenery === 'drunk-tank'
+          ? 'tobiCellTaunt'
+          : this.flight
+            ? 'tobiFlightTaunt'
+            : 'tobiTaunt',
+        'tobi',
+      );
+      this.bubbles.say(
+        new Vector3(position.x, position.y + 1.35, position.z),
+        shout,
+        socialBalance.replySeconds,
+      );
+      // After a few rounds the crowd stops finding it charming.
+      const responder = this.parade?.responder ?? this.crowd.responder;
+      if (responder)
+        this.bubbles.say(
+          new Vector3(responder.x, responder.y, responder.z),
+          this.voices.next(this.tauntCount > 2 ? 'crowdAnnoyed' : 'crowd', count),
+          socialBalance.replySeconds,
+        );
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({
+        speech: shout,
         toast: this.flight
-          ? `«Bitte leise sein!» · Beschwerde ${this.flight.puzzle.strikes}/3`
+          ? `${shout} · Beschwerde ${this.flight.puzzle.strikes}/3`
           : count
-            ? `«PLATZ DA, ICH KENNE KARL!» · ${count} Leute reagieren.`
-            : '«ICH KENNE KARL!»',
+            ? `${shout} · ${count} Leute reagieren.`
+            : shout,
       });
     }
     if (actions.flirtPressed && this.npcs?.flirt(position)) this.flirts++;

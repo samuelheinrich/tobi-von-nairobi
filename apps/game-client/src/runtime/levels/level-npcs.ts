@@ -32,6 +32,11 @@ export interface LevelNpcs {
 
 /** Which foley carries which kind of line. Friendly chatter chirps, complaints grumble. */
 const cues: Record<SpeechTopic, SoundCue> = {
+  tobiTaunt: 'provoke',
+  tobiCellTaunt: 'provoke',
+  tobiFlightTaunt: 'provoke',
+  crowd: 'cheer',
+  crowdAnnoyed: 'grumble',
   flirt: 'flirt',
   flirtRejected: 'reject',
   bargirlTaunt: 'reject',
@@ -39,7 +44,8 @@ const cues: Record<SpeechTopic, SoundCue> = {
   cellGuard: 'grumble',
   resident: 'flirt',
   yoga: 'flirt',
-  tobiCellTaunt: 'provoke',
+  passenger: 'grumble',
+  barGuest: 'cheer',
 };
 
 export function replyCue(topic: SpeechTopic): SoundCue {
