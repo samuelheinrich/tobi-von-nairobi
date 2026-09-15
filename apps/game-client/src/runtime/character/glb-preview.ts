@@ -7,9 +7,12 @@ import { CATALOGUE, entryFor, type CatalogueEntry } from './glb-catalogue.js';
 
 /** Proof of concept: puts downloaded GLB figures into a running level in place of NPC bodies.
  *
- * Off unless the page is opened with `?glb=…`, and everything it needs — the glTF loader and the
- * files themselves — is fetched only then. The production bundle keeps its size, and the models
- * stay in the owner's local `models/` folder, which the dev server serves and no build ships.
+ * Off unless the page is opened with `?glb=…`; the models themselves are fetched only then, and
+ * they stay in the owner's local `models/` folder, which the dev server serves and no build ships.
+ *
+ * The imports below stay dynamic for that reason, but they no longer split the glTF loader out of
+ * the bundle: the humanoid runtime imports it statically now that Tobi needs it, so it ships
+ * either way. Rollup says as much at build time.
  *
  * Two very different kinds of file end up here. Three carry a skeleton and behave like characters;
  * the rest are single static meshes that stand still while the rig walks around underneath them,

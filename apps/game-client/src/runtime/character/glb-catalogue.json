@@ -199,6 +199,30 @@
     "licence": "CC-BY-4.0"
   },
   {
+    "file": "skellet-rigged/18+/elybrownomb2-game.glb",
+    "source": "skellet-rigged/18+/elybrownomb2.glb",
+    "megabytes": 8.12,
+    "triangles": 59846,
+    "sourceTriangles": 129884,
+    "joints": 66,
+    "animations": [
+      "Armature.001|mixamo.com|Layer0",
+      "Armature.002|mixamo.com|Layer0",
+      "Armature.003|mixamo.com|Layer0",
+      "Armature.004|mixamo.com|Layer0",
+      "Armature.005|mixamo.com|Layer0",
+      "Armature.006|mixamo.com|Layer0",
+      "Armature.007|mixamo.com|Layer0",
+      "Armature.008|mixamo.com|Layer0",
+      "Armature.009|mixamo.com|Layer0",
+      "Armature.010|mixamo.com|Layer0",
+      "Armature.011|mixamo.com|Layer0",
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": "StevenDevolder",
+    "licence": "CC-BY-4.0"
+  },
+  {
     "file": "skellet-rigged/bar/mia_3d-game.glb",
     "source": "skellet-rigged/bar/mia_3d.glb",
     "megabytes": 5.75,
@@ -235,6 +259,56 @@
       "AvatarCurrentMotion"
     ],
     "author": "Lucid Dreams",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/anita_female_gabber_from_the_90s-game.glb",
+    "source": "skellet-rigged/party/anita_female_gabber_from_the_90s.glb",
+    "megabytes": 3.97,
+    "triangles": 61036,
+    "sourceTriangles": 119589,
+    "joints": 106,
+    "animations": [
+      "Animation"
+    ],
+    "author": "ustoopia",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/dutch_male_gabber_from_the_90s-game.glb",
+    "source": "skellet-rigged/party/dutch_male_gabber_from_the_90s.glb",
+    "megabytes": 2.66,
+    "triangles": 50956,
+    "sourceTriangles": 50956,
+    "joints": 132,
+    "animations": [],
+    "author": "ustoopia",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/female_dutch_gabber_from_the_90s-game.glb",
+    "source": "skellet-rigged/party/female_dutch_gabber_from_the_90s.glb",
+    "megabytes": 4.94,
+    "triangles": 60403,
+    "sourceTriangles": 74400,
+    "joints": 198,
+    "animations": [
+      "Animation"
+    ],
+    "author": "ustoopia",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/sjonnie_dutch_male_gabber_from_the_90s-game.glb",
+    "source": "skellet-rigged/party/sjonnie_dutch_male_gabber_from_the_90s.glb",
+    "megabytes": 3.74,
+    "triangles": 61925,
+    "sourceTriangles": 81735,
+    "joints": 106,
+    "animations": [
+      "Animation"
+    ],
+    "author": "ustoopia",
     "licence": "CC-BY-4.0"
   },
   {

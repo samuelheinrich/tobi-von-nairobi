@@ -61,6 +61,19 @@ const dance = (file: string, action: 'dance' | 'celebrate') => ({
   animations: { [action]: 'dance' },
 });
 
+/** Fourteen dances from one showcase download, each in its own geometry-free file.
+ *
+ * The pack held fifteen copies of the same body, one per dance, in a single 36,6 MiB file.
+ * `split-characters.py` separated them, one body is kept and the dances are shared — 2,2 MiB of
+ * clips instead of 26 MiB of near-identical girls. Any Mixamo-rigged figure can use them.
+ */
+export const poseDance = (index: number, action: 'dance' | 'celebrate' | 'taunt' = 'dance') => ({
+  model: `/characters/animations/dance-pose-${String(index).padStart(2, '0')}.glb`,
+  bones: mixamoBones,
+  animations: { [action]: 'dance' },
+});
+const POSE_SECONDS = 9.33;
+
 const shared = {
   mouthOffset: [0, 0.02, 0.08] as [number, number, number],
   rotation: [0, 0, 0] as [number, number, number],
@@ -98,8 +111,8 @@ export const valeryConfig: CharacterConfig = {
   model: '/characters/cast/valery.glb',
   height: 1.72,
   bones: mixamoBones,
-  clipSources: [dance('dance-basic', 'dance'), dance('dance-wave', 'celebrate')],
-  motionDurations: { dance: 15.3, celebrate: 16 },
+  clipSources: [poseDance(7, 'dance'), poseDance(11, 'celebrate')],
+  motionDurations: { dance: 9.33, celebrate: 9.33 },
 };
 
 export const ladyboyConfig: CharacterConfig = {
@@ -118,8 +131,8 @@ export const miaConfig: CharacterConfig = {
   model: '/characters/cast/mia.glb',
   height: 1.7,
   bones: mixamoBones,
-  clipSources: [dance('dance-belly', 'dance'), dance('dance-basic', 'celebrate')],
-  motionDurations: { dance: 19.6, celebrate: 15.3 },
+  clipSources: [poseDance(2, 'dance'), poseDance(6, 'celebrate')],
+  motionDurations: { dance: 9.33, celebrate: 9.33 },
 };
 
 export const fitnessConfig: CharacterConfig = {
@@ -194,6 +207,17 @@ export const elyConfig: CharacterConfig = {
   motionDurations: { dance: 25.57, celebrate: 15.27, taunt: 3.23 },
 };
 
+/** The body that came with those dances. */
+export const poleConfig: CharacterConfig = {
+  ...shared,
+  id: 'dancer-pole',
+  model: '/characters/cast/dancer-pole.glb',
+  height: 1.71,
+  bones: mixamoBones,
+  clipSources: [poseDance(1, 'dance'), poseDance(4, 'celebrate'), poseDance(10, 'taunt')],
+  motionDurations: { dance: POSE_SECONDS, celebrate: POSE_SECONDS, taunt: POSE_SECONDS },
+};
+
 /** Avaturn avatars of real people. One each per level, never a crowd of them. */
 export const samConfig: CharacterConfig = {
   ...shared,
@@ -221,6 +245,7 @@ export const castConfigs = [
   copConfig,
   hipHopConfig,
   elyConfig,
+  poleConfig,
   gabberAnitaConfig,
   gabberFemaleConfig,
   gabberSjonnieConfig,

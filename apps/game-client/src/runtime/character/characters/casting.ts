@@ -11,6 +11,7 @@ import {
   hipHopConfig,
   ladyboyConfig,
   miaConfig,
+  poleConfig,
   samConfig,
   valeryConfig,
 } from './cast.js';
@@ -69,6 +70,7 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: miaConfig },
     { config: hipHopConfig },
     { config: elyConfig },
+    { config: poleConfig },
     stand(valeryConfig),
   ],
   dancer: [
@@ -77,6 +79,7 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: dancerSlipConfig },
     { config: hipHopConfig },
     { config: elyConfig },
+    { config: poleConfig },
   ],
   ladyboyDancer: [{ config: ladyboyConfig }],
   vendor: [stand(townsfolkConfigs[2]!), stand(valeryConfig)],
