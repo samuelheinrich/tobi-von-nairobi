@@ -132,6 +132,24 @@ export const fitnessConfig: CharacterConfig = {
   motionDurations: { dance: 16, celebrate: 16.9 },
 };
 
+/** Club dancer that came back from Mixamo with its own hip-hop clip, so it needs no borrowed one.
+ *
+ * The suffixed bone names are the ones the FBX round-trip produced. `chest` deliberately names
+ * `Spine2_04` and not `Spine_02`: this rig carries both, and they are two different bones.
+ */
+export const hipHopConfig: CharacterConfig = {
+  ...shared,
+  id: 'dancer-hiphop',
+  model: '/characters/cast/dancer-hiphop.glb',
+  height: 1.74,
+  bones: {
+    ...mixamoBones,
+    chest: 'mixamorig:Spine2_04',
+  },
+  animations: { dance: 'mixamo.com' },
+  motionDurations: { dance: 4.4666666984558105 },
+};
+
 /** Avaturn avatars of real people. One each per level, never a crowd of them. */
 export const samConfig: CharacterConfig = {
   ...shared,
@@ -157,6 +175,7 @@ export const chrisConfig: CharacterConfig = {
 
 export const castConfigs = [
   copConfig,
+  hipHopConfig,
   valeryConfig,
   ladyboyConfig,
   miaConfig,

@@ -85,25 +85,34 @@ export interface AnimationState {
 }
 /** Compares bone names across the exporters that produced them.
  *
- * Drops any namespace up to `|` or `:`, and the numeric suffix a glTF round-trip appends when it
- * has to make joint names unique — a Mixamo rig that went through FBX comes back as
- * `mixamorig:Hips_32`, which is the same bone as `Hips`.
+ * Always drops a namespace up to `|` or `:`. `stripIndex` additionally drops the numeric suffix a
+ * glTF round-trip appends to make joint names unique: `mixamorig:Hips_32` is the same bone as
+ * `Hips`.
+ *
+ * That suffix rule must never be applied to an alias. `spine_03` is a real Unreal bone name whose
+ * `_03` carries meaning — stripping it would turn the alias into `spine` and let `chest` match a
+ * rig's plain `Spine`, which is a different bone one level down.
  */
-export function normaliseBoneName(name: string): string {
-  return name
-    .replace(/^.*[|:]/, '')
-    .replace(/_\d+$/, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '');
+export function normaliseBoneName(name: string, stripIndex = true): string {
+  const bare = name.replace(/^.*[|:]/, '');
+  return (stripIndex ? bare.replace(/_\d+$/, '') : bare).toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 export function suggestBoneMap(names: readonly string[]): Partial<BoneMap> {
-  const normalise = normaliseBoneName;
+  // Aliases are tried in order, most canonical first, and each one looks for an exact match before
+  // it will accept a suffix-stripped one. Letting the candidate list drive the search instead
+  // mixes the two up: a rig with both `Spine_02` and `Spine2_04` would hand `chest` the lower
+  // bone, because `Spine_02` happens to read like the alias `Spine02` of a different rig.
+  const wanted = (alias: string) => normaliseBoneName(alias, false);
   return Object.fromEntries(
     Object.entries(boneAliases).flatMap(([key, aliases]) => {
-      const match = names.find((name) =>
-        aliases.some((alias) => normalise(alias) === normalise(name)),
-      );
-      return match ? [[key, match]] : [];
+      for (const alias of aliases) {
+        const target = wanted(alias);
+        const match =
+          names.find((name) => normaliseBoneName(name, false) === target) ??
+          names.find((name) => normaliseBoneName(name, true) === target);
+        if (match) return [[key, match]];
+      }
+      return [];
     }),
   );
 }

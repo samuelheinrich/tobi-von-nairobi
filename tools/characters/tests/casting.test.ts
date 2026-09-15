@@ -4,7 +4,10 @@ import {
   cast,
   type CastRole,
 } from '../../../apps/game-client/src/runtime/character/characters/casting.js';
-import { normaliseBoneName } from '../../../apps/game-client/src/runtime/character/humanoid/schema.js';
+import {
+  normaliseBoneName,
+  suggestBoneMap,
+} from '../../../apps/game-client/src/runtime/character/humanoid/schema.js';
 
 describe('casting', () => {
   it('hands out a one-per-level model only once', () => {
@@ -56,5 +59,29 @@ describe('bone names across exporters', () => {
 
   it('does not collapse bones that only differ by a meaningful number', () => {
     expect(normaliseBoneName('Spine01_010')).not.toBe(normaliseBoneName('Spine02_09'));
+  });
+
+  it('keeps an alias intact: spine_03 is a bone name, not spine with a suffix', () => {
+    expect(normaliseBoneName('spine_03', false)).toBe('spine03');
+    expect(normaliseBoneName('spine_03')).toBe('spine');
+  });
+
+  it('gives chest the upper spine even when a lower one reads like another rig alias', () => {
+    // A Mixamo rig that went through FBX: Spine_02 is the lower bone, Spine2_04 the chest.
+    const map = suggestBoneMap([
+      'mixamorig:Hips_01',
+      'mixamorig:Spine_02',
+      'mixamorig:Spine1_03',
+      'mixamorig:Spine2_04',
+      'mixamorig:Neck_05',
+    ]);
+    expect(map.spine).toBe('mixamorig:Spine_02');
+    expect(map.chest).toBe('mixamorig:Spine2_04');
+  });
+
+  it('gives the Unreal rig its own numbering', () => {
+    const map = suggestBoneMap(['pelvis', 'spine_01', 'spine_02', 'spine_03', 'neck_01', 'Head']);
+    expect(map.spine).toBe('spine_01');
+    expect(map.chest).toBe('spine_03');
   });
 });

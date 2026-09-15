@@ -101,7 +101,8 @@ export function sculptHead(scene: Scene, parts: Parts, a: Appearance, p: FacePro
     (u, v) => {
       const y = -0.258 + v * (p.crown + 0.27),
         angle = u * Math.PI * 2;
-      const [width, front, back] = sectionAt(y, p) as [number, number, number];
+      // The front comes from faceSurface below, so that slot stays empty.
+      const [width, , back] = sectionAt(y, p) as [number, number, number];
       const x = Math.sin(angle) * width,
         cos = Math.cos(angle);
       const z = cos >= 0 ? faceSurface(x, y, p) : back * cos;

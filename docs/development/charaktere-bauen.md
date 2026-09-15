@@ -147,3 +147,31 @@ die **aufgelösten** Namen statt der aus der Konfiguration. Ohne diesen letzten 
 «Retarget produced no tracks» fehl, obwohl die Figur selbst lädt.
 
 Neue Aliasse für Character-Creator-Rigs (`CC_Base_*`) stehen in `boneAliases`.
+
+## 18+-Modelle für die kleinen Bars in Nana Plaza
+
+Geprüft wurden alle acht. Drei sind als Figuren im Spiel, zwei taugen als Kulisse, drei nicht.
+
+| Modell                                   | Dreiecke | Gelenke | Pose        | Verwendung                               |
+| ---------------------------------------- | -------: | ------: | ----------- | ---------------------------------------- |
+| `nude_woman_hip_hop_dancing`             |   24'998 |      66 | tanzend     | **`dancer-hiphop`**, eigener Clip        |
+| `naked-dancer` → `dancer-club`           |   25'898 |      65 | tanzend     | bereits im Spiel                         |
+| `naked-dancer-with-slip` → `dancer-slip` |   25'553 |      33 | tanzend     | bereits im Spiel                         |
+| `girl_sexy`                              |   25'000 |       — | **sitzend** | Kulisse: Frau am Bartisch                |
+| `sexy_nurse_002`                         |   24'999 |       — | stehend     | Kulisse, oder riggen                     |
+| `sexy_girl_dancing`                      |   25'553 |       — | vorgebeugt  | Quelle von `dancer-slip`, redundant      |
+| `female_nude_3d_model_in_t_pose`         |   24'934 |       — | T-Pose      | Quelle von `dancer-club`, redundant      |
+| `bdsm_naked_women_milf_t-pose`           |   24'999 |       — | T-Pose      | so unbrauchbar, aber bester Rig-Kandidat |
+
+**Die Tänzerin mit eigenem Clip** ist der klare Gewinn: `nude_woman_hip_hop_dancing` bringt einen
+4,5-Sekunden-Hip-Hop mit und braucht keinen geliehenen. Sie besetzt jetzt `dancer` und `bargirl`.
+
+**Zwei taugen als Kulisse.** `girl_sexy` sitzt — genau die Haltung, die an einem Bartisch fehlt —
+und `sexy_nurse_002` steht entspannt. Beide haben **kein Skelett**, können also keine
+`HumanoidCharacter` sein. Als unbewegte Requisite in einer kleinen Bar fällt das kaum auf; dafür
+braucht es einen eigenen Kulissen-Lader, den es noch nicht gibt.
+
+**Wer als Nächstes durch Mixamo sollte:** `bdsm_naked_women_milf_t-pose`. Die T-Pose macht sie als
+Kulisse unbrauchbar und als Auto-Rigging-Vorlage ideal — genau das, woran Nina gescheitert ist.
+`sexy_nurse_002` steht ebenfalls frei genug für Mixamo. `girl_sexy` dagegen sitzt mit anliegenden
+Armen und wird dort scheitern; sie bleibt besser eine sitzende Requisite.
