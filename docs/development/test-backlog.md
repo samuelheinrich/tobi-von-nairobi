@@ -4,7 +4,7 @@ Tests, die zu einer gelieferten Änderung gehören, aber bewusst **noch nicht** 
 
 Der Grund für diese Liste: Ab einer gewissen Grösse kostet die vollständige Browser-Prüfkette mehr Zeit, als eine kleine Inhaltsänderung wert ist. Statt die Lücke zu verschweigen, steht sie hier.
 
-**Regel:** Was eine Invariante schützt (Platzierungen, Lösbarkeit, Lizenzen, Sicherheit), wird sofort getestet. Was Inhalt ist (Textvarianten, Klangfarbe, Kulissendetails), darf hier landen.
+**Aktuelle Regel:** [AGENTS.md](../../AGENTS.md) hat Vorrang. Keine GitHub-CI. Auch bei Invarianten nur eine gezielte lokale Prüfung, sofern sie kurz und tokenarm bleibt. Aufwendige Prüfungen hier festhalten und nur auf ausdrücklichen Auftrag ausführen.
 
 ## Status
 
@@ -64,3 +64,28 @@ Jeder Eintrag nennt die Änderung, den fehlenden Test, den Aufwand und das konkr
 - **Risiko solange offen:** was unbemerkt kaputtgehen kann
 - **Commit:** Hash der Änderung
 ```
+
+### Modulare Figuren: Spielgefühl und Hardwarebudget
+
+- **Betrifft:** `runtime/character/modular`, Nana-/Parade-Nahbereich, Bahn-/Flugzeug-Sitzfiguren.
+- **Fehlender Test:** längere manuelle Runde auf durchschnittlicher Desktop-GPU; Framezeit/Heap beim mehrfachen Wechsel zwischen dicht besetzten Bereichen; Nahprüfung von Rock/Schuhen bei allen Sitz- und Yogaposen. Breite E2E-Wiederholung wurde bewusst nicht ausgeführt.
+- **Aufwand:** M, lokal und nur bei konkretem Bedarf.
+- **Risiko solange offen:** Spitzen bei erstmaligem Garderobenaufbau, sichtbare LOD-Wechsel oder Überschneidungen einzelner Outfit-/Pose-Kombinationen. Keine garantierte 60-FPS-Aussage.
+- **Commit:** Arbeitsstand 15.09.2026, noch nicht committed.
+
+### Nightlife-/Beach-Garderoben
+
+- **Betrifft:** `runtime/character/modular/female`, Nahbereichspools.
+- **Fehlender Test:** längere Hardware-/Heap-Prüfung und vollständige Bewegungszyklen aller Outfit-/Pose-Kombinationen. Frontal-/Profil-/Sitzansichten, Auswahl aller 23 Posen sowie eine kleine Datenprüfung wurden lokal durchgeführt.
+- **Aufwand:** M, bei konkretem Bedarf lokal.
+- **Risiko solange offen:** Garderobenaufbau kann Framezeitspitzen verursachen; extreme Bewegungen können vereinfachte Röcke/Schuhe überschneiden.
+- **Commit:** Arbeitsstand, noch nicht committed.
+
+### GLB-Vorschau: Regression und Hardwarebudget
+
+- **Betrifft:** `runtime/character/glb-preview.ts`, `vite.config.ts` (Dev-Route `/models`), `test/models.html`, ein Aufruf in `nana-plaza/npc-population.ts`.
+- **Fehlender Test:** automatisierte Prüfung, dass das Spiel **ohne** `?glb=` unverändert läuft und kein glTF-Chunk geladen wird; Framezeit auf echter GPU mit sechs schweren Figuren (`?glb=girl`, 1,5 Mio Dreiecke pro Kopie); Verhalten beim Slot-Recycling über längere Zeit, wenn die prozeduralen Körper dauerhaft unsichtbar gehalten werden.
+- **Aufwand:** S für den Ohne-Flag-Fall, M für die Hardwaremessung.
+- **Risiko solange offen:** Die Vorschau hängt einen Konstruktoraufruf in die Nana-Bevölkerung. Er kehrt ohne Parameter sofort zurück, aber ein Fehler dort träfe ein Produktionslevel. Die Dauer-Unsichtbarkeit der prozeduralen Körper läuft über einen `onBeforeRenderObservable` und ist nur für die Vorschau gedacht.
+- **Geprüft wurde:** Typecheck, ESLint, Prettier, lokaler Build mit Bundle-Messung (1,64 → 1,95 MiB gzip, kein Preload der glTF-Chunks), Laden aller vier Dateien im Modell-Studio sowie sechs ersetzte NPCs im laufenden Nana-Level unter Software-WebGL.
+- **Commit:** siehe Commit dieser Änderung.
