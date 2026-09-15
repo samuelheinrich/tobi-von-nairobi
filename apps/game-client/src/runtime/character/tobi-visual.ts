@@ -2,6 +2,7 @@ import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import { Matrix, Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
+import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import { characterPose } from '@tobi/game-core';
@@ -9,6 +10,25 @@ import { createTobiLikeness } from './tobi-likeness.js';
 import { CigaretteSmoke } from './cigarette-smoke.js';
 import { createBottleModel } from '../items/bottle-model.js';
 import { material } from '../levels/materials.js';
+import { TobiAvatar } from './tobi-avatar.js';
+
+/** How long Tobi stays visibly drunk after a bottle.
+ *
+ * Counted in the same clamped animation time as the sway, the stumble and the pickup cue, so on a
+ * machine that drops below ten frames a second the phase outlasts thirty wall-clock seconds. That
+ * is deliberate: every other timer in this class behaves the same way, and a purely visual state
+ * has no business running on a different clock than the pose it belongs to.
+ */
+const DRUNK_SECONDS = 30;
+
+/** Tobi's height in rig space, measured from the procedural figure the avatars replace. */
+const TOBI_HEIGHT = 2.17;
+
+/** True when `mesh` sits anywhere below `ancestor` in the scene graph. */
+function isUnder(mesh: AbstractMesh, ancestor: TransformNode): boolean {
+  for (let node = mesh.parent; node; node = node.parent) if (node === ancestor) return true;
+  return false;
+}
 
 /** Articulated procedural rig. The swaying body is a child of the stable collision/camera root. */
 export class TobiVisual {
@@ -26,6 +46,10 @@ export class TobiVisual {
   private pickup = 0;
   private stumble = 0;
   private stumbleClock = 0;
+  /** The scanned avatars, once they have loaded. Null means the procedural figure is on screen. */
+  private avatar: TobiAvatar | null = null;
+  private readonly procedural: AbstractMesh[] = [];
+  private drunkFor = 0;
 
   public constructor(scene: Scene, shadows: ShadowGenerator) {
     this.root = new TransformNode('tobi', scene);
@@ -55,12 +79,13 @@ export class TobiVisual {
       surface = shirt,
       parent = this.body,
     ): Mesh => {
-      const mesh = MeshBuilder.CreateSphere(name, { diameter, segments: 6 }, scene);
+      const mesh = MeshBuilder.CreateSphere(name, { diameter, segments: 12 }, scene);
       mesh.scaling.set(...size);
       mesh.position.set(...position);
       mesh.material = surface;
       mesh.parent = parent;
       shadows.addShadowCaster(mesh);
+      this.procedural.push(mesh);
       return mesh;
     };
     part('tobi-shirt', 1, [1.08, 0.98, 0.83], [0, 1.1, 0]);
@@ -77,6 +102,8 @@ export class TobiVisual {
       const arm = pivot('tobi-shoulder', this.body, side * 0.58, 1.4);
       part('arm', 0.32, [0.9, 2, 0.9], [side * 0.06, -0.3, 0], skin, arm);
       part('hand', 0.23, [1, 1, 1], [side * 0.06, -0.62, 0], skin, arm);
+      part('thumb', 0.1, [0.75, 1.35, 0.8], [side * -0.025, -0.64, 0.035], skin, arm);
+      part('fingers', 0.12, [1.25, 0.6, 0.8], [side * 0.06, -0.72, 0.025], skin, arm);
       this.arms.push(arm);
     }
     this.smoke = new CigaretteSmoke(scene, createTobiLikeness(scene, this.body, this.head));
@@ -84,6 +111,28 @@ export class TobiVisual {
     this.heldBottle.parent = this.arms[0]!;
     this.heldBottle.position.set(-0.06, -0.62, 0.13);
     this.heldBottle.setEnabled(false);
+    // The likeness adds its own meshes under body and head; they have to hide with the rest.
+    for (const mesh of this.body.getChildMeshes()) {
+      if (!this.procedural.includes(mesh) && !isUnder(mesh, this.heldBottle)) {
+        this.procedural.push(mesh);
+      }
+    }
+    void this.loadAvatar(scene);
+  }
+
+  /** Swaps the procedural skin for the scanned avatars, quietly doing nothing if they fail. */
+  private async loadAvatar(scene: Scene): Promise<void> {
+    // Fitted to the figure it replaces, so camera, collision and reach stay as tuned.
+    const avatar = await TobiAvatar.load(scene, this.body, TOBI_HEIGHT);
+    if (!avatar) return;
+    if (this.root.isDisposed()) {
+      avatar.dispose();
+      return;
+    }
+    this.avatar = avatar;
+    for (const mesh of this.procedural) mesh.isVisible = false;
+    // The cigarette is part of the procedural head; without it the smoke has no source.
+    this.smoke.dispose();
   }
 
   public throwBottle(): void {
@@ -92,6 +141,13 @@ export class TobiVisual {
 
   public celebratePickup(): void {
     this.pickup = 1;
+    // Every bottle restarts the half minute; they do not add up.
+    this.drunkFor = DRUNK_SECONDS;
+  }
+
+  /** Seconds of visible drunkenness left, for the HUD or a test to read. */
+  public get drunkSeconds(): number {
+    return this.drunkFor;
   }
 
   /** Returns a one-shot stumble cue; callers may pair it with audio. */
@@ -107,7 +163,11 @@ export class TobiVisual {
     sitting = false,
   ): boolean {
     this.time += delta;
-    this.smoke.update(delta);
+    if (this.drunkFor > 0) {
+      this.drunkFor = Math.max(0, this.drunkFor - delta);
+      this.avatar?.setDrunk(this.drunkFor > 0);
+    }
+    if (!this.avatar) this.smoke.update(delta);
     this.throwing = Math.max(0, this.throwing - delta * 3);
     this.heldBottle.setEnabled(holding);
     this.gait += delta * (victory ? 9 : speed * 2.8);
@@ -183,6 +243,7 @@ export class TobiVisual {
     return tripped;
   }
   public dispose(): void {
+    this.avatar?.dispose();
     this.smoke.dispose();
     this.root.dispose(false, true);
   }
