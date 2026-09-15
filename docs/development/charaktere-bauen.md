@@ -175,3 +175,35 @@ braucht es einen eigenen Kulissen-Lader, den es noch nicht gibt.
 Kulisse unbrauchbar und als Auto-Rigging-Vorlage ideal — genau das, woran Nina gescheitert ist.
 `sexy_nurse_002` steht ebenfalls frei genug für Mixamo. `girl_sexy` dagegen sitzt mit anliegenden
 Armen und wird dort scheitern; sie bleibt besser eine sitzende Requisite.
+
+## Street Parade: die Gabber
+
+Vier Figuren aus den 90er-Niederlanden, alle CC-BY und alle auf Mixamo-Rigs. Sie sind die
+**detaillierten Darsteller nahe der Kamera**; die Route selbst bleibt auf Thin Instances.
+
+| Modell           | Dreiecke | Gelenke | Clip                     |
+| ---------------- | -------: | ------: | ------------------------ |
+| `gabber-anita`   |   61'036 |     106 | eigener, 10,97 s         |
+| `gabber-sjonnie` |   61'925 |     106 | eigener, 8,30 s          |
+| `gabber-female`  |   60'403 |     198 | eigener, 8,30 s — dezent |
+| `gabber-dutch`   |   50'956 |     132 | geliehen (`dance-club`)  |
+
+`asian_neo_cyberpunk` bleibt aussen vor: kein Skelett, 3'285'344 Dreiecke, 140 MiB.
+
+`gabber-female` bewegt die Hüfte nur schwach (0,02 rad). Ihr Clip ist mit 390 Kanälen doppelt so
+dicht wie die anderen und steckt die Bewegung offenbar in Nebenknochen. Sie tanzt, nur ruhiger.
+
+## Nana: Ely mit zwölf Clips
+
+`elybrownomb2` kam mit **zwölf** Mixamo-Animationen zurück, 3,2 bis 27,9 Sekunden. Drei laufen
+direkt als `dance`, `celebrate` und `taunt`; zwei weitere sind als `dance-slow` und `dance-club`
+herausgelöst und stehen allen Figuren zur Verfügung.
+
+### Extrahierte Clips sind jetzt übertragbar
+
+`extract-animation.mjs` schreibt Gelenknamen in kanonischer Form: aus `mixamorig:Hips_64` wird
+`mixamorig:Hips`. Vorher passte ein herausgelöster Clip nur auf genau das Modell, aus dem er kam —
+der Retargeter schlägt seine Quellknoten über den Namen nach. Kollidieren zwei Namen nach dem
+Kürzen, bleibt alles unverändert und das Script sagt es.
+
+Daran scheiterte `gabber-dutch` zuerst mit «Retarget produced no tracks».

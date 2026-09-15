@@ -2,7 +2,12 @@ import type { CharacterConfig } from '../humanoid/schema.js';
 import {
   chrisConfig,
   copConfig,
+  elyConfig,
   fitnessConfig,
+  gabberAnitaConfig,
+  gabberDutchConfig,
+  gabberFemaleConfig,
+  gabberSjonnieConfig,
   hipHopConfig,
   ladyboyConfig,
   miaConfig,
@@ -33,7 +38,8 @@ export type CastRole =
   | 'resident'
   | 'passenger'
   | 'yoga'
-  | 'beach';
+  | 'beach'
+  | 'raver';
 
 export interface CastMember {
   config: CharacterConfig;
@@ -59,12 +65,18 @@ export const cast: Record<CastRole, CastMember[]> = {
   flightAttendant: [stand(valeryConfig)],
   tourist: [stand(townsfolkConfigs[2]!), stand(townsfolkConfigs[3]!), one(chrisConfig)],
   expat: [stand(townsfolkConfigs[0]!), stand(townsfolkConfigs[1]!), one(samConfig)],
-  bargirl: [{ config: miaConfig }, { config: hipHopConfig }, stand(valeryConfig)],
+  bargirl: [
+    { config: miaConfig },
+    { config: hipHopConfig },
+    { config: elyConfig },
+    stand(valeryConfig),
+  ],
   dancer: [
     { config: dancerBeachConfig },
     { config: dancerClubConfig },
     { config: dancerSlipConfig },
     { config: hipHopConfig },
+    { config: elyConfig },
   ],
   ladyboyDancer: [{ config: ladyboyConfig }],
   vendor: [stand(townsfolkConfigs[2]!), stand(valeryConfig)],
@@ -73,6 +85,13 @@ export const cast: Record<CastRole, CastMember[]> = {
   passenger: [stand(townsfolkConfigs[1]!), stand(townsfolkConfigs[2]!)],
   yoga: [stand(fitnessConfig)],
   beach: [{ config: fitnessConfig }, stand(townsfolkConfigs[0]!)],
+  // Street Parade. Thin instances carry the route; these are the figures near the camera.
+  raver: [
+    { config: gabberAnitaConfig },
+    { config: gabberFemaleConfig },
+    { config: gabberSjonnieConfig },
+    { config: gabberDutchConfig },
+  ],
 };
 
 /** Tracks which one-per-level models a level has already handed out. */

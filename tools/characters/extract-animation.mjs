@@ -29,6 +29,27 @@ for (const n of d.nodes) {
   delete n.weights;
   delete n.extensions;
 }
+// Canonical joint names, so any rig of the same family can use this clip.
+//
+// A model that went through FBX comes back with numbered joints — `mixamorig:Hips_64`. A clip
+// carrying those names only retargets onto the exact model it came from, because the retargeter
+// looks its source nodes up by name. Stripping the number makes the clip portable; it is skipped
+// when that would make two joints share a name.
+const jointIds = new Set(d.skins[0].joints);
+const canonical = (name) => (name ?? '').replace(/_\d+$/, '');
+const renamed = [...jointIds].map((i) => canonical(d.nodes[i].name));
+if (new Set(renamed).size === renamed.length) {
+  let changed = 0;
+  for (const i of jointIds) {
+    const next = canonical(d.nodes[i].name);
+    if (next !== d.nodes[i].name) changed++;
+    d.nodes[i].name = next;
+  }
+  if (changed) console.log(`${changed} Gelenknamen auf die kanonische Form gebracht`);
+} else {
+  console.warn('Gelenknamen bleiben unverändert: kanonische Namen wären nicht eindeutig');
+}
+
 const meshNode = d.nodes.find((n) => n.skin === 0);
 if (!meshNode) throw new Error('Skin has no mesh node');
 for (const n of d.nodes) if (n !== meshNode) delete n.skin;

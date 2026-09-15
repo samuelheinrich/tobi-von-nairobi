@@ -150,6 +150,50 @@ export const hipHopConfig: CharacterConfig = {
   motionDurations: { dance: 4.4666666984558105 },
 };
 
+/** Ravers for the Street Parade: 90s Dutch gabbers, all on Mixamo rigs.
+ *
+ * Three brought a clip of their own; the fourth borrows one. They are the detailed figures near
+ * the camera — the route itself stays on thin instances.
+ */
+const gabber = (
+  id: string,
+  file: string,
+  height: number,
+  seconds: number | null,
+): CharacterConfig => ({
+  ...shared,
+  id,
+  model: `/characters/party/${file}.glb`,
+  height,
+  bones: mixamoBones,
+  ...(seconds === null
+    ? {
+        animations: {},
+        clipSources: [dance('dance-club', 'dance')],
+        motionDurations: { dance: 10.83 },
+      }
+    : { animations: { dance: 'Animation' }, motionDurations: { dance: seconds } }),
+});
+export const gabberAnitaConfig = gabber('gabber-anita', 'gabber-anita', 1.7, 10.97);
+export const gabberFemaleConfig = gabber('gabber-female', 'gabber-female', 1.72, 8.3);
+export const gabberSjonnieConfig = gabber('gabber-sjonnie', 'gabber-sjonnie', 1.84, 8.3);
+export const gabberDutchConfig = gabber('gabber-dutch', 'gabber-dutch', 1.86, null);
+
+/** Bar dancer that arrived with twelve Mixamo clips; three of them are used directly. */
+export const elyConfig: CharacterConfig = {
+  ...shared,
+  id: 'dancer-ely',
+  model: '/characters/cast/dancer-ely.glb',
+  height: 1.73,
+  bones: mixamoBones,
+  animations: {
+    dance: 'Armature.010|mixamo.com|Layer0',
+    celebrate: 'Armature.003|mixamo.com|Layer0',
+    taunt: 'Armature.004|mixamo.com|Layer0',
+  },
+  motionDurations: { dance: 25.57, celebrate: 15.27, taunt: 3.23 },
+};
+
 /** Avaturn avatars of real people. One each per level, never a crowd of them. */
 export const samConfig: CharacterConfig = {
   ...shared,
@@ -176,6 +220,11 @@ export const chrisConfig: CharacterConfig = {
 export const castConfigs = [
   copConfig,
   hipHopConfig,
+  elyConfig,
+  gabberAnitaConfig,
+  gabberFemaleConfig,
+  gabberSjonnieConfig,
+  gabberDutchConfig,
   valeryConfig,
   ladyboyConfig,
   miaConfig,
