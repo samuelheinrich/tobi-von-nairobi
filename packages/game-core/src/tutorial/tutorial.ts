@@ -7,6 +7,7 @@ export type LessonMetric =
   | 'drinks'
   | 'throws'
   | 'taunts'
+  | 'celebrates'
   | 'cover'
   | 'seated'
   | 'stoodUp';
@@ -33,6 +34,7 @@ export class Tutorial {
     drinks: 0,
     throws: 0,
     taunts: 0,
+    celebrates: 0,
     cover: 0,
     seated: 0,
     stoodUp: 0,

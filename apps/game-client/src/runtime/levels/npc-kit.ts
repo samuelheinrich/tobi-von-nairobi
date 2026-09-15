@@ -3,6 +3,7 @@ import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGener
 import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 import { material } from './materials.js';
 import { createCharacter, type CharacterRig } from '../character/modular/rig.js';
+import { registerNpcModel } from '../character/npc-models.js';
 import {
   appearance,
   categoryFromName,
@@ -41,5 +42,7 @@ export function createNpc(
   thai = false,
 ): NpcRig {
   const a = appearance(category ?? categoryFromName(name), palette.seed ?? 0, female, thai);
-  return createCharacter(scene, name, a, shadows, seated);
+  const rig = createCharacter(scene, name, a, shadows, seated);
+  registerNpcModel(scene, rig, seated);
+  return rig;
 }

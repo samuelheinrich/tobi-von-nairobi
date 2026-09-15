@@ -3,7 +3,7 @@ import '@babylonjs/loaders/glTF/2.0/glTFLoader.js';
 import '@babylonjs/loaders/glTF/2.0/Extensions/EXT_texture_webp.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
-import type { AssetContainer } from '@babylonjs/core/assetContainer.js';
+import { AssetContainer } from '@babylonjs/core/assetContainer.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import { SkeletonAdapter } from './skeleton-adapter.js';
 import { CharacterAttachments } from './attachments.js';
@@ -159,6 +159,49 @@ export class HumanoidCharacter {
     );
     this.pose(delta, state);
     return events;
+  }
+  /** Reuse geometry/materials and retargeted clips, but give each NPC its own skeleton/clock. */
+  instantiate(parent: TransformNode): HumanoidCharacter {
+    const scene = parent.getScene();
+    // Babylon identifies container roots through parent === null. The normalised game mount
+    // is outside that container; detach only during the synchronous cloning operation.
+    const roots = this.container.rootNodes.map((node) => ({ node, parent: node.parent }));
+    let instance;
+    try {
+      for (const { node } of roots) node.parent = null;
+      instance = this.container.instantiateModelsToScene((name) => name, false, {
+        doNotInstantiate: true,
+      });
+    } finally {
+      for (const { node, parent: owner } of roots) node.parent = owner;
+    }
+    const source = instance.rootNodes[0];
+    if (!(source instanceof TransformNode)) {
+      instance.dispose();
+      throw new Error('Character instance has no transform root');
+    }
+    const container = new AssetContainer(scene);
+    container.rootNodes = instance.rootNodes;
+    container.meshes = source.getChildMeshes();
+    container.transformNodes = [source, ...source.getChildTransformNodes()];
+    container.skeletons = instance.skeletons;
+    container.animationGroups = instance.animationGroups;
+    const mount = new TransformNode(this.config.id + '-npc', scene);
+    try {
+      source.parent = mount;
+      source.setEnabled(true);
+      mount.position.copyFrom(this.root.position);
+      mount.scaling.copyFrom(this.root.scaling);
+      mount.rotationQuaternion = this.root.rotationQuaternion!.clone();
+      const rig = new SkeletonAdapter(source, container.skeletons, this.config.bones);
+      const result = new HumanoidCharacter(mount, rig, this.config, container, this.scale);
+      mount.parent = parent;
+      return result;
+    } catch (error) {
+      container.dispose();
+      mount.dispose();
+      throw error;
+    }
   }
   /** Allows a skin variant to follow the same controller without advancing the clock twice. */
   pose(delta: number, state: AnimationState, controller = this.controller): void {

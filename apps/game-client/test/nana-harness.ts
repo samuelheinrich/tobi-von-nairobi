@@ -58,6 +58,7 @@ export async function exerciseNanaRoute() {
         specialPressed: false,
         throwPressed: false,
         flirtPressed: false,
+        celebratePressed: false,
       },
       0,
       motor.support(delta),

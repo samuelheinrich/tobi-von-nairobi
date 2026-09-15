@@ -87,6 +87,8 @@ export async function finishTutorialLessons(page: Page) {
   await page.keyboard.press('KeyE');
   await expect(coach).toHaveAttribute('data-lesson', 'stand', { timeout: 15000 });
   await page.keyboard.press('KeyE');
+  await expect(coach).toHaveAttribute('data-lesson', 'celebrate');
+  await page.keyboard.press('KeyC');
   await expect(coach).not.toBeVisible();
   await page.keyboard.down('KeyW');
   await expect(page.getByText('EINCHECKEN', { exact: false })).toBeVisible({ timeout: 15000 });

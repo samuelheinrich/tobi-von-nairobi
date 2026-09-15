@@ -1,5 +1,13 @@
 # Implementierungsstand
 
+**NPCs im Spiel auf GLB umgestellt:** Die vorhandene Besetzung aus `characters/casting.ts` wird jetzt vom gemeinsamen NPC-Erzeuger verwendet – einschliesslich Polizei, Security, Zug, Flugzeug, WG und Bali. Nana-/Parade-Pools wechseln Modelle passend zur Rolle; die Fernmengen verwenden instanzierte GLB-Posen. Fehlende Rollen verwenden die definierten Platzhalter, Ladefehler behalten die prozedurale Darstellung. [Anbindung und Prüfstand](npc-glb-rollout.md).
+
+**Tobi-FBX-Clips:** Chicken Dance mit **C** im Stand sowie als automatischer Siegestanz (Steuerungshilfe und Tutorial ergänzt), Fight Dance für R, Aufnahme-Ausschnitt vor dem Trinken und neuer Wurf mit Release nach 0,88 s. Vier schlanke Animations-GLBs, vollständige Schulter-/Fingertracks, acht gezielte lokale Tests und Browserprüfung beider Skins. [Zuordnung und Abnahme](humanoid-animation-pipeline.md#vier-neue-tobi-fbx-clips).
+
+**Blender-/Mixamo-Pipeline:** lokale GLB↔FBX-Konvertierung mit Überschreibschutz, SHA-256-Berichten und direkter Kandidatenansicht im Model Studio. Mixamo bleibt manuell. [Workflow](../../tools/characters/README.md).
+
+**Humanoid-Animationen:** Tobis GLB verwendet einen gemeinsamen Bone-Adapter, In-Place-Posen und Crossfades. Hand-Sockets, zeitgesteuerter Flaschenwurf, Sitz-/Sprungsequenzen, lokales Animation-Studio und wiederverwendbare Analyse-/Retargeting-Tools sind angebunden. [Analyse, Architektur und Anleitung für weitere Modelle](humanoid-animation-pipeline.md).
+
 **15. September 2026 – Git-Konsolidierung:** bisherige Agenten-Commits und offene Nana-/NPC-Änderungen sind auf lokalem `main` zusammengeführt. CI-Workflow entfernt, Agentenregeln versioniert. [Aktuelle Übergabe](handover-2026-09-15-consolidated-main.md).
 
 **Erwachsene Nightlife-/Beach-Figuren:** fünf Körperprofile, neue Kleidungsschnitte, deterministische Gruppenvariation, 23 Posen und nahes Blinzeln. [Details und Achtergruppen-Galerie](adult-female-characters.md).

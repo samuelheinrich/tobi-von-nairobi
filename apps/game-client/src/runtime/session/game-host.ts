@@ -1,4 +1,5 @@
 import { Tutorial, type LessonSignals } from '@tobi/game-core';
+import { setNpcAnimationDelta } from '../character/npc-models.js';
 import { tutorialLessons, tutorialLayout } from '@tobi/game-data';
 import { Ray } from '@babylonjs/core/Culling/ray.js';
 import { FlightRuntime } from '../flight/flight-runtime.js';
@@ -471,14 +472,21 @@ export class GameHost {
         this.toastUntil = this.session.elapsedSeconds + 3;
         this.store.update({ toast: 'FARBRAUSCH · Die Parade hat jetzt noch mehr Farben.' });
       }
-    if (!sitting && actions.throwPressed && this.projectiles.count < 8 && this.hands.throw()) {
+    if (
+      !sitting &&
+      actions.throwPressed &&
+      this.projectiles.count < 8 &&
+      this.visual.canThrow &&
+      this.hands.throw()
+    ) {
       // The visible character leads the throw; orbiting the camera never changes its direction.
       this.visual.root.rotation.y = this.facing.yaw;
-      this.projectiles.launch(position, this.facing.yaw);
       lessonSignals.throws = 1;
-      this.visual.throwBottle();
-      this.audio.play('throw');
-      this.police?.system.disrupt();
+      this.visual.throwBottle((prop) => {
+        this.projectiles.launchProp(prop, this.facing.yaw);
+        this.audio.play('throw');
+        this.police?.system.disrupt();
+      });
     }
     if (this.projectiles.count > 0)
       this.projectiles.update(delta, [
@@ -497,9 +505,25 @@ export class GameHost {
         ...(this.npcs?.targets ?? []),
       ]);
     this.tauntCooldown = Math.max(0, this.tauntCooldown - delta);
+    if (
+      actions.celebratePressed &&
+      !actions.specialPressed &&
+      !actions.throwPressed &&
+      !sitting &&
+      !escort &&
+      this.motor.grounded &&
+      !this.hands.drinking &&
+      Math.hypot(velocity.x, velocity.z) < 0.12 &&
+      this.visual.celebrate()
+    ) {
+      lessonSignals.celebrates = 1;
+      this.toastUntil = this.session.elapsedSeconds + 3;
+      this.store.update({ toast: 'CELEBRATE · Tobi tanzt! Bewegen zum Abbrechen.' });
+    }
     if (actions.specialPressed && this.tauntCooldown === 0) {
       this.tauntCooldown = 3;
       this.tauntCount++;
+      this.visual.taunt();
       const count =
         (this.parade?.taunt(position) ?? this.crowd.taunt(position)) +
         (this.npcs?.taunt(position) ?? 0);
@@ -712,6 +736,7 @@ export class GameHost {
       this.hands.holding || this.barDrinkSeconds > 0,
       Math.max(this.hands.drinkPose, Math.sin((Math.PI * this.barDrinkSeconds) / 1.2)),
       this.seating.active?.kind === 'seat',
+      this.seating.active?.seatHeight ?? 0.42,
     );
     if (tripped) this.audio.play('stumble');
   }
@@ -724,6 +749,10 @@ export class GameHost {
     try {
       if (this.store.getSnapshot().phase === 'playing') this.clock.advance(delta, this.step);
       this.syncVisual(Math.min(delta, 0.1));
+      setNpcAnimationDelta(
+        this.scene,
+        this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.05) : 0,
+      );
       if (this.store.getSnapshot().phase === 'playing') {
         this.environment.update?.(Math.min(delta, 0.1));
         this.pills.update(Math.min(delta, 0.1));

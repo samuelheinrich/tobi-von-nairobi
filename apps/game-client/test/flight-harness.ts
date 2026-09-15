@@ -37,6 +37,7 @@ export async function exerciseFlight() {
         specialPressed: false,
         throwPressed: false,
         flirtPressed: false,
+        celebratePressed: false,
       },
       0,
       motor.support(1 / 60),

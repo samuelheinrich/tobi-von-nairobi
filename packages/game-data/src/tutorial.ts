@@ -88,7 +88,15 @@ export const tutorialLessons = [
     threshold: 1,
     title: 'STEH WIEDER AUF',
     key: 'E',
-    body: 'Drücke erneut E. Danach erreichst du CASA TOBI vorne am Ende des Wegs und schliesst mit E ab.',
+    body: 'Drücke erneut E. Danach fehlt nur noch Tobis Siegestanz.',
+  },
+  {
+    id: 'celebrate',
+    metric: 'celebrates',
+    threshold: 1,
+    title: 'DRÜCKE C ZUM FEIERN',
+    key: 'C',
+    body: 'Bleibe stehen und drücke C für den Chicken Dance. Bewegen bricht ihn ab. Gehe danach zu CASA TOBI vorne am Ende des Wegs und schliesse mit E ab.',
   },
 ] as const;
 export const tutorialLayout = {

@@ -15,6 +15,7 @@ const gameKeys = new Set([
   'ShiftRight',
   'KeyE',
   'KeyR',
+  'KeyC',
   'KeyG',
   'KeyF',
 ]);
@@ -69,6 +70,7 @@ export class KeyboardInput implements InputSource {
       sprintHeld: down('ShiftLeft', 'ShiftRight') > 0,
       interactPressed: this.pressed.has('KeyE'),
       specialPressed: this.pressed.has('KeyR'),
+      celebratePressed: this.pressed.has('KeyC'),
       throwPressed: this.pressed.has('KeyG'),
       flirtPressed: this.pressed.has('KeyF'),
     };

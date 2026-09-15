@@ -8,6 +8,8 @@ export interface RestSpot {
   position: Position3;
   exit: Position3;
   yaw: number;
+  /** Seat surface above the visual character origin. Existing seats default to 0.42 m. */
+  seatHeight?: number;
 }
 
 /** Engine-independent posture. Only an explicit interaction enters or leaves a spot. */

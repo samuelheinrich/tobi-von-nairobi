@@ -8,6 +8,7 @@ export interface InputActions {
   sprintHeld: boolean;
   interactPressed: boolean;
   specialPressed: boolean;
+  celebratePressed: boolean;
   throwPressed: boolean;
   flirtPressed: boolean;
 }

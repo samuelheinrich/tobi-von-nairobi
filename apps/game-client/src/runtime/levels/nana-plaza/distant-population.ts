@@ -7,16 +7,29 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import { material } from '../materials.js';
 import type { NanaResident } from '@tobi/game-data';
 import type { Position3 } from '@tobi/contracts';
+import { FarNpcModels } from '../../character/far-npc-models.js';
+import { npcCategoryRoles } from '../../character/npc-models.js';
 
 /** Distant residents in six draw batches, sharing the near pool's identities and interactions. */
 export class DistantPopulation {
   private readonly batches;
   private elapsed = 1;
+  private readonly models: FarNpcModels;
   public constructor(
     scene: Scene,
     private readonly people: readonly (NanaResident & { position: Vector3 })[],
     looks?: readonly Appearance[],
   ) {
+    this.models = new FarNpcModels(
+      scene,
+      people.map((p) => ({
+        id: p.id,
+        role: npcCategoryRoles[nanaCategory[p.role]],
+        position: () => p.position,
+        yaw: p.id * 1.3,
+        seated: p.action === 'sit',
+      })),
+    );
     const surface = material(scene, 'nana-distant-residents', '#ffffff');
     this.batches = (
       [
@@ -68,6 +81,7 @@ export class DistantPopulation {
     this.elapsed += delta;
     if (this.elapsed < 0.1) return;
     this.elapsed = 0;
+    this.models.update(player, nearIds);
     const matrix = Matrix.Identity(),
       rotation = Quaternion.Identity(),
       position = Vector3.Zero(),
@@ -79,7 +93,7 @@ export class DistantPopulation {
           p.position.z - player.z,
           p.y - player.y,
         );
-        const shown = !nearIds.has(p.id) && distance < 65;
+        const shown = !nearIds.has(p.id) && !this.models.has(p.id) && distance < 65;
         const beat = Math.sin(
           (distance > 35 ? Math.floor(time * 2) / 2 : time) * 2.8 + p.id * 2.399,
         );
@@ -105,6 +119,7 @@ export class DistantPopulation {
     }
   }
   public dispose(): void {
+    this.models.dispose();
     for (const batch of this.batches) batch.mesh.dispose();
   }
 }

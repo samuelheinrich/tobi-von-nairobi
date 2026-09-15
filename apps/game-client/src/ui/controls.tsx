@@ -30,6 +30,9 @@ export function Controls({ escape = false, flirt = false }: { escape?: boolean; 
         </span>
       )}
       <span>
+        <kbd>C</kbd> Celebrate / Tanzen
+      </span>
+      <span>
         <kbd>ESC</kbd> Pause
       </span>
     </div>

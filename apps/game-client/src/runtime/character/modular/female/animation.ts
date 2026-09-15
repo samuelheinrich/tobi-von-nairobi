@@ -101,6 +101,18 @@ export function animateFemale(
     beat = Math.sin(phase),
     rest = clock % 9 > 7.5 ? 0.22 : 1;
   rig.gesture(gesture === 'drink' ? 'drink' : gesture === 'phone' ? 'phone' : '');
+  rig.action =
+    mode === 'dance' || mode === 'pole'
+      ? mode
+      : gesture === 'sit'
+        ? 'sit'
+        : gesture === 'drink'
+          ? 'drink'
+          : gesture === 'phone'
+            ? 'phone'
+            : stride > 0
+              ? 'walk'
+              : 'idle';
   rig.visual.rotation.z = sway * beat * rest;
   rig.visual.position.x = 0.018 * Math.sin(phase * 0.7);
   rig.root.rotation.z = 0;

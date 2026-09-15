@@ -41,6 +41,15 @@ export class ThrownBottles {
     if (this.active.length >= 8) return false;
     const node = createBottleModel(this.scene, 'thrown-bottle');
     node.position.set(position.x, position.y + 0.5, position.z);
+    return this.launchProp(node, yaw, elevation);
+  }
+  /** Accepts the actual detached hand prop at its world transform, without an origin offset. */
+  public launchProp(node: TransformNode, yaw: number, elevation = 0.17): boolean {
+    if (this.active.length >= 8) {
+      node.dispose();
+      return false;
+    }
+    node.setEnabled(true);
     const speed = prototypeBalance.throwSpeed;
     const flat = Math.cos(elevation) * speed;
     this.active.push({
@@ -93,7 +102,9 @@ export class ThrownBottles {
         this.active.splice(i, 1);
       } else {
         flight.node.position.copyFrom(next);
-        flight.node.rotation.x += delta * 12;
+        if (flight.node.rotationQuaternion) {
+          flight.node.rotate(Vector3.Right(), delta * 12);
+        } else flight.node.rotation.x += delta * 12;
       }
     }
   }

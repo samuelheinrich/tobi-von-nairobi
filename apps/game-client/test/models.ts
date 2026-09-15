@@ -210,7 +210,23 @@ window.addEventListener(
   { once: true },
 );
 
-describe();
-void showRole('police').catch((error: unknown) => {
-  status.textContent = `Fehler: ${String(error)}`;
-});
+const candidate = new URLSearchParams(window.location.search).get('file');
+if (candidate) {
+  reference.root.setEnabled(false);
+  ground.setEnabled(false);
+  roles.disabled = true;
+  turntable.checked = false;
+  turntable.disabled = true;
+  table.textContent =
+    'Lokale Prüfung: Texturen, Orientierung, Grösse, Gewichte und einzelne Clips prüfen. Keine automatische Spielintegration.';
+  void import('./model-file-preview.js')
+    .then(({ previewModelFile }) => previewModelFile(scene, camera, candidate))
+    .catch((error: unknown) => {
+      status.textContent = `Fehler: ${String(error)}`;
+    });
+} else {
+  describe();
+  void showRole('police').catch((error: unknown) => {
+    status.textContent = `Fehler: ${String(error)}`;
+  });
+}

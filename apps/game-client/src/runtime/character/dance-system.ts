@@ -20,6 +20,7 @@ export function animateDance(
   seed: number,
   detailed: boolean,
 ): void {
+  rig.gesture(name.includes('pole') ? 'pole' : 'dance');
   const [lift, swing, stride, tempo] = profiles[name];
   const phase = time * tempo * (0.86 + (seed % 7) * 0.045) + seed * 2.399;
   const beat = Math.sin(phase);

@@ -8,8 +8,12 @@ import { buildLimbs } from './limbs.js';
 import { buildHead } from './head.js';
 import { buildBody } from './body.js';
 import { appearance, type Appearance, type CharacterCategory } from './presets.js';
+import type { CastRole } from '../characters/casting.js';
 
 export interface CharacterRig {
+  castRole?: CastRole;
+  action: string;
+  modelActive: boolean;
   root: TransformNode;
   head: Mesh;
   blink: Mesh | null;
@@ -49,8 +53,10 @@ function register(scene: Scene, rig: CharacterRig) {
         const visible =
           !scene.frustumPlanes ||
           scene.frustumPlanes.every((plane) => plane.dotCoordinate(person.root.position) >= -3);
-        person.visual.setEnabled(visible && distance < 28);
-        person.distant.setEnabled(visible && distance >= 28 && distance < 80);
+        person.visual.setEnabled(!person.modelActive && visible && distance < 28);
+        person.distant.setEnabled(
+          !person.modelActive && visible && distance >= 28 && distance < 80,
+        );
         for (const mesh of person.details) mesh.visibility = distance < 14 && visible ? 1 : 0;
         if (person.blink) {
           const beat =
@@ -136,6 +142,8 @@ export function createCharacter(
   }
   let currentHead: Mesh;
   const rig: CharacterRig = {
+    action: seated ? 'sit' : 'idle',
+    modelActive: false,
     root,
     visual: model,
     distant: buildDistant(scene, root, spec, seated),
@@ -197,6 +205,7 @@ export function createCharacter(
       remember();
     },
     gesture(action) {
+      rig.action = action;
       for (const prop of props) prop.node.setEnabled(prop.action === action);
     },
     dispose: () => root.dispose(),

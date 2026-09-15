@@ -26,6 +26,7 @@ export function animateCharacter(
   time: number,
   seed: number,
 ): void {
+  rig.gesture(action);
   if (
     rig.appearance.femaleStyle &&
     ['idle', 'dance', 'club', 'pole', 'sit', 'drink', 'phone', 'talk', 'walk'].includes(action)

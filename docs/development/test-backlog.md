@@ -98,3 +98,15 @@ Jeder Eintrag nennt die Änderung, den fehlenden Test, den Aufwand und das konkr
 - **Risiko solange offen:** Die Gewichte stammen aus einem Fallback, nicht aus Bone-Heat. Sichtbare Deformationsfehler (Strumpfgürtel an der Hüfte, Bikini beim Rumpfdrehen) sind dokumentiert, aber nicht in Bewegung im Spiel beurteilt.
 - **Geprüft wurde:** Reimport der exportierten GLB in Blender (42'799 Dreiecke, 65 Bones, 65 Vertexgruppen, drei Clips), gemessener Vertexversatz je Clip, Sichtkontrolle in zwölf gerenderten Posen.
 - **Commit:** siehe Commit dieser Änderung.
+
+## Humanoid-Animationen · 15. September 2026
+
+Nur auf ausdrücklichen Auftrag: manuelle Safari-/Referenzhardware-Abnahme, längerer Parcours über weitere Sitztypen und Treppen, Fusskontakt bei abrupten Richtungswechseln sowie Retargeting eines anders aufgebauten Rigs. Der lokale Smoke-Check deckt beide Tobi-Skins, den kompatiblen Sam-Avatar und einen kurzen Zugablauf ab; keine allgemeine GLB-/IK-Qualitätsgarantie. Keine GitHub-CI einrichten.
+
+### Celebrate-Taste C
+
+Die neue Tutorial-Lektion und der vorhandene E2E-Helfer sind angepasst. Ein vollständiger Tutorial-Durchlauf wurde für diese kleine Erweiterung nicht erneut ausgeführt; bei der nächsten manuellen Tutorial-Runde C nach dem Aufstehen mitprüfen. Controller-Verhalten und Tastendruck werden gezielt lokal geprüft, keine CI.
+
+### GLB-NPCs in allen Levels
+
+Gezielt geprüft: alle 17 Rollen über den echten NPC-Erzeuger, Ferninstanzen, Slot-Wechsel und Dispose sowie Zugpassagiere. Noch offen: längere Hardware-/Speichermessung, komplette Runden mit Verfolgung/Festnahme, alle Sitz-/Yoga-/Telefon-Gesten und sämtliche Stockwerkswechsel. Die Fernstufe verwendet statische instanzierte Modellposen; keine allgemeine 60-FPS-Zusage. Nur lokal auf ausdrücklichen Folgeauftrag, keine CI.

@@ -55,6 +55,7 @@ export class HouseResidents implements LevelNpcs {
         activity === 'sit' || activity === 'yoga' || activity === 'meditate',
       );
       rig.root.position.set(x, floor * hippieHouseLayout.floorHeight, z);
+      rig.castRole = activity === 'yoga' || activity === 'meditate' ? 'yoga' : 'resident';
       rig.root.rotation.y = facing;
       this.people.push({ rig, floor, activity, phase: id * 0.7, startled: 0, id });
       id++;
