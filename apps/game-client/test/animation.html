@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Humanoid Animation Studio</title>
+    <style>
+      body {
+        margin: 0;
+        background: #17212d;
+        color: #eee;
+        font: 14px system-ui;
+      }
+      header {
+        padding: 14px;
+      }
+      h1 {
+        font-size: 21px;
+        margin: 0 0 10px;
+      }
+      button,
+      select,
+      input {
+        margin: 4px;
+        padding: 6px;
+      }
+      input[type='number'] {
+        width: 58px;
+      }
+      canvas {
+        width: 100vw;
+        height: 72vh;
+        display: block;
+      }
+      #status {
+        padding: 8px;
+      }
+      fieldset {
+        display: inline-block;
+        border: 1px solid #678;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Humanoid Animation Studio</h1>
+      <select id="model">
+        <option value="tobi">Tobi</option>
+        <option value="drunk">Tobi betrunken</option>
+        <option value="sam">Sam (lokal, Wiederverwendung)</option>
+        <option value="dancer-beach">Tänzerin · Beach</option>
+        <option value="dancer-club">Tänzerin · Club (18+)</option>
+        <option value="dancer-slip">Tänzerin · Slip (18+)</option>
+      </select>
+      <select id="action"></select
+      ><button id="play">Abspielen / Crossfade</button>
+      <label>Tempo <input id="speed" type="range" min="0" max="2" step=".05" value="1" /></label>
+      <button id="jump">Sprungsequenz</button><button id="sit">Sitzen / Aufstehen</button
+      ><button id="throw">Flasche werfen</button>
+      <label><input id="bones" type="checkbox" />Bones</label
+      ><label><input id="prop" type="checkbox" checked />Flasche</label>
+      <fieldset id="offsets">
+        <legend>Hand-Offset · Position / Rotation / Scale (Source Space)</legend>
+      </fieldset>
+      <p>
+        Walk/Run wählen für Gameplay-Wechsel. Maus: Kamera drehen. Offsets lassen sich in die
+        CharacterConfig übernehmen.
+      </p>
+    </header>
+    <canvas></canvas>
+    <div id="status">Lade …</div>
+    <script type="module" src="./animation.ts"></script>
+  </body>
+</html>
