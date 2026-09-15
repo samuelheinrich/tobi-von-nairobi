@@ -172,6 +172,9 @@ trifft alle statischen Sketchfab-Figuren im Bestand — `bargirl-sitting` (sitze
 `yoga-girl-naked-sitting` (Schneidersitz) und `hippie-yoga` (Balancepose) sind noch deutlich
 schlechtere Fälle als Nina.
 
+> Umgesetzt am 15.09.: die Reduktionshälfte ist als
+> [`tools/models/reduce.mjs`](modell-reduktion.md) skriptiert und über den ganzen Bestand gelaufen.
+
 **Was ich stattdessen empfehle:**
 
 1. **Reduktion vom Rigging trennen.** Die Reduktion als Batch über alle Modelle laufen lassen — das

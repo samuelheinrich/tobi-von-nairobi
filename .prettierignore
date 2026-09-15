@@ -5,3 +5,6 @@ node_modules/
 .artifacts/
 playwright-report/
 test-results/
+
+# Von tools/models/reduce.mjs erzeugt; wird bei jedem Lauf neu geschrieben.
+apps/game-client/src/runtime/character/glb-catalogue.json

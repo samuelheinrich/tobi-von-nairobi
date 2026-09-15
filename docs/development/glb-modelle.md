@@ -26,6 +26,11 @@ _Sketchfab Standard License_ — keine offene Lizenz, Weitergabe der Datei nicht
 
 ## Zuordnung
 
+> Die Tabelle unten ist der Stand vom 15.09. vormittags. Seither sind die T-Pose-Sammlung und die
+> Tobi-Avatare dazugekommen, und alle Modelle laufen über
+> [`tools/models/reduce.mjs`](modell-reduktion.md). **Aktuell ist immer das Modell-Studio**
+> (<http://localhost:5173/test/models.html>), das seine Zahlen aus `glb-catalogue.json` zieht.
+
 Gemessen aus den Dateien selbst (Accessor-Zahlen, Skin-Gelenke, Animationsnamen); der Katalog steht
 maschinenlesbar in `src/runtime/character/glb-catalogue.ts`.
 

@@ -1,6 +1,6 @@
 import { createReadStream, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, sep } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -19,9 +19,11 @@ function localModels(): Plugin {
     configureServer(server) {
       server.middlewares.use('/models', (request, response, next) => {
         const name = decodeURIComponent((request.url ?? '').split('?')[0] ?? '').replace(/^\//, '');
-        // Only plain file names: no traversal out of the folder.
-        if (!/^[\w.-]+\.glb$/i.test(name)) return next();
-        const file = join(repoRoot, 'models', name);
+        // Subfolders are allowed (models/tpose, models/tpose/18+), traversal is not.
+        if (!/^(?:[\w.+-]+\/)*[\w.+-]+\.glb$/i.test(name)) return next();
+        const root = join(repoRoot, 'models');
+        const file = resolve(root, name);
+        if (file !== root && !file.startsWith(root + sep)) return next();
         let size: number;
         try {
           size = statSync(file).size;

@@ -17,17 +17,28 @@ import { CATALOGUE, entryFor, type CatalogueEntry } from './glb-catalogue.js';
  * which, and which role each file was downloaded for.
  */
 
-/** Reads `?glb=police` — the file name without its extension — from the page URL.
+/** Reads `?glb=police` from the page URL. The value matches either the reduced or the original
+ * file name, with or without the `-game` suffix and the `.glb` extension.
  *
- * `?glb=1` picks Sam, the only entry that arrives rigged *and* animated.
+ * `?glb=1` picks Sam, the cheapest entry that arrives rigged *and* animated.
  */
 export function glbPreviewChoice(search = window.location.search): CatalogueEntry | null {
   const value = new URLSearchParams(search).get('glb');
   if (value === null) return null;
-  if (value === '1' || value === '') return entryFor('sam.glb') ?? null;
-  const wanted = value.toLowerCase();
+  if (value === '1' || value === '') return entryFor('sam-game.glb') ?? null;
+  const wanted = value
+    .toLowerCase()
+    .replace(/\.glb$/i, '')
+    .replace(/-game$/i, '');
+  const stem = (path: string) =>
+    path
+      .split('/')
+      .pop()!
+      .replace(/\.glb$/i, '')
+      .replace(/-game$/i, '')
+      .toLowerCase();
   return (
-    CATALOGUE.find((entry) => entry.file.replace(/\.glb$/i, '').toLowerCase() === wanted) ?? null
+    CATALOGUE.find((entry) => stem(entry.file) === wanted || stem(entry.source) === wanted) ?? null
   );
 }
 
@@ -79,7 +90,7 @@ export async function applyGlbPreview(
     const [{ LoadAssetContainerAsync }] = await Promise.all([
       import('@babylonjs/core/Loading/sceneLoader.js'),
       import('@babylonjs/loaders/glTF/2.0/glTFLoader.js'),
-      // Only the three extensions the downloaded files declare — `female_police_v2.glb` and
+      // Only the extensions the files declare — `female_police_v2.glb` and
       // `locker_room_glamour-dancer.glb` list pbrSpecularGlossiness as *required* and refuse to
       // load without it. `registerBuiltInGLTFExtensions()` would cover them too but drags in every
       // extension Babylon knows — gaussian splatting, interactivity, OpenPBR — and half a megabyte
@@ -87,6 +98,9 @@ export async function applyGlbPreview(
       import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_unlit.js'),
       import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_specular.js'),
       import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_pbrSpecularGlossiness.js'),
+      // Every file `tools/models/reduce.mjs` writes stores its textures as WebP and lists this
+      // under extensionsRequired, so without it the reduced models refuse to load outright.
+      import('@babylonjs/loaders/glTF/2.0/Extensions/EXT_texture_webp.js'),
     ]);
     const container = await LoadAssetContainerAsync(`/models/${model.file}`, scene);
     if (scene.isDisposed) return 0;

@@ -8,6 +8,7 @@ import '@babylonjs/loaders/glTF/2.0/glTFLoader.js';
 import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_unlit.js';
 import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_specular.js';
 import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_pbrSpecularGlossiness.js';
+import '@babylonjs/loaders/glTF/2.0/Extensions/EXT_texture_webp.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
@@ -101,11 +102,15 @@ function rowFor(entry: CatalogueEntry): string {
     : '—';
   const caveat = entry.caveat ? `<br><span class="warn">⚠ ${entry.caveat}</span>` : '';
   const here = shown.has(entry.file) ? ' class="here"' : '';
-  return `<tr${here}><td><strong>${entry.title}</strong><br><span class="dim">${entry.file}</span></td>
+  const cut =
+    entry.sourceTriangles > entry.triangles
+      ? `<br><span class="dim">aus ${entry.sourceTriangles.toLocaleString('de-CH')}</span>`
+      : '';
+  return `<tr${here}><td><strong>${entry.title}</strong><br><span class="dim">${entry.source}</span></td>
     <td>${ROLE_LABEL[entry.role]}</td>
-    <td class="dim">${entry.author}<br><span class="dim">${entry.licence}</span>${caveat}</td>
-    <td class="num">${entry.megabytes.toFixed(1)} MiB</td>
-    <td class="num">${entry.triangles.toLocaleString('de-CH')}</td>
+    <td class="dim">${entry.author ?? '—'}<br><span class="dim">${entry.licence ?? '—'}</span>${caveat}</td>
+    <td class="num">${entry.megabytes.toFixed(2)} MiB</td>
+    <td class="num">${entry.triangles.toLocaleString('de-CH')}${cut}</td>
     <td class="num">${rig}</td></tr>`;
 }
 
@@ -128,7 +133,7 @@ function describe(): void {
   ];
   const sorted = order.flatMap((role) => entriesForRole(role));
   table.innerHTML = `<p class="dim">${CATALOGUE.length} Dateien, ${rigged} davon mit Skelett.
-    Alle Sketchfab-Modelle sind CC-BY-4.0 und brauchen Namensnennung.
+    Alle reduziert über <code>tools/models/reduce.mjs</code>; Sketchfab-Modelle sind CC-BY-4.0 und brauchen Namensnennung.
     Zum Vergleich: die heutige prozedurale Figur kostet
     <strong>${Math.round(npcTriangles).toLocaleString('de-CH')}</strong> Dreiecke und 0 Byte.</p>
     <table><thead><tr><th>Modell</th><th>Rolle</th><th>Autor · Lizenz</th><th>Datei</th>
