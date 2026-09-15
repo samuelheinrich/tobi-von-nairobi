@@ -16,6 +16,7 @@ import {
 import { tobiConfig, tobiDrunkConfig } from '../src/runtime/character/characters/tobi.js';
 import { dancerConfigs } from '../src/runtime/character/characters/dancers.js';
 import { townsfolkConfigs } from '../src/runtime/character/characters/townsfolk.js';
+import { castConfigs } from '../src/runtime/character/characters/cast.js';
 import { createBottleModel } from '../src/runtime/items/bottle-model.js';
 import { ThrownBottles } from '../src/runtime/items/thrown-bottles.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -79,7 +80,9 @@ async function load() {
   lines?.dispose();
   lines = null;
   const choice = element<HTMLSelectElement>('model').value;
-  const dancer = [...dancerConfigs, ...townsfolkConfigs].find((entry) => entry.id === choice);
+  const dancer = [...dancerConfigs, ...townsfolkConfigs, ...castConfigs].find(
+    (entry) => entry.id === choice,
+  );
   const config = dancer
     ? dancer
     : choice === 'drunk'

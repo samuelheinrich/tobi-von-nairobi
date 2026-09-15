@@ -86,8 +86,13 @@ export class HumanoidCharacter {
       const importedActions = new Map<HumanoidAction, string>();
       if (config.clipSources?.length) {
         const { importRetargetedClips } = await import('./retarget-import.js');
+        // Retargeting looks its target nodes up by exact name, so hand it the names the adapter
+        // actually resolved. A config may say `Hips` where the asset calls the bone `Hips_51`.
+        const resolvedBones = Object.fromEntries(
+          [...rig.joints].map(([key, joint]) => [key, joint.node.name]),
+        ) as typeof config.bones;
         for (const clipSource of config.clipSources) {
-          const retargeted = await importRetargetedClips(scene, source, config.bones, clipSource);
+          const retargeted = await importRetargetedClips(scene, source, resolvedBones, clipSource);
           for (const [action, clip] of retargeted) {
             container.animationGroups.push(clip);
             importedActions.set(action as HumanoidAction, clip.name);

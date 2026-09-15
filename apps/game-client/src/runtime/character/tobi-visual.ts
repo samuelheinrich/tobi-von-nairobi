@@ -11,6 +11,8 @@ import { CigaretteSmoke } from './cigarette-smoke.js';
 import { createBottleModel } from '../items/bottle-model.js';
 import { material } from '../levels/materials.js';
 import { TobiAvatar } from './tobi-avatar.js';
+import { CharacterAnimationController } from './humanoid/animation-controller.js';
+import { tobiConfig } from './characters/tobi.js';
 
 /** How long Tobi stays visibly drunk after a bottle.
  *
@@ -20,9 +22,6 @@ import { TobiAvatar } from './tobi-avatar.js';
  * has no business running on a different clock than the pose it belongs to.
  */
 const DRUNK_SECONDS = 30;
-
-/** Tobi's height in rig space, measured from the procedural figure the avatars replace. */
-const TOBI_HEIGHT = 2.17;
 
 /** True when `mesh` sits anywhere below `ancestor` in the scene graph. */
 function isUnder(mesh: AbstractMesh, ancestor: TransformNode): boolean {
@@ -38,7 +37,16 @@ export class TobiVisual {
   private readonly legs: TransformNode[] = [];
   private readonly knees: TransformNode[] = [];
   private readonly arms: TransformNode[] = [];
-  private readonly heldBottle: TransformNode;
+  private heldBottle: TransformNode;
+  private readonly animation = new CharacterAnimationController(
+    tobiConfig.throwReleaseTime,
+    undefined,
+    tobiConfig.motionDurations,
+  );
+  private releaseThrow: ((prop: TransformNode) => void) | null = null;
+  public get canThrow(): boolean {
+    return !this.animation.busy && !this.releaseThrow;
+  }
   private readonly smoke: CigaretteSmoke;
   private throwing = 0;
   private time = 0;
@@ -123,7 +131,7 @@ export class TobiVisual {
   /** Swaps the procedural skin for the scanned avatars, quietly doing nothing if they fail. */
   private async loadAvatar(scene: Scene): Promise<void> {
     // Fitted to the figure it replaces, so camera, collision and reach stay as tuned.
-    const avatar = await TobiAvatar.load(scene, this.body, TOBI_HEIGHT);
+    const avatar = await TobiAvatar.load(scene, this.body);
     if (!avatar) return;
     if (this.root.isDisposed()) {
       avatar.dispose();
@@ -135,12 +143,25 @@ export class TobiVisual {
     this.smoke.dispose();
   }
 
-  public throwBottle(): void {
+  public throwBottle(release: (prop: TransformNode) => void): void {
+    if (!this.canThrow) return;
     this.throwing = 1;
+    this.animation.play('throw_bottle');
+    this.releaseThrow = release;
+  }
+
+  public taunt(): void {
+    this.animation.play('taunt');
+  }
+
+  public celebrate(): boolean {
+    return this.animation.play('celebrate', true);
   }
 
   public celebratePickup(): void {
     this.pickup = 1;
+    if (!['pickup', 'drink'].includes(this.animation.action))
+      this.animation.playSequence(['pickup', 'drink']);
     // Every bottle restarts the half minute; they do not add up.
     this.drunkFor = DRUNK_SECONDS;
   }
@@ -161,6 +182,7 @@ export class TobiVisual {
     holding = false,
     drinking = 0,
     sitting = false,
+    seatHeight = 0.42,
   ): boolean {
     this.time += delta;
     if (this.drunkFor > 0) {
@@ -169,8 +191,9 @@ export class TobiVisual {
     }
     if (!this.avatar) this.smoke.update(delta);
     this.throwing = Math.max(0, this.throwing - delta * 3);
-    this.heldBottle.setEnabled(holding);
-    this.gait += delta * (victory ? 9 : speed * 2.8);
+    this.heldBottle.setEnabled(holding || this.releaseThrow !== null);
+    const dancing = victory || this.animation.action === 'celebrate';
+    this.gait += delta * (dancing ? 9 : speed * 2.8);
     this.pickup = Math.max(0, this.pickup - delta * 1.8);
     this.stumble = Math.max(0, this.stumble - delta * 2.8);
     let tripped = false;
@@ -187,7 +210,7 @@ export class TobiVisual {
       gait: this.gait,
       speed,
       grounded,
-      victory,
+      victory: dancing,
       mood,
       stamina,
       pickup: this.pickup,
@@ -239,6 +262,48 @@ export class TobiVisual {
         drinking,
       );
     } else this.heldBottle.rotationQuaternion = null;
+    const animationState = {
+      speed,
+      grounded,
+      sitting,
+      drinking: drinking > 0.001,
+      holding,
+      seatHeight,
+      victory,
+    };
+    const markers = this.animation.step(
+      delta,
+      animationState,
+      tobiConfig.walkSpeed,
+      tobiConfig.runSpeed,
+      tobiConfig.cycleSpeeds,
+    );
+    if (this.avatar) {
+      // The GLB skeleton owns posture; applying the old proxy pose too would bend/lower it twice.
+      this.body.position.setAll(0);
+      this.body.rotation.setAll(0);
+      this.avatar.animate(delta, animationState, this.animation);
+      this.avatar.attach(this.heldBottle, this.animation);
+    }
+    for (const marker of markers) {
+      if (marker.name !== 'release' || !this.releaseThrow) continue;
+      const released = this.heldBottle;
+      if (this.avatar) this.avatar.detach(released);
+      else {
+        const world = released.computeWorldMatrix(true).clone();
+        released.parent = null;
+        released.rotationQuaternion = Quaternion.Identity();
+        world.decompose(released.scaling, released.rotationQuaternion, released.position);
+      }
+      const release = this.releaseThrow;
+      this.releaseThrow = null;
+      this.heldBottle = createBottleModel(this.root.getScene(), 'tobi-held-bottle');
+      this.heldBottle.parent = this.arms[0]!;
+      this.heldBottle.position.set(-0.06, -0.62, 0.13);
+      this.heldBottle.setEnabled(holding);
+      if (this.avatar) this.avatar.attach(this.heldBottle, this.animation);
+      release(released);
+    }
     if (victory) this.root.rotation.y += delta * 1.3;
     return tripped;
   }

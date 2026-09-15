@@ -105,3 +105,45 @@ Bahnpassagiere, Taxifahrer, Strassenverkäufer und Flugbegleiter. Weder Mixamo n
 Quaternius-Gratispaket lösen das: Mixamo riggt nur, was schon angezogen ist, und das Gratispaket
 hat keine Kleidung. Entweder bekleidete CC0-Modelle beschaffen, oder die bezahlte
 Quaternius-SOURCE-Fassung, oder weiter Avaturn-Avatare wie bei Tobi und Sam.
+
+## Besetzung der Rollen
+
+`characters/casting.ts` hält, welches Modell welche Rolle spielt. `characters/cast.ts` hält die
+Konfigurationen dazu.
+
+| Rolle                                                 | Modell                      | Stand           |
+| ----------------------------------------------------- | --------------------------- | --------------- |
+| Polizei, Security, Kondukteur, Zellenwärter           | `cop`                       | passend         |
+| Bardame                                               | `mia`, `valery`             | passend         |
+| Tänzerin                                              | die drei Mixamo-Tänzerinnen | passend         |
+| Ladyboy-Tänzerin                                      | `ladyboy`                   | passend         |
+| Strandgäste                                           | `fitness`, Quaternius       | passend         |
+| Flugbegleiter                                         | `valery`                    | **Platzhalter** |
+| Tourist, Expat, Verkäufer, Taxi, WG, Passagiere, Yoga | Quaternius, `fitness`       | **Platzhalter** |
+| Tourist (einmalig)                                    | `chris`                     | Porträt         |
+| Expat (einmalig)                                      | `sam`                       | Porträt         |
+
+**Einmalige Figuren.** `sam` und `chris` sind Abbilder konkreter Personen. Die `Casting`-Klasse gibt
+jede von ihnen **höchstens einmal pro Level** aus und zieht sie danach zurück; die übrigen Modelle
+dürfen sich wiederholen. `Casting.reset()` beim Levelwechsel.
+
+### Was aus dem Download nicht ging
+
+- **`captain.glb` hat kein Skelett.** Es war als Flugbegleiter vorgesehen, ist aber ein Standbild.
+  Vorläufig spielt `valery` die Rolle.
+- **`party/asian_neo_cyberpunk_…`** ebenfalls ohne Skelett, dazu 3'285'344 Dreiecke bei 140 MiB.
+- **Die fünf Modelle unter `beach/`** sind technisch in Ordnung (98–104k Dreiecke, 102–140 Gelenke),
+  tragen aber die Züge realer, identifizierbarer Personen — vier Darstellerinnen und eine
+  Politkommentatorin. CC-BY deckt das Modell des Hochladenden, nicht das Persönlichkeitsrecht der
+  abgebildeten Person. Aus demselben Grund flog schon die Jokowi-Figur raus. Sie sind deshalb nicht
+  eingebaut.
+
+### Bone-Namen nach dem FBX-Umweg
+
+Modelle, die über Mixamo liefen, kommen mit angehängten Zahlen zurück: `mixamorig:Hips_32`,
+`CC_Base_Hip_02`, `Hips_51`. `normaliseBoneName` in `humanoid/schema.ts` schneidet das Suffix weg,
+der `SkeletonAdapter` fällt darauf zurück, wenn der exakte Name fehlt, und das Retargeting bekommt
+die **aufgelösten** Namen statt der aus der Konfiguration. Ohne diesen letzten Punkt schlägt es mit
+«Retarget produced no tracks» fehl, obwohl die Figur selbst lädt.
+
+Neue Aliasse für Character-Creator-Rigs (`CC_Base_*`) stehen in `boneAliases`.

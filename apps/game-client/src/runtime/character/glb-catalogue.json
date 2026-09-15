@@ -11,6 +11,32 @@
     "licence": "CC-BY-4.0"
   },
   {
+    "file": "chris-v1-dynamic-game.glb",
+    "source": "chris-v1-dynamic.glb",
+    "megabytes": 1.81,
+    "triangles": 22050,
+    "sourceTriangles": 22050,
+    "joints": 52,
+    "animations": [
+      "IdleV4.2(maya_head)"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "chris-v2-dynamic-game.glb",
+    "source": "chris-v2-dynamic.glb",
+    "megabytes": 10.25,
+    "triangles": 24023,
+    "sourceTriangles": 24023,
+    "joints": 54,
+    "animations": [
+      "avaturn_animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
     "file": "female-sporty1-game.glb",
     "source": "female-sporty1.glb",
     "megabytes": 1.56,
@@ -170,6 +196,69 @@
     "joints": 0,
     "animations": [],
     "author": "SinfulBrain",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/bar/mia_3d-game.glb",
+    "source": "skellet-rigged/bar/mia_3d.glb",
+    "megabytes": 5.75,
+    "triangles": 59964,
+    "sourceTriangles": 846785,
+    "joints": 66,
+    "animations": [],
+    "author": "Veterock",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/cop-game.glb",
+    "source": "skellet-rigged/cop.glb",
+    "megabytes": 2.26,
+    "triangles": 27850,
+    "sourceTriangles": 27850,
+    "joints": 34,
+    "animations": [
+      "Walking",
+      "Idle"
+    ],
+    "author": "tonyflanagan",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/ladyboy/trans_non_binary_rigged__blendshapes-game.glb",
+    "source": "skellet-rigged/ladyboy/trans_non_binary_rigged__blendshapes.glb",
+    "megabytes": 26.16,
+    "triangles": 69280,
+    "sourceTriangles": 69280,
+    "joints": 102,
+    "animations": [
+      "0_T-Pose",
+      "AvatarCurrentMotion"
+    ],
+    "author": "Lucid Dreams",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/sport/female_fitness_model_-_ai_generated__rigged-game.glb",
+    "source": "skellet-rigged/sport/female_fitness_model_-_ai_generated__rigged.glb",
+    "megabytes": 3.04,
+    "triangles": 59998,
+    "sourceTriangles": 204905,
+    "joints": 25,
+    "animations": [
+      "Armature|Armature|walking_man|baselayer"
+    ],
+    "author": "dipakpauldtk",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/valery_tpose_blender_rigged_woman-game.glb",
+    "source": "skellet-rigged/valery_tpose_blender_rigged_woman.glb",
+    "megabytes": 2.56,
+    "triangles": 31301,
+    "sourceTriangles": 31301,
+    "joints": 53,
+    "animations": [],
+    "author": "xander.dice",
     "licence": "CC-BY-4.0"
   },
   {
@@ -344,6 +433,128 @@
     "animations": [],
     "author": "jmarco2000",
     "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "work/quaternius/man-buzzed-dark-game.glb",
+    "source": "work/quaternius/man-buzzed-dark.glb",
+    "megabytes": 1.05,
+    "triangles": 16132,
+    "sourceTriangles": 16132,
+    "joints": 65,
+    "animations": [],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/quaternius/man-parted-beard-game.glb",
+    "source": "work/quaternius/man-parted-beard.glb",
+    "megabytes": 1.1,
+    "triangles": 17637,
+    "sourceTriangles": 17637,
+    "joints": 65,
+    "animations": [],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/quaternius/woman-buns-dark-game.glb",
+    "source": "work/quaternius/woman-buns-dark.glb",
+    "megabytes": 1.14,
+    "triangles": 18344,
+    "sourceTriangles": 18344,
+    "joints": 65,
+    "animations": [],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/quaternius/woman-long-light-game.glb",
+    "source": "work/quaternius/woman-long-light.glb",
+    "megabytes": 1.11,
+    "triangles": 17966,
+    "sourceTriangles": 17966,
+    "joints": 65,
+    "animations": [],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/belly-dance-game.glb",
+    "source": "work/rigged/belly-dance.glb",
+    "megabytes": 1.64,
+    "triangles": 25127,
+    "sourceTriangles": 436982,
+    "joints": 33,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/naked-dancer-with-slip-game.glb",
+    "source": "work/rigged/naked-dancer-with-slip.glb",
+    "megabytes": 1.62,
+    "triangles": 25553,
+    "sourceTriangles": 25553,
+    "joints": 33,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/naked-dancer-game.glb",
+    "source": "work/rigged/naked-dancer.glb",
+    "megabytes": 2.25,
+    "triangles": 25898,
+    "sourceTriangles": 190746,
+    "joints": 65,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/tut-hip-hop-dance-game.glb",
+    "source": "work/rigged/tut-hip-hop-dance.glb",
+    "megabytes": 1.6,
+    "triangles": 25127,
+    "sourceTriangles": 436982,
+    "joints": 33,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/wave-hip-hop-dance-game.glb",
+    "source": "work/rigged/wave-hip-hop-dance.glb",
+    "megabytes": 1.59,
+    "triangles": 25127,
+    "sourceTriangles": 436982,
+    "joints": 33,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/rigged/woman-dance1-game.glb",
+    "source": "work/rigged/woman-dance1.glb",
+    "megabytes": 1.57,
+    "triangles": 25127,
+    "sourceTriangles": 436982,
+    "joints": 33,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
   },
   {
     "file": "yoga-girl-naked-sitting-game.glb",

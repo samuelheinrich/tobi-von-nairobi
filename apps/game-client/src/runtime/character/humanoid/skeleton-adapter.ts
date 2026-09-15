@@ -1,7 +1,7 @@
 import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { Skeleton } from '@babylonjs/core/Bones/skeleton.js';
-import type { BoneMap, HumanoidBone } from './schema.js';
+import { normaliseBoneName, type BoneMap, type HumanoidBone } from './schema.js';
 
 export interface Joint {
   node: TransformNode;
@@ -21,12 +21,16 @@ export class SkeletonAdapter {
   ) {
     for (const skeleton of skeletons) skeleton.returnToRest();
     const nodes = root.getChildTransformNodes(false);
+    const bones = skeletons.flatMap((s) => s.bones);
     for (const [key, name] of Object.entries(map) as [HumanoidBone, string][]) {
+      const wanted = normaliseBoneName(name);
+      // Exact first; then a normalised match, so a config can name `Hips` and still find the
+      // `mixamorig:Hips_32` a round-trip through FBX produced.
       const node =
-        skeletons
-          .flatMap((s) => s.bones)
-          .find((b) => b.name === name)
-          ?.getTransformNode() ?? nodes.find((n) => n.name === name);
+        bones.find((b) => b.name === name)?.getTransformNode() ??
+        nodes.find((n) => n.name === name) ??
+        bones.find((b) => normaliseBoneName(b.name) === wanted)?.getTransformNode() ??
+        nodes.find((n) => normaliseBoneName(n.name) === wanted);
       if (!node) throw new Error('Humanoid bone missing: ' + key + ' -> ' + name);
       const rest = node.rotationQuaternion?.clone() ?? Quaternion.FromEulerVector(node.rotation);
       node.rotationQuaternion = rest.clone();
