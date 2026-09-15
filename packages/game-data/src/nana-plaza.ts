@@ -8,4 +8,5 @@ export {
   type NanaResident,
   type DanceName,
   type AmbientAction,
+  NANA_CROWD_DENSITY,
 } from './nana-plaza/npcs.js';

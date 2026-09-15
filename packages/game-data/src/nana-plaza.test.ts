@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { nanaPlaza, nanaVenues, nanaResidents, danceNames, drunkTank } from './index.js';
+import {
+  nanaPlaza,
+  nanaVenues,
+  nanaResidents,
+  danceNames,
+  drunkTank,
+  NANA_CROWD_DENSITY,
+} from './index.js';
 
 describe('Nana content invariants', () => {
   it('retains stable pickups and distributes them across the full journey', () => {
@@ -18,7 +25,11 @@ describe('Nana content invariants', () => {
     expect(nanaVenues.filter((v) => v.floor === 1 && v.mode === 'full')).toHaveLength(5);
     expect(nanaVenues.filter((v) => v.floor === 2 && v.mode === 'full')).toHaveLength(4);
     expect(new Set(danceNames).size).toBe(8);
-    expect(nanaResidents.filter((p) => p.z < 0)).toHaveLength(40);
+    // The street crowd scales with the density rather than sitting at a fixed count, but it must
+    // still reach the far end of the Soi and keep every role represented — thinning by skipping
+    // indices once wiped out the taxi drivers entirely, because roles cycle on the index.
+    expect(nanaResidents.filter((p) => p.z < 0)).toHaveLength(Math.round(40 * NANA_CROWD_DENSITY));
+    expect(Math.min(...nanaResidents.map((p) => p.z))).toBeLessThanOrEqual(-42);
     expect(new Set(nanaResidents.map((p) => p.role)).size).toBe(8);
   });
   it('keeps the custody level out of the selector and score economy', () => {

@@ -11,6 +11,8 @@ async function walk(directory) {
       continue;
     }
     if (!/\.[cm]?[jt]sx?$/.test(path)) continue;
+    // Build configuration runs in Node by definition and never reaches a browser.
+    if (/\.config\.[cm]?[jt]s$/.test(entry.name)) continue;
     const source = await readFile(path, 'utf8');
     const imports = [...source.matchAll(/(?:from\s*|import\s*\()['"]([^'"]+)/g)].map(
       (match) => match[1],

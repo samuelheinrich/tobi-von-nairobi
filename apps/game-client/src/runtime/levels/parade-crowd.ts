@@ -16,7 +16,9 @@ import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { material } from './materials.js';
 import { navigationObstacles, sightBlockers } from './nav-obstacles.js';
 
-export const PARADE_CROWD_SIZE = 240;
+// Thinned by a quarter on 15.09.2026: 240 read as a wall rather than a crowd, and cost the most
+// of anything on the route.
+export const PARADE_CROWD_SIZE = 180;
 
 /** Fills the route with dancers instead of lining them up: walk the polyline, then fan out
  * sideways and keep whatever the navigation grid says is standable. */
