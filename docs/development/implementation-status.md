@@ -1,6 +1,18 @@
 # Implementierungsstand
 
-CI-Aufteilung und Betrieb: [ci.md](ci.md). Die bisherige gemeinsame Prüfung wird in Qualitätsprüfung und drei isolierte Browser-Shards getrennt; `required` bleibt der Pflichtcheck für beide Jobgruppen.
+**15. September 2026 – Git-Konsolidierung:** bisherige Agenten-Commits und offene Nana-/NPC-Änderungen sind auf lokalem `main` zusammengeführt. CI-Workflow entfernt, Agentenregeln versioniert. [Aktuelle Übergabe](handover-2026-09-15-consolidated-main.md).
+
+**Erwachsene Nightlife-/Beach-Figuren:** fünf Körperprofile, neue Kleidungsschnitte, deterministische Gruppenvariation, 23 Posen und nahes Blinzeln. [Details und Achtergruppen-Galerie](adult-female-characters.md).
+
+**Gesichtsüberarbeitung:** sieben modellierte Kopfformen, Augen mit Lidern/Iris/Pupille, Lippen, Nasen-/Ohrstruktur, Alters- und Hautdetails sowie angepasste Haarlinien. [Lokale Galerie und technische Details](modular-characters.md#gesichtssystem--überarbeitung-vom-15-september-2026).
+
+**15. September 2026 – Modulare Figuren:** gerundete Körper und Gesichter, rollenabhängige Kleidung, Polizei-/Security-Ausrüstung, gemeinsame Gelenke mit Händen/Knie/Ellenbogen, drei Distanzstufen und detaillierter Nahbereich für Nana/Parade. [Architektur, Galerie und lokale Prüfungen](modular-characters.md).
+
+## Nana-Ausbau · 14. September 2026
+
+Zusammenhängende BTS/Sukhumvit/Soi/Plaza-Welt mit drei begehbaren Ebenen, zehn Erdgeschossfronten und neun oberen Venues. NPC-Pool/Distanzdarstellung, acht Tanzprofile, Getränkekarte, räumliche Arcade-Audiozonen und separate Eingangssicherheit. Details: [Gameplay-Spezifikation](../gameplay/nana-plaza-and-custody.md), [Umbauplan](nana-expansion-plan.md). Content-Version `prototype-5-nana`. Nur lokale Prüfungen; GitHub-CI bleibt deaktiviert. Kein Deployment; der Ausbau ist inzwischen auf `main` konsolidiert.
+
+**Aktuelle Eigentümerentscheidung:** Freizeitprojekt, keine GitHub-CI und nur gezielte lokale Prüfungen mit geringem Zeit- und Tokenaufwand. [Agentenregeln](../../AGENTS.md) · [CI deaktiviert](ci.md). Frühere Aussagen über verpflichtende CI sind historisch.
 
 Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Flucht-Loop: `feature/bali-escape`. Konto- und Speicherfunktionen: `feature/accounts-and-saves`. Bali-Level und Figuren-/Soundfeedback: `feature/bali-nights-and-tobi-wobble`. Tobi-Referenzfigur, Wurfflaschen, Railway und Parade: `feature/tobi-railway-street-parade`. Mehrstöckige Hippie-WG: `feature/arlesheim-hippie-wg`. Bewohner, Nana Plaza, Zelle, Zürcher Karte und Bewegungs-/Wurf-/Kamera-Überarbeitung: `feature/guest-level-gallery`. Fly High, wiederverwendbares Sitzen, geführtes Tutorial und zusammengeführte Bali-Küste: `feature/fly-high-and-bali`.
 
@@ -13,7 +25,7 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 - Validierte JSON-Leveldaten, erweiterbares Collect-/Reach-Objective-System, eindeutige Pickupwertung und einmaliger Abschlussbonus.
 - Entwicklungsmenü mit Teleport, Respawn und Zustands-/FPS-Inspektion; aus dem Produktionsimportgraph entfernt.
 - NestJS/Fastify-API für Liveness, Datenbankbereitschaft und Content; PostgreSQL in Compose; Prisma-Schema und initiale Migration für User, Saveslots und Settings.
-- CI-Workflow sowie Unit-, echte PostgreSQL-Integrations- und Browsertests.
+- Vorhandene Unit-, PostgreSQL-Integrations- und Browsertests bleiben für gezielte lokale Prüfungen erhalten. Der GitHub-CI-Workflow wurde entfernt.
 - Verfolgungsregeln mit Chaos, unabhängiger Fahndung, modularer Police-FSM, echtem Sichtkontakt, Bodengitter-Routing, neunsekündiger Flucht, Festnahme und Neustart.
 - R als wiederholbare Chaos-Aktion mit Cooldown; datengetriebenes Escape-Objective und Check-in-Gate, +500 Fluchtpunkte, eigene HUD-Anzeigen und Debug-Inspektion.
 
@@ -50,7 +62,7 @@ Weitere Power-ups neben dem Farbrausch, Kombos, Risiko-Scoremultiplikatoren, ein
 
 Die Kamera verwendet fünf Ray-Probes als erste Annäherung an einen Kameraradius; ein echter Shape Sweep und weitere Innenraumformen über offenen Zug und WG hinaus bleiben Arbeitspakete. Die Physik läuft in festen Schritten, visuelle Transforminterpolation ist noch offen. Referenzgeräte-/Safari-Abnahme und ein zehnminütiger manueller Kollisions-Parcours sind nicht durch einen Headless-Chromium-Lauf ersetzt.
 
-Das GitHub-Repository ist [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/tobi-von-nairobi), mit `@samuelheinrich` als initialem Codeowner. Die Erstveröffentlichung erfolgt nach einem leeren Bootstrap-Commit auf `main` als Pull Request. `main` ist geschützt: mindestens ein unabhängiges Review, erfolgreicher `required`-CI-Check und geklärte Diskussionen sind vor dem Merge nötig; der Schutz gilt auch für Administratoren. Force-Push und Löschen sind deaktiviert. Der aktuelle Review- und CI-Status ist im Pull Request sichtbar. Produktionsziel ist **https://tobi-von-nairobi.ch**. Der Benutzer betreibt dort einen statischen Upload; das aktuelle Artefakt muss aus `apps/game-client/dist/` stammen. Ein automatisches Produktionsdeployment und das produktive Backend sind nicht eingerichtet.
+Das GitHub-Repository ist [samuelheinrich/tobi-von-nairobi](https://github.com/samuelheinrich/tobi-von-nairobi), mit `@samuelheinrich` als initialem Codeowner. Die Entwicklung ist auf `main` konsolidiert. Branch Protection ist derzeit ausgeschaltet; das historische Backup ist kein Wiederherstellungsauftrag. GitHub-CI bleibt deaktiviert und der Workflow wurde entfernt. Produktionsziel ist **https://tobi-von-nairobi.ch**. Der Benutzer betreibt dort einen statischen Upload; das aktuelle Artefakt muss aus `apps/game-client/dist/` stammen. Ein automatisches Produktionsdeployment und das produktive Backend sind nicht eingerichtet.
 
 ## Toolchainentscheidungen während der Implementierung
 
@@ -60,6 +72,8 @@ Der projektbezogene Setupbefehl lautet **`pnpm run setup`**. `pnpm setup` ist ei
 
 ## Validierungsnachweise
 
+Die folgenden Angaben dokumentieren frühere Prüfstände, keine erneute Gesamtabnahme des konsolidierten Stands. Die jüngsten gezielten Prüfungen stehen in der aktuellen Übergabe und den Figurendokumenten. Insbesondere ist die historische Bundle-Grösse nach Aufnahme der GLB-Avatare nicht mehr aktuell.
+
 Die Prüfkette umfasst 54 Unit-Tests (Levelvalidierung, feste Uhr, Bewegung, Missions-/Scorewertung, Chaos/Wanted, Police-FSM, Fluchtereignisse, Navigation samt Referenzvergleich des räumlichen Index, Blockierlogik und die Zürcher Platzierungsinvarianten), vierzehn Integrationstests gegen echtes PostgreSQL und 27 Browsertests. Der Browser prüft den kompletten Tutorialdurchlauf, Sprint/Pause und die Havok-Grenzen: Grounding, tatsächliche Sprunghöhe, Landung, Wandkollision, Kamerafreiraum und Freigabe aller Engineinstanzen nach wiederholtem Aufbau.
 
 Zusätzlich prüft der Browser echte Audioausgabe, Stummschaltung/Pause und die Pegelanzeige. Er fährt die gesamten Fluchtwege der Bali-Verfolgungslevels und der neuen verbundenen Küste sowie die komplette Zürcher Paraderoute mit realen Collidern, Havok-Bewegung und Sicht-Raycasts ab und belegt dabei, dass Tobi nie auf dem Wasser steht und das Becken nicht durchqueren kann. E2E deckt Nana Plaza einschliesslich Energie-Auffüllung und beantworteter Annäherung sowie den Weg von der Festnahme über die Zelle zurück ins Menü ab. Die produktive Oberfläche wird von Levelwahl bis Festnahme und Neustart geprüft. [Details und Grenzen](../gameplay/pursuit.md).
@@ -68,7 +82,7 @@ Die neuen Browserprüfungen lösen Fly High mit echten Kollisionen und Crew-Sich
 
 `pnpm check:bundle` prüft zusätzlich das komprimierte Gesamtbudget aller gebauten Client-Assets und stellt sicher, dass das Developer-Menü im Produktionsartefakt fehlt. Der gemessene Gesamtumfang beträgt derzeit unter **1,6 MiB gzip**; das ist ein Transfergrössenvergleich, keine FPS-Messung. Vite weist weiterhin auf den absichtlich verzögert geladenen, grösseren Engine-Chunk hin. Referenzhardware und Safari bleiben separate Abnahmen.
 
-Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgeschlagene CI-Browsertests laden ihre Traces/Screenshots als kurzlebiges Artefakt hoch. Der Integrationstest legt nur eindeutig benannte Testdatensätze an und entfernt sie anschliessend; er setzt die Entwicklungsdatenbank nicht zurück.
+Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Automatische GitHub-Testläufe und deren Artefakt-Uploads finden nicht mehr statt. Der Integrationstest legt nur eindeutig benannte Testdatensätze an und entfernt sie anschliessend; er setzt die Entwicklungsdatenbank nicht zurück.
 
 ## Nächste Arbeitspakete
 
@@ -77,4 +91,4 @@ Lokale Browser-Screenshots werden in `.artifacts/screenshots/` erzeugt. Fehlgesc
 3. Die angemeldete neue Bali-Küste als durchgehenden Browser-Abnahmelauf ergänzen; Checkpoints und Achievements auf die bestehenden atomaren Run-Transaktionen aufbauen.
 4. Den Flucht-Blockout zu einem 5–15-Minuten-Level ausbauen und das gesamte Bali-MVP mit Spielern abnehmen.
 
-Die aktuelle Arbeitsanweisung für den nächsten Agenten steht in [handover-2026-09-14-to-codex.md](handover-2026-09-14-to-codex.md): Stand von `main`, abgeschaltete Branch Protection und die rote CI. Technische Details der Klang- und Stimmenarbeit in [handover-2026-09-14-voices-and-foley.md](handover-2026-09-14-voices-and-foley.md); sie nennt ausserdem, warum die CI auf `main` derzeit in den Timeout läuft, und verweist auf [test-backlog.md](test-backlog.md) für bewusst aufgeschobene Tests. Die [Übergabe davor](handover-2026-09-14-fly-high-and-bali.md) beschreibt Fly High, Tutorial und Bali-Küste. Die [vorherige Übergabe](handover-2026-09-14.md) dokumentiert Nana Plaza, Zelle, Zürich und die frühere Bewegungsüberarbeitung; widersprechende Levelzahlen und Wurfrichtungsregeln sind durch diese Lieferung ersetzt. Die langfristige Spezifikation bleibt in [IMPLEMENTATION_PLAN.md](../../IMPLEMENTATION_PLAN.md). Dieser Status beschreibt ausschliesslich tatsächlich gelieferte und noch ausstehende Arbeit.
+Die aktuelle Arbeitsanweisung steht in [handover-2026-09-15-consolidated-main.md](handover-2026-09-15-consolidated-main.md). Die [Übergabe vom 14. September](handover-2026-09-14-to-codex.md) dokumentiert den damaligen Stand; ihre CI-Reparaturvorschläge sind durch die Eigentümerentscheidung aufgehoben. Technische Details der Klang- und Stimmenarbeit in [handover-2026-09-14-voices-and-foley.md](handover-2026-09-14-voices-and-foley.md); sie nennt ausserdem, warum die CI auf `main` derzeit in den Timeout läuft, und verweist auf [test-backlog.md](test-backlog.md) für bewusst aufgeschobene Tests. Die [Übergabe davor](handover-2026-09-14-fly-high-and-bali.md) beschreibt Fly High, Tutorial und Bali-Küste. Die [vorherige Übergabe](handover-2026-09-14.md) dokumentiert Nana Plaza, Zelle, Zürich und die frühere Bewegungsüberarbeitung; widersprechende Levelzahlen und Wurfrichtungsregeln sind durch diese Lieferung ersetzt. Die langfristige Spezifikation bleibt in [IMPLEMENTATION_PLAN.md](../../IMPLEMENTATION_PLAN.md). Dieser Status beschreibt ausschliesslich tatsächlich gelieferte und noch ausstehende Arbeit.

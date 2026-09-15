@@ -1,59 +1,101 @@
 # Bangkok Nana Plaza und die Ausnüchterungszelle
 
-Zwei neue Kapitel mit gegensätzlicher Stimmung: ein lautes Innenhof-Venue voller Neon und ein sehr stiller Raum mit Gitterstäben. Nana Plaza steht als **Level 08** in der Galerie. Die Zelle nicht: sie ist ausschliesslich über eine Festnahme erreichbar und in `levelSchema` mit `selectable: false` markiert.
+## Raumfolge und Referenzen
 
-## Bangkok Nana Plaza
+Nana Plaza ist ein zusammenhängender Nachtstadt-Level: **Nana BTS → Sukhumvit → Soi 4 → Eingang → Innenhof → zwei obere Galerieebenen → Rückweg zum BTS**. Alle Übergänge erfolgen zu Fuss. Die Level-ID `bangkok_nana_plaza`, die 16 Flaschen-IDs und die Missionsziele bleiben stabil.
 
-**Aufgabe:** 16 Flaschen im Innenhof sammeln, die Security abhängen und über den Soi-4-Ausgang verschwinden.
+Als visuelle Referenzen dienen die [Betreiberseite](https://nanaplazabkk.com/), ihr [Galerie-/Innenhoffoto](https://nanaplazabkk.com/wp-content/uploads/2024/01/nana-plaza-bangkok.jpg), das [Eingangsfoto](https://nanaplazabkk.com/wp-content/uploads/2022/12/nana-plaza-square.jpg), die [Lagebeschreibung der Plaza](https://en.wikipedia.org/wiki/Nana_Plaza) sowie die [Stationsbeschreibung Nana E3](https://en.wikipedia.org/wiki/Nana_BTS_station). Die Station liegt entlang Sukhumvit östlich der Nana-Kreuzung; das Spiel verkürzt und dreht die Strecke. Es übernimmt die schmale Eingangspassage, den dreigeschossigen Hof mit gegenüberliegenden Galerien, Schilderbänder, Beer-Garden und hohe Überdachung. Referenzfotos werden nicht als Spieltexturen übernommen.
 
-Ein dreistöckiger U-förmiger Barblock umschliesst den Hof: Westflügel, Ostflügel und Nordflügel, jeweils mit Balkonen, Geländern und Leuchtbändern pro Stockwerk. Sieben Hochhäuser mit Fensterrastern stehen ausserhalb und schliessen den Himmel. Der einzige Zugang ist der Soi im Süden; dort liegt auch das Ziel.
+Dies ist eine stilisierte Rekonstruktion, kein vermessenes Stadtmodell. Die Treppen liegen für eine klare Spielerroute im rückwärtigen Annex. Bars und Biermarken tragen erfundene Namen; es besteht kein dargestelltes Sponsoring realer Betriebe.
 
-In der Mitte liegt eine **Discofläche** aus 42 einzeln angesteuerten Bodenplatten. Sie wechseln im Takt durch vier Neonfarben. Darüber dreht sich eine Spiegelkugel mit sechs Lichtkegeln, deren Sichtbarkeit auf denselben Beat reagiert. Der Effekt besteht vollständig aus emissiver Geometrie: keine zusätzlichen dynamischen Lichter, kein Post-Processing, damit das Bildbudget der übrigen Level unverändert bleibt.
+## Welt und Navigation
 
-Acht **Podeste mit Stangen** verteilen sich um die Tanzfläche und entlang der Flügel. Auf jedem tanzt eine Go-go-Tänzerin: eine Hand an der Stange, Hüfte und Beine auf dem Beat, das Podest dreht sich langsam. An drei Bartheken stehen Personal und Gäste auf Hockern.
+Die Welt umfasst etwa 148 × 176 Meter, Geschosshöhen 4,8 Meter. Start ist auf dem acht Meter hohen BTS-Bahnsteig. Ein über die Strasse laufender Zug bremst, hält, öffnet Türen und fährt wieder ab. Bahnsteig, Gates, Beschilderung, Trasse, Pfeiler und Treppen bilden eine zusammengehörige Station. Eine zusätzliche Rolltreppe verwendet animierte Stufen über einer kontinuierlichen Kollisionsrampe.
 
-![Nana Plaza mit Discofläche und Antwort einer Tänzerin](../screenshots/bangkok-nana-plaza.png)
+Sukhumvit enthält Fahrspuren, Bürgersteige, animierte Taxis/Tuk-Tuks/Busse, modular wiederholte Geschäftshäuser, Hotels, Werbetafeln und Klimageräte. Soi 4 wird schmaler: Markisen, Kabelbündel, Streetfood-Wagen, Roller, Barfronten, ATM/Exchange, Passanten und Leuchtschilder führen zur Plaza. Gebäude und sichtbare Baustellenbegrenzungen schliessen die Welt ab. Verkehr ist eine animierte Kulisse, keine vollständige Verkehrssimulation.
 
-### Anpöbeln und Anflirten
+Die Plaza hat drei wirklich begehbare Ebenen. Beide Seitenflügel und der hintere Flügel besitzen tragende Böden. Der Hof bleibt durch alle Ebenen offen; obere Geländer bestehen aus sichtbaren Pfosten/Handläufen und kollidierenden transparenten Füllungen. Die WG-Technik mit kontinuierlichen Rampen und visuellen Trittstufen verhindert das bekannte Havok-Hängenbleiben an kleinen Stufen. Die 360°-Kamera verwendet weiterhin ihre fünf Hindernisproben. Keine globalen Clipplanes schneiden den Innenhof weg.
 
-| Taste | Wirkung                                                                                         |
-| ----- | ----------------------------------------------------------------------------------------------- |
-| **R** | Wie bisher: alle Figuren im Umkreis von acht Metern erschrecken, +20 Chaos, drei Sekunden Pause |
-| **F** | Neu: das nächste sichtbare Gegenüber innerhalb von fünf Metern bekommt ein Kompliment           |
+## Venues und Interaktionen
 
-**F** wirkt nur auf Tänzerinnen und Barpersonal, nicht auf Gäste, und nur mit freier Sichtlinie: eine Wand oder ein Flügel dazwischen verhindert die Reaktion. Die Antwort erscheint als Sprechblase über der Figur und zusätzlich im HUD. Die Sätze sind englisch mit den thailändischen Satzpartikeln «na» und «ka» — «Hey sexy!», «Handsome man!», «You come sit with me na?». Jede vierte Annäherung fällt freundlich ab («You talk too much, handsome man!»). Jede Figur führt ihre eigene Liste, damit eine Reihe von NPCs nicht im Chor antwortet.
+| Ebene        | Umfang                             | Identität                                                                |
+| ------------ | ---------------------------------- | ------------------------------------------------------------------------ |
+| Ground Floor | 10 Fronten plus 6 offene Hoftheken | Beer-Bars, fiktive Marken, kleine Tische und Hocker                      |
+| Second Floor | 5 vollständig begehbare Bars       | Rot, Violett, Rock, LED und Cabaret                                      |
+| Third Floor  | 4 vollständig begehbare Venues     | Supernova Signature Club, Prism Cabaret, Midnight Orchid, Electric Lotus |
 
-Flirten erzeugt **kein Chaos** und beeinflusst weder Fahndung noch Score. Es ist eine soziale Reaktion, kein Fortschrittssystem. Der HUD-Zähler zeigt nur, wie oft jemand geantwortet hat. Pöbeln bleibt der Weg, Aufmerksamkeit der Polizei zu erzeugen.
+Authoring-Modi sind `facade`, `shallow` und `full`. Geschlossene Fronten besitzen ein sichtbares Rollo. Offene Räume haben eine vier Meter breite Tür, Sitzbänke, Theke, Regal, Kühlschrank, Screens, Spiegeloptik, Lautsprecher und farbige Emissionsflächen. Obere Räume haben Bühnen und Stangen; Supernova ergänzt mehr Bühnenplätze und einen DJ-Bereich. Die Spiegel sind derzeit stilisierte reflektierende Farbflächen, keine zusätzlichen Renderkameras.
 
-### Verfolgung
+- **F:** sichtbare Performer oder Barpersonal im Umkreis von fünf Metern ansprechen/flirten. Durch Wände oder zwischen Geschossen gibt es keine Antworten. Jeder NPC zählt seine Annäherungen separat; jede vierte wird freundlich abgelehnt.
+- **R:** umliegende sichtbare NPCs anpöbeln und Chaos erzeugen.
+- **E:** auf einer freien Sitzbank sitzen oder aufstehen; an einer Theke die Getränkekarte öffnen.
+- Getränkekarte: **F** wählt, **E** kauft, Weggehen schliesst. BEER 150 THB, SHOT 200 THB, WATER 80 THB. Das lokale Startbudget beträgt 1200 THB; keine Kontowährung oder Datenbankbuchung. Käufe geben Energie und eine Trinkpose, Alkohol erhöht den Arcade-Pegel. Kein Geld: „KONTO LEER · WARENKORB VOLL“.
 
-Zwei Guards, 5,8 m/s, sieben Chaos pro Flasche. Der Hof ist eng: Barthekene, Podeste und Flügel brechen Sichtlinien, die Soi-Wände dagegen kanalisieren. Acht Farbtabletten liegen im Hof verteilt.
+Eine E-Eingabe wird nur einmal verarbeitet. Sitzplätze verwenden das vorhandene `Seating` mit validiertem Ausstiegspunkt. Das lokale Getränkebudget wird beim Neustart zurückgesetzt und kann nicht negativ werden.
+
+## NPCs und Tänze
+
+Die Authoring-Daten enthalten 40 Strassenpersonen, 40 Hofgäste und zusätzliche Venue-Besetzungen. Rollen: Bartender, Dancer, Ladyboy Dancer, Security, Tourist, Expat, Street Vendor und Taxi Driver. Alle Performer sind erwachsene Figuren und verwenden dieselben respektvollen sozialen Regeln; Geschlechtsidentität ist kein Witz oder abweichender Spielwert.
+
+Ambient-Verhalten umfasst kurze Lauf-/Querungswege, Gespräch, Getränk-, Rauch-, Telefon- und Heranwink-Posen. Die Wege bleiben absichtlich lokal und werden nicht als allgemeine Fussgänger-Verkehrsplanung ausgegeben. Performer verwenden acht wiederverwendbare Profile: `dance_idle_01/02`, `dance_slow_01/02`, `dance_pole_01/02`, `dance_club_01/02`. Phase und Tempo variieren deterministisch pro Figur.
+
+Höchstens 32 detaillierte Rigs werden nach Nähe zugeteilt und wiederverwendet. Weitere Personen erscheinen in sechs Thin-Instance-Gruppen. Nahe Figuren animieren vollständig, mittlere mit reduzierter Frequenz, entfernte mit wenigen Posen pro Sekunde. Nicht sichtbare nahe Rigs überspringen die Animation. Es gibt keine individuellen NPC-Physikcontroller oder Render-Observer. Interaktionsidentität, Dialogfortschritt und Wurfreaktion bleiben beim Rig-Wechsel erhalten.
+
+`NpcVoices` und `SpeechBubbles` bleiben die gemeinsame Sprachpipeline. Neue englische Rollen- und Situationsdialoge reagieren auf Betrunkenheit und Chaos. Die Sprechblasen verwenden weiterhin den festen Pool. Betriebssystem-Stimmen sind optional; Text funktioniert auch ohne TTS.
+
+## Chaos, Security, Polizei und Ziel
+
+Die 16 Flaschen verteilen sich wie folgt: **2 BTS/Sukhumvit, 4 Soi 4, 4 Ground Floor, 3 Second Floor, 3 Third Floor**. Jede füllt weiterhin Energie und erhöht Chaos um sieben. Die bestehenden acht Arcade-Farbtabletten bleiben im Hof.
+
+| Chaos  | Reaktion                              |
+| ------ | ------------------------------------- |
+| 0–20   | normales Nachtleben                   |
+| 21–40  | Eingangssicherheit beobachtet/warnt   |
+| 41–60  | kurze Security-Verfolgung im Innenhof |
+| 61–80  | Polizei auf der Soi, ein Stern        |
+| 81–100 | verstärkte Verfolgung, zwei Sterne    |
+
+Die Eingangssicherheit nutzt das bestehende NavigationGrid, verfolgt nur kurz im Erdgeschoss-Hof und begleitet einen erwischten Spieler entlang eines Pfads hinaus. Die Begleitung gibt Bewegungsabsichten an den normalen Havok-Motor; sie teleportiert nicht. Danach gilt eine Schonfrist. **Security führt niemals in die Zelle.** Sie ist derzeit kein etagenübergreifender Verfolger.
+
+Polizei bleibt ein Boden-Navigationssystem. Böden, Treppen und obere Wände blockieren ihr Erdgeschossraster nicht. Sicht und Festnahme berücksichtigen die Spielerhöhe: niemand wird durch eine Geschossdecke gesehen oder festgenommen. Die Fahndung kann beim Erkunden höherer Ebenen weiter bestehen. Nach allen 16 Flaschen muss Tobi tatsächlichen Polizeikontakt verlieren und den markierten BTS-Ausgang erreichen. Ein früheres Abhängen erfüllt das nachgeschaltete Fluchtziel nicht.
+
+## Audio und Licht
+
+Audiozonen gehören zu Sukhumvit, BTS, Soi, Hoftheken und einzelnen Bars. Ein Mixer wählt die stärksten vier Quellen, glättet Distanzgewichte und berücksichtigt Höhenunterschiede. Beim Betreten dominiert die jeweilige Bar; im Hof überlagern sich mehrere Rhythmen. Alle Quellen gehen durch den vorhandenen Audio-Masterbus: Pause, Stummschaltung und Dispose gelten weiter.
+
+Verkehr, Hupen, Zuggeräusche, Brems-/Türgeräusche, Stimmenatmosphäre und verschiedene Musikrhythmen sind hier prozedurale Arcade-Sounds. Es werden keine fremden Musikaufnahmen eingebunden. Die bestehende SoundBank für Foley bleibt erhalten. Kein Anspruch auf authentische Ortsaufnahmen oder vollwertige Musikstücke.
+
+Neon und Festoon-Lichter sind emissive Geometrie. Sechs gemeinsame Farbpaletten pulsieren; die Bars erhalten getrennte Farbthemen. Es gibt keine zusätzlichen dynamischen Punktlichter. Beleuchtung und Fassaden sind prozedural; echte Lightmaps sind noch nicht Teil der Asset-Pipeline dieses Levels.
+
+## Architektur und Performance
+
+`packages/game-data/src/nana-plaza/` enthält Weltmasse/Tour, Venue-/Drink-Daten und Bewohner. `nana-plaza.ts` bleibt der öffentliche Export. Das Level-JSON enthält Spawn, Ziel, Pickups und optionale datengetriebene `wantedThresholds`.
+
+`runtime/levels/nana-plaza/` trennt Builder/Atlas, Strassen, BTS, Plaza, Innenräume, Ambient-Details, Population, entfernte Instanzen, Security, Barinteraktionen und Audiozonen. Die alten `nana-plaza-scene.ts` und `nana-venue.ts` bleiben kleine kompatible Einstiegspunkte. `LevelScene` erhielt optionale Interaktion-/Audio-Verträge; andere Levels müssen sie nicht implementieren.
+
+Ein 2048²-Atlas fasst bis zu 128 Schilder zusammen. Props teilen Geometrie und Materialien über Instanzen. Innenraumdetails werden nach Entfernung und Höhe ausgeblendet; Galerien und Schilder bleiben sichtbar, die Physik bleibt aktiv. Das ist Sector-Visibility, **kein** asynchrones Chunk-Streaming. Der gesamte Grundriss bleibt geladen.
+
+Die Content-Version ist `prototype-5-nana`; bei späterem Backend-Deployment müssen Client und Server dieselben Content-Daten verwenden.
+
+Der verifizierte lokale Vollaufbau mit NPC-Pool umfasst etwa 2150 Meshes/Instanzen und 165 Materialien. Die Anzahl ist keine Draw-Call- oder FPS-Messung. 60 FPS bleiben ein Ziel, das auf echten Desktop-Geräten geprüft werden muss; es gibt noch keine allgemeine Leistungsgarantie.
 
 ## Ausnüchterungszelle
 
-**Aufgabe:** keine. Wer festgenommen wird, landet hier, und der einzige verbleibende Fortschritt ist, die Nacht zu beenden.
+Die Zelle (`selectable: false`, World `custody`) bleibt ausschliesslich über Festnahme erreichbar. „AB IN DIE ZELLE“ lädt ihre eigene Session; alternativ ist ein Neustart möglich.
 
-Der «Erwischt»-Dialog führt nicht mehr direkt zum Neustart. Er bietet **AB IN DIE ZELLE** an; der zweite Knopf startet weiterhin sofort einen neuen Versuch. Die Zelle lädt als eigenes Level mit eigener Session.
+Bett, Toilette, Tisch, Gitter, Wärter und das kurze Kameraprofil bleiben bestehen. **R** ruft den Wärter; **E** an der Pritsche beendet die Nacht. Keine Pickups, keine Punkte, kein Abschlussbonus und keine Speicherung eines Zellenaufenthalts. Das Ergebnis führt zurück zum Tutorial-Menü.
 
-![Tobi in Zelle drei, der Wärter im Korridor](../screenshots/ausnuechterungszelle.png)
+## Lokale Prüfung
 
-Die Zelle misst fünf mal sieben Meter: Pritsche in der Südwestecke, Klo mit Spülkasten, Tisch mit Hocker, eine flackernde Deckenlampe, ein vergittertes Fenster und Wandkritzeleien. Die vierte Wand besteht aus neunzehn Gitterstäben zum Korridor. Dahinter sitzt der Wärter auf seinem Posten.
+Keine GitHub-CI. Der Umbauplan liegt in [nana-expansion-plan.md](../development/nana-expansion-plan.md).
 
-- **R** lässt Tobi rumpöbeln — «ICH KENNE KARL!», «DAS IST EIN MISSVERSTÄNDNIS!», «ICH WILL MEINEN ANRUF!». Der Wärter kommt einmal an die Gitter, sagt seinen Satz, wartet und geht zurück. Er reagiert nicht auf die Fahndung; es gibt in diesem Level keine.
-- **E** auf der Pritsche beendet die Nacht und öffnet die Ergebnisansicht.
-- Es gibt keine Flaschen, keine Punkte und keinen Abschlussbonus. `levelSchema.scoring` setzt beides auf null, und die Runde wird bewusst **nicht gespeichert**: ein Zellenaufenthalt ist kein Levelergebnis. Der Ergebnisdialog endet mit **ZURÜCK AN DEN ANFANG**.
+- Unit: Flaschenverteilung, Venue-Zahlen, NPC-Rollen, Dialogkonsistenz, Dispatch-Schwellen, Höhen-Sichtschutz und unveränderte Zellen-Eigenschaften.
+- Browser-Harness `test/nana-harness.ts`: tatsächliche Havok-Bewegung vom Bahnsteig durch die Soi über beide Treppen, alle neun oberen Venue-Eingänge, Flirt und Getränkekarte.
+- Menü-E2E: neuer Stationsweg mit normalen Tasten, Flirt/Kauf/Pöbeln; die vorhandenen Festnahme-/Zellen-Tests verwenden den neuen Weg. Keine Tests wurden entfernt.
+- `playwright.nana-local.config.ts` ist ausschliesslich ein manuell aufrufbarer lokaler Test gegen laufende Server (Client-Preview 4175, physischer Harness 5173). Es startet keine CI und keine Datenbank.
 
-Die Zellenkamera ist ein eigenes Rig-Profil (3,2 Meter Abstand, flacher Winkel), weil das Innenraumprofil der WG in einem Raum dieser Grösse an die Decke stösst. Wände, Decke und Gitter sind vollwertige Kamerahindernisse, so dass die Kamera im Raum bleibt.
+### Prüfstand dieses Ausbaus
 
-## Module und Nachweise
+Client-Typecheck/Produktionsbuild und gezieltes ESLint: bestanden. 22 fokussierte Unit-Tests: bestanden. Lokale Browserfälle: vollständige Havok-Route inklusive Kamera, alle Flaschen und Abschluss; Menü/Flirt/Kauf/Pöbeln; Festnahme/Neustart; Festnahme/Zelle/Wärter/Pritsche. Die Tests laufen bewusst manuell; keine Workflow-Datei wurde wieder aktiviert. Ausgelassene Gesamt-Suites gelten nicht als bestanden.
 
-- `contracts/content`: `nana-plaza`- und `drunk-tank`-Kulissen, World `custody`, `selectable` und der optionale `scoring`-Override. `pickups` darf jetzt leer sein.
-- `contracts/input`: `flirtPressed` als achte geräteunabhängige Aktion.
-- `game-core/character/npc-speech`: sämtliche Sprechtexte und ein deterministischer, nicht wiederholender Zeilenwähler. Enginefrei und testbar.
-- `game-data/nana-plaza.ts`: Hof, Flügel, Podeste, Theken und Hochhäuser als Autorendaten.
-- `runtime/levels/nana-plaza-scene.ts`, `nana-venue.ts`, `cell-scene.ts`, `cell-guard.ts`: Kulissen und Besetzungen.
-- `runtime/levels/level-npcs.ts`: ein gemeinsamer Vertrag für alle nicht-polizeilichen Besetzungen — Wurfziele, Blockieren, Pöbeln, Flirten und gesprochene Zeilen. Die Polizei bleibt bewusst aussen vor.
-- `runtime/levels/speech-bubbles.ts`: fester Pool billboardfreier Sprechblasen, per Yaw zur Kamera gedreht.
-- E2E prüft Levelwahl, Energie-Auffüllung, eine beantwortete Annäherung und steigendes Chaos nach dem Pöbeln. Der Flucht-E2E-Test läuft bis zur Festnahme, in die Zelle, durch das Pöbeln bis zur Wärterreaktion und über die Pritsche zurück ins Menü.
-
-Beide Level sind Prototypen: keine Bardialoge mit Auswahl, keine Getränkebestellung, keine Zellenzeit, kein Anwalt. Die Figuren haben keine eigenen Physikkörper; Theken, Podeste und Wände begrenzen den Raum.
+![Aktuelle Plaza-Vorschau](../../apps/game-client/src/assets/level-previews/bangkok_nana_plaza.webp)
