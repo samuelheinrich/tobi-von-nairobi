@@ -1,16 +1,5 @@
 [
   {
-    "file": "bargirl-sitting-game.glb",
-    "source": "bargirl-sitting.glb",
-    "megabytes": 1.06,
-    "triangles": 25000,
-    "sourceTriangles": 99999,
-    "joints": 0,
-    "animations": [],
-    "author": "Fadly.W",
-    "licence": "CC-BY-4.0"
-  },
-  {
     "file": "chris-v1-dynamic-game.glb",
     "source": "chris-v1-dynamic.glb",
     "megabytes": 1.81,
@@ -35,120 +24,6 @@
     ],
     "author": null,
     "licence": null
-  },
-  {
-    "file": "female-sporty1-game.glb",
-    "source": "female-sporty1.glb",
-    "megabytes": 1.56,
-    "triangles": 24996,
-    "sourceTriangles": 1970634,
-    "joints": 0,
-    "animations": [],
-    "author": "SYMXY_",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "girl_sexy-game.glb",
-    "source": "girl_sexy.glb",
-    "megabytes": 0.77,
-    "triangles": 25000,
-    "sourceTriangles": 1499876,
-    "joints": 0,
-    "animations": [],
-    "author": "tr.onurdk1",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "hippie_female-game.glb",
-    "source": "hippie_female.glb",
-    "megabytes": 1.23,
-    "triangles": 9991,
-    "sourceTriangles": 9991,
-    "joints": 0,
-    "animations": [],
-    "author": "huvava9992",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "hippie_zombie-game.glb",
-    "source": "hippie_zombie.glb",
-    "megabytes": 1.18,
-    "triangles": 9964,
-    "sourceTriangles": 9964,
-    "joints": 0,
-    "animations": [],
-    "author": "maicollgdalpiaz",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "kayla-dancer-game.glb",
-    "source": "kayla-dancer.glb",
-    "megabytes": 1.46,
-    "triangles": 30000,
-    "sourceTriangles": 187707,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "locker_room_glamour-dancer-game.glb",
-    "source": "locker_room_glamour-dancer.glb",
-    "megabytes": 2.11,
-    "triangles": 32812,
-    "sourceTriangles": 294270,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "nina-dancer-game.glb",
-    "source": "nina-dancer.glb",
-    "megabytes": 3.54,
-    "triangles": 42799,
-    "sourceTriangles": 465635,
-    "joints": 65,
-    "animations": [
-      "dance",
-      "idle",
-      "walk"
-    ],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "pink_halter_dress_portrait-bar-girl-game.glb",
-    "source": "pink_halter_dress_portrait-bar-girl.glb",
-    "megabytes": 1.12,
-    "triangles": 25000,
-    "sourceTriangles": 262468,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "police-game.glb",
-    "source": "police.glb",
-    "megabytes": 0.26,
-    "triangles": 7814,
-    "sourceTriangles": 7814,
-    "joints": 0,
-    "animations": [],
-    "author": "Tech developers",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "realistic_girl_in_dress-game.glb",
-    "source": "realistic_girl_in_dress.glb",
-    "megabytes": 1.41,
-    "triangles": 24996,
-    "sourceTriangles": 511796,
-    "joints": 0,
-    "animations": [],
-    "author": "120320",
-    "licence": "CC-BY-4.0"
   },
   {
     "file": "redhead_party_dress_girl-game.glb",
@@ -188,14 +63,16 @@
     "licence": "CC-BY-4.0"
   },
   {
-    "file": "sexy_nurse_002-game.glb",
-    "source": "sexy_nurse_002.glb",
-    "megabytes": 1.75,
-    "triangles": 24999,
-    "sourceTriangles": 749370,
-    "joints": 0,
-    "animations": [],
-    "author": "SinfulBrain",
+    "file": "skellet-rigged/18+/beautiful_realistic_undressed_girls_-_14_anims-game.glb",
+    "source": "skellet-rigged/18+/beautiful_realistic_undressed_girls_-_14_anims.glb",
+    "megabytes": 14.01,
+    "triangles": 47836,
+    "sourceTriangles": 429075,
+    "joints": 990,
+    "animations": [
+      "Animation"
+    ],
+    "author": "Polygonal Studios",
     "licence": "CC-BY-4.0"
   },
   {
@@ -231,6 +108,76 @@
     "joints": 66,
     "animations": [],
     "author": "Veterock",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/bar/realistic_female-game.glb",
+    "source": "skellet-rigged/bar/realistic_female.glb",
+    "megabytes": 29.94,
+    "triangles": 25574,
+    "sourceTriangles": 82137,
+    "joints": 102,
+    "animations": [
+      "FBXExportClip_0"
+    ],
+    "author": "Biviyt",
+    "licence": "CC-BY-SA-4.0"
+  },
+  {
+    "file": "skellet-rigged/beach/angela_white-game.glb",
+    "source": "skellet-rigged/beach/angela_white.glb",
+    "megabytes": 6.14,
+    "triangles": 45191,
+    "sourceTriangles": 98346,
+    "joints": 140,
+    "animations": [],
+    "author": "kynetic",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/beach/chanel_preston-game.glb",
+    "source": "skellet-rigged/beach/chanel_preston.glb",
+    "megabytes": 4.48,
+    "triangles": 45190,
+    "sourceTriangles": 98346,
+    "joints": 140,
+    "animations": [],
+    "author": "kynetic",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/beach/cheyenne_hunter-game.glb",
+    "source": "skellet-rigged/beach/cheyenne_hunter.glb",
+    "megabytes": 6.09,
+    "triangles": 44573,
+    "sourceTriangles": 104376,
+    "joints": 102,
+    "animations": [
+      "TPose"
+    ],
+    "author": "kynetic",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/beach/samantha_rone-game.glb",
+    "source": "skellet-rigged/beach/samantha_rone.glb",
+    "megabytes": 6.14,
+    "triangles": 45108,
+    "sourceTriangles": 98240,
+    "joints": 140,
+    "animations": [],
+    "author": "kynetic",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/beach/tomi_lahren-game.glb",
+    "source": "skellet-rigged/beach/tomi_lahren.glb",
+    "megabytes": 6.42,
+    "triangles": 46488,
+    "sourceTriangles": 99936,
+    "joints": 140,
+    "animations": [],
+    "author": "kynetic",
     "licence": "CC-BY-4.0"
   },
   {
@@ -272,6 +219,32 @@
       "Animation"
     ],
     "author": "ustoopia",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/character_male_sci-fi-game.glb",
+    "source": "skellet-rigged/party/character_male_sci-fi.glb",
+    "megabytes": 1.7,
+    "triangles": 17075,
+    "sourceTriangles": 17075,
+    "joints": 68,
+    "animations": [],
+    "author": "LokitoBlu",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/cyberpunk_girl-game.glb",
+    "source": "skellet-rigged/party/cyberpunk_girl.glb",
+    "megabytes": 2.46,
+    "triangles": 25012,
+    "sourceTriangles": 42986,
+    "joints": 148,
+    "animations": [
+      "Static",
+      "Walk",
+      "TPose"
+    ],
+    "author": "Toni García Vilche",
     "licence": "CC-BY-4.0"
   },
   {
@@ -325,6 +298,17 @@
     "licence": "CC-BY-4.0"
   },
   {
+    "file": "skellet-rigged/sport/rosie_free_rigged_3d_model_for_blender-game.glb",
+    "source": "skellet-rigged/sport/rosie_free_rigged_3d_model_for_blender.glb",
+    "megabytes": 1.12,
+    "triangles": 24994,
+    "sourceTriangles": 40140,
+    "joints": 138,
+    "animations": [],
+    "author": "Angelmaker",
+    "licence": "CC-BY-4.0"
+  },
+  {
     "file": "skellet-rigged/valery_tpose_blender_rigged_woman-game.glb",
     "source": "skellet-rigged/valery_tpose_blender_rigged_woman.glb",
     "megabytes": 2.56,
@@ -375,28 +359,6 @@
     "licence": null
   },
   {
-    "file": "tpose/18+/bdsm_naked_women_milf_t-pose-game.glb",
-    "source": "tpose/18+/bdsm_naked_women_milf_t-pose.glb",
-    "megabytes": 1.29,
-    "triangles": 24999,
-    "sourceTriangles": 134686,
-    "joints": 0,
-    "animations": [],
-    "author": "3dUVpro",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/18+/female_nude_3d_model_in_t_pose-game.glb",
-    "source": "tpose/18+/female_nude_3d_model_in_t_pose.glb",
-    "megabytes": 1.8,
-    "triangles": 24934,
-    "sourceTriangles": 190746,
-    "joints": 0,
-    "animations": [],
-    "author": "EdgeloopStudio",
-    "licence": "CC-BY-4.0"
-  },
-  {
     "file": "tpose/18+/nude_woman_hip_hop_dancing-game.glb",
     "source": "tpose/18+/nude_woman_hip_hop_dancing.glb",
     "megabytes": 1.24,
@@ -407,50 +369,6 @@
       "mixamo.com"
     ],
     "author": "dogankaynak01",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/18+/sexy_girl_dancing-game.glb",
-    "source": "tpose/18+/sexy_girl_dancing.glb",
-    "megabytes": 1.01,
-    "triangles": 25553,
-    "sourceTriangles": 44097,
-    "joints": 0,
-    "animations": [],
-    "author": "AJScyle",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/basic_model_of_a_female_character__t-pose_asset-beach-game.glb",
-    "source": "tpose/basic_model_of_a_female_character__t-pose_asset-beach.glb",
-    "megabytes": 0.73,
-    "triangles": 25000,
-    "sourceTriangles": 436982,
-    "joints": 0,
-    "animations": [],
-    "author": "GR-video",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/beige_athleisure_silhouette-woman-sport-game.glb",
-    "source": "tpose/beige_athleisure_silhouette-woman-sport.glb",
-    "megabytes": 2.93,
-    "triangles": 45777,
-    "sourceTriangles": 321358,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/elegance_in_leather-woman-game.glb",
-    "source": "tpose/elegance_in_leather-woman.glb",
-    "megabytes": 1.84,
-    "triangles": 29187,
-    "sourceTriangles": 286066,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
     "licence": "CC-BY-4.0"
   },
   {
@@ -465,28 +383,6 @@
     "licence": "CC-BY-4.0"
   },
   {
-    "file": "tpose/japanese_woman_t-pose-game.glb",
-    "source": "tpose/japanese_woman_t-pose.glb",
-    "megabytes": 1.5,
-    "triangles": 25000,
-    "sourceTriangles": 117720,
-    "joints": 0,
-    "animations": [],
-    "author": "3dUVpro",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/open_arms_in_the_park-jeans-woman-game.glb",
-    "source": "tpose/open_arms_in_the_park-jeans-woman.glb",
-    "megabytes": 1.63,
-    "triangles": 25323,
-    "sourceTriangles": 234847,
-    "joints": 0,
-    "animations": [],
-    "author": "Zizian1987",
-    "licence": "CC-BY-4.0"
-  },
-  {
     "file": "tpose/rigged_t-pose_human_male_w_50_face_blendshapes-game.glb",
     "source": "tpose/rigged_t-pose_human_male_w_50_face_blendshapes.glb",
     "megabytes": 1.08,
@@ -498,59 +394,11 @@
     "licence": "CC-BY-4.0"
   },
   {
-    "file": "tpose/young_woman._t-posed-game.glb",
-    "source": "tpose/young_woman._t-posed.glb",
-    "megabytes": 1.24,
-    "triangles": 25390,
-    "sourceTriangles": 149575,
-    "joints": 0,
-    "animations": [],
-    "author": "jmarco2000",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "work/gabber-fix/sjonnie-game.glb",
-    "source": "work/gabber-fix/sjonnie.glb",
-    "megabytes": 1.56,
-    "triangles": 19821,
-    "sourceTriangles": 19821,
-    "joints": 53,
-    "animations": [
-      "GLTF_created_0|GLTF_created_0|Animation"
-    ],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/gabber-split/anita/anita-01-game.glb",
-    "source": "work/gabber-split/anita/anita-01.glb",
-    "megabytes": 2.12,
-    "triangles": 39863,
-    "sourceTriangles": 39863,
-    "joints": 53,
-    "animations": [
-      "Animation"
-    ],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/gabber-split/dutch/dutch-01-game.glb",
-    "source": "work/gabber-split/dutch/dutch-01.glb",
-    "megabytes": 1.27,
-    "triangles": 20372,
-    "sourceTriangles": 20372,
-    "joints": 66,
-    "animations": [],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/gabber-split/female/female-01-game.glb",
-    "source": "work/gabber-split/female/female-01.glb",
-    "megabytes": 1.53,
-    "triangles": 24800,
-    "sourceTriangles": 24800,
+    "file": "work/girls/girl-01-game.glb",
+    "source": "work/girls/girl-01.glb",
+    "megabytes": 1.44,
+    "triangles": 28605,
+    "sourceTriangles": 28605,
     "joints": 66,
     "animations": [
       "Animation"
@@ -559,149 +407,59 @@
     "licence": null
   },
   {
-    "file": "work/gabber-split/sjonnie/sjonnie-01-game.glb",
-    "source": "work/gabber-split/sjonnie/sjonnie-01.glb",
-    "megabytes": 1.58,
-    "triangles": 19821,
-    "sourceTriangles": 19821,
-    "joints": 53,
+    "file": "work/tobi-clips/chicken-dance-game.glb",
+    "source": "work/tobi-clips/chicken-dance.glb",
+    "megabytes": 2.08,
+    "triangles": 20456,
+    "sourceTriangles": 20456,
+    "joints": 52,
     "animations": [
-      "Animation"
-    ],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/quaternius/man-buzzed-dark-game.glb",
-    "source": "work/quaternius/man-buzzed-dark.glb",
-    "megabytes": 1.05,
-    "triangles": 16132,
-    "sourceTriangles": 16132,
-    "joints": 65,
-    "animations": [],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/quaternius/man-parted-beard-game.glb",
-    "source": "work/quaternius/man-parted-beard.glb",
-    "megabytes": 1.1,
-    "triangles": 17637,
-    "sourceTriangles": 17637,
-    "joints": 65,
-    "animations": [],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/quaternius/woman-buns-dark-game.glb",
-    "source": "work/quaternius/woman-buns-dark.glb",
-    "megabytes": 1.14,
-    "triangles": 18344,
-    "sourceTriangles": 18344,
-    "joints": 65,
-    "animations": [],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/quaternius/woman-long-light-game.glb",
-    "source": "work/quaternius/woman-long-light.glb",
-    "megabytes": 1.11,
-    "triangles": 17966,
-    "sourceTriangles": 17966,
-    "joints": 65,
-    "animations": [],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/rigged/belly-dance-game.glb",
-    "source": "work/rigged/belly-dance.glb",
-    "megabytes": 1.64,
-    "triangles": 25127,
-    "sourceTriangles": 436982,
-    "joints": 33,
-    "animations": [
+      "Armature|Armature|IdleV4.2(maya_head)",
       "Armature|mixamo.com|Layer0"
     ],
     "author": null,
     "licence": null
   },
   {
-    "file": "work/rigged/naked-dancer-with-slip-game.glb",
-    "source": "work/rigged/naked-dancer-with-slip.glb",
-    "megabytes": 1.62,
-    "triangles": 25553,
-    "sourceTriangles": 25553,
-    "joints": 33,
+    "file": "work/tobi-clips/fight-dance-game.glb",
+    "source": "work/tobi-clips/fight-dance.glb",
+    "megabytes": 2.02,
+    "triangles": 20456,
+    "sourceTriangles": 20456,
+    "joints": 52,
     "animations": [
+      "Armature|Armature|IdleV4.2(maya_head)",
       "Armature|mixamo.com|Layer0"
     ],
     "author": null,
     "licence": null
   },
   {
-    "file": "work/rigged/naked-dancer-game.glb",
-    "source": "work/rigged/naked-dancer.glb",
-    "megabytes": 2.25,
-    "triangles": 25898,
-    "sourceTriangles": 190746,
-    "joints": 65,
+    "file": "work/tobi-clips/pickup-bottle-game.glb",
+    "source": "work/tobi-clips/pickup-bottle.glb",
+    "megabytes": 2.08,
+    "triangles": 20456,
+    "sourceTriangles": 20456,
+    "joints": 52,
     "animations": [
+      "Armature|Armature|IdleV4.2(maya_head)",
       "Armature|mixamo.com|Layer0"
     ],
     "author": null,
     "licence": null
   },
   {
-    "file": "work/rigged/tut-hip-hop-dance-game.glb",
-    "source": "work/rigged/tut-hip-hop-dance.glb",
-    "megabytes": 1.6,
-    "triangles": 25127,
-    "sourceTriangles": 436982,
-    "joints": 33,
+    "file": "work/tobi-clips/throw-bottle-game.glb",
+    "source": "work/tobi-clips/throw-bottle.glb",
+    "megabytes": 2.03,
+    "triangles": 20456,
+    "sourceTriangles": 20456,
+    "joints": 52,
     "animations": [
+      "Armature|Armature|IdleV4.2(maya_head)",
       "Armature|mixamo.com|Layer0"
     ],
     "author": null,
     "licence": null
-  },
-  {
-    "file": "work/rigged/wave-hip-hop-dance-game.glb",
-    "source": "work/rigged/wave-hip-hop-dance.glb",
-    "megabytes": 1.59,
-    "triangles": 25127,
-    "sourceTriangles": 436982,
-    "joints": 33,
-    "animations": [
-      "Armature|mixamo.com|Layer0"
-    ],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "work/rigged/woman-dance1-game.glb",
-    "source": "work/rigged/woman-dance1.glb",
-    "megabytes": 1.57,
-    "triangles": 25127,
-    "sourceTriangles": 436982,
-    "joints": 33,
-    "animations": [
-      "Armature|mixamo.com|Layer0"
-    ],
-    "author": null,
-    "licence": null
-  },
-  {
-    "file": "yoga-girl-naked-sitting-game.glb",
-    "source": "yoga-girl-naked-sitting.glb",
-    "megabytes": 1.69,
-    "triangles": 25000,
-    "sourceTriangles": 831198,
-    "joints": 0,
-    "animations": [],
-    "author": "XRProfXR",
-    "licence": "CC-BY-4.0"
   }
 ]

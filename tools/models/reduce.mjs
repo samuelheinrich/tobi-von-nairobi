@@ -80,8 +80,10 @@ function walk(dir = '') {
   const out = [];
   for (const entry of readdirSync(join(MODELS, dir), { withFileTypes: true })) {
     const rel = dir ? `${dir}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) out.push(...walk(rel));
-    else if (entry.name.endsWith('.glb') && !entry.name.endsWith(SUFFIX)) out.push(rel);
+    // `unused/` is the parking bay tidy.mjs moves things to; it is not part of the stock.
+    if (entry.isDirectory()) {
+      if (entry.name !== 'unused') out.push(...walk(rel));
+    } else if (entry.name.endsWith('.glb') && !entry.name.endsWith(SUFFIX)) out.push(rel);
   }
   return out.sort();
 }
