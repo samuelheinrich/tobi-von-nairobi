@@ -89,3 +89,12 @@ Jeder Eintrag nennt die Änderung, den fehlenden Test, den Aufwand und das konkr
 - **Risiko solange offen:** Die Vorschau hängt einen Konstruktoraufruf in die Nana-Bevölkerung. Er kehrt ohne Parameter sofort zurück, aber ein Fehler dort träfe ein Produktionslevel. Die Dauer-Unsichtbarkeit der prozeduralen Körper läuft über einen `onBeforeRenderObservable` und ist nur für die Vorschau gedacht.
 - **Geprüft wurde:** Typecheck, ESLint, Prettier, lokaler Build mit Bundle-Messung (1,64 → 1,95 MiB gzip, kein Preload der glTF-Chunks), Laden aller Dateien im Modell-Studio inklusive Sams Idle-Animation, sowie ersetzte NPCs im laufenden Nana-Level unter Software-WebGL.
 - **Commit:** siehe Commit dieser Änderung.
+
+### Nina-Game-Version: Engine- und Hardwareprüfung
+
+- **Betrifft:** `models/nina-dancer-game.glb` aus dem [Workflow-Test](nina-dancer-optimierung.md).
+- **Fehlender Test:** Laden und Abspielen der drei Clips in Babylon statt nur in Blender; Framezeit auf echter GPU mit mehreren Kopien; Prüfung, ob die Distanzgewichtung beim Blenden zwischen Clips sichtbar zuckt.
+- **Aufwand:** S, sobald die Datei über `?glb=nina-dancer-game` im Spiel landet.
+- **Risiko solange offen:** Die Gewichte stammen aus einem Fallback, nicht aus Bone-Heat. Sichtbare Deformationsfehler (Strumpfgürtel an der Hüfte, Bikini beim Rumpfdrehen) sind dokumentiert, aber nicht in Bewegung im Spiel beurteilt.
+- **Geprüft wurde:** Reimport der exportierten GLB in Blender (42'799 Dreiecke, 65 Bones, 65 Vertexgruppen, drei Clips), gemessener Vertexversatz je Clip, Sichtkontrolle in zwölf gerenderten Posen.
+- **Commit:** siehe Commit dieser Änderung.
