@@ -38,7 +38,7 @@ export function Hud({ view }: { view: GameView }) {
                   : level.scenery === 'railway'
                     ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
                     : level.scenery === 'nana-plaza'
-                      ? 'Jede Flasche füllt die Energie. F: anflirten, R: anpöbeln.'
+                      ? 'BTS → Soi 4 → Plaza. Treppen hinten im Hof. E: Bar / Sitz, F: flirten, R: pöbeln. Danach zurück zum BTS.'
                       : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
                 : view.pursuit && !view.canCheckIn
                   ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
@@ -88,13 +88,15 @@ export function Hud({ view }: { view: GameView }) {
         {view.interaction && <span data-testid="seat-interaction">{view.interaction}</span>}
         {view.interiorFloor !== null && (
           <strong data-testid="interior-floor">
-            {view.cabin
-              ? view.interiorFloor === 0
-                ? 'A380 · HAUPTDECK · ECONOMY'
-                : 'A380 · OBERDECK · BUSINESS'
-              : view.interiorFloor === 0
-                ? 'ERDGESCHOSS · AUSGANG IM SÜDEN'
-                : `${view.interiorFloor}. OBERGESCHOSS · 6 ZIMMER`}
+            {level.scenery === 'nana-plaza'
+              ? `NANA PLAZA · FLOOR ${view.interiorFloor + 1} · TREPPEN HINTEN`
+              : view.cabin
+                ? view.interiorFloor === 0
+                  ? 'A380 · HAUPTDECK · ECONOMY'
+                  : 'A380 · OBERDECK · BUSINESS'
+                : view.interiorFloor === 0
+                  ? 'ERDGESCHOSS · AUSGANG IM SÜDEN'
+                  : `${view.interiorFloor}. OBERGESCHOSS · 6 ZIMMER`}
           </strong>
         )}
         <strong data-testid="bottle-hand">

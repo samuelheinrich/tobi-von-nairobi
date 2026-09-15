@@ -18,6 +18,8 @@ export interface LevelNpcs {
   readonly targets: readonly BottleTarget[];
   /** True while an NPC is physically standing in Tobi's path. */
   readonly blocked: boolean;
+  context?(chaos: number, mood?: number): void;
+  movement?(player: Position3): { x: number; z: number } | null;
   update(delta: number, player: Position3): void;
   /** Returns how many NPCs reacted to being shouted at. */
   taunt(position: Position3): number;
@@ -32,6 +34,13 @@ export interface LevelNpcs {
 
 /** Which foley carries which kind of line. Friendly chatter chirps, complaints grumble. */
 const cues: Record<SpeechTopic, SoundCue> = {
+  nanaSecurity: 'grumble',
+  nanaBartender: 'flirt',
+  nanaTourist: 'flirt',
+  nanaExpat: 'flirt',
+  nanaVendor: 'flirt',
+  nanaTaxi: 'flirt',
+  nanaDrunk: 'grumble',
   tobiTaunt: 'provoke',
   tobiCellTaunt: 'provoke',
   tobiFlightTaunt: 'provoke',

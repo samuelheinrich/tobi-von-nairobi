@@ -23,12 +23,75 @@ export type SpeechTopic =
   | 'greeting'
   | 'greetingBar'
   | 'greetingYoga'
-  | 'greetingTrain';
+  | 'greetingTrain'
+  | 'nanaSecurity'
+  | 'nanaBartender'
+  | 'nanaTourist'
+  | 'nanaExpat'
+  | 'nanaVendor'
+  | 'nanaTaxi'
+  | 'nanaDrunk';
 
 /** Bar-girl English keeps the affectionate Thai sentence particles «na» and «ka».
  * German lines are de-CH: «ss» instead of «ß», and the guillemets the rest of the UI uses.
  */
 const lines: Record<SpeechTopic, readonly string[]> = {
+  nanaSecurity: [
+    'Please keep the entrance clear.',
+    'Easy, sir. People are working here.',
+    'No throwing bottles. Last warning.',
+    'Calm down or we walk you outside.',
+    'The exit is behind you, sir.',
+    'One warning is enough, please.',
+  ],
+  nanaBartender: [
+    'Beer, shot or water?',
+    'Water might be a good idea.',
+    'The menu is at the counter.',
+    'Your friend Karl left no deposit.',
+    'Cold drinks, warm welcome.',
+    'Take your time with the menu.',
+  ],
+  nanaTourist: [
+    'Is the Skytrain still running?',
+    'We already walked past this bar.',
+    'What a night!',
+    'I only came here for noodles.',
+    'Have you seen my friends?',
+    'We need a photo of those lights.',
+  ],
+  nanaExpat: [
+    'The stairs are at the back.',
+    'A quiet drink. That was the plan.',
+    'Soi 4 never sleeps.',
+    'Try the upstairs show.',
+    'Keep your receipt.',
+    'Same street, a different night.',
+  ],
+  nanaVendor: [
+    'Fresh noodles, still hot!',
+    'Hungry? You look hungry.',
+    'Careful, hot wok!',
+    'Food first, another drink later.',
+    'Fresh mango over here!',
+    'Mind the cart, please.',
+  ],
+  nanaTaxi: [
+    'Taxi? Meter on.',
+    'Where are you going?',
+    'No, Abu Dhabi is not nearby.',
+    'I can wait, take your time.',
+    'Hotel or station?',
+    'Traffic is moving slowly tonight.',
+  ],
+  nanaDrunk: [
+    'Have some water, friend.',
+    'The floor is perfectly straight.',
+    'Take a seat for a minute.',
+    'Your dancing needs a rest.',
+    'Perhaps skip the next shot.',
+    'Your taxi is that way.',
+  ],
   /** Tobi shouting at anyone within earshot. The joke is that he is certain this helps. */
   tobiTaunt: [
     '«ICH KENNE KARL!»',
@@ -377,6 +440,13 @@ const lines: Record<SpeechTopic, readonly string[]> = {
  * instead of reading «Handsome man!» with a German one.
  */
 const ENGLISH: ReadonlySet<SpeechTopic> = new Set<SpeechTopic>([
+  'nanaSecurity',
+  'nanaBartender',
+  'nanaTourist',
+  'nanaExpat',
+  'nanaVendor',
+  'nanaTaxi',
+  'nanaDrunk',
   'flirt',
   'flirtRejected',
   'bargirlTaunt',

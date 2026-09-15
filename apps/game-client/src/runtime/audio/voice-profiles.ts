@@ -73,6 +73,13 @@ const POLICE: VoiceProfile = {
 };
 
 const profiles: Record<SpeechTopic, VoiceProfile> = {
+  nanaSecurity: { prefer: ['Daniel'], pitch: 0.9, rate: 1, volume: 0.8 },
+  nanaBartender: { prefer: ['Samantha', 'Karen'], pitch: 1, rate: 1, volume: 0.7, spread: true },
+  nanaTourist: { prefer: ['Daniel', 'Samantha'], pitch: 1, rate: 1, volume: 0.7, spread: true },
+  nanaExpat: { prefer: ['Daniel', 'Karen'], pitch: 0.95, rate: 1, volume: 0.7, spread: true },
+  nanaVendor: { prefer: ['Samantha', 'Daniel'], pitch: 1, rate: 1, volume: 0.7, spread: true },
+  nanaTaxi: { prefer: ['Daniel', 'Karen'], pitch: 1, rate: 1, volume: 0.7, spread: true },
+  nanaDrunk: { prefer: ['Samantha', 'Daniel'], pitch: 1, rate: 1, volume: 0.7, spread: true },
   tobiTaunt: TOBI,
   tobiCellTaunt: { ...TOBI, rate: 1.1 },
   tobiFlightTaunt: { ...TOBI, pitch: 0.72, rate: 1.05, volume: 0.85 },

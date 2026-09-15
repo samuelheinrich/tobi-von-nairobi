@@ -1,3 +1,5 @@
+import { outwardArmAngle } from '../character/modular/arm-pose.js';
+import { animateCharacter } from '../character/modular/animation.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { Position3 } from '@tobi/contracts';
@@ -18,9 +20,17 @@ export class LocalBystanders implements LevelNpcs {
     private readonly bubbles: SpeechBubbles,
     positions: readonly (readonly [number, number])[],
     private readonly line: string,
+    beachZone = false,
   ) {
     this.people = positions.map(([x, z], i) => {
-      const rig = createNpc(scene, `local-${i}`, npcPalette(scene, i), shadows);
+      const rig = createNpc(
+        scene,
+        `local-${i}`,
+        npcPalette(scene, i),
+        shadows,
+        false,
+        beachZone && z < -25 ? 'beach_guest' : 'local',
+      );
       rig.root.position.set(x, 0, z);
       return { rig, startled: 0 };
     });
@@ -51,9 +61,13 @@ export class LocalBystanders implements LevelNpcs {
     this.time += delta;
     for (const p of this.people) {
       p.startled = Math.max(0, p.startled - delta);
+      if (p.rig.appearance.femaleStyle && !p.startled) {
+        animateCharacter(p.rig, 'idle', this.time, p.rig.appearance.seed);
+        continue;
+      }
       p.rig.head.rotation.z = Math.sin(this.time * 2) * 0.04;
       p.rig.arms.forEach(
-        (arm, i) => (arm.rotation.z = (i ? -1 : 1) * (p.startled > 0 ? 1.1 : 0.1)),
+        (arm, i) => (arm.rotation.z = outwardArmAngle(i, p.startled > 0 ? 1.1 : 0.1)),
       );
     }
   }

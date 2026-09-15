@@ -3,42 +3,42 @@
   "id": "bangkok_nana_plaza",
   "worldId": "bangkok",
   "title": "Bangkok Nana Plaza",
-  "subtitle": "Drei Stockwerke Neon, acht Stangen und sehr viele Komplimente.",
+  "subtitle": "Vom Skytrain durch Soi 4: drei Etagen Neon und ein langer Heimweg.",
   "atmosphere": "night",
   "scenery": "nana-plaza",
   "maxWanted": 2,
   "chaosPerBottle": 7,
   "policeSpeed": 5.8,
   "spawn": {
-    "x": 0.0,
-    "y": 1.5,
-    "z": -20.0
+    "x": 15,
+    "y": 9.5,
+    "z": -49
   },
   "destination": {
     "id": "soi_four_exit",
     "position": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": -25.0
+      "x": 59,
+      "y": 0,
+      "z": -49
     },
     "radius": 3.0
   },
   "navigationBounds": {
-    "minX": -20,
-    "maxX": 20,
-    "minZ": -27,
-    "maxZ": 22
+    "minX": -74,
+    "maxX": 74,
+    "minZ": -90,
+    "maxZ": 86
   },
   "policeSpawns": [
     {
-      "x": -11.0,
-      "y": 0.0,
-      "z": 16.0
+      "x": 4,
+      "y": 0,
+      "z": -32
     },
     {
-      "x": 11.0,
-      "y": 0.0,
-      "z": -11.0
+      "x": -4,
+      "y": 0,
+      "z": -12
     }
   ],
   "pickups": [
@@ -46,144 +46,144 @@
       "id": "bangkok_nana_plaza_bottle_01",
       "itemId": "bottle",
       "position": {
-        "x": -8.0,
-        "y": 0.0,
-        "z": -12.0
+        "x": 24,
+        "y": 8,
+        "z": -49
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_02",
       "itemId": "bottle",
       "position": {
-        "x": 8.0,
-        "y": 0.0,
-        "z": -12.0
+        "x": 56,
+        "y": 0,
+        "z": -49
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_03",
       "itemId": "bottle",
       "position": {
-        "x": -11.5,
-        "y": 0.0,
-        "z": -6.0
+        "x": -4,
+        "y": 0,
+        "z": -40
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_04",
       "itemId": "bottle",
       "position": {
-        "x": 11.5,
-        "y": 0.0,
-        "z": -6.0
+        "x": 4,
+        "y": 0,
+        "z": -30
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_05",
       "itemId": "bottle",
       "position": {
-        "x": -6.0,
-        "y": 0.0,
-        "z": -2.0
+        "x": -4,
+        "y": 0,
+        "z": -20
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_06",
       "itemId": "bottle",
       "position": {
-        "x": 6.0,
-        "y": 0.0,
-        "z": -2.0
+        "x": 4,
+        "y": 0,
+        "z": -10
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_07",
       "itemId": "bottle",
       "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": -6.0
+        "x": -10,
+        "y": 0,
+        "z": 12
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_08",
       "itemId": "bottle",
       "position": {
-        "x": -11.5,
-        "y": 0.0,
-        "z": 4.0
+        "x": 10,
+        "y": 0,
+        "z": 23
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_09",
       "itemId": "bottle",
       "position": {
-        "x": 11.5,
-        "y": 0.0,
-        "z": 4.0
+        "x": -10,
+        "y": 0,
+        "z": 35
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_10",
       "itemId": "bottle",
       "position": {
-        "x": -7.0,
-        "y": 0.0,
-        "z": 10.0
+        "x": 10,
+        "y": 0,
+        "z": 47
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_11",
       "itemId": "bottle",
       "position": {
-        "x": 7.0,
-        "y": 0.0,
-        "z": 10.0
+        "x": -19,
+        "y": 4.8,
+        "z": 12
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_12",
       "itemId": "bottle",
       "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 12.0
+        "x": 19,
+        "y": 4.8,
+        "z": 28
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_13",
       "itemId": "bottle",
       "position": {
-        "x": -11.5,
-        "y": 0.0,
-        "z": 14.0
+        "x": 0,
+        "y": 4.8,
+        "z": 58
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_14",
       "itemId": "bottle",
       "position": {
-        "x": 11.5,
-        "y": 0.0,
-        "z": 14.0
+        "x": -19,
+        "y": 9.6,
+        "z": 12
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_15",
       "itemId": "bottle",
       "position": {
-        "x": -3.0,
-        "y": 0.0,
-        "z": -19.0
+        "x": 19,
+        "y": 9.6,
+        "z": 28
       }
     },
     {
       "id": "bangkok_nana_plaza_bottle_16",
       "itemId": "bottle",
       "position": {
-        "x": 3.0,
-        "y": 0.0,
-        "z": -22.0
+        "x": 0,
+        "y": 9.6,
+        "z": 58
       }
     }
   ],
@@ -191,65 +191,65 @@
     {
       "id": "bangkok_nana_plaza_tablet_01",
       "position": {
-        "x": -13.0,
-        "y": 0.0,
-        "z": -10.0
+        "x": 12,
+        "y": 0,
+        "z": 8
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_02",
       "position": {
-        "x": 13.0,
-        "y": 0.0,
-        "z": -10.0
+        "x": -12,
+        "y": 0,
+        "z": 13
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_03",
       "position": {
-        "x": -4.0,
-        "y": 0.0,
-        "z": 6.0
+        "x": 12,
+        "y": 0,
+        "z": 18
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_04",
       "position": {
-        "x": 4.0,
-        "y": 0.0,
-        "z": 6.0
+        "x": -12,
+        "y": 0,
+        "z": 23
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_05",
       "position": {
-        "x": -13.0,
-        "y": 0.0,
-        "z": 10.0
+        "x": 12,
+        "y": 0,
+        "z": 28
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_06",
       "position": {
-        "x": 13.0,
-        "y": 0.0,
-        "z": 10.0
+        "x": -12,
+        "y": 0,
+        "z": 33
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_07",
       "position": {
-        "x": -9.0,
-        "y": 0.0,
-        "z": 17.0
+        "x": 12,
+        "y": 0,
+        "z": 38
       }
     },
     {
       "id": "bangkok_nana_plaza_tablet_08",
       "position": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": -16.0
+        "x": -12,
+        "y": 0,
+        "z": 43
       }
     }
   ],
@@ -272,5 +272,6 @@
       "targetId": "soi_four_exit",
       "after": ["lose_the_patrol"]
     }
-  ]
+  ],
+  "wantedThresholds": [61, 81]
 }

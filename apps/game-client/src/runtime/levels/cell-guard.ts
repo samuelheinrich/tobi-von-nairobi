@@ -105,6 +105,6 @@ export class CellGuard implements LevelNpcs {
     return line;
   }
   public dispose(): void {
-    this.rig.root.dispose(false, true);
+    this.rig.root.dispose();
   }
 }

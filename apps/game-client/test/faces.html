@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gesichtsstudio · Tobi von Nairobi</title>
+    <style>
+      body {
+        margin: 0;
+        background: #131b26;
+        color: #e0e6eb;
+        font: 16px system-ui;
+      }
+      header {
+        padding: 18px 28px;
+      }
+      h1 {
+        font-size: 23px;
+        margin: 0 0 10px;
+      }
+      button,
+      select {
+        background: #2b3a4c;
+        color: white;
+        border: 1px solid #678;
+        padding: 7px;
+        border-radius: 5px;
+      }
+      canvas {
+        width: 100vw;
+        height: 75vh;
+        display: block;
+      }
+      p {
+        color: #b7c6d3;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>GESICHTSSTUDIO</h1>
+      <button id="variants">Andere Merkmale</button>
+      <label
+        >Alter
+        <select id="age">
+          <option value="mixed">Gemischt</option>
+          <option value="young-adult">Junge Erwachsene</option>
+          <option value="adult">Erwachsene</option>
+          <option value="older">Ältere Erwachsene</option>
+        </select></label
+      >
+      <label><input id="hair" type="checkbox" /> Haare</label>
+      <label><input id="profile" type="checkbox" /> Profilansicht</label>
+      <p>
+        Oval · Rund · Schmal · Kantig · Herzförmig · Breit · Länglich — Maus zum Drehen und Zoomen
+      </p>
+      <label
+        >Ansicht
+        <select id="focus">
+          <option value="all">Alle</option>
+          <option value="0">Oval</option>
+          <option value="1">Rund</option>
+          <option value="2">Schmal</option>
+          <option value="3">Kantig</option>
+          <option value="4">Herzförmig</option>
+          <option value="5">Breit</option>
+          <option value="6">Länglich</option>
+        </select></label
+      >
+      <p id="stats"></p>
+    </header>
+    <canvas></canvas>
+    <script type="module" src="./faces.ts"></script>
+  </body>
+</html>

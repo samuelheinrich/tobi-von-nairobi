@@ -1,3 +1,4 @@
+import { outwardArmAngle } from '../character/modular/arm-pose.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
@@ -142,8 +143,10 @@ export class RailwayPassengers implements LevelNpcs {
       const sway = Math.sin(this.time * 2.2 + person.id) * (person.startled > 0 ? 3 : 1);
       person.rig.head.rotation.z = sway * 0.05;
       for (const [index, arm] of person.rig.arms.entries())
-        arm.rotation.z =
-          (index === 0 ? 1 : -1) * (person.startled > 0 ? 1.3 + sway * 0.2 : 0.1 + sway * 0.06);
+        arm.rotation.z = outwardArmAngle(
+          index,
+          person.startled > 0 ? 1.3 + sway * 0.2 : 0.1 + sway * 0.06,
+        );
       person.rig.root.position.y = person.home.y + (person.seated ? 0 : Math.abs(sway) * 0.02);
     }
   }
@@ -204,7 +207,7 @@ export class RailwayPassengers implements LevelNpcs {
   }
 
   public dispose(): void {
-    for (const person of this.people) person.rig.root.dispose(false, true);
-    this.conductor.rig.root.dispose(false, true);
+    for (const person of this.people) person.rig.root.dispose();
+    this.conductor.rig.root.dispose();
   }
 }

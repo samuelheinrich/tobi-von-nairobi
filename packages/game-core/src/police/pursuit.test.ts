@@ -182,3 +182,18 @@ describe('coordinated pursuit', () => {
     expect(protectedPlayer.escapes).toBe(0);
   });
 });
+
+it('ground patrols cannot see or capture a player on an upper gallery', () => {
+  const pursuit = new PursuitSystem(1, [{ x: 0, z: 0 }], rules, {
+    clear: () => true,
+    canSee: () => true,
+    path: () => [],
+  });
+  pursuit.chaos.add(100);
+  pursuit.wanted.report(100);
+  for (let i = 0; i < 120; i++) pursuit.step(1 / 60, { x: 0, y: 5.8, z: 0 });
+  expect(pursuit.wanted.hadContact).toBe(false);
+  expect(pursuit.caught).toBe(false);
+  for (let i = 0; i < 120; i++) pursuit.step(1 / 60, { x: 0, y: 1, z: 0 });
+  expect(pursuit.wanted.hadContact).toBe(true);
+});

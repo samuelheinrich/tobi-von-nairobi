@@ -1,3 +1,5 @@
+import type { Position3 } from '@tobi/contracts';
+import { SpatialAmbience, type AmbientZone } from './spatial-ambience.js';
 import { SoundBank } from './sound-bank.js';
 import type { SoundCue } from './sound-cues.js';
 
@@ -63,6 +65,56 @@ export class AudioFeedback {
   private stepDistance = 0;
   private beatTime = 0;
   private beat = 0;
+  private readonly spatial = new SpatialAmbience();
+
+  public spatialEnvironment(
+    delta: number,
+    listener: Position3,
+    zones: readonly AmbientZone[],
+  ): void {
+    if (this.paused || this.silent) return;
+    for (const { zone, gain, beat } of this.spatial.step(delta, listener, zones)) {
+      if (zone.kind === 'music') {
+        this.tone({ frequency: 105, end: 42, duration: 0.18, volume: gain });
+        this.tone({
+          frequency: zone.note * (beat % 4 < 2 ? 1 : 1.5),
+          duration: 0.35,
+          volume: gain * 0.5,
+          type: 'triangle',
+          delay: 0.1,
+        });
+        this.noise({
+          duration: 0.045,
+          volume: gain * 0.25,
+          from: 6500,
+          type: 'highpass',
+          delay: 0.2,
+        });
+      } else if (zone.kind === 'traffic') {
+        this.noise({ duration: 2.6, volume: gain, from: 350, to: 700, type: 'lowpass' });
+        if (beat % 4 === 0)
+          this.tone({ frequency: 380, duration: 0.3, volume: gain * 0.6, type: 'sawtooth' });
+      } else if (zone.kind === 'train') {
+        const cycle = beat % 22;
+        this.noise({
+          duration: 2.1,
+          volume: gain * (cycle < 7 || cycle > 11 ? 1 : 0.18),
+          from: cycle < 7 ? 1600 : 700,
+          to: 300,
+          type: 'lowpass',
+        });
+        if (cycle === 7) this.noise({ duration: 1.5, volume: gain * 0.8, from: 3400, to: 500 });
+        if (cycle === 8 || cycle === 11) {
+          this.tone({ frequency: 880, duration: 0.2, volume: gain });
+          this.tone({ frequency: 659, duration: 0.3, delay: 0.25, volume: gain });
+          this.noise({ duration: 0.8, delay: 0.55, volume: gain * 0.5, from: 800, to: 1600 });
+        }
+      } else {
+        this.shout(zone.note, 1, 0, gain * 0.5, 700, 1300);
+        this.noise({ duration: 2.4, volume: gain * 0.5, from: 900, to: 1400 });
+      }
+    }
+  }
 
   public environment(delta: number, scenery: string): void {
     if (this.paused || this.silent) return;

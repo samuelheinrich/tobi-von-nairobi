@@ -12,7 +12,7 @@ import { levelSchema, type LevelDefinition } from '@tobi/contracts';
 import rawLevel from './levels/welcome-to-bali.json' with { type: 'json' };
 
 export const welcomeToBali = levelSchema.parse(rawLevel);
-export const contentVersion = 'prototype-4';
+export const contentVersion = 'prototype-5-nana';
 export const baliEscape = levelSchema.parse(rawEscape);
 export const beachBar = levelSchema.parse(rawBar);
 export const nightMarket = levelSchema.parse(rawMarket);
@@ -67,7 +67,7 @@ export { pursuitBalance } from './pursuit-balancing.js';
 export { hippieHouseLayout } from './hippie-house.js';
 export { zurichLayout } from './zurich.js';
 export { railwayLayout } from './railway.js';
-export { nanaPlazaLayout } from './nana-plaza.js';
+export * from './nana-plaza.js';
 
 export { aircraftLayout } from './aircraft.js';
 

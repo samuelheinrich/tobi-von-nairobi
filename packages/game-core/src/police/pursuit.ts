@@ -87,6 +87,7 @@ export class PursuitSystem {
       for (const agent of this.activeAgents) {
         const sees =
           this.wanted.level > 0 &&
+          player.y < 2.5 &&
           distance2(agent.position, player) <= this.rules.sightRange &&
           this.nav.canSee(agent.position, player);
         this.visible ||= sees;

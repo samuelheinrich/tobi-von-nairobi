@@ -40,6 +40,7 @@ export function createLevelNpcs(
         [50, 70],
       ],
       'He! Karl bezahlt deine Rechnung auch nicht!',
+      true,
     );
   if (level.scenery === 'railway')
     return new RailwayPassengers(scene, environment.shadows, bubbles);

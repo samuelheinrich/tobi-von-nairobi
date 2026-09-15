@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Adult Character Studio · Tobi von Nairobi</title>
+    <style>
+      body {
+        margin: 0;
+        background: #131b26;
+        color: #e4e9ef;
+        font: 16px system-ui;
+      }
+      header {
+        padding: 15px 25px;
+      }
+      h1 {
+        font-size: 23px;
+        margin: 0 0 8px;
+      }
+      button,
+      select {
+        background: #293d50;
+        color: white;
+        border: 1px solid #678;
+        padding: 7px;
+        border-radius: 4px;
+      }
+      canvas {
+        width: 100vw;
+        height: 76vh;
+        display: block;
+      }
+      p {
+        color: #b9c7d4;
+        margin: 8px 0;
+      }
+      #cast {
+        font-size: 13px;
+        display: flex;
+        gap: 12px;
+        justify-content: space-around;
+      }
+      #cast span {
+        max-width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>ADULT CHARACTER STUDIO</h1>
+      <select id="group">
+        <option value="gogo_dancer">8 Tänzerinnen</option>
+        <option value="beach_female">8 Beach-Frauen</option>
+        <option value="pool_party">8 Pool-Gäste</option>
+        <option value="cabaret_dancer">8 Cabaret-Figuren</option>
+      </select>
+      <button id="variants">Andere Gruppe</button>
+      <select id="pose">
+        <option value="auto">Individuelle Animationen</option>
+        <option value="still">Still / Formvergleich</option>
+      </select>
+      <label><input id="turn" type="checkbox" />Seitenansicht</label>
+      <p>Erwachsene Besetzung, 23–42 Jahre. Maus: drehen und zoomen.</p>
+      <p id="stats"></p>
+    </header>
+    <canvas></canvas>
+    <div id="cast"></div>
+    <script type="module" src="./female.ts"></script>
+  </body>
+</html>

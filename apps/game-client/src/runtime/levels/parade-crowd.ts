@@ -1,3 +1,5 @@
+import { diversifyFemaleGroup } from '../character/modular/female/presets.js';
+import { animateFemale } from '../character/modular/female/animation.js';
 import '@babylonjs/core/Meshes/thinInstanceMesh.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { Matrix, Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
@@ -7,6 +9,10 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import { NavigationGrid, ReactiveCrowd } from '@tobi/game-core';
 import type { Point2 } from '@tobi/game-core';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
+import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
+import { animateDance } from '../character/dance-system.js';
+import { appearance, type Appearance } from '../character/modular/presets.js';
+import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { material } from './materials.js';
 import { navigationObstacles, sightBlockers } from './nav-obstacles.js';
 
@@ -60,6 +66,9 @@ export class ParadeCrowd {
     size: Vector3;
     limb: number;
   }[] = [];
+  private readonly near: { rig: NpcRig; id: number | null }[] = [];
+  private readonly looks: Appearance[];
+  private allocation = 1;
   private time = 0;
   private paintTime = 0;
   private readonly solids: Set<Mesh>;
@@ -73,6 +82,21 @@ export class ParadeCrowd {
     this.solids = sightBlockers(colliders);
     this.nav = new NavigationGrid(level.navigationBounds!, navigationObstacles(colliders), 0.3);
     this.system = new ReactiveCrowd(crowdAlongRoute(route, this.nav, limit));
+    this.looks = diversifyFemaleGroup(
+      this.system.people.map((p) => appearance('club_guest', p.id)),
+    );
+    for (let i = 0; i < 16; i++) {
+      const rig = createNpc(
+        scene,
+        `parade-near-${i}`,
+        npcPalette(scene, i),
+        null,
+        false,
+        'club_guest',
+      );
+      rig.root.setEnabled(false);
+      this.near.push({ rig, id: null });
+    }
     const surface = material(scene, 'crowd-instance-white', '#ffffff');
     for (const [name, size, offset, limb] of [
       ['body', [0.55, 0.75, 0.35], [0, 1.1, 0], 0],
@@ -82,27 +106,26 @@ export class ParadeCrowd {
       ['left-leg', [0.22, 0.65, 0.25], [-0.16, 0.35, 0], 2],
       ['right-leg', [0.22, 0.65, 0.25], [0.16, 0.35, 0], -2],
     ] as const) {
-      const mesh = MeshBuilder.CreateBox(`parade-crowd-${name}`, { size: 1 }, scene);
+      const mesh = MeshBuilder.CreateSphere(
+        `parade-crowd-${name}`,
+        { diameter: 1, segments: 5 },
+        scene,
+      );
       mesh.material = surface;
       mesh.isPickable = false;
       mesh.alwaysSelectAsActiveMesh = true;
       const matrices = new Float32Array(this.system.people.length * 16),
         colors = new Float32Array(this.system.people.length * 4);
       for (const p of this.system.people) {
-        const palette = [
-          [0.95, 0.3, 0.62, 1],
-          [0.2, 0.85, 0.78, 1],
-          [0.9, 0.75, 0.3, 1],
-          [0.6, 0.4, 0.85, 1],
-        ];
-        colors.set(
+        const outfit = this.looks[p.id]!;
+        const color = Color3.FromHexString(
           name === 'head'
-            ? [0.65 + (p.id % 3) * 0.1, 0.45 + (p.id % 3) * 0.1, 0.3 + (p.id % 3) * 0.1, 1]
+            ? outfit.skin
             : name.includes('leg')
-              ? [0.2, 0.28, 0.4, 1]
-              : palette[p.id % 4]!,
-          p.id * 4,
+              ? outfit.bottomColor
+              : outfit.topColor,
         );
+        colors.set([color.r, color.g, color.b, 1], p.id * 4);
       }
       mesh.thinInstanceSetBuffer('matrix', matrices, 16, false);
       mesh.thinInstanceSetBuffer('color', colors, 4, true);
@@ -138,6 +161,55 @@ export class ParadeCrowd {
   public update(delta: number): void {
     if (delta <= 0) return;
     this.time += delta;
+    this.allocation += delta;
+    const camera = this.scene.activeCamera;
+    if (camera && this.allocation >= 0.4) {
+      this.allocation = 0;
+      const candidates = this.system.people
+        .filter(
+          (p) =>
+            Math.hypot(p.position.x - camera.position.x, p.position.z - camera.position.z) < 16,
+        )
+        .sort(
+          (a, b) =>
+            Math.hypot(a.position.x - camera.position.x, a.position.z - camera.position.z) -
+            Math.hypot(b.position.x - camera.position.x, b.position.z - camera.position.z),
+        )
+        .slice(0, this.near.length);
+      for (const slot of this.near)
+        if (!candidates.some((p) => p.id === slot.id)) {
+          slot.id = null;
+          slot.rig.root.setEnabled(false);
+        }
+      for (const p of candidates)
+        if (!this.near.some((s) => s.id === p.id)) {
+          const slot =
+            this.near.find((s) => s.id === null && s.rig.appearance.seed === p.id) ??
+            this.near.find((s) => s.id === null);
+          if (!slot) break;
+          slot.id = p.id;
+          slot.rig.dressAppearance(this.looks[p.id]!);
+          slot.rig.root.setEnabled(true);
+        }
+    }
+    for (const slot of this.near) {
+      if (slot.id === null) continue;
+      const p = this.system.people[slot.id]!;
+      slot.rig.root.position.set(p.position.x, 0, p.position.z);
+      slot.rig.root.rotation.y = p.id * 2.399;
+      if (this.scene.frustumPlanes && !slot.rig.head.isInFrustum(this.scene.frustumPlanes))
+        continue;
+      if (slot.rig.appearance.femaleStyle)
+        animateFemale(slot.rig, this.time * (p.frightened ? 1.7 : 1), 'dance');
+      else
+        animateDance(
+          slot.rig,
+          p.id % 2 ? 'dance_club_01' : 'dance_club_02',
+          this.time * (p.frightened ? 1.7 : 1),
+          p.id,
+          true,
+        );
+    }
     this.paintTime += delta;
     this.system.step(delta, (a, b) => this.nav.clear(a, b));
     if (this.paintTime >= 1 / 20) {
@@ -149,6 +221,8 @@ export class ParadeCrowd {
     const matrix = Matrix.Identity(),
       rotation = Quaternion.Identity(),
       position = Vector3.Zero();
+    const nearIds = new Set(this.near.map((s) => s.id));
+    const hidden = Vector3.Zero();
     for (const batch of this.batches) {
       for (const p of this.system.people) {
         const dance = Math.sin(this.time * (p.frightened ? 11 : 3) + p.id);
@@ -165,13 +239,14 @@ export class ParadeCrowd {
           batch.offset.y + Math.abs(dance) * 0.06,
           p.position.z,
         );
-        Matrix.ComposeToRef(batch.size, rotation, position, matrix);
+        Matrix.ComposeToRef(nearIds.has(p.id) ? hidden : batch.size, rotation, position, matrix);
         matrix.copyToArray(batch.matrices, p.id * 16);
       }
       batch.mesh.thinInstanceBufferUpdated('matrix');
     }
   }
   public dispose(): void {
+    for (const slot of this.near) slot.rig.dispose();
     for (const batch of this.batches) batch.mesh.dispose();
   }
 }

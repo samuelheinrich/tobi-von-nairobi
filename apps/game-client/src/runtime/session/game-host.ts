@@ -62,6 +62,7 @@ export class GameHost {
   private readonly audio = new AudioFeedback();
   private readonly mood = new BottleMood();
   private readonly hands = new BottleHands();
+  private barDrinkSeconds = 0;
   private readonly trip = new ColorTrip();
   private readonly pills: ColorPickups;
   private readonly projectiles: ThrownBottles;
@@ -351,10 +352,17 @@ export class GameHost {
   private step = (delta: number): void => {
     if (this.store.getSnapshot().phase !== 'playing') return;
     const actions = this.input.sample();
+    this.barDrinkSeconds = Math.max(0, this.barDrinkSeconds - delta);
     const lessonSignals: Partial<LessonSignals> = {};
     this.camera.look(actions.lookX, actions.lookY);
     if (this.seating.active) this.facing.yaw = this.seating.active.yaw;
     let usedInteraction = false;
+    const escort = this.npcs?.movement?.(this.motor.position);
+    if (escort) {
+      actions.interactPressed = false;
+      const exit = this.seating.leave();
+      if (exit) this.motor.teleport(exit);
+    }
     if (actions.interactPressed) {
       const exit = this.seating.leave();
       const spot = exit
@@ -368,15 +376,35 @@ export class GameHost {
         usedInteraction = true;
       }
     }
+    if (actions.interactPressed && !usedInteraction) {
+      const result = this.environment.interact?.(this.motor.position);
+      if (result) {
+        usedInteraction = true;
+        this.locomotion.stamina = Math.min(
+          movement.maxStamina,
+          this.locomotion.stamina + result.energy,
+        );
+        if (this.locomotion.stamina === movement.maxStamina) this.locomotion.refill();
+        if (result.energy > 0) {
+          this.audio.play('drink');
+          this.barDrinkSeconds = 1.2;
+          if (result.drink) this.mood.collect();
+        }
+        this.toastUntil = this.session.elapsedSeconds + 4;
+        this.store.update({ toast: result.text });
+      }
+    }
     const sitting = this.seating.active !== null;
-    const movementActions = sitting
-      ? { ...actions, moveX: 0, moveZ: 0, jumpPressed: false, sprintHeld: false }
-      : this.flight
-        ? { ...actions, jumpPressed: false }
-        : actions;
+    const movementActions = escort
+      ? { ...actions, moveX: escort.x, moveZ: escort.z, jumpPressed: false, sprintHeld: false }
+      : sitting
+        ? { ...actions, moveX: 0, moveZ: 0, jumpPressed: false, sprintHeld: false }
+        : this.flight
+          ? { ...actions, jumpPressed: false }
+          : actions;
     const velocity = this.locomotion.step(
       movementActions,
-      this.camera.yaw,
+      escort ? 0 : this.camera.yaw,
       this.motor.support(delta),
       delta,
     );
@@ -433,7 +461,9 @@ export class GameHost {
       if (this.session.collected.size % 3 === 0) this.audio.play('hiccup');
     }
     this.trip.step(delta);
-    this.audio.environment(delta, this.level.scenery);
+    if (this.environment.audioZones)
+      this.audio.spatialEnvironment(delta, position, this.environment.audioZones);
+    else this.audio.environment(delta, this.level.scenery);
     for (const id of this.pills.nearby(position))
       if (this.trip.collect(id)) {
         this.pills.collect(id);
@@ -511,7 +541,13 @@ export class GameHost {
             : shout,
       });
     }
-    if (actions.flirtPressed && this.npcs?.flirt(position)) this.flirts++;
+    if (
+      actions.flirtPressed &&
+      !this.environment.cycleInteraction?.(position) &&
+      this.npcs?.flirt(position)
+    )
+      this.flirts++;
+    this.npcs?.context?.(this.police?.system.chaos.value ?? 0, this.store.getSnapshot().mood);
     this.npcs?.update(delta, position);
     // A blocking NPC pushes Tobi back out of its body; it never reports him to anyone.
     const pushed = this.npcs?.resolve(position) ?? null;
@@ -673,8 +709,8 @@ export class GameHost {
       this.store.getSnapshot().phase === 'complete',
       this.mood.amount,
       this.locomotion.stamina,
-      this.hands.holding,
-      this.hands.drinkPose,
+      this.hands.holding || this.barDrinkSeconds > 0,
+      Math.max(this.hands.drinkPose, Math.sin((Math.PI * this.barDrinkSeconds) / 1.2)),
       this.seating.active?.kind === 'seat',
     );
     if (tripped) this.audio.play('stumble');
@@ -712,6 +748,8 @@ export class GameHost {
         this.camera.camera.position,
       );
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
+      // Read-only position projection for local route diagnostics; no mutation/test commands.
+      this.canvas.dataset.playerPosition = `${this.motor.position.x.toFixed(2)},${this.motor.position.y.toFixed(2)},${this.motor.position.z.toFixed(2)}`;
       this.uiTime += delta;
       if (this.uiTime >= 0.1) {
         this.uiTime = 0;
@@ -720,7 +758,7 @@ export class GameHost {
           mood: Math.round(this.mood.amount * 100),
           moodLabel: this.mood.label,
           emptyBottles: this.hands.empties,
-          drinking: this.hands.drinking,
+          drinking: this.hands.drinking || this.barDrinkSeconds > 0,
           tripSeconds: Math.ceil(this.trip.remaining),
           tripIntensity: this.trip.intensity,
           crowdCount: this.parade?.system.people.length ?? 0,
@@ -728,15 +766,17 @@ export class GameHost {
             ? this.motor.position.y > 4.4
               ? 1
               : 0
-            : this.level.scenery === 'hippie-house'
-              ? Math.max(
-                  0,
-                  Math.min(
-                    hippieHouseLayout.floors.length - 1,
-                    Math.floor((this.motor.position.y - 0.5) / hippieHouseLayout.floorHeight),
-                  ),
-                )
-              : null,
+            : this.level.scenery === 'nana-plaza' && this.motor.position.z > 4
+              ? Math.max(0, Math.min(2, Math.floor((this.motor.position.y - 0.5) / 4.8)))
+              : this.level.scenery === 'hippie-house'
+                ? Math.max(
+                    0,
+                    Math.min(
+                      hippieHouseLayout.floors.length - 1,
+                      Math.floor((this.motor.position.y - 0.5) / hippieHouseLayout.floorHeight),
+                    ),
+                  )
+                : null,
           tauntedCount: this.parade?.system.taunted.size ?? 0,
           flirts: this.flirts,
           blocked: this.npcs?.blocked ?? false,
@@ -753,7 +793,9 @@ export class GameHost {
                   this.motor.position,
                   this.environment.restSpots ?? [],
                 );
-                return spot ? `E · ${spot.label}` : '';
+                return spot
+                  ? `E · ${spot.label}`
+                  : (this.environment.interactionPrompt?.(this.motor.position) ?? '');
               })(),
           lesson: this.tutorialView(),
           cabin: this.flight

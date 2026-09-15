@@ -6,7 +6,6 @@ import { CabinPuzzle, type RestSpot } from '@tobi/game-core';
 import { aircraftLayout } from '@tobi/game-data';
 import type { LevelScene } from '../levels/create-level-scene.js';
 import { createNpc, npcPalette } from '../levels/npc-kit.js';
-import { box, material } from '../levels/materials.js';
 
 /** Babylon perception and character presentation for the engine-free cabin rules. */
 export class FlightRuntime {
@@ -17,20 +16,16 @@ export class FlightRuntime {
     private readonly scene: Scene,
     private readonly environment: LevelScene,
   ) {
-    const uniform = material(scene, 'flight-crew-uniform', '#8e2853');
-    const scarf = material(scene, 'flight-crew-scarf', '#f4c975');
-    this.rigs = this.puzzle.crew.map((member) => {
-      const palette = npcPalette(scene, 1);
+    this.rigs = this.puzzle.crew.map((member, index) => {
       const rig = createNpc(
         scene,
         member.route.id,
-        { ...palette, top: uniform, bottom: uniform },
+        npcPalette(scene, index + 1),
         environment.shadows,
+        false,
+        'crew',
+        true,
       );
-      const hat = box(scene, 'crew-hat', [0.5, 0.16, 0.45], [0, 2.02, 0], uniform);
-      hat.parent = rig.root;
-      const neck = box(scene, 'crew-scarf', [0.35, 0.14, 0.4], [0, 1.44, 0], scarf);
-      neck.parent = rig.root;
       rig.root.position.set(member.position.x, member.route.floor, member.position.z);
       rig.root.rotation.y = member.direction > 0 ? 0 : Math.PI;
       for (const mesh of rig.root.getChildMeshes()) mesh.isVisible = member.route.floor === 0;

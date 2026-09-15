@@ -1,3 +1,5 @@
+import type { SceneInteractionResult } from './scene-interaction.js';
+import type { AmbientZone } from '../audio/spatial-ambience.js';
 import { createBaliAdventureScene } from './bali-adventure-scene.js';
 import { createTutorialScene } from './tutorial-scene.js';
 import type { RestSpot } from '@tobi/game-core';
@@ -15,6 +17,10 @@ import { createCellScene } from './cell-scene.js';
 
 export interface LevelScene extends BaliScene {
   readonly restSpots?: readonly RestSpot[];
+  readonly audioZones?: readonly AmbientZone[];
+  interact?(position: Position3): SceneInteractionResult | null;
+  cycleInteraction?(position: Position3): boolean;
+  interactionPrompt?(position: Position3): string;
   update?(delta: number): void;
   focus?(position: Position3): void;
 }

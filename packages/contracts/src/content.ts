@@ -68,6 +68,8 @@ export const levelSchema = z
     chaosPerBottle: z.number().positive().max(30).default(16),
     policeSpeed: z.number().min(2).max(8).default(4.6),
     policeSpawns: z.array(positionSchema).optional(),
+    /** Optional content-specific dispatch thresholds, ascending and one per wanted tier. */
+    wantedThresholds: z.array(z.number().int().min(1).max(100)).optional(),
     /** Overrides the prototype score table; a level without a score economy sets both to zero. */
     scoring: z
       .object({
@@ -109,6 +111,15 @@ export const levelSchema = z
       ctx.addIssue({
         code: 'custom',
         message: 'Pursuit requires navigation bounds and one spawn per wanted tier',
+      });
+    if (
+      level.wantedThresholds &&
+      (level.wantedThresholds.length !== level.maxWanted ||
+        level.wantedThresholds.some((n, i, all) => i > 0 && n <= all[i - 1]!))
+    )
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Wanted thresholds must be ascending, one per tier',
       });
     const bounds = level.navigationBounds;
     if (

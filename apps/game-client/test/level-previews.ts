@@ -28,7 +28,7 @@ const poses: Record<string, { eye: [number, number, number]; target: [number, nu
   railway: { eye: [12, 23, -38], target: [0, 0, -19] },
   'street-parade': { eye: [23, 20, -37], target: [0, 1, -3] },
   'hippie-house': { eye: [22, 42, -28], target: [0, 9, 4] },
-  'nana-plaza': { eye: [-11.5, 6.5, -12], target: [3, 2.2, 8] },
+  'nana-plaza': { eye: [-12, 14, 7], target: [2, 3.5, 34] },
   'drunk-tank': { eye: [9, 7, -9], target: [0, 1, 0] },
 };
 const canvas = document.querySelector('canvas')!;
@@ -64,9 +64,9 @@ const bubbles = new SpeechBubbles(scene, 2);
 const flight = level.scenery === 'aircraft' ? new FlightRuntime(scene, environment) : null;
 flight?.step(0.4, level.spawn, null);
 const npcs = createLevelNpcs(scene, level, environment, bubbles);
-npcs?.update(0.4, level.spawn);
+npcs?.update(0.4, level.scenery === 'nana-plaza' ? { x: 0, y: 1, z: 24 } : level.spawn);
 bubbles.update(0, new Vector3(...pose.eye));
-environment.focus?.(level.spawn);
+environment.focus?.(level.scenery === 'nana-plaza' ? { x: 0, y: 5.8, z: 24 } : level.spawn);
 bottles.cutaway(level.spawn.y);
 // Let pulsing materials — disco tiles, neon, love-mobile speakers — settle into a lit frame.
 for (let i = 0; i < 4; i++) environment.update?.(0.12);

@@ -1,3 +1,4 @@
+import { outwardArmAngle } from '../character/modular/arm-pose.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -133,12 +134,12 @@ export class HouseResidents implements LevelNpcs {
       if (!leftArm || !rightArm) continue;
       if (person.activity === 'yoga' || person.activity === 'meditate') {
         const lift = person.activity === 'yoga' ? 1.6 + breath * 0.75 : 0.35;
-        leftArm.rotation.z = lift;
-        rightArm.rotation.z = -lift;
+        leftArm.rotation.z = outwardArmAngle(0, lift);
+        rightArm.rotation.z = outwardArmAngle(1, lift);
         person.rig.root.position.y = y + Math.abs(breath) * 0.05;
       } else if (person.activity === 'dance') {
-        leftArm.rotation.z = 1.2 + breath * 0.5;
-        rightArm.rotation.z = -1.2 - breath * 0.5;
+        leftArm.rotation.z = outwardArmAngle(0, 1.2 + breath * 0.5);
+        rightArm.rotation.z = outwardArmAngle(1, 1.2 + breath * 0.5);
         person.rig.root.rotation.y += delta * 0.8;
       } else {
         leftArm.rotation.x = breath * (person.activity === 'stir' ? 0.9 : 0.2);
@@ -194,7 +195,7 @@ export class HouseResidents implements LevelNpcs {
     return line;
   }
   public dispose(): void {
-    for (const person of this.people) person.rig.root.dispose(false, true);
+    for (const person of this.people) person.rig.root.dispose();
     this.people.length = 0;
   }
 }

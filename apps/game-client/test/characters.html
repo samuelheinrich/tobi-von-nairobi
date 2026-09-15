@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Character Studio · Tobi von Nairobi</title>
+    <style>
+      body {
+        margin: 0;
+        background: #111925;
+        color: #e4e9ee;
+        font: 16px system-ui;
+      }
+      header {
+        padding: 18px 30px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      select,
+      button {
+        background: #253649;
+        color: white;
+        border: 1px solid #789;
+        padding: 6px;
+        border-radius: 4px;
+      }
+      canvas {
+        width: 100vw;
+        height: 78vh;
+        display: block;
+      }
+      p {
+        margin: 8px 0;
+        color: #aabbcc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CHARACTER STUDIO</h1>
+      <a href="./faces.html" style="color: #9ed8ef">Gesichter in Nahansicht</a> ·
+      <a href="./female.html" style="color: #9ed8ef">Nightlife &amp; Beach: Achtergruppen</a>
+      <p>Tourist · Clubgast · Tänzerin · Security · Thai Police — gemeinsame modulare Basis</p>
+      <label
+        >Animation
+        <select id="action">
+          <option value="idle">Idle</option>
+          <option value="walk">Gehen</option>
+          <option value="run">Rennen</option>
+          <option value="talk">Sprechen</option>
+          <option value="sit">Sitzen</option>
+          <option value="drink">Trinken</option>
+          <option value="phone">Telefon</option>
+          <option value="smoke">Rauchen</option>
+          <option value="dance">Tanzen</option>
+          <option value="club">Club</option>
+          <option value="pole">Pole</option>
+          <option value="cheer">Jubeln</option>
+          <option value="angry">Pöbeln</option>
+          <option value="chase">Verfolgen</option>
+          <option value="arrest">Festnehmen</option>
+        </select></label
+      >
+      <button id="variants">Andere Varianten</button> <button id="cabaret">Cabaret-Outfit</button>
+      <p id="stats"></p>
+    </header>
+    <canvas></canvas>
+    <script type="module" src="./characters.ts"></script>
+  </body>
+</html>
