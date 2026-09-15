@@ -66,26 +66,27 @@
       .dim {
         color: #8b9cad;
       }
+      .warn {
+        color: #e8b06a;
+      }
+      tr.here td {
+        background: #182739;
+      }
     </style>
   </head>
   <body>
     <header>
       <h1>MODELL-STUDIO</h1>
       <p class="dim" style="margin: 0 0 8px">
-        Die verbliebenen Modelle neben der heutigen Spielfigur. Sam bringt ein Skelett mit.
+        Lizenz, Kosten und Rollenzuordnung aller lokalen GLB-Dateien. Die 3D-Ansicht lädt eine Rolle
+        auf einmal.
         <a href="./characters.html">Character Studio</a> ·
         <a href="./faces.html">Gesichter</a>
       </p>
       <label
-        >Ansicht
-        <select id="focus">
-          <option value="all">Alle nebeneinander</option>
-          <option value="npc">Heutige Spielfigur</option>
-          <option value="sam.glb">Sam (gerigged)</option>
-          <option value="sexy_nurse_002.glb">Sexy Nurse 002</option>
-          <option value="girl_sexy.glb">Girl sexy</option>
-        </select></label
-      >
+        >Rolle
+        <select id="role"></select
+      ></label>
       <label><input type="checkbox" id="turntable" checked /> Drehteller</label>
       <p id="status">Lade …</p>
       <p id="fps"></p>

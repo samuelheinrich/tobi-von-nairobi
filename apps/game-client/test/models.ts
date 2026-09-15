@@ -1,11 +1,13 @@
-/** Model studio: measures what the four downloaded Sketchfab GLB files actually cost and how
- * they look next to the procedural figures the game ships today.
+/** Model studio: the licence, cost and role of every file in the owner's local `models/` folder,
+ * and a 3D view of the ones for a chosen role next to the procedural figure they would replace.
  *
- * Deliberately a separate harness and not part of the game: the files are large, unrigged and
- * under third-party licences. Nothing here is built into the production bundle.
+ * The table comes from `glb-catalogue.ts` and is complete before anything downloads — several of
+ * these files are tens of megabytes, so the 3D view loads one role at a time.
  */
 import '@babylonjs/loaders/glTF/2.0/glTFLoader.js';
-import { registerBuiltInGLTFExtensions } from '@babylonjs/loaders/glTF/2.0/Extensions/dynamic.js';
+import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_unlit.js';
+import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_specular.js';
+import '@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_pbrSpecularGlossiness.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
@@ -18,48 +20,15 @@ import { CreateGround } from '@babylonjs/core/Meshes/Builders/groundBuilder.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
 import { LoadAssetContainerAsync } from '@babylonjs/core/Loading/sceneLoader.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
+import {
+  CATALOGUE,
+  ROLE_LABEL,
+  entriesForRole,
+  type CatalogueEntry,
+  type ModelRole,
+} from '../src/runtime/character/glb-catalogue.js';
 import { createNpc, npcPalette } from '../src/runtime/levels/npc-kit.js';
 import { animateCharacter } from '../src/runtime/character/modular/animation.js';
-
-registerBuiltInGLTFExtensions();
-
-/** What the owner downloaded, with the licence each file carries in its own `asset.extras`. */
-interface Candidate {
-  file: string;
-  title: string;
-  author: string;
-  licence: string;
-  /** True when the licence permits shipping the file in this public repository. */
-  usable: boolean;
-  note: string;
-}
-
-const CANDIDATES: readonly Candidate[] = [
-  {
-    file: 'sam.glb',
-    title: 'Sam',
-    author: 'Avaturn · Eigentümer',
-    licence: 'eigenes Abbild',
-    usable: true,
-    note: 'Skelett mit 52 Gelenken und Idle-Animation. 21k Dreiecke — günstiger als die heutige Figur.',
-  },
-  {
-    file: 'sexy_nurse_002.glb',
-    title: 'Sexy Nurse 002',
-    author: 'SinfulBrain',
-    licence: 'CC-BY-4.0',
-    usable: true,
-    note: 'Nutzbar mit Namensnennung. Starr. 39 MiB, 749k Dreiecke: muss reduziert werden.',
-  },
-  {
-    file: 'girl_sexy.glb',
-    title: 'Girl sexy',
-    author: 'tr.onurdk1',
-    licence: 'CC-BY-4.0',
-    usable: true,
-    note: 'Nutzbar mit Namensnennung. Starr, unlit. 66 MiB, 1,5 Mio Dreiecke: schwerster Fall.',
-  },
-];
 
 const TARGET_HEIGHT = 1.78;
 const SPACING = 2;
@@ -69,7 +38,7 @@ const engine = new Engine(canvas, true);
 const scene = new Scene(engine);
 scene.clearColor = new Color4(0.055, 0.075, 0.11, 1);
 
-const camera = new ArcRotateCamera('studio', Math.PI / 2, 1.35, 9, new Vector3(0, 1, 0), scene);
+const camera = new ArcRotateCamera('studio', Math.PI / 2, 1.35, 8, new Vector3(0, 1, 0), scene);
 camera.attachControl(canvas, true);
 camera.fov = 0.55;
 camera.wheelPrecision = 24;
@@ -80,13 +49,13 @@ camera.upperRadiusLimit = 40;
 new HemisphericLight('fill', new Vector3(0, 1, 1), scene).intensity = 0.85;
 new DirectionalLight('key', new Vector3(-0.4, -1, -0.6), scene).intensity = 1;
 
-const ground = CreateGround('ground', { width: 40, height: 40 }, scene);
+const ground = CreateGround('ground', { width: 60, height: 60 }, scene);
 const groundMaterial = new StandardMaterial('ground', scene);
 groundMaterial.diffuseColor = new Color3(0.1, 0.12, 0.15);
 groundMaterial.specularColor = Color3.Black();
 ground.material = groundMaterial;
 
-/** The current NPC for side-by-side comparison; it stands at the far left of the row. */
+/** The current NPC, for a like-for-like comparison at the left of every row. */
 const reference = createNpc(
   scene,
   'dancer',
@@ -97,44 +66,11 @@ const reference = createNpc(
   true,
   true,
 );
-reference.root.position.x = -1.5 * SPACING;
 
-interface Loaded {
-  candidate: Candidate;
-  root: TransformNode;
-  /** True when the file brought a skeleton and at least one animation. */
-  rigged: boolean;
-  joints: number;
-  triangles: number;
-  seconds: number;
-  megabytes: number;
-}
-
-const loaded: Loaded[] = [];
 const status = document.querySelector('#status')!;
 const table = document.querySelector('#table')!;
-
-function describe(): void {
-  const rows = loaded.map((entry) => {
-    const flag = entry.candidate.usable ? '🟢' : '🔴';
-    const rig = entry.rigged ? `✓ ${entry.joints} Gelenke` : '—';
-    return `<tr><td>${flag} <strong>${entry.candidate.title}</strong><br><span class="dim">${entry.candidate.author} · ${entry.candidate.licence}</span></td>
-      <td class="num">${entry.megabytes.toFixed(1)} MiB</td>
-      <td class="num">${entry.triangles.toLocaleString('de-CH')}</td>
-      <td class="num">${rig}</td>
-      <td class="num">${entry.seconds.toFixed(2)} s</td>
-      <td class="dim">${entry.candidate.note}</td></tr>`;
-  });
-  const npcTriangles = reference.root
-    .getChildMeshes()
-    .reduce((sum, mesh) => sum + mesh.getTotalIndices() / 3, 0);
-  table.innerHTML = `<table><thead><tr><th>Modell</th><th>Datei</th><th>Dreiecke</th><th>Skelett</th><th>Laden</th><th>Bewertung</th></tr></thead><tbody>
-    <tr><td>⚪️ <strong>Heutige Spielfigur</strong><br><span class="dim">prozedural, animiert</span></td>
-      <td class="num">0 MiB</td><td class="num">${Math.round(npcTriangles).toLocaleString('de-CH')}</td>
-      <td class="num">prozedural</td>
-      <td class="num">0,00 s</td><td class="dim">Referenz ganz links, gehende Animation.</td></tr>
-    ${rows.join('')}</tbody></table>`;
-}
+const roles = document.querySelector<HTMLSelectElement>('#role')!;
+const turntable = document.querySelector<HTMLInputElement>('#turntable')!;
 
 /** Scales an import to human height and stands it on the ground, whatever unit it came in.
  *
@@ -146,9 +82,9 @@ function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged:
   for (const mesh of meshes) {
     mesh.computeWorldMatrix(true);
     mesh.refreshBoundingInfo({ applySkeleton: rigged });
-    const bounds = mesh.getBoundingInfo().boundingBox;
-    min = Vector3.Minimize(min, bounds.minimumWorld);
-    max = Vector3.Maximize(max, bounds.maximumWorld);
+    const box = mesh.getBoundingInfo().boundingBox;
+    min = Vector3.Minimize(min, box.minimumWorld);
+    max = Vector3.Maximize(max, box.maximumWorld);
   }
   const height = max.y - min.y;
   if (height < 0.001) return;
@@ -157,74 +93,96 @@ function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged:
   root.position.set(-((min.x + max.x) / 2) * scale, -min.y * scale, -((min.z + max.z) / 2) * scale);
 }
 
-async function load(candidate: Candidate, slot: number): Promise<void> {
-  status.textContent = `Lade ${candidate.title} …`;
-  const started = performance.now();
-  const response = await fetch(`/models/${candidate.file}`);
-  const bytes = await response.arrayBuffer();
-  const container = await LoadAssetContainerAsync(new File([bytes], candidate.file), scene);
-  const seconds = (performance.now() - started) / 1000;
+const shown = new Map<string, TransformNode>();
 
+function rowFor(entry: CatalogueEntry): string {
+  const rig = entry.joints
+    ? `✓ ${entry.joints}${entry.animation ? ` · ${entry.animation}` : ' · kein Clip'}`
+    : '—';
+  const caveat = entry.caveat ? `<br><span class="warn">⚠ ${entry.caveat}</span>` : '';
+  const here = shown.has(entry.file) ? ' class="here"' : '';
+  return `<tr${here}><td><strong>${entry.title}</strong><br><span class="dim">${entry.file}</span></td>
+    <td>${ROLE_LABEL[entry.role]}</td>
+    <td class="dim">${entry.author}<br><span class="dim">${entry.licence}</span>${caveat}</td>
+    <td class="num">${entry.megabytes.toFixed(1)} MiB</td>
+    <td class="num">${entry.triangles.toLocaleString('de-CH')}</td>
+    <td class="num">${rig}</td></tr>`;
+}
+
+function describe(): void {
+  const npcTriangles = reference.root
+    .getChildMeshes()
+    .reduce((sum, mesh) => sum + mesh.getTotalIndices() / 3, 0);
+  const rigged = CATALOGUE.filter((entry) => entry.joints > 0).length;
+  const order: ModelRole[] = [
+    'tobi',
+    'police',
+    'security',
+    'dancer',
+    'bargirl',
+    'tourist',
+    'resident',
+    'yoga',
+    'beach',
+    'none',
+  ];
+  const sorted = order.flatMap((role) => entriesForRole(role));
+  table.innerHTML = `<p class="dim">${CATALOGUE.length} Dateien, ${rigged} davon mit Skelett.
+    Alle Sketchfab-Modelle sind CC-BY-4.0 und brauchen Namensnennung.
+    Zum Vergleich: die heutige prozedurale Figur kostet
+    <strong>${Math.round(npcTriangles).toLocaleString('de-CH')}</strong> Dreiecke und 0 Byte.</p>
+    <table><thead><tr><th>Modell</th><th>Rolle</th><th>Autor · Lizenz</th><th>Datei</th>
+    <th>Dreiecke</th><th>Skelett</th></tr></thead><tbody>${sorted.map(rowFor).join('')}</tbody></table>`;
+}
+
+async function load(entry: CatalogueEntry, slot: number): Promise<void> {
+  status.textContent = `Lade ${entry.title} (${entry.megabytes.toFixed(1)} MiB) …`;
+  const container = await LoadAssetContainerAsync(`/models/${entry.file}`, scene);
   const copy = container.instantiateModelsToScene((name) => name, false, {
     doNotInstantiate: true,
   });
   const root = copy.rootNodes[0];
   if (!(root instanceof TransformNode)) return;
   const meshes = root.getChildMeshes().filter((mesh) => mesh.getTotalVertices() > 0);
-  const rigged = copy.animationGroups.length > 0;
-  normalise(root, meshes, rigged);
-  root.position.x += (slot - 0.5) * SPACING;
+  normalise(root, meshes, entry.joints > 0);
+  root.position.x += slot * SPACING;
   // A file that brought its own clip plays it; the static ones have nothing to play.
   for (const group of copy.animationGroups) group.play(true);
-
-  const triangles = meshes.reduce((sum, mesh) => sum + mesh.getTotalIndices() / 3, 0);
-  loaded.push({
-    candidate,
-    root,
-    rigged,
-    joints: copy.skeletons[0]?.bones.length ?? 0,
-    triangles: Math.round(triangles),
-    seconds,
-    megabytes: bytes.byteLength / 1048576,
-  });
-  describe();
+  shown.set(entry.file, root);
 }
 
-async function loadAll(): Promise<void> {
-  for (const [slot, candidate] of CANDIDATES.entries()) await load(candidate, slot);
-  const rigged = loaded.filter((entry) => entry.rigged).length;
-  status.textContent = `${loaded.length} geladen, davon ${rigged} mit Skelett und eigener Animation.`;
+async function showRole(role: ModelRole): Promise<void> {
+  for (const node of shown.values()) node.dispose(false, true);
+  shown.clear();
+  describe();
+  const entries = entriesForRole(role);
+  // The camera looks down -Z in a left-handed scene, so a larger x renders further left. The
+  // reference figure takes the leftmost slot; the models line up to its right.
+  reference.root.position.x = entries.length * SPACING;
+  camera.setTarget(new Vector3((entries.length * SPACING) / 2, 1, 0));
+  camera.radius = 5 + entries.length * 1.6;
+  for (const [slot, entry] of entries.entries()) await load(entry, slot);
+  const heavy = entries.reduce((sum, entry) => sum + entry.triangles, 0);
+  status.textContent = `${ROLE_LABEL[role]}: ${entries.length} Modelle, ${heavy.toLocaleString('de-CH')} Dreiecke zusammen. Ganz links die heutige Figur.`;
+  describe();
   document.body.dataset.ready = 'true';
 }
 
-const focus = document.querySelector<HTMLSelectElement>('#focus')!;
-focus.addEventListener('change', () => {
-  const chosen = focus.value;
-  for (const entry of loaded)
-    entry.root.setEnabled(chosen === 'all' || chosen === entry.candidate.file);
-  reference.root.setEnabled(chosen === 'all' || chosen === 'npc');
-  const target = loaded.find((entry) => entry.candidate.file === chosen);
-  camera.setTarget(
-    chosen === 'all'
-      ? new Vector3(0, 1, 0)
-      : new Vector3(
-          chosen === 'npc' ? reference.root.position.x : (target?.root.position.x ?? 0),
-          1,
-          0,
-        ),
-  );
-  camera.radius = chosen === 'all' ? 9 : 3.4;
-});
-
-const turntable = document.querySelector<HTMLInputElement>('#turntable')!;
+roles.innerHTML = (Object.keys(ROLE_LABEL) as ModelRole[])
+  .filter((role) => entriesForRole(role).length > 0)
+  .map(
+    (role) =>
+      `<option value="${role}">${ROLE_LABEL[role]} (${entriesForRole(role).length})</option>`,
+  )
+  .join('');
+roles.addEventListener('change', () => void showRole(roles.value as ModelRole));
 
 let time = 0;
 engine.runRenderLoop(() => {
   const delta = Math.min(0.05, engine.getDeltaTime() / 1000);
   time += delta;
-  // The reference figure walks; the imports cannot, so they only turn on the spot.
   animateCharacter(reference, 'walk', time, 0);
-  if (turntable.checked) for (const entry of loaded) entry.root.rotation.y += delta * 0.5;
+  if (turntable.checked) for (const node of shown.values()) node.rotation.y += delta * 0.5;
   scene.render();
   document.querySelector('#fps')!.textContent =
     `${engine.getFps().toFixed(0)} FPS · ${Math.round(scene.getActiveIndices() / 3).toLocaleString('de-CH')} Dreiecke im Bild`;
@@ -240,6 +198,7 @@ window.addEventListener(
   { once: true },
 );
 
-void loadAll().catch((error: unknown) => {
+describe();
+void showRole('police').catch((error: unknown) => {
   status.textContent = `Fehler: ${String(error)}`;
 });

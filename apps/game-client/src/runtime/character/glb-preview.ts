@@ -3,6 +3,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 import type { CharacterRig } from './modular/rig.js';
+import { CATALOGUE, entryFor, type CatalogueEntry } from './glb-catalogue.js';
 
 /** Proof of concept: puts downloaded GLB figures into a running level in place of NPC bodies.
  *
@@ -10,36 +11,34 @@ import type { CharacterRig } from './modular/rig.js';
  * files themselves — is fetched only then. The production bundle keeps its size, and the models
  * stay in the owner's local `models/` folder, which the dev server serves and no build ships.
  *
- * Two very different kinds of file end up here. `sam` carries a 52-joint skeleton and an idle
- * animation, so it behaves like a character. The Sketchfab downloads are single static meshes:
- * they stand still while the rig walks around underneath them, which is the point of showing them.
+ * Two very different kinds of file end up here. Three carry a skeleton and behave like characters;
+ * the rest are single static meshes that stand still while the rig walks around underneath them,
+ * which is exactly what the preview is meant to make visible. `glb-catalogue.ts` says which is
+ * which, and which role each file was downloaded for.
  */
 
-interface Model {
-  file: string;
-  /** True when the file brings its own skeleton and animation. */
-  rigged: boolean;
-  /** How many NPCs get this model. Each copy costs its full triangle count. */
-  copies: number;
-}
-
-const CATALOGUE = {
-  sam: { file: 'sam.glb', rigged: true, copies: 1 },
-  nurse: { file: 'sexy_nurse_002.glb', rigged: false, copies: 4 },
-  girl: { file: 'girl_sexy.glb', rigged: false, copies: 2 },
-} as const satisfies Record<string, Model>;
-
-export type GlbPreviewChoice = keyof typeof CATALOGUE;
-
-const TARGET_HEIGHT = 1.78;
-
-/** Reads `?glb=sam` (or `?glb=1` for the default) from the page URL. */
-export function glbPreviewChoice(search = window.location.search): GlbPreviewChoice | null {
+/** Reads `?glb=police` — the file name without its extension — from the page URL.
+ *
+ * `?glb=1` picks Sam, the only entry that arrives rigged *and* animated.
+ */
+export function glbPreviewChoice(search = window.location.search): CatalogueEntry | null {
   const value = new URLSearchParams(search).get('glb');
   if (value === null) return null;
-  if (value === '1' || value === '') return 'sam';
-  return value in CATALOGUE ? (value as GlbPreviewChoice) : null;
+  if (value === '1' || value === '') return entryFor('sam.glb') ?? null;
+  const wanted = value.toLowerCase();
+  return (
+    CATALOGUE.find((entry) => entry.file.replace(/\.glb$/i, '').toLowerCase() === wanted) ?? null
+  );
 }
+
+/** How many NPCs get this model. Each copy costs its full triangle count, so heavy files get one. */
+function copiesOf(entry: CatalogueEntry): number {
+  if (entry.triangles > 250_000) return 1;
+  if (entry.triangles > 80_000) return 2;
+  return 4;
+}
+
+const TARGET_HEIGHT = 1.78;
 
 /** Scales an import to Tobi's height and stands it on its own origin.
  *
@@ -71,25 +70,28 @@ function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged:
 export async function applyGlbPreview(
   scene: Scene,
   rigs: readonly CharacterRig[],
-  choice: GlbPreviewChoice | null = glbPreviewChoice(),
+  model: CatalogueEntry | null = glbPreviewChoice(),
 ): Promise<number> {
-  if (!choice || rigs.length === 0) return 0;
-  const model: Model = CATALOGUE[choice];
+  if (!model || rigs.length === 0) return 0;
+  const rigged = model.joints > 0;
   try {
     // Loading the glTF plugin here keeps it out of every build that does not ask for it.
     const [{ LoadAssetContainerAsync }] = await Promise.all([
       import('@babylonjs/core/Loading/sceneLoader.js'),
       import('@babylonjs/loaders/glTF/2.0/glTFLoader.js'),
-      // Only the extensions the downloaded files declare. `registerBuiltInGLTFExtensions()` would
-      // work too but drags in every extension Babylon knows — gaussian splatting, interactivity,
-      // OpenPBR — and half a megabyte of chunks the preview never touches.
+      // Only the three extensions the downloaded files declare — `female_police_v2.glb` and
+      // `locker_room_glamour-dancer.glb` list pbrSpecularGlossiness as *required* and refuse to
+      // load without it. `registerBuiltInGLTFExtensions()` would cover them too but drags in every
+      // extension Babylon knows — gaussian splatting, interactivity, OpenPBR — and half a megabyte
+      // of chunks the preview never touches.
       import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_unlit.js'),
       import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_specular.js'),
+      import('@babylonjs/loaders/glTF/2.0/Extensions/KHR_materials_pbrSpecularGlossiness.js'),
     ]);
     const container = await LoadAssetContainerAsync(`/models/${model.file}`, scene);
     if (scene.isDisposed) return 0;
 
-    const dressed = rigs.slice(0, model.copies);
+    const dressed = rigs.slice(0, copiesOf(model));
     for (const rig of dressed) {
       // The container instantiates skeletons and animation groups per copy, so several figures
       // can move independently instead of sharing one pose.
@@ -99,7 +101,7 @@ export async function applyGlbPreview(
       const root = copy.rootNodes[0];
       if (!(root instanceof TransformNode)) continue;
       const meshes = root.getChildMeshes().filter((mesh) => mesh.getTotalVertices() > 0);
-      normalise(root, meshes, model.rigged);
+      normalise(root, meshes, rigged);
       // Hangs off the rig root, so it follows the NPC's position and facing. A rigged model plays
       // its own clip on top; a static one simply gets carried around.
       root.parent = rig.root;
