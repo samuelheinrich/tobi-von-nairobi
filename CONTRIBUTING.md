@@ -1,5 +1,7 @@
 # Zusammenarbeit
 
+Die aktuelle Eigentümerentscheidung in [AGENTS.md](AGENTS.md) gilt vorrangig: Freizeitprojekt, keine GitHub-CI, nur gezielte lokale Prüfungen mit geringem Zeit- und Tokenaufwand.
+
 Diese Vereinbarung gilt für die Implementierung. Tooling und lokale Prüfungen sind eingerichtet. Das GitHub-Repository verwendet Pull Requests; `@samuelheinrich` ist der initiale Codeowner. Den tatsächlichen Stand dokumentiert [implementation-status.md](docs/development/implementation-status.md). [Vollständiger Workflow](docs/development/repository-and-workflow.md)
 
 ## Arbeitsweise
@@ -20,7 +22,7 @@ refactor(missions): extract objective handlers
 docs(api): document savegame endpoint
 ```
 
-Ein PR erklärt das konkrete Problem, das resultierende Verhalten und die tatsächlich ausgeführten Prüfungen. UI-/Gameänderungen zeigen Screenshot oder Clip. Schema-/Contentänderungen erklären Migration und Kompatibilität. Mindestens ein anderer Entwickler reviewed; offene Diskussionen und erforderliche CI-Prüfungen sind vor Merge abgeschlossen. Squash-Titel folgt Conventional Commits. `main` erhält nach dem dokumentierten Bootstrap ausschliesslich geprüfte PR-Merges.
+Ein PR erklärt das konkrete Problem, das resultierende Verhalten und die tatsächlich ausgeführten Prüfungen. UI-/Gameänderungen zeigen Screenshot oder Clip. Schema-/Contentänderungen erklären Migration und Kompatibilität. Reviews können Änderungen absichern; automatisierte CI-Prüfungen sind keine Merge-Voraussetzung. Squash-Titel folgt Conventional Commits. `main` erhält nach dem dokumentierten Bootstrap ausschliesslich geprüfte PR-Merges.
 
 ## Coding Standards
 
@@ -32,7 +34,7 @@ Keine unkontrollierten Produktions-`console.log()`-Aufrufe; den Logger mit Kateg
 
 ## Prüfungen vor einem PR
 
-Die in [README](README.md) aufgeführten Scripts bilden die gemeinsame Oberfläche. Relevante Unit-/Integrations-/E2E-Prüfungen ausführen und Ergebnisse ehrlich dokumentieren. Keine Tests hinzufügen, die nur eine triviale Implementierung nacherzählen. Spielregeln prüfen Invarianten, 3D-Adapter laufen im Browser, Datenbankregeln gegen PostgreSQL. Bei Änderungen an Verträgen auch die Verbraucher prüfen.
+Die Scripts in [README](README.md) stehen für freiwillige lokale Prüfungen bereit. Wähle bei Bedarf die kleinste passende Prüfung. Keine vollständigen Testketten als Standard, keine GitHub-Läufe und keine neuen Tests für triviale Änderungen. Aufwendige Prüfungen gehören in den [Test-Backlog](docs/development/test-backlog.md), bis der Eigentümer sie ausdrücklich beauftragt. Tatsächlich ausgeführte Prüfungen kurz dokumentieren.
 
 ## Assets und Inhalte
 

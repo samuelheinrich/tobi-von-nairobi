@@ -1,5 +1,7 @@
 # Übergabe: Fly High, Tutorial und Bali-Küste
 
+> Aktualisierung durch den Eigentümer: Keine weiteren GitHub-CI-Läufe. Nur lokale, zeit- und tokensparende Prüfungen. Die Anweisungen zur CI-Reparatur und Wiederherstellung verpflichtender Checks in dieser älteren Übergabe sind überholt. Es gilt [AGENTS.md](../../AGENTS.md).
+
 Stand: 14. September 2026. Diese Übergabe ergänzt und teilweise ersetzt [die vorherige Übergabe](handover-2026-09-14.md). Der verbindliche Funktionsstand steht in [implementation-status.md](implementation-status.md).
 
 ## Auftrag und gelieferter Umfang

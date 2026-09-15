@@ -1,5 +1,7 @@
 # Übergabe: Stimmen, Sprachausgabe und echte Soundeffekte
 
+> Aktualisierung durch den Eigentümer: Keine weiteren GitHub-CI-Läufe. Nur lokale, zeit- und tokensparende Prüfungen. Die Anweisungen zur CI-Reparatur und Wiederherstellung verpflichtender Checks in dieser älteren Übergabe sind überholt. Es gilt [AGENTS.md](../../AGENTS.md).
+
 Stand: 14. September 2026. Branch `feature/fly-high-and-bali`, Stand `460ce77`, gepusht. Diese Übergabe ergänzt [Fly High und Bali-Küste](handover-2026-09-14-fly-high-and-bali.md) und [die erste Übergabe](handover-2026-09-14.md). Der verbindliche Funktionsstand steht in [implementation-status.md](implementation-status.md).
 
 ## ⚠️ Zuerst lesen: CI läuft auf `main` in den Timeout
