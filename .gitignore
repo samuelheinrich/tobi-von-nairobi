@@ -21,3 +21,7 @@ fixpermission.sh
 
 # Lokale 3D-Modell-Downloads. Grosse Binaerdateien und fremde Lizenzen bleiben lokal.
 /models/
+
+# Lokale Python-/Blender-Script-Caches.
+__pycache__/
+*.pyc
