@@ -44,6 +44,30 @@ Ohne Schritt 3 lädt das Modell trotzdem, es steht nur unter «ohne Zuordnung».
 stehen ausschliesslich gemessene Werte. Von Hand gepflegt sind nur die Rollenzuordnung und die
 Vorbehalte in `glb-catalogue.ts`.
 
+## Rollen und Grössenkorrektur
+
+Rollen stehen in `ROLE_BY_SOURCE` in `glb-catalogue.ts`. Eine davon ist besonders:
+
+**`adult` — «18+ · Geheimclub».** Modelle für den versteckten Club in Nana Plaza. Bewusst eine
+eigene Rolle, damit sie nicht versehentlich in einer normalen Levelbesetzung landen: wer NPCs
+verteilt, greift auf `entriesForRole('dancer')` und ähnliche zu, nie auf «alles». Aktuell sechs
+Modelle.
+
+**Grössenkorrektur.** Beide Ansichten skalieren ein Modell so, dass seine Bounding Box 1,78 m hoch
+wird. Das stimmt für eine aufrecht stehende Figur und für keine andere Haltung — eine sitzende
+Figur wird dann sitzend so gross wie alle anderen stehend. Für solche Fälle gibt es
+`SCALE_CORRECTION` in `glb-catalogue.ts`:
+
+```ts
+const SCALE_CORRECTION: Record<string, number> = {
+  'yoga-girl-naked-sitting.glb': 0.5,
+};
+```
+
+Der Faktor wirkt **nach** der Normierung. Er gehört bewusst in den Katalog und nicht in die GLB:
+`reduce.mjs` baut die `-game.glb` aus dem Original neu, eine eingebackene Skalierung wäre beim
+nächsten Lauf weg.
+
 ## Was die Pipeline tut
 
 | Schritt                 | Zweck                                                                                       |

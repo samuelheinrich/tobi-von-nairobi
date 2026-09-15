@@ -22,17 +22,6 @@
     "licence": "CC-BY-4.0"
   },
   {
-    "file": "female_police_v2-game.glb",
-    "source": "female_police_v2.glb",
-    "megabytes": 0.65,
-    "triangles": 24999,
-    "sourceTriangles": 34252,
-    "joints": 0,
-    "animations": [],
-    "author": "Michael Constantine",
-    "licence": "CC-BY-4.0"
-  },
-  {
     "file": "girl_sexy-game.glb",
     "source": "girl_sexy.glb",
     "megabytes": 0.77,
@@ -291,17 +280,6 @@
     "licence": "CC-BY-4.0"
   },
   {
-    "file": "tpose/charter_t-pose-game.glb",
-    "source": "tpose/charter_t-pose.glb",
-    "megabytes": 1.9,
-    "triangles": 26524,
-    "sourceTriangles": 26524,
-    "joints": 66,
-    "animations": [],
-    "author": "Yury Misiyuk",
-    "licence": "CC-BY-4.0"
-  },
-  {
     "file": "tpose/elegance_in_leather-woman-game.glb",
     "source": "tpose/elegance_in_leather-woman.glb",
     "megabytes": 1.84,
@@ -354,17 +332,6 @@
     "joints": 86,
     "animations": [],
     "author": "Mike Alger",
-    "licence": "CC-BY-4.0"
-  },
-  {
-    "file": "tpose/t_-_pose-man-beach-game.glb",
-    "source": "tpose/t_-_pose-man-beach.glb",
-    "megabytes": 2.36,
-    "triangles": 24900,
-    "sourceTriangles": 466744,
-    "joints": 0,
-    "animations": [],
-    "author": "kafkaall",
     "licence": "CC-BY-4.0"
   },
   {

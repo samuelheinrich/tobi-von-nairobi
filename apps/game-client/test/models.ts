@@ -77,7 +77,12 @@ const turntable = document.querySelector<HTMLInputElement>('#turntable')!;
  *
  * A rigged avatar authored in metres is left alone: rescaling it only fights the skeleton.
  */
-function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged: boolean): void {
+function normalise(
+  root: TransformNode,
+  meshes: readonly AbstractMesh[],
+  rigged: boolean,
+  correction = 1,
+): void {
   let min = new Vector3(Infinity, Infinity, Infinity);
   let max = new Vector3(-Infinity, -Infinity, -Infinity);
   for (const mesh of meshes) {
@@ -89,7 +94,9 @@ function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged:
   }
   const height = max.y - min.y;
   if (height < 0.001) return;
-  const scale = rigged && height > 1.4 && height < 2.2 ? 1 : TARGET_HEIGHT / height;
+  // A pose that is not upright measures the wrong thing, so the catalogue may correct it.
+  const fitted = rigged && height > 1.4 && height < 2.2 ? 1 : TARGET_HEIGHT / height;
+  const scale = fitted * correction;
   root.scaling.scaleInPlace(scale);
   root.position.set(-((min.x + max.x) / 2) * scale, -min.y * scale, -((min.z + max.z) / 2) * scale);
 }
@@ -149,7 +156,7 @@ async function load(entry: CatalogueEntry, slot: number): Promise<void> {
   const root = copy.rootNodes[0];
   if (!(root instanceof TransformNode)) return;
   const meshes = root.getChildMeshes().filter((mesh) => mesh.getTotalVertices() > 0);
-  normalise(root, meshes, entry.joints > 0);
+  normalise(root, meshes, entry.joints > 0, entry.scale);
   root.position.x += slot * SPACING;
   // A file that brought its own clip plays it; the static ones have nothing to play.
   for (const group of copy.animationGroups) group.play(true);

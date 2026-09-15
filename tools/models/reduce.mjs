@@ -304,6 +304,9 @@ if (refused.length) {
 if (broken.length) {
   console.log(`\nNicht lesbar, bitte prüfen: ${broken.join(', ')}`);
 }
+// Always, not only after a rebuild: deleting a model has to reach the catalogue too.
+if (!ANALYSE) writeCatalogue();
+
 if (done.length) {
   const tri = done.reduce((a, r) => a + r.before.triangles, 0);
   const triAfter = done.reduce((a, r) => a + r.after.triangles, 0);
@@ -313,7 +316,6 @@ if (done.length) {
     `\n${done.length} Modelle:  ${fmt(tri)} → ${fmt(triAfter)} Dreiecke (−${pct(tri, triAfter)})` +
       `   ${mb.toFixed(1)} → ${mbAfter.toFixed(1)} MiB (−${pct(mb, mbAfter)})`,
   );
-  writeCatalogue();
   const rigged = done.filter((r) => r.after.joints);
   console.log(
     rigged.length

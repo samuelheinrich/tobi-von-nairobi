@@ -25,6 +25,7 @@ export type ModelRole =
   | 'resident'
   | 'yoga'
   | 'beach'
+  | 'adult'
   | 'none';
 
 export const ROLE_LABEL: Record<ModelRole, string> = {
@@ -37,6 +38,7 @@ export const ROLE_LABEL: Record<ModelRole, string> = {
   resident: 'WG-Bewohner',
   yoga: 'Yogagruppe',
   beach: 'Strandgäste',
+  adult: '18+ · Geheimclub',
   none: 'ohne Zuordnung',
 };
 
@@ -46,9 +48,7 @@ const ROLE_BY_SOURCE: Record<string, ModelRole> = {
   'tobi-2-traegershirt.glb': 'tobi',
   'tobi-2-traegershirt-drunken-dynamic-face.glb': 'tobi',
   'police.glb': 'police',
-  'female_police_v2.glb': 'police',
   'security_guard.glb': 'security',
-  'tpose/charter_t-pose.glb': 'security',
   'kayla-dancer.glb': 'dancer',
   'locker_room_glamour-dancer.glb': 'dancer',
   'nina-dancer.glb': 'dancer',
@@ -67,9 +67,29 @@ const ROLE_BY_SOURCE: Record<string, ModelRole> = {
   'tpose/fra_paolo_da_divago_-_t_pose-hippie-moench.glb': 'resident',
   'yoga-girl-naked-sitting.glb': 'yoga',
   'female-sporty1.glb': 'beach',
+  // Für den versteckten Club in Nana Plaza. Nicht in den normalen Levelbesetzungen verwenden.
+  'girl_sexy.glb': 'adult',
+  'sexy_nurse_002.glb': 'adult',
+  'tpose/18+/bdsm_naked_women_milf_t-pose.glb': 'adult',
+  'tpose/18+/female_nude_3d_model_in_t_pose.glb': 'adult',
+  'tpose/18+/nude_woman_hip_hop_dancing.glb': 'adult',
+  'tpose/18+/sexy_girl_dancing.glb': 'adult',
   'tpose/beige_athleisure_silhouette-woman-sport.glb': 'beach',
   'tpose/basic_model_of_a_female_character__t-pose_asset-beach.glb': 'beach',
-  'tpose/t_-_pose-man-beach.glb': 'beach',
+};
+
+/** Correction for models the automatic sizing gets wrong, keyed by source file name.
+ *
+ * Both viewers scale an import so its bounding box is 1,78 m tall. That is right for a figure
+ * standing upright and wrong for every other pose: a seated model ends up as tall sitting as
+ * everyone else is standing. The factor here is applied afterwards.
+ *
+ * This lives in the catalogue rather than in the GLB on purpose — `tools/models/reduce.mjs`
+ * rebuilds those files from their originals, so a baked-in scale would not survive the next run.
+ */
+const SCALE_CORRECTION: Record<string, number> = {
+  // Sitzt im Schneidersitz; auf Sitzhöhe normiert wäre sie überlebensgross.
+  'yoga-girl-naked-sitting.glb': 0.5,
 };
 
 /** Things a licence does not settle, keyed by source file name. */
@@ -98,6 +118,8 @@ export interface CatalogueEntry {
   /** 0 when the file is a single static mesh. */
   joints: number;
   animation: string | null;
+  /** Multiplier applied after height normalisation; 1 for everything that stands upright. */
+  scale: number;
   caveat?: string;
 }
 
@@ -126,6 +148,7 @@ export const CATALOGUE: readonly CatalogueEntry[] = measured
       sourceTriangles: m.sourceTriangles,
       joints: m.joints,
       animation: m.animations[0] ?? null,
+      scale: SCALE_CORRECTION[m.source] ?? 1,
       ...(caveat ? { caveat } : {}),
     };
   })

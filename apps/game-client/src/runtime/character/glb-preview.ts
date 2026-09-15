@@ -56,7 +56,12 @@ const TARGET_HEIGHT = 1.78;
  * Returns without touching anything when the file already arrives at a plausible human height —
  * a rigged avatar is authored in metres, and rescaling it would only fight the skeleton.
  */
-function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged: boolean): void {
+function normalise(
+  root: TransformNode,
+  meshes: readonly AbstractMesh[],
+  rigged: boolean,
+  correction = 1,
+): void {
   let min = new Vector3(Infinity, Infinity, Infinity);
   let max = new Vector3(-Infinity, -Infinity, -Infinity);
   for (const mesh of meshes) {
@@ -68,7 +73,9 @@ function normalise(root: TransformNode, meshes: readonly AbstractMesh[], rigged:
   }
   const height = max.y - min.y;
   if (height < 0.001) return;
-  const scale = rigged && height > 1.4 && height < 2.2 ? 1 : TARGET_HEIGHT / height;
+  // A pose that is not upright measures the wrong thing, so the catalogue may correct it.
+  const fitted = rigged && height > 1.4 && height < 2.2 ? 1 : TARGET_HEIGHT / height;
+  const scale = fitted * correction;
   root.scaling.scaleInPlace(scale);
   root.position.set(-((min.x + max.x) / 2) * scale, -min.y * scale, -((min.z + max.z) / 2) * scale);
 }
@@ -115,7 +122,7 @@ export async function applyGlbPreview(
       const root = copy.rootNodes[0];
       if (!(root instanceof TransformNode)) continue;
       const meshes = root.getChildMeshes().filter((mesh) => mesh.getTotalVertices() > 0);
-      normalise(root, meshes, rigged);
+      normalise(root, meshes, rigged, model.scale);
       // Hangs off the rig root, so it follows the NPC's position and facing. A rigged model plays
       // its own clip on top; a static one simply gets carried around.
       root.parent = rig.root;
