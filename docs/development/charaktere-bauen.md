@@ -207,3 +207,30 @@ der Retargeter schlägt seine Quellknoten über den Namen nach. Kollidieren zwei
 Kürzen, bleibt alles unverändert und das Script sagt es.
 
 Daran scheiterte `gabber-dutch` zuerst mit «Retarget produced no tracks».
+
+## Körpergrössen
+
+Alle besetzten Figuren liegen zwischen **1,70 und 1,88 m** und treffen ihre konfigurierte Höhe auf
+9 mm genau. Gemessen wird im Studio über `window.__studio()`, das die tatsächliche Weltausdehnung
+der Figur meldet — nicht die Zahl aus der Konfiguration.
+
+Tobi stand vorher auf **2,17 m**. Die Zahl stammte aus der Vermessung der alten prozeduralen
+Cartoon-Figur und machte ihn, sobald echte Modelle danebenstanden, einen Kopf grösser als jeden
+NPC — bei einer Kollisionskapsel von 1,80 m. Jetzt 1,88: die grösste Figur der Besetzung, aber im
+menschlichen Bereich.
+
+### Fünf Modelle mit unbrauchbarer Ruhepose
+
+Die vier Gabber und die Pole-Tänzerin sind **nicht besetzt**, ihre Konfigurationen bleiben aber
+erhalten. Ihre Ruhepose liegt flach entlang Z — Kopf bei +3,6, Füsse bei −4,0 — und aufgerichtet
+werden sie nur durch ihre Animation.
+
+Das bricht die Skalierung: die Laufzeit vermisst eine Figur **in Ruhe**, liest dort eine Höhe von
+0,36 und skaliert mit Faktor 5. Gerendert ergab das 3,4 bis 9 Meter.
+
+Erfolglos versucht: anders splitten, ein FBX-Rundlauf über `glb_to_fbx.py`/`fbx_to_glb.py`, und das
+Backen der Wrapper-Rotation in Armature und Mesh (`flatten-transforms.py`). Alle drei liefern
+identische Messwerte, die flache Ruhepose steckt also in den Downloads selbst.
+
+Sie brauchen einen Export mit **stehender Ruhepose**, bevor sie zurück in die Besetzung können.
+Solange halten Platzhalter die Rolle `raver`.

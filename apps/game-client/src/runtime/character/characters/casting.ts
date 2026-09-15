@@ -4,14 +4,9 @@ import {
   copConfig,
   elyConfig,
   fitnessConfig,
-  gabberAnitaConfig,
-  gabberDutchConfig,
-  gabberFemaleConfig,
-  gabberSjonnieConfig,
   hipHopConfig,
   ladyboyConfig,
   miaConfig,
-  poleConfig,
   samConfig,
   valeryConfig,
 } from './cast.js';
@@ -70,7 +65,6 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: miaConfig },
     { config: hipHopConfig },
     { config: elyConfig },
-    { config: poleConfig },
     stand(valeryConfig),
   ],
   dancer: [
@@ -79,7 +73,6 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: dancerSlipConfig },
     { config: hipHopConfig },
     { config: elyConfig },
-    { config: poleConfig },
   ],
   ladyboyDancer: [{ config: ladyboyConfig }],
   vendor: [stand(townsfolkConfigs[2]!), stand(valeryConfig)],
@@ -89,12 +82,15 @@ export const cast: Record<CastRole, CastMember[]> = {
   yoga: [stand(fitnessConfig)],
   beach: [{ config: fitnessConfig }, stand(townsfolkConfigs[0]!)],
   // Street Parade. Thin instances carry the route; these are the figures near the camera.
-  raver: [
-    { config: gabberAnitaConfig },
-    { config: gabberFemaleConfig },
-    { config: gabberSjonnieConfig },
-    { config: gabberDutchConfig },
-  ],
+  //
+  // The four gabbers and the pole dancer are *not* cast, although their configs still exist. Their
+  // rest pose lies flat along Z — head at +3.6, feet at -4.0 — and only the animation stands them
+  // up. The runtime measures a character at rest to scale it, so it reads a height of 0.36 and
+  // scales by five: they rendered between 3.4 and 9 metres tall. Splitting them differently, an
+  // FBX round-trip and baking the wrapper rotation all left it unchanged, so the flat rest pose is
+  // in the downloads themselves. They need re-exporting with a standing rest pose before they can
+  // come back. Placeholders hold the part meanwhile.
+  raver: [stand(townsfolkConfigs[2]!), stand(townsfolkConfigs[3]!), stand(dancerBeachConfig)],
 };
 
 /** Tracks which one-per-level models a level has already handed out. */

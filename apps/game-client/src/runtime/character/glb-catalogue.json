@@ -509,6 +509,69 @@
     "licence": "CC-BY-4.0"
   },
   {
+    "file": "work/gabber-fix/sjonnie-game.glb",
+    "source": "work/gabber-fix/sjonnie.glb",
+    "megabytes": 1.56,
+    "triangles": 19821,
+    "sourceTriangles": 19821,
+    "joints": 53,
+    "animations": [
+      "GLTF_created_0|GLTF_created_0|Animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/gabber-split/anita/anita-01-game.glb",
+    "source": "work/gabber-split/anita/anita-01.glb",
+    "megabytes": 2.12,
+    "triangles": 39863,
+    "sourceTriangles": 39863,
+    "joints": 53,
+    "animations": [
+      "Animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/gabber-split/dutch/dutch-01-game.glb",
+    "source": "work/gabber-split/dutch/dutch-01.glb",
+    "megabytes": 1.27,
+    "triangles": 20372,
+    "sourceTriangles": 20372,
+    "joints": 66,
+    "animations": [],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/gabber-split/female/female-01-game.glb",
+    "source": "work/gabber-split/female/female-01.glb",
+    "megabytes": 1.53,
+    "triangles": 24800,
+    "sourceTriangles": 24800,
+    "joints": 66,
+    "animations": [
+      "Animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/gabber-split/sjonnie/sjonnie-01-game.glb",
+    "source": "work/gabber-split/sjonnie/sjonnie-01.glb",
+    "megabytes": 1.58,
+    "triangles": 19821,
+    "sourceTriangles": 19821,
+    "joints": 53,
+    "animations": [
+      "Animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
     "file": "work/quaternius/man-buzzed-dark-game.glb",
     "source": "work/quaternius/man-buzzed-dark.glb",
     "megabytes": 1.05,

@@ -11,6 +11,7 @@ import type { Point2 } from '@tobi/game-core';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
 import { animateDance } from '../character/dance-system.js';
+import { FarNpcModels } from '../character/far-npc-models.js';
 import { appearance, type Appearance } from '../character/modular/presets.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { material } from './materials.js';
@@ -21,13 +22,18 @@ import { navigationObstacles, sightBlockers } from './nav-obstacles.js';
 export const PARADE_CROWD_SIZE = 180;
 
 /** Fills the route with dancers instead of lining them up: walk the polyline, then fan out
- * sideways and keep whatever the navigation grid says is standable. */
+ * sideways and keep whatever the navigation grid says is standable.
+ *
+ * Candidates are collected along the **whole** route and then thinned to the limit. Stopping as
+ * soon as the limit was reached packed every dancer onto the first leg along the Utoquai and left
+ * the Quaibruecke and everything past it empty.
+ */
 export function crowdAlongRoute(
   route: readonly Point2[],
   nav: NavigationGrid,
   limit: number,
 ): Point2[] {
-  const positions: Point2[] = [];
+  const candidates: Point2[] = [];
   const offsets = [2.6, -2.6, 4.2, -4.2, 5.8, -5.8, 7.4, -7.4];
   for (let leg = 0; leg + 1 < route.length; leg++) {
     const from = route[leg]!,
@@ -43,18 +49,22 @@ export function crowdAlongRoute(
       const baseX = from.x + dx * t,
         baseZ = from.z + dz * t;
       for (const [index, offset] of offsets.entries()) {
-        if (positions.length >= limit) return positions;
         // Deterministic jitter avoids a parade that marches in perfect rows.
         const wobble = Math.sin(travelled * 1.7 + index * 2.3) * 0.55;
         const point = {
           x: baseX + nx * (offset + wobble),
           z: baseZ + nz * (offset + wobble) + Math.cos(travelled + index) * 0.4,
         };
-        if (nav.open(point)) positions.push(point);
+        if (nav.open(point)) candidates.push(point);
       }
     }
   }
-  return positions;
+  if (candidates.length <= limit) return candidates;
+  // Even stride over the collected order, which runs from the start of the route to the end.
+  const step = candidates.length / limit;
+  const spread: Point2[] = [];
+  for (let i = 0; i < limit; i++) spread.push(candidates[Math.floor(i * step)]!);
+  return spread;
 }
 
 /** Hundreds of individually reactive dancers rendered with six thin-instance batches. */
@@ -70,6 +80,7 @@ export class ParadeCrowd {
   }[] = [];
   private readonly near: { rig: NpcRig; id: number | null }[] = [];
   private readonly looks: Appearance[];
+  private readonly models: FarNpcModels;
   private allocation = 1;
   private time = 0;
   private paintTime = 0;
@@ -84,6 +95,15 @@ export class ParadeCrowd {
     this.solids = sightBlockers(colliders);
     this.nav = new NavigationGrid(level.navigationBounds!, navigationObstacles(colliders), 0.3);
     this.system = new ReactiveCrowd(crowdAlongRoute(route, this.nav, limit));
+    this.models = new FarNpcModels(
+      scene,
+      this.system.people.map((p) => ({
+        id: p.id,
+        role: 'raver',
+        position: () => ({ x: p.position.x, y: 0, z: p.position.z }),
+        yaw: p.id * 2.399,
+      })),
+    );
     this.looks = diversifyFemaleGroup(
       this.system.people.map((p) => appearance('club_guest', p.id)),
     );
@@ -97,6 +117,7 @@ export class ParadeCrowd {
         'club_guest',
       );
       rig.root.setEnabled(false);
+      rig.castRole = 'raver';
       this.near.push({ rig, id: null });
     }
     const surface = material(scene, 'crowd-instance-white', '#ffffff');
@@ -224,6 +245,8 @@ export class ParadeCrowd {
       rotation = Quaternion.Identity(),
       position = Vector3.Zero();
     const nearIds = new Set(this.near.map((s) => s.id));
+    if (this.scene.activeCamera)
+      this.models.update(this.scene.activeCamera.globalPosition, nearIds);
     const hidden = Vector3.Zero();
     for (const batch of this.batches) {
       for (const p of this.system.people) {
@@ -241,13 +264,19 @@ export class ParadeCrowd {
           batch.offset.y + Math.abs(dance) * 0.06,
           p.position.z,
         );
-        Matrix.ComposeToRef(nearIds.has(p.id) ? hidden : batch.size, rotation, position, matrix);
+        Matrix.ComposeToRef(
+          nearIds.has(p.id) || this.models.has(p.id) ? hidden : batch.size,
+          rotation,
+          position,
+          matrix,
+        );
         matrix.copyToArray(batch.matrices, p.id * 16);
       }
       batch.mesh.thinInstanceBufferUpdated('matrix');
     }
   }
   public dispose(): void {
+    this.models.dispose();
     for (const slot of this.near) slot.rig.dispose();
     for (const batch of this.batches) batch.mesh.dispose();
   }

@@ -114,6 +114,37 @@ async function load() {
     action: character?.controller.action,
     time: character?.controller.time,
     hips: character?.rig.joints.get('hips')?.node.rotationQuaternion?.asArray(),
+    // Measured world height of what is actually on screen, not the configured number.
+    world: (() => {
+      if (!character) return null;
+      let lo = Infinity,
+        hi = -Infinity;
+      for (const mesh of character.root.getChildMeshes()) {
+        if (!mesh.getTotalVertices()) continue;
+        mesh.computeWorldMatrix(true);
+        mesh.refreshBoundingInfo({ applySkeleton: true });
+        const box = mesh.getBoundingInfo().boundingBox;
+        lo = Math.min(lo, box.minimumWorld.y);
+        hi = Math.max(hi, box.maximumWorld.y);
+      }
+      return Number.isFinite(hi - lo) ? Number((hi - lo).toFixed(3)) : null;
+    })(),
+    configured: character?.config.height,
+    // Joint-based height for comparison: head to the lower foot, in world units.
+    joints: (() => {
+      if (!character) return null;
+      const at = (key: 'head' | 'leftFoot' | 'rightFoot') => {
+        const node = character!.rig.joints.get(key)?.node;
+        if (!node) return null;
+        node.computeWorldMatrix(true);
+        return node.getAbsolutePosition().y;
+      };
+      const head = at('head'),
+        l = at('leftFoot'),
+        r = at('rightFoot');
+      if (head === null || l === null || r === null) return null;
+      return Number((head - Math.min(l, r)).toFixed(3));
+    })(),
   });
   document.body.dataset.ready = 'true';
 }

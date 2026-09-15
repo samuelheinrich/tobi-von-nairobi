@@ -21,7 +21,10 @@ export const tobiBones = {
 export const tobiConfig: CharacterConfig = {
   id: 'tobi',
   model: '/characters/tobi.glb',
-  height: 2.17,
+  // 1,88 m: the tallest of the cast, which runs 1,70–1,85, and a little above the 1,8 m collision
+  // capsule the way a figure normally sits over its capsule. The old 2,17 came from measuring the
+  // procedural cartoon Tobi and made him a head taller than every NPC once real models arrived.
+  height: 1.88,
   mouthOffset: [0, 0.015, 0.09],
   rotation: [0, 0, 0],
   bones: tobiBones,
