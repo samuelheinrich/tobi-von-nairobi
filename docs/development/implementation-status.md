@@ -1,5 +1,7 @@
 # Implementierungsstand
 
+> Neueste Übergabe: [Charaktermodelle, Besetzung und offene Defekte](handover-2026-09-15-charaktere.md) — 15. September 2026.
+
 **NPCs im Spiel auf GLB umgestellt:** Die vorhandene Besetzung aus `characters/casting.ts` wird jetzt vom gemeinsamen NPC-Erzeuger verwendet – einschliesslich Polizei, Security, Zug, Flugzeug, WG und Bali. Nana-/Parade-Pools wechseln Modelle passend zur Rolle; die Fernmengen verwenden instanzierte GLB-Posen. Fehlende Rollen verwenden die definierten Platzhalter, Ladefehler behalten die prozedurale Darstellung. [Anbindung und Prüfstand](npc-glb-rollout.md).
 
 **Tobi-FBX-Clips:** Chicken Dance mit **C** im Stand sowie als automatischer Siegestanz (Steuerungshilfe und Tutorial ergänzt), Fight Dance für R, Aufnahme-Ausschnitt vor dem Trinken und neuer Wurf mit Release nach 0,88 s. Vier schlanke Animations-GLBs, vollständige Schulter-/Fingertracks, acht gezielte lokale Tests und Browserprüfung beider Skins. [Zuordnung und Abnahme](humanoid-animation-pipeline.md#vier-neue-tobi-fbx-clips).
@@ -15,6 +17,8 @@
 **Gesichtsüberarbeitung:** sieben modellierte Kopfformen, Augen mit Lidern/Iris/Pupille, Lippen, Nasen-/Ohrstruktur, Alters- und Hautdetails sowie angepasste Haarlinien. [Lokale Galerie und technische Details](modular-characters.md#gesichtssystem--überarbeitung-vom-15-september-2026).
 
 **15. September 2026 – Modulare Figuren:** gerundete Körper und Gesichter, rollenabhängige Kleidung, Polizei-/Security-Ausrüstung, gemeinsame Gelenke mit Händen/Knie/Ellenbogen, drei Distanzstufen und detaillierter Nahbereich für Nana/Parade. [Architektur, Galerie und lokale Prüfungen](modular-characters.md).
+
+> Neueste Übergabe: [Charaktermodelle und offene Defekte](handover-2026-09-15-charaktere.md) (15.09.2026).
 
 ## Nana-Ausbau · 14. September 2026
 
