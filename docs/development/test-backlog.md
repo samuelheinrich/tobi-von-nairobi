@@ -84,8 +84,8 @@ Jeder Eintrag nennt die Änderung, den fehlenden Test, den Aufwand und das konkr
 ### GLB-Vorschau: Regression und Hardwarebudget
 
 - **Betrifft:** `runtime/character/glb-preview.ts`, `vite.config.ts` (Dev-Route `/models`), `test/models.html`, ein Aufruf in `nana-plaza/npc-population.ts`.
-- **Fehlender Test:** automatisierte Prüfung, dass das Spiel **ohne** `?glb=` unverändert läuft und kein glTF-Chunk geladen wird; Framezeit auf echter GPU mit sechs schweren Figuren (`?glb=girl`, 1,5 Mio Dreiecke pro Kopie); Verhalten beim Slot-Recycling über längere Zeit, wenn die prozeduralen Körper dauerhaft unsichtbar gehalten werden.
+- **Fehlender Test:** automatisierte Prüfung, dass das Spiel **ohne** `?glb=` unverändert läuft und kein glTF-Chunk geladen wird; Framezeit auf echter GPU mit den schweren Figuren (`?glb=girl`, 1,5 Mio Dreiecke pro Kopie); Verhalten beim Slot-Recycling über längere Zeit, wenn die prozeduralen Körper dauerhaft unsichtbar gehalten werden; ob Sams Animationsgruppe bei mehreren Kopien sauber getrennt bleibt.
 - **Aufwand:** S für den Ohne-Flag-Fall, M für die Hardwaremessung.
 - **Risiko solange offen:** Die Vorschau hängt einen Konstruktoraufruf in die Nana-Bevölkerung. Er kehrt ohne Parameter sofort zurück, aber ein Fehler dort träfe ein Produktionslevel. Die Dauer-Unsichtbarkeit der prozeduralen Körper läuft über einen `onBeforeRenderObservable` und ist nur für die Vorschau gedacht.
-- **Geprüft wurde:** Typecheck, ESLint, Prettier, lokaler Build mit Bundle-Messung (1,64 → 1,95 MiB gzip, kein Preload der glTF-Chunks), Laden aller vier Dateien im Modell-Studio sowie sechs ersetzte NPCs im laufenden Nana-Level unter Software-WebGL.
+- **Geprüft wurde:** Typecheck, ESLint, Prettier, lokaler Build mit Bundle-Messung (1,64 → 1,95 MiB gzip, kein Preload der glTF-Chunks), Laden aller Dateien im Modell-Studio inklusive Sams Idle-Animation, sowie ersetzte NPCs im laufenden Nana-Level unter Software-WebGL.
 - **Commit:** siehe Commit dieser Änderung.
