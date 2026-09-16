@@ -13,6 +13,7 @@ import { material } from '../levels/materials.js';
 import { TobiAvatar } from './tobi-avatar.js';
 import { CharacterAnimationController } from './humanoid/animation-controller.js';
 import { tobiConfig } from './characters/tobi.js';
+import type { SeatAnchor } from './seating/seat-anchor.js';
 
 /** How long Tobi stays visibly drunk after a bottle.
  *
@@ -183,6 +184,7 @@ export class TobiVisual {
     drinking = 0,
     sitting = false,
     seatHeight = 0.42,
+    seatAnchor?: SeatAnchor,
   ): boolean {
     this.time += delta;
     if (this.drunkFor > 0) {
@@ -269,6 +271,7 @@ export class TobiVisual {
       drinking: drinking > 0.001,
       holding,
       seatHeight,
+      anchoredSeat: !!seatAnchor,
       victory,
     };
     const markers = this.animation.step(
@@ -283,6 +286,7 @@ export class TobiVisual {
       this.body.position.setAll(0);
       this.body.rotation.setAll(0);
       this.avatar.animate(delta, animationState, this.animation);
+      if (seatAnchor) this.avatar.alignToSeat(seatAnchor, this.body);
       this.avatar.attach(this.heldBottle, this.animation);
     }
     for (const marker of markers) {

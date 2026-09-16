@@ -27,7 +27,7 @@ const poses: Record<string, { eye: [number, number, number]; target: [number, nu
   tutorial: { eye: [15, 18, -12], target: [0, 0, 7] },
   aircraft: { eye: [15, 21, -42], target: [0, 0, -13] },
   railway: { eye: [12, 23, -38], target: [0, 0, -19] },
-  'street-parade': { eye: [23, 20, -37], target: [0, 1, -3] },
+  'street-parade': { eye: [-35, 14, 35], target: [-35, 1.5, 92] },
   'hippie-house': { eye: [-65, 65, -80], target: [8, 3, 1] },
   'nana-plaza': { eye: [-12, 14, 7], target: [2, 3.5, 34] },
   'drunk-tank': { eye: [9, 7, -9], target: [0, 1, 0] },
@@ -75,11 +75,23 @@ environment.focus?.(
     ? { x: 0, y: 5.8, z: 24 }
     : level.scenery === 'hippie-house'
       ? { x: 0, y: 1, z: -22 }
-      : level.spawn,
+      : level.scenery === 'street-parade'
+        ? { x: -35, y: 1, z: 86 }
+        : level.spawn,
 );
 bottles.cutaway(level.spawn.y);
+const advanceLevel = (seconds: number) => {
+  for (let elapsed = 0; elapsed < seconds; elapsed += 0.12) {
+    const delta = Math.min(0.12, seconds - elapsed);
+    environment.update?.(delta);
+    npcs?.update(delta, level.scenery === 'street-parade' ? { x: -35, y: 1, z: 86 } : level.spawn);
+    world.step(delta);
+  }
+  document.body.dataset.levelDebug = JSON.stringify(environment.debugState?.() ?? {});
+};
 // Let pulsing materials — disco tiles, neon, love-mobile speakers — settle into a lit frame.
-for (let i = 0; i < 4; i++) environment.update?.(0.12);
+advanceLevel(0.48);
+Object.assign(window, { advanceLevel });
 await scene.whenReadyAsync();
 for (let i = 0; i < 3; i++) scene.render();
 document.body.dataset.previewReady = 'true';

@@ -38,4 +38,6 @@ export interface WorldSectorDefinition {
   x: number;
   z: number;
   radius: number;
+  /** Extra view distance beyond the authored radius. Default 150 m for legacy worlds. */
+  visibilityMargin?: number;
 }

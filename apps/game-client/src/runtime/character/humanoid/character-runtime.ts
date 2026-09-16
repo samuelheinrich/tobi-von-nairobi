@@ -17,6 +17,7 @@ import type {
   HumanoidBone,
   PropAttachmentPreset,
 } from './schema.js';
+import type { SeatAnchor } from '../seating/seat-anchor.js';
 
 /** One skinned character, one pose writer, shared action vocabulary and no root-motion gameplay. */
 export class HumanoidCharacter {
@@ -30,6 +31,7 @@ export class HumanoidCharacter {
   private readonly armNeutral: { left: Quaternion; right: Quaternion };
   private readonly restHipHeight: number;
   private readonly restFootHeight: number;
+  private readonly neutralRootPosition: Vector3;
   private constructor(
     readonly root: TransformNode,
     readonly rig: SkeletonAdapter,
@@ -38,6 +40,7 @@ export class HumanoidCharacter {
     private readonly scale: number,
   ) {
     this.attachments = new CharacterAttachments(rig);
+    this.neutralRootPosition = root.position.clone();
     this.controller = new CharacterAnimationController(
       config.throwReleaseTime,
       undefined,
@@ -91,8 +94,12 @@ export class HumanoidCharacter {
         const resolvedBones = Object.fromEntries(
           [...rig.joints].map(([key, joint]) => [key, joint.node.name]),
         ) as typeof config.bones;
-        for (const clipSource of config.clipSources) {
-          const retargeted = await importRetargetedClips(scene, source, resolvedBones, clipSource);
+        const imports = await Promise.all(
+          config.clipSources.map((clipSource) =>
+            importRetargetedClips(scene, source, resolvedBones, clipSource),
+          ),
+        );
+        for (const retargeted of imports) {
           for (const [action, clip] of retargeted) {
             container.animationGroups.push(clip);
             importedActions.set(action as HumanoidAction, clip.name);
@@ -273,7 +280,10 @@ export class HumanoidCharacter {
         } else rotation = this.rig.rotation(key, deltaRotation);
         if (key === 'hips') {
           let offset = motion.hipOffset;
-          if (state.sitting || ['sit_down', 'sit_idle', 'stand_up'].includes(controller.action)) {
+          if (
+            !state.anchoredSeat &&
+            (state.sitting || ['sit_down', 'sit_idle', 'stand_up'].includes(controller.action))
+          ) {
             const amount = -motion.hipOffset / 0.5;
             offset =
               (((state.seatHeight ?? 0.42) + this.config.height * 0.075 - this.restHipHeight) /
@@ -310,6 +320,24 @@ export class HumanoidCharacter {
       this.rig.joints.get('hips')!.node.position.y +=
         ((this.restFootHeight - footHeight) / this.scale) * alpha;
     }
+  }
+
+  /** Restore the normalised model mount before it is reused by another gameplay character. */
+  mount(parent: TransformNode): void {
+    this.root.parent = parent;
+    this.root.position.copyFrom(this.neutralRootPosition);
+  }
+
+  /** Sampled pose first, exact pelvis-to-seat solve second. Bone names come from SkeletonAdapter. */
+  alignToSeat(anchor: SeatAnchor, attach = true): void {
+    anchor.alignPelvis(this.root, this.rig.joints.get('hips')!.node, attach);
+  }
+
+  get bodyMetrics(): Readonly<{ height: number; hipsToGround: number }> {
+    return {
+      height: this.config.height,
+      hipsToGround: this.restHipHeight - this.restFootHeight,
+    };
   }
   attachProp(
     prop: TransformNode,

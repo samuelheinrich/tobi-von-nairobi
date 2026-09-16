@@ -1,5 +1,9 @@
 import { NpcGroup } from './npc-group.js';
-import { arlesheimNeighbours, baliResidents, baliTerrainHeight } from '@tobi/game-data';
+import {
+  arlesheimNeighbours,
+  baliResidents,
+  baliTerrainHeight,
+} from '@tobi/game-data';
 import { LocalBystanders } from './local-bystanders.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
@@ -10,6 +14,29 @@ import { RailwayPassengers } from './railway-passengers.js';
 import { HouseResidents } from './house-residents.js';
 import { NanaVenue } from './nana-venue.js';
 import { CellGuard } from './cell-guard.js';
+import { StationPassengers } from './zurich/passengers.js';
+import { GlanzmannNpc } from './glanzmann-npc.js';
+
+function glanzmannFor(
+  scene: Scene,
+  level: LevelDefinition,
+  environment: LevelScene,
+  bubbles: SpeechBubbles,
+): LevelNpcs | null {
+  const placement: readonly [number, number, number] | null =
+    level.scenery === 'bali-adventure'
+      ? [42, baliTerrainHeight(42, 45), 45]
+      : level.scenery === 'street-parade'
+          ? [-51, 0.1, 64]
+          : level.scenery === 'hippie-house'
+            ? [12, 0, -24]
+            : level.scenery === 'nana-plaza'
+              ? [4.5, 0, -18]
+              : null;
+  return placement
+    ? new GlanzmannNpc(scene, environment.shadows, bubbles, placement, Math.PI)
+    : null;
+}
 
 /** Picks the resident cast for a level. Levels without one simply have no social layer. */
 export function createLevelNpcs(
@@ -18,6 +45,7 @@ export function createLevelNpcs(
   environment: LevelScene,
   bubbles: SpeechBubbles,
 ): LevelNpcs | null {
+  let residents: LevelNpcs | null = null;
   if (level.scenery === 'tutorial')
     return new LocalBystanders(
       scene,
@@ -27,7 +55,7 @@ export function createLevelNpcs(
       'Gut gepöbelt! Jetzt hinter die grüne Wand.',
     );
   if (level.scenery === 'bali-adventure')
-    return new LocalBystanders(
+    residents = new LocalBystanders(
       scene,
       environment.shadows,
       bubbles,
@@ -38,9 +66,16 @@ export function createLevelNpcs(
       baliResidents.map((p) => p.role),
     );
   if (level.scenery === 'railway')
-    return new RailwayPassengers(scene, environment.shadows, bubbles);
+    residents = new RailwayPassengers(
+      scene,
+      environment.shadows,
+      bubbles,
+      environment.seatAnchors ?? [],
+    );
+  if (level.scenery === 'street-parade' && environment.transit)
+    residents = new StationPassengers(scene, environment.shadows, bubbles, environment.transit);
   if (level.scenery === 'hippie-house')
-    return new NpcGroup([
+    residents = new NpcGroup([
       new HouseResidents(scene, environment.shadows, bubbles),
       new LocalBystanders(
         scene,
@@ -51,7 +86,9 @@ export function createLevelNpcs(
       ),
     ]);
   if (level.scenery === 'nana-plaza')
-    return new NanaVenue(scene, environment.shadows, environment.colliders, bubbles);
+    residents = new NanaVenue(scene, environment.shadows, environment.colliders, bubbles);
   if (level.scenery === 'drunk-tank') return new CellGuard(scene, environment.shadows, bubbles);
-  return null;
+  const glanzmann = glanzmannFor(scene, level, environment, bubbles);
+  if (residents && glanzmann) return new NpcGroup([residents, glanzmann]);
+  return residents ?? glanzmann;
 }

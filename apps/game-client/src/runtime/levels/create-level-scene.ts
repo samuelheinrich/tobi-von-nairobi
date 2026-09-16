@@ -11,10 +11,12 @@ import type { HavokWorld } from '../physics/havok-world.js';
 import type { BaliScene } from './bali-scene.js';
 import { createBaliScene } from './bali-scene.js';
 import { createRailwayScene } from './railway-scene.js';
-import { createParadeScene } from './parade-scene.js';
+import { createZurichScene } from './zurich/scene.js';
+import type { TrainSystem } from '../trains/train-system.js';
 import { createHippieHouseScene } from './hippie-house-scene.js';
 import { createNanaPlazaScene } from './nana-plaza-scene.js';
 import { createCellScene } from './cell-scene.js';
+import type { SeatAnchor } from '../character/seating/seat-anchor.js';
 
 export interface LevelScene extends BaliScene {
   readonly vehicles?: readonly VehicleDefinition[];
@@ -22,19 +24,23 @@ export interface LevelScene extends BaliScene {
   safeGround?(position: Position3): boolean;
   worldLabel?(position: Position3): string;
   readonly restSpots?: readonly RestSpot[];
+  readonly seatAnchors?: readonly SeatAnchor[];
   readonly audioZones?: readonly AmbientZone[];
+  readonly transit?: TrainSystem;
   interact?(position: Position3): SceneInteractionResult | null;
   cycleInteraction?(position: Position3): boolean;
   interactionPrompt?(position: Position3): string;
   update?(delta: number): void;
   focus?(position: Position3): void;
+  debugState?(): object;
+  readonly debugTeleports?: readonly { label: string; position: Position3 }[];
 }
 function buildLevelScene(scene: Scene, world: HavokWorld, level: LevelDefinition): LevelScene {
   if (level.scenery === 'bali-adventure') return createBaliAdventureScene(scene, world, level);
   if (level.scenery === 'tutorial') return createTutorialScene(scene, world, level);
   if (level.scenery === 'aircraft') return createAircraftScene(scene, world, level);
   if (level.scenery === 'railway') return createRailwayScene(scene, world, level);
-  if (level.scenery === 'street-parade') return createParadeScene(scene, world, level);
+  if (level.scenery === 'street-parade') return createZurichScene(scene, world, level);
   if (level.scenery === 'hippie-house') return createHippieHouseScene(scene, world, level);
   if (level.scenery === 'nana-plaza') return createNanaPlazaScene(scene, world, level);
   if (level.scenery === 'drunk-tank') return createCellScene(scene, world, level);

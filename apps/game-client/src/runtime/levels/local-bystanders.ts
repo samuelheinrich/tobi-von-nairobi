@@ -1,5 +1,4 @@
 import type { CharacterCategory } from '../character/modular/presets.js';
-import { outwardArmAngle } from '../character/modular/arm-pose.js';
 import { animateCharacter } from '../character/modular/animation.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -22,7 +21,7 @@ export class LocalBystanders implements LevelNpcs {
     positions: readonly (readonly [number, number])[],
     private readonly line: string,
     beachZone = false,
-    heightAt: (x: number, z: number) => number = () => 0,
+    private readonly heightAt: (x: number, z: number) => number = () => 0,
     categories: readonly CharacterCategory[] = [],
   ) {
     this.people = positions.map(([x, z], i) => {
@@ -35,7 +34,7 @@ export class LocalBystanders implements LevelNpcs {
         categories[i] ?? (beachZone && z < -25 ? 'beach_guest' : 'local'),
       );
       rig.root.position.set(x, heightAt(x, z), z);
-      return { rig, startled: 0 };
+      return { rig, home: new Vector3(x, heightAt(x, z), z), startled: 0 };
     });
   }
   public get targets() {
@@ -78,14 +77,43 @@ export class LocalBystanders implements LevelNpcs {
         Math.hypot(player.x - p.rig.root.position.x, player.z - p.rig.root.position.z) < 65;
       p.rig.root.setEnabled(near);
       if (!near) continue;
+      const wasStartled = p.startled > 0;
       p.startled = Math.max(0, p.startled - delta);
-      if (p.rig.appearance.femaleStyle && !p.startled) {
-        animateCharacter(p.rig, 'idle', this.time, p.rig.appearance.seed);
-        continue;
+      const previousX = p.rig.root.position.x;
+      const previousZ = p.rig.root.position.z;
+      let moving = false;
+      if (wasStartled && player) {
+        const dx = p.rig.root.position.x - player.x;
+        const dz = p.rig.root.position.z - player.z;
+        const length = Math.max(0.01, Math.hypot(dx, dz));
+        const fromHome = Vector3.Distance(p.rig.root.position, p.home);
+        if (fromHome < 5) {
+          p.rig.root.position.x += (dx / length) * delta * 3.8;
+          p.rig.root.position.z += (dz / length) * delta * 3.8;
+          moving = true;
+        }
+      } else {
+        const dx = p.home.x - p.rig.root.position.x;
+        const dz = p.home.z - p.rig.root.position.z;
+        const length = Math.hypot(dx, dz);
+        if (length > 0.05) {
+          const step = Math.min(length, delta * 1.2);
+          p.rig.root.position.x += (dx / length) * step;
+          p.rig.root.position.z += (dz / length) * step;
+          moving = true;
+        }
       }
-      p.rig.head.rotation.z = Math.sin(this.time * 2) * 0.04;
-      p.rig.arms.forEach(
-        (arm, i) => (arm.rotation.z = outwardArmAngle(i, p.startled > 0 ? 1.1 : 0.1)),
+      p.rig.root.position.y = this.heightAt(p.rig.root.position.x, p.rig.root.position.z);
+      if (moving)
+        p.rig.root.rotation.y = Math.atan2(
+          p.rig.root.position.x - previousX,
+          p.rig.root.position.z - previousZ,
+        );
+      animateCharacter(
+        p.rig,
+        wasStartled ? 'flee' : moving ? 'walk' : 'idle',
+        this.time,
+        p.rig.appearance.seed,
       );
     }
   }

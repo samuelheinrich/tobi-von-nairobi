@@ -14,7 +14,7 @@ import { levelSchema, type LevelDefinition } from '@tobi/contracts';
 import rawLevel from './levels/welcome-to-bali.json' with { type: 'json' };
 
 export const welcomeToBali = levelSchema.parse(rawLevel);
-export const contentVersion = 'prototype-7-arlesheim';
+export const contentVersion = 'prototype-8-zurich-hb';
 export const baliEscape = levelSchema.parse(rawEscape);
 export const beachBar = levelSchema.parse(rawBar);
 export const nightMarket = levelSchema.parse(rawMarket);
@@ -81,7 +81,15 @@ export { movement, prototypeBalance, socialBalance } from './balancing.js';
 
 export { pursuitBalance } from './pursuit-balancing.js';
 export { hippieHouseLayout } from './hippie-house.js';
-export { zurichLayout } from './zurich.js';
+export {
+  zurichLayout,
+  zurichSectors,
+  zurichStations,
+  zurichTrainRoute,
+  zurichPassengerSpawns,
+  zurichBuildings,
+  zurichWorldBounds,
+} from './zurich.js';
 export { railwayLayout } from './railway.js';
 export * from './nana-plaza.js';
 

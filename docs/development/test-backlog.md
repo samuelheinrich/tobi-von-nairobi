@@ -126,3 +126,11 @@ Lokal: vollständige Route mit allen 36 Flaschen, tatsächlichen Fahrzeugen und 
 ### Arlesheimer Quartier · 16. September 2026
 
 Gezielt lokal geprüft: vollständige WG-/Quartierroute, alle 36 Flaschen, Indoor/Outdoor-Cutaway und Bali-Regression nach Builder-Extraktion. Offen: längere Hardware-/Safari-Runde, alle NPC-Posen im Quartier, freies Scooterfahren zwischen Gartenmöbeln und vollständiger angemeldeter Speicherlauf mit neuen Pickups. Der bestehende E2E-Test hat aktualisierte Flaschenzahlen, wurde in dieser Änderung nicht komplett ausgeführt. Keine GitHub-CI daraus ableiten.
+
+### Zürich HB und S16 · 16. September 2026
+
+- **Betrifft:** `runtime/trains`, `runtime/levels/zurich`, dynamische Sitzanker und Station-NPCs.
+- **Fehlender Test:** vollständige manuelle Hin-/Rückfahrt mit freiem Laufen und Sitzen im Wagen, Ein-/Aussteigen in jeder Türphase, längere Hardware-/Safari-Runde und vollständiger 42-Flaschen-Abschluss.
+- **Aufwand:** M, lokal auf ausdrücklichen Bedarf.
+- **Risiko solange offen:** einzelne Randkontakte an Türpaneelen oder Tunnelkurven, Jitter bei sehr niedriger Framezeit und noch nicht begangene Nebenwege im Untergeschoss.
+- **Bereits geprüft:** GLB-Inventar, Typecheck, kleiner Datentest, Client-Smoke/Preview und lokaler Build. Nach der Kollisionskorrektur zusätzlich Hallenquerung auf `y=1,04`, Rampenweg von `y=0,76` bis `y=-4,18`, der Durchgang ins Untergeschoss bis `x=-45,30` sowie der offene S16-Türweg durch den Wagen. Keine Browserfehler und kein Respawn in diesen Pfaden. Keine GitHub-CI daraus ableiten.

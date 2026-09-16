@@ -17,6 +17,7 @@ export type CharacterAction =
   | 'pole'
   | 'cheer'
   | 'angry'
+  | 'flee'
   | 'chase'
   | 'arrest';
 /** Absolute time + identity offset: a shared procedural rig, without per-character clocks. */
@@ -76,7 +77,7 @@ export function animateCharacter(
     animateDance(rig, dance, time, seed, true);
     return;
   }
-  if (action === 'walk' || action === 'run' || action === 'chase') {
+  if (action === 'walk' || action === 'run' || action === 'flee' || action === 'chase') {
     const fast = action !== 'walk';
     for (const [i, leg] of rig.legs.entries())
       leg.rotation.x = Math.sin(phase * (fast ? 8 : 4.5) + i * Math.PI) * (fast ? 0.7 : 0.35);

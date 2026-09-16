@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { streetParade } from './index.js';
-import { zurichLayout } from './zurich.js';
+import { zurichLayout, zurichStations, zurichTrainRoute, zurichWorldBounds } from './zurich.js';
 
 interface Rect {
   minX: number;
@@ -21,7 +21,7 @@ const covers = (rect: Rect, point: { x: number; z: number }, margin = 0): boolea
   point.z <= rect.maxZ + margin;
 
 const solids = [
-  ...zurichLayout.blocks.map(footprint),
+  ...zurichLayout.blocks.filter((block) => block.id !== 'hauptbahnhof').map(footprint),
   ...zurichLayout.towers.map(footprint),
   ...zurichLayout.loveMobiles.map(footprint),
 ];
@@ -52,10 +52,10 @@ describe('Zurich street parade placement', () => {
   it('keeps the whole plate inside the navigation bounds the pursuit uses', () => {
     const bounds = streetParade.navigationBounds;
     expect(bounds).toBeDefined();
-    expect(bounds!.minX).toBeGreaterThan(zurichLayout.ground.minX);
-    expect(bounds!.maxX).toBeLessThan(zurichLayout.ground.maxX);
-    expect(bounds!.minZ).toBeGreaterThan(zurichLayout.ground.minZ);
-    expect(bounds!.maxZ).toBeLessThan(zurichLayout.ground.maxZ);
+    expect(bounds!.minX).toBeGreaterThan(zurichWorldBounds.minX);
+    expect(bounds!.maxX).toBeLessThan(zurichWorldBounds.maxX);
+    expect(bounds!.minZ).toBeGreaterThan(zurichWorldBounds.minZ);
+    expect(bounds!.maxZ).toBeLessThan(zurichWorldBounds.maxZ);
   });
 
   it('follows the documented parade order from Utoquai to the Hafendamm', () => {
@@ -65,5 +65,17 @@ describe('Zurich street parade placement', () => {
       x: streetParade.destination.position.x,
       z: streetParade.destination.position.z,
     });
+  });
+
+  it('authors the promised HB tracks and a two-station train route', () => {
+    expect(zurichStations.hb.surfaceTracks).toBe(12);
+    expect(zurichStations.hb.undergroundTracks).toBe(4);
+    expect(zurichTrainRoute.stops.map((stop) => stop.id)).toEqual(['zurich_hb', 'stadelhofen']);
+    expect(zurichTrainRoute.points.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it('distributes twelve additional bottles through HB and Stadelhofen', () => {
+    expect(streetParade.pickups).toHaveLength(42);
+    expect(streetParade.pickups.filter((pickup) => pickup.position.z > 40)).toHaveLength(12);
   });
 });

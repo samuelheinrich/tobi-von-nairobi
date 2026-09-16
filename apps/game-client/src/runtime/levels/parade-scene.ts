@@ -115,6 +115,7 @@ export function createParadeScene(scene: Scene, world: HavokWorld, level: LevelD
   const facade = (style: string): StandardMaterial =>
     style === 'oldtown' ? oldtown : style === 'grand' ? grand : style === 'shed' ? steel : stone;
   for (const block of zurichLayout.blocks) {
+    if (block.id === 'hauptbahnhof') continue;
     const body = kit.solid(
       box(
         scene,
@@ -259,7 +260,6 @@ export function createParadeScene(scene: Scene, world: HavokWorld, level: LevelD
     [ground.minX, 0, 1, ground.maxZ - ground.minZ],
     [ground.maxX, 0, 1, ground.maxZ - ground.minZ],
     [0, ground.minZ, ground.maxX - ground.minX, 1],
-    [0, ground.maxZ, ground.maxX - ground.minX, 1],
   ] as const)
     kit.barrier(box(scene, 'city-boundary', [w, 9, d], [x, 4.5, z], stone));
   const hill = MeshBuilder.CreateCylinder(

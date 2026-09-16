@@ -11,7 +11,10 @@ try {
   await page.goto('http://127.0.0.1:5173/test/animation.html');
   await page.waitForFunction(() => window.characterStudio?.character, {}, { timeout: 15000 });
   await mkdir('.artifacts/characters', { recursive: true });
-  const models = process.argv.includes('--with-sam') ? ['tobi', 'drunk', 'sam'] : ['tobi', 'drunk'];
+  const models = ['tobi', 'drunk'];
+  if (process.argv.includes('--with-sam')) models.push('sam');
+  if (process.argv.includes('--with-civilians'))
+    models.push('civilian-joe', 'civilian-josh', 'civilian-woman', 'glanzmann');
   for (const model of models) {
     await page.selectOption('#model', model);
     await page.waitForFunction(
@@ -50,8 +53,13 @@ try {
         };
       }, action);
       assert.ok(result.finite, model + ' ' + action + ' finite joints');
-      if (model !== 'sam' && ['pickup', 'throw_bottle', 'celebrate', 'taunt'].includes(action))
+      if (
+        ['tobi', 'drunk'].includes(model) &&
+        ['pickup', 'throw_bottle', 'celebrate', 'taunt'].includes(action)
+      )
         assert.ok(result.imported, model + ' ' + action + ' imported FBX clip');
+      if (model.startsWith('civilian-') && ['walk', 'sit_idle'].includes(action))
+        assert.ok(result.imported, model + ' ' + action + ' imported shared clip');
       assert.ok(
         result.parent && result.distance < 0.14,
         model + ' ' + action + ' attached hand prop',

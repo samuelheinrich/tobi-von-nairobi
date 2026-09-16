@@ -154,3 +154,30 @@ Kein neuer Produktionsbuild/Upload-ZIP für diese Clip-Prüfung, keine GitHub-CI
 ### Celebrate im Spiel
 
 **C** startet im Stand einen Chicken-Dance-Durchlauf. Bewegung, Springen oder eine neue Aktion beenden den manuellen Tanz; ein laufender Flaschenwurf wird nicht unterbrochen. Beim Levelabschluss bleibt der Tanz eine Schleife. Die Taste läuft über `InputActions.celebratePressed`, steht in der Steuerungshilfe und wird als letzte Tutorial-Lektion erklärt. Die drei anderen FBX-Aktionen bleiben über automatisches Aufnehmen, **G** und **R** angebunden.
+
+## Gemeinsame Bewegungen für Joe, Josh und Woman
+
+Die FBX-Dateien aus `models/skellet-rigged/normal-ppl/` wurden mit der lokalen Blender-Pipeline in
+neue Arbeits-GLBs konvertiert; die Originale blieben unverändert. Je ein Körper wurde auf ungefähr
+30'000 Dreiecke reduziert. Aus den Bewegungsdateien erzeugt `extract-animation.mjs` kleine,
+geometriefreie Runtime-Clips für `walk`, zwei Walk-Varianten, Rückwärtsgehen, `run_away`, Sitzen und
+zwei Tanzstufen. `characters/civilians.ts` weist allen drei Körpern dieselbe Clip-Bibliothek zu und
+legt nur die bevorzugte Variante pro Figur fest.
+
+Der generische Ablauf lautet weiterhin: Körper-GLB analysieren, Bone-Map konfigurieren, getrennte
+Clipquellen eintragen und über dieselbe Humanoid-Runtime retargeten. Zug-, Bahnhofs- und
+Flugpassagiere verwenden ausschliesslich diese bekleideten Körper. Glanzmann nutzt dieselbe Runtime,
+aber eine eigene V2-Config und die Casting-Rolle `special`, die höchstens einmal pro Level vergeben
+wird. Seine Level-Interaktion bleibt vom Modell getrennt.
+
+Die Clipquellen werden pro Körper parallel geladen. Neben den 17 Gameplay-Knochen ordnet der
+Retargeter kompatible Schulter-, Zehen- und Fingerknochen anhand ihrer normalisierten Namen zu;
+unterschiedliche Mixamo-Namespaces wie `mixamorig:`, `mixamorig2:` und `mixamorig7:` sind damit
+kein eigenes Modell-Sonderverhalten. Bis eine Figur bereit ist, bleibt der leichte prozedurale
+Platzhalter sichtbar.
+
+Im Animation Studio stehen die vier neuen Figuren direkt zur Auswahl. Der gezielte lokale Check ist:
+
+```sh
+node tools/characters/smoke.mjs --with-civilians
+```

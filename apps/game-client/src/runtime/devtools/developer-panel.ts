@@ -3,6 +3,7 @@ export interface DebugCommands {
   togglePhysicsLayer?(layer: string): void;
   respawn(): void;
   teleportHome(): void;
+  teleports?: readonly { label: string; run(): void }[];
   inspect(): string;
 }
 
@@ -20,6 +21,12 @@ export function createDeveloperPanel(commands: DebugCommands): () => void {
     const button = document.createElement('button');
     button.textContent = label;
     button.onclick = action;
+    panel.append(button);
+  }
+  for (const teleport of commands.teleports ?? []) {
+    const button = document.createElement('button');
+    button.textContent = teleport.label;
+    button.onclick = teleport.run;
     panel.append(button);
   }
   if (commands.togglePhysics) {

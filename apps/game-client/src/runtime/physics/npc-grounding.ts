@@ -104,9 +104,16 @@ class NpcGrounding {
         );
         a.proxy.isVisible = false;
         a.proxy.isPickable = false;
-        a.proxy.position.copyFrom(foot).y += seated
-          ? (a.rig.seatHeight ?? 0.5) + height / 2
-          : height / 2;
+        const initialCentre = a.rig.seatAnchor
+          ? a.rig.seatAnchor.surface.worldPosition.add(new Vector3(0, height / 2, 0))
+          : foot.add(
+              new Vector3(
+                0,
+                seated ? (a.rig.seatHeight ?? 0.5) + height / 2 : height / 2,
+                0,
+              ),
+            );
+        a.proxy.position.copyFrom(initialCentre);
         a.body = world.addCollider(a.proxy, {
           collision: 'capsule',
           layer: 'NPC',
@@ -133,9 +140,11 @@ class NpcGrounding {
         }
       }
       a.last.copyFrom(foot);
-      const centre = foot.add(
-        new Vector3(0, seated ? (a.rig.seatHeight ?? 0.5) + height / 2 : height / 2, 0),
-      );
+      const centre = a.rig.seatAnchor
+        ? a.rig.seatAnchor.surface.worldPosition.add(new Vector3(0, height / 2, 0))
+        : foot.add(
+            new Vector3(0, seated ? (a.rig.seatHeight ?? 0.5) + height / 2 : height / 2, 0),
+          );
       a.body!.aggregate.body.setTargetTransform(
         centre,
         a.proxy.rotationQuaternion ?? Quaternion.Identity(),

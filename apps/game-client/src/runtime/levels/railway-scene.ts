@@ -7,6 +7,8 @@ import { railwayLayout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
 import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
+import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
+import { SeatAnchor, SeatSurface } from '../character/seating/seat-anchor.js';
 
 /** Five open-top carriages, one of them a bar, with continuous physical gangways.
  * Moving scenery never moves colliders: only the sleepers slide to fake the ride.
@@ -25,6 +27,7 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
   brass.emissiveColor = Color3.FromHexString('#4a3714');
   const bottleGlass = material(scene, 'bar-bottles', '#3f8f74');
   const layout = railwayLayout;
+  const seatAnchors: SeatAnchor[] = [];
   const front = layout.carriageCentres[layout.carriageCentres.length - 1]!;
   box(scene, 'thai-landscape', [140, 0.4, 220], [0, -1.8, 0], grass);
   kit.solid(box(scene, 'island-ground', [8, 0.6, 100], [0, -0.3, 0], floor));
@@ -33,6 +36,8 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
     box(scene, 'track-sleeper', [7, 0.13, 0.5], [0, -1, i * 3 - 80], dark),
   );
   for (const [index, z] of layout.carriageCentres.entries()) {
+    const carriageRoot = new TransformNode(`railway-carriage-${index}`, scene);
+    carriageRoot.position.z = z;
     const bar = index === layout.barCarriageIndex;
     for (const x of [-4, 4]) {
       kit.solid(box(scene, 'carriage-side', [0.3, 1.0, 17], [x, 0.5, z], green));
@@ -76,14 +81,45 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
       }
       sceneSign(scene, 'BARWAGEN', -3.7, 2.1, z, 3.4, { ink: '#ffe6a8', plate: '#5b2f1c' });
     } else {
-      for (const offset of layout.seatOffsets)
-        for (const x of layout.seatColumns) {
+      for (const [row, offset] of layout.seatOffsets.entries())
+        for (const [column, x] of layout.seatColumns.entries()) {
           const seat = kit.solid(
             box(scene, 'train-seat', [1.65, 0.55, 1.7], [x, 0.275, z + offset], seats),
           );
           seat.receiveShadows = true;
           kit.solid(
-            box(scene, 'train-seat-back', [1.65, 1.25, 0.22], [x, 0.8, z + offset + 0.8], seats),
+            box(
+              scene,
+              'train-seat-back',
+              [0.22, 1.25, 1.7],
+              [x + Math.sign(x) * 0.72, 0.8, z + offset],
+              seats,
+            ),
+          );
+          const id = `railway-seat-${index}-${row}-${column}`;
+          const surface = new SeatSurface(scene, {
+            id,
+            parent: carriageRoot,
+            position: [x, 0.55, offset],
+            width: 1.65,
+            depth: 1.7,
+            collider: seat,
+          });
+          const inward = -Math.sign(x);
+          const outward = Math.sign(x);
+          seatAnchors.push(
+            new SeatAnchor({
+              id,
+              type: 'train',
+              surface,
+              // This is an authored pelvis marker, not a model/root correction.
+              // Pelvis sits over the cushion, close to the backrest. The hips joint is about
+              // 24 cm above the visible contact point for this shared seated pose.
+              position: [outward * 0.2, 0.24, 0],
+              yaw: x > 0 ? -Math.PI / 2 : Math.PI / 2,
+              footTargetLeft: [inward * 0.95, -0.55, -0.16],
+              footTargetRight: [inward * 0.95, -0.55, 0.16],
+            }),
           );
         }
     }
@@ -106,29 +142,36 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
   for (const z of [-33, -14, 24, 42])
     kit.solid(box(scene, 'luggage-stack', [1.1, 0.8, 1.2], [2.5, 0.4, z], luggage));
   const landscape = createRailwayLandscape(scene, kit.shadows);
+  scene.metadata = {
+    ...scene.metadata,
+    seatValidationWarnings: seatAnchors.flatMap((anchor) => anchor.validate()),
+  };
   let offset = 0;
   return {
     ...kit,
     destination: destinationRing(scene, level),
+    seatAnchors,
     // These are the deterministic empty benches skipped by RailwayPassengers.
     restSpots: [
       {
         id: 'train-rear-seat',
         label: 'FREIER SITZ',
         seatHeight: 0.55,
+        seatAnchorId: 'railway-seat-0-0-0',
         kind: 'seat' as const,
-        position: { x: -2.8, y: 0.9, z: -44 },
+        position: { x: -3, y: 0.9, z: -44 },
         exit: { x: -1.3, y: 1.1, z: -44 },
-        yaw: Math.PI,
+        yaw: Math.PI / 2,
       },
       {
         id: 'train-rear-seat-2',
         label: 'FREIER SITZ',
         seatHeight: 0.55,
+        seatAnchorId: 'railway-seat-0-2-1',
         kind: 'seat' as const,
-        position: { x: 2.8, y: 0.9, z: -36 },
+        position: { x: 3, y: 0.9, z: -36 },
         exit: { x: 1.3, y: 1.1, z: -36 },
-        yaw: Math.PI,
+        yaw: -Math.PI / 2,
       },
     ],
     update(delta: number) {

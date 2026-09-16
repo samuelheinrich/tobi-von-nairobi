@@ -203,7 +203,7 @@ export class NanaVenue implements LevelNpcs {
         animateDance(slot.rig, p.dance, this.time, p.id, distance < 15);
       else {
         const action = p.startled
-          ? 'angry'
+          ? 'flee'
           : p.action === 'hail'
             ? 'cheer'
             : p.action === 'cross'

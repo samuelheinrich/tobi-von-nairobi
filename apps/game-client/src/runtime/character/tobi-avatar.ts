@@ -4,6 +4,7 @@ import { HumanoidCharacter } from './humanoid/character-runtime.js';
 import type { CharacterAnimationController } from './humanoid/animation-controller.js';
 import type { AnimationState } from './humanoid/schema.js';
 import { tobiConfig, tobiDrunkConfig } from './characters/tobi.js';
+import type { SeatAnchor } from './seating/seat-anchor.js';
 
 /** Tobi's two skins share the generic runtime and a single gameplay animation clock. */
 export class TobiAvatar {
@@ -45,6 +46,9 @@ export class TobiAvatar {
   }
   animate(delta: number, state: AnimationState, controller: CharacterAnimationController): void {
     this.active.pose(delta, state, controller);
+  }
+  alignToSeat(anchor: SeatAnchor, visualRoot: TransformNode): void {
+    anchor.alignPelvis(visualRoot, this.active.rig.joints.get('hips')!.node, false);
   }
   attach(prop: TransformNode, controller: CharacterAnimationController): void {
     this.active.attachProp(prop, this.active.config.attachments.bottle_right_hand!, controller);

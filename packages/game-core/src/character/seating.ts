@@ -10,6 +10,8 @@ export interface RestSpot {
   yaw: number;
   /** Seat surface above the visual character origin. Existing seats default to 0.42 m. */
   seatHeight?: number;
+  /** Runtime SeatAnchor id. Kept as data here so game-core stays independent from Babylon. */
+  seatAnchorId?: string;
 }
 
 /** Engine-independent posture. Only an explicit interaction enters or leaves a spot. */

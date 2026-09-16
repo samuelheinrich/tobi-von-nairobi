@@ -1,5 +1,81 @@
 [
   {
+    "file": "animated/18+/ajrobiek-dance-hard-game.glb",
+    "source": "animated/18+/ajrobiek-dance-hard.glb",
+    "megabytes": 11.48,
+    "triangles": 65862,
+    "sourceTriangles": 65862,
+    "joints": 102,
+    "animations": [
+      "allmot|FBXExportClip_0",
+      "Key.013|FBXExportClip_0",
+      "Key.015|FBXExportClip_0",
+      "Key.016|FBXExportClip_0",
+      "Key.017|FBXExportClip_0",
+      "Key.018|FBXExportClip_0",
+      "Key.019|FBXExportClip_0",
+      "Key.020|FBXExportClip_0",
+      "Key.021|FBXExportClip_0",
+      "Key.022|FBXExportClip_0",
+      "Key.023|FBXExportClip_0",
+      "Key.024|FBXExportClip_0"
+    ],
+    "author": "StevenDevolder",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "animated/18+/beth-walking-forward-game.glb",
+    "source": "animated/18+/beth-walking-forward.glb",
+    "megabytes": 82.22,
+    "triangles": 59984,
+    "sourceTriangles": 74124,
+    "joints": 102,
+    "animations": [
+      "Animation"
+    ],
+    "author": "patromes",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "animated/18+/girl_dancing_naked-game.glb",
+    "source": "animated/18+/girl_dancing_naked.glb",
+    "megabytes": 59.54,
+    "triangles": 41881,
+    "sourceTriangles": 41881,
+    "joints": 102,
+    "animations": [
+      "Armature|1746722837904_TempMotion"
+    ],
+    "author": "patromes",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "animated/18+/naked-hippie-witch-game.glb",
+    "source": "animated/18+/naked-hippie-witch.glb",
+    "megabytes": 37.56,
+    "triangles": 161681,
+    "sourceTriangles": 208877,
+    "joints": 115,
+    "animations": [
+      "Animation"
+    ],
+    "author": "patromes",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "animated/18+/topless_sexy_girl_with_heels-game.glb",
+    "source": "animated/18+/topless_sexy_girl_with_heels.glb",
+    "megabytes": 90.08,
+    "triangles": 55470,
+    "sourceTriangles": 55470,
+    "joints": 102,
+    "animations": [
+      "Animation"
+    ],
+    "author": "patromes",
+    "licence": "CC-BY-4.0"
+  },
+  {
     "file": "chris-v1-dynamic-game.glb",
     "source": "chris-v1-dynamic.glb",
     "megabytes": 1.81,
@@ -18,6 +94,19 @@
     "megabytes": 10.25,
     "triangles": 24023,
     "sourceTriangles": 24023,
+    "joints": 54,
+    "animations": [
+      "avaturn_animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "glanzmann/glanzmann-dynamic-v2-game.glb",
+    "source": "glanzmann/glanzmann-dynamic-v2.glb",
+    "megabytes": 10.59,
+    "triangles": 23074,
+    "sourceTriangles": 23074,
     "joints": 54,
     "animations": [
       "avaturn_animation"
@@ -402,6 +491,45 @@
     "joints": 66,
     "animations": [
       "Animation"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/normal-ppl/joe-dance-medium-game.glb",
+    "source": "work/normal-ppl/joe-dance-medium.glb",
+    "megabytes": 2.2,
+    "triangles": 29994,
+    "sourceTriangles": 54938,
+    "joints": 65,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/normal-ppl/josh-standard-walk-game.glb",
+    "source": "work/normal-ppl/josh-standard-walk.glb",
+    "megabytes": 2.04,
+    "triangles": 31191,
+    "sourceTriangles": 52551,
+    "joints": 65,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
+    ],
+    "author": null,
+    "licence": null
+  },
+  {
+    "file": "work/normal-ppl/woman-walking-game.glb",
+    "source": "work/normal-ppl/woman-walking.glb",
+    "megabytes": 2.32,
+    "triangles": 31242,
+    "sourceTriangles": 54961,
+    "joints": 65,
+    "animations": [
+      "Armature|mixamo.com|Layer0"
     ],
     "author": null,
     "licence": null

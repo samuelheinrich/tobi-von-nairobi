@@ -12,14 +12,17 @@ export function createWorldBuilder(
   world: HavokWorld,
   definitions: readonly WorldSectorDefinition[],
   sky = '#cfddd5',
+  existing?: ReturnType<typeof sceneKit>,
 ) {
-  const kit = sceneKit(scene, world, sky, {
-    fogStart: 260,
-    fogEnd: 650,
-    shadowMap: 1024,
-    ambient: 0.85,
-    sun: 0.65,
-  });
+  const kit =
+    existing ??
+    sceneKit(scene, world, sky, {
+      fogStart: 260,
+      fogEnd: 650,
+      shadowMap: 1024,
+      ambient: 0.85,
+      sun: 0.65,
+    });
   const sectors = new WorldSectors(definitions),
     surfaces = new Map<string, ReturnType<typeof material>>(),
     templates = new Map<string, Mesh>();

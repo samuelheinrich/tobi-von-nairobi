@@ -18,6 +18,12 @@ export const motionTiming: Record<HumanoidAction, { duration: number; loop: bool
   drink: { duration: 0.85, loop: false },
   pickup: { duration: 0.35, loop: false },
   hit_reaction: { duration: 0.35, loop: false },
+  walk_alt: { duration: 1.03, loop: true },
+  walk_alt_2: { duration: 1, loop: true },
+  walk_backward: { duration: 1.5, loop: true },
+  run_away: { duration: 1.83, loop: true },
+  dance_hard: { duration: 10.83, loop: true },
+  dance_medium: { duration: 2.33, loop: true },
 };
 export interface MotionPose {
   rotations: Partial<Record<HumanoidBone, Quaternion>>;
@@ -26,6 +32,14 @@ export interface MotionPose {
 /** Shared authored in-place motions in Y-up/+Z-forward character space, not asset bone axes.
  * Sampling these curves has no dependency on Tobi or a particular skeleton. */
 export function sampleMotion(action: HumanoidAction, t: number, clearance: number): MotionPose {
+  const fallbackAction: HumanoidAction =
+    action === 'walk_alt' || action === 'walk_alt_2' || action === 'walk_backward'
+      ? 'walk'
+      : action === 'run_away'
+        ? 'run'
+        : action === 'dance_hard' || action === 'dance_medium'
+          ? 'dance'
+          : action;
   const p = Math.min(1, t / motionTiming[action].duration),
     wave = Math.sin(p * Math.PI * 2);
   const r: Partial<Record<HumanoidBone, Tuple3>> = { chest: [0.018 * Math.sin(t * 3), 0, 0] };
@@ -40,8 +54,8 @@ export function sampleMotion(action: HumanoidAction, t: number, clearance: numbe
     set('rightLowerArm', -bend);
   };
   arms(0, 0);
-  if (action === 'walk' || action === 'run') {
-    const run = action === 'run',
+  if (fallbackAction === 'walk' || fallbackAction === 'run') {
+    const run = fallbackAction === 'run',
       amplitude = run ? 0.9 : 0.55;
     set('leftUpperLeg', wave * amplitude);
     set('rightUpperLeg', -wave * amplitude);
@@ -54,7 +68,7 @@ export function sampleMotion(action: HumanoidAction, t: number, clearance: numbe
     set('chest', run ? 0.09 : 0.025, -wave * 0.055);
     hipOffset = (1 - Math.cos(p * Math.PI * 4)) * (run ? 0.025 : 0.012);
   }
-  if (action === 'dance') {
+  if (fallbackAction === 'dance') {
     // Fallback for a character that has no dance clip of its own: weight shift, hip sway and a
     // loose upper body. Deliberately small — a real clip should always win where one exists.
     const beat = Math.sin(p * Math.PI * 4);

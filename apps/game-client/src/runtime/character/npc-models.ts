@@ -81,8 +81,10 @@ class NpcModels {
       elapsed: 0,
     };
     this.actors.add(actor);
+    if (rig.seatAnchor) rig.seatAnchor.occupied = true;
     rig.root.onDisposeObservable.add(() => {
       this.actors.delete(actor);
+      if (rig.seatAnchor) rig.seatAnchor.occupied = false;
       // The root already owns/disposes its meshes; dispose the instance's skeleton and clips too.
       actor.character?.dispose();
       actor.character = null;
@@ -125,7 +127,7 @@ class NpcModels {
     const model = actor.character;
     if (!model) return;
     actor.character = null;
-    model.root.parent = this.storage;
+    model.mount(this.storage);
     model.root.setEnabled(false);
     const free = this.available.get(model.config.id) ?? [];
     if (free.length < 2) {
@@ -144,7 +146,7 @@ class NpcModels {
       if (!template || this.disposed || actor.rig.root.isDisposed() || actor.identity !== identity)
         return;
       const model = this.available.get(config.id)?.pop() ?? template.instantiate(actor.rig.root);
-      model.root.parent = actor.rig.root;
+      model.mount(actor.rig.root);
       model.controller.preview(
         actor.seated
           ? 'sit_idle'
@@ -159,7 +161,9 @@ class NpcModels {
         drinking: false,
         holding: false,
         seatHeight: (actor.rig.seatHeight ?? 0.5) / Math.max(0.1, actor.rig.root.scaling.y),
+        anchoredSeat: !!actor.rig.seatAnchor,
       });
+      if (actor.rig.seatAnchor) model.alignToSeat(actor.rig.seatAnchor);
       model.root.setEnabled(true);
       model.root.metadata = { npcModel: config.id, role: npcRole(actor.rig), identity };
       actor.character = model;
@@ -208,21 +212,24 @@ class NpcModels {
         continue;
       const seated =
         actor.seated || rig.action === 'sit' || rig.legs.every((l) => l.rotation.x < -1);
-      const action: HumanoidAction = seated
-        ? 'sit_idle'
-        : speed > 0.2
-          ? speed > 3.5
-            ? 'run'
-            : 'walk'
-          : ['dance', 'club', 'pole'].includes(rig.action)
-            ? 'dance'
-            : rig.action === 'drink'
-              ? 'drink'
-              : ['angry', 'talk', 'arrest', 'phone', 'smoke'].includes(rig.action)
-                ? 'taunt'
-                : rig.action === 'cheer'
-                  ? 'celebrate'
-                  : 'idle';
+      const baseAction: HumanoidAction = seated
+          ? 'sit_idle'
+          : rig.action === 'flee'
+            ? 'run_away'
+            : speed > 0.2
+              ? speed > 3.5
+                ? 'run'
+                : 'walk'
+              : ['dance', 'club', 'pole'].includes(rig.action)
+                ? 'dance'
+                : rig.action === 'drink'
+                  ? 'drink'
+                  : ['angry', 'talk', 'arrest', 'phone', 'smoke'].includes(rig.action)
+                    ? 'taunt'
+                    : rig.action === 'cheer'
+                      ? 'celebrate'
+                      : 'idle',
+        action = model.config.actionOverrides?.[baseAction] ?? baseAction;
       if (model.controller.action !== action || model.controller.serial === 0) {
         model.controller.preview(action);
         model.controller.time = (rig.appearance.seed * 0.713) % model.controller.timing().duration;
@@ -237,8 +244,10 @@ class NpcModels {
         drinking: action === 'drink',
         holding: false,
         seatHeight: (actor.rig.seatHeight ?? 0.5) / Math.max(0.1, actor.rig.root.scaling.y),
+        anchoredSeat: !!actor.rig.seatAnchor,
       };
       model.pose(actor.elapsed, state);
+      if (actor.rig.seatAnchor) model.alignToSeat(actor.rig.seatAnchor);
       rig.root.rotation.z = 0;
       actor.elapsed = 0;
     }

@@ -9,11 +9,14 @@ import { buildHead } from './head.js';
 import { buildBody } from './body.js';
 import { appearance, type Appearance, type CharacterCategory } from './presets.js';
 import type { CastRole } from '../characters/casting.js';
+import type { SeatAnchor } from '../seating/seat-anchor.js';
 
 export interface CharacterRig {
   castRole?: CastRole;
   /** Seat surface height above the foot anchor, in metres. */
   seatHeight?: number;
+  /** Explicit pelvis target. New seating uses this instead of moving the character root by eye. */
+  seatAnchor?: SeatAnchor;
   action: string;
   modelActive: boolean;
   root: TransformNode;

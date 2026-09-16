@@ -25,3 +25,6 @@ fixpermission.sh
 # Lokale Python-/Blender-Script-Caches.
 __pycache__/
 *.pyc
+
+# Screenshots zur Fehlersuche, nicht Teil des Projekts.
+/tshoot/

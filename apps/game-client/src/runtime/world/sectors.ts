@@ -31,7 +31,8 @@ export class WorldSectors {
     for (const entry of this.entries.values()) {
       const { definition: d } = entry;
       const distance = Math.hypot(position.x - d.x, position.z - d.z);
-      const visible = distance < d.radius + (entry.visible ? 160 : 140);
+      const margin = d.visibilityMargin ?? 150;
+      const visible = distance < d.radius + margin + (entry.visible ? 10 : -10);
       if (visible && !entry.built) {
         entry.built = true;
         entry.build?.();

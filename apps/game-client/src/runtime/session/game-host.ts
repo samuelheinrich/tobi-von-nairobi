@@ -301,6 +301,19 @@ export class GameHost {
           this.motor.teleport({ ...this.level.destination.position, y: 1.5 });
           this.locomotion.reset();
         },
+        ...(this.environment.debugTeleports
+          ? {
+              teleports: this.environment.debugTeleports.map((teleport) => ({
+                label: `Teleport · ${teleport.label}`,
+                run: () => {
+                  this.store.update({ debug: true });
+                  this.motor.teleport(teleport.position);
+                  this.locomotion.reset();
+                  this.camera.reset();
+                },
+              })),
+            }
+          : {}),
         inspect: () =>
           JSON.stringify(
             {
@@ -316,6 +329,7 @@ export class GameHost {
               droppedSeconds: Number(this.clock.droppedSeconds.toFixed(3)),
               objective: this.session.mission.active?.id,
               pursuit: this.police?.system.snapshot(),
+              level: this.environment.debugState?.(),
               agents: this.police?.system.agents.map((a) => ({
                 id: a.id,
                 state: a.state,
@@ -788,6 +802,11 @@ export class GameHost {
     if (this.seating.active) this.visual.root.rotation.y = this.seating.active.yaw;
     if (this.vehicles?.active) this.visual.root.rotation.y = this.vehicles.active.yaw;
     this.visual.root.setEnabled(this.seating.active?.kind !== 'toilet');
+    const activeSeatAnchor = this.seating.active?.seatAnchorId
+      ? this.environment.seatAnchors?.find(
+          (anchor) => anchor.id === this.seating.active?.seatAnchorId,
+        )
+      : undefined;
     const tripped = this.visual.animate(
       ['paused', 'caught'].includes(this.store.getSnapshot().phase) ? 0 : delta,
       this.store.getSnapshot().phase === 'playing' ? speed : 0,
@@ -799,6 +818,7 @@ export class GameHost {
       Math.max(this.hands.drinkPose, Math.sin((Math.PI * this.barDrinkSeconds) / 1.2)),
       this.seating.active?.kind === 'seat' || !!this.vehicles?.active,
       this.vehicles?.active?.seatHeight ?? this.seating.active?.seatHeight ?? 0.42,
+      activeSeatAnchor,
     );
     if (tripped) this.audio.play('stumble');
   }
@@ -841,6 +861,9 @@ export class GameHost {
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       // Read-only position projection for local route diagnostics; no mutation/test commands.
       this.canvas.dataset.playerPosition = `${this.motor.position.x.toFixed(2)},${this.motor.position.y.toFixed(2)},${this.motor.position.z.toFixed(2)}`;
+      const train = this.environment.transit?.primary?.snapshot;
+      if (train)
+        this.canvas.dataset.trainState = `${train.state}|${train.doorState}|${train.currentStation}|${train.nextStation}|${train.speed.toFixed(2)}`;
       this.uiTime += delta;
       if (this.uiTime >= 0.1) {
         this.uiTime = 0;

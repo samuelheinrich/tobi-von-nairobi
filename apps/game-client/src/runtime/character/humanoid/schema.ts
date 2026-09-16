@@ -36,6 +36,12 @@ export const actions = [
   'pickup',
   'hit_reaction',
   'celebrate',
+  'walk_alt',
+  'walk_alt_2',
+  'walk_backward',
+  'run_away',
+  'dance_hard',
+  'dance_medium',
 ] as const;
 export type HumanoidAction = (typeof actions)[number];
 export type Tuple3 = [number, number, number];
@@ -51,6 +57,8 @@ export interface ClipSource {
   model: string;
   bones: BoneMap;
   animations: Partial<Record<HumanoidAction, string>>;
+  /** Gameplay movement is authoritative; imported wrapper/root translation is discarded. */
+  rootMotion?: 'ignore';
 }
 export interface CharacterConfig {
   id: string;
@@ -62,6 +70,9 @@ export interface CharacterConfig {
   /** Source clips are sampled in-place. Missing actions use the shared humanoid library. */
   animations: Partial<Record<HumanoidAction, string>>;
   clipSources?: ClipSource[];
+  /** Model/preset-specific choices from the shared motion library. The gameplay state remains
+   * `walk`, `run` or `dance`; only the visible authored clip changes. */
+  actionOverrides?: Partial<Record<HumanoidAction, HumanoidAction>>;
   attachments: Record<string, PropAttachmentPreset>;
   armClearance: number;
   walkSpeed: number;
@@ -82,6 +93,8 @@ export interface AnimationState {
   victory?: boolean;
   /** Seat surface above the character origin, in game metres. */
   seatHeight?: number;
+  /** A SeatAnchor will solve the sampled pelvis pose; disables the legacy foot-origin correction. */
+  anchoredSeat?: boolean;
 }
 /** Compares bone names across the exporters that produced them.
  *

@@ -9,6 +9,7 @@ import type { BottleTarget } from '../items/thrown-bottles.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
 import type { SpeechBubbles } from './speech-bubbles.js';
 import { replyCue, type LevelNpcs, type NpcReply } from './level-npcs.js';
+import type { SeatAnchor } from '../character/seating/seat-anchor.js';
 
 interface Passenger {
   rig: NpcRig;
@@ -34,13 +35,17 @@ export class RailwayPassengers implements LevelNpcs {
     scene: Scene,
     shadows: ShadowGenerator,
     private readonly bubbles: SpeechBubbles,
+    seatAnchors: readonly SeatAnchor[],
   ) {
     const layout = railwayLayout;
+    const anchors = new Map(seatAnchors.map((anchor) => [anchor.id, anchor]));
     let id = 0;
+    let showcase = 0;
     for (const [carriage, z] of layout.carriageCentres.entries()) {
       if (carriage === layout.barCarriageIndex) {
         for (const [index, dz] of [-4.4, -2.2, 1.1, 3.3, 5.5].entries()) {
           const rig = createNpc(scene, `bar-guest-${id}`, npcPalette(scene, id), shadows);
+          rig.castRole = 'passenger';
           rig.root.position.set(0.85, 0, z + dz);
           rig.root.rotation.y = Math.PI / 2;
           this.people.push({
@@ -53,6 +58,7 @@ export class RailwayPassengers implements LevelNpcs {
           id++;
           if (index === 0) {
             const keeper = createNpc(scene, `bartender-${id}`, npcPalette(scene, 5), shadows);
+            keeper.castRole = 'passenger';
             keeper.root.position.set(3.2, 0, z + 1);
             keeper.root.rotation.y = -Math.PI / 2;
             this.people.push({
@@ -67,19 +73,33 @@ export class RailwayPassengers implements LevelNpcs {
         }
         continue;
       }
-      for (const offset of layout.seatOffsets)
-        for (const x of layout.seatColumns) {
+      for (const row of layout.seatOffsets.keys())
+        for (const column of layout.seatColumns.keys()) {
           // A deterministic gap keeps the carriages from looking like a full commuter train.
           if ((id * 7 + carriage * 3) % 5 === 0) {
             id++;
             continue;
           }
-          const rig = createNpc(scene, `passenger-${id}`, npcPalette(scene, id), shadows, true);
-          rig.root.position.set(x, 0, z + offset);
-          rig.seatHeight = 0.55;
-          rig.root.rotation.y = x > 0 ? -Math.PI / 2 : Math.PI / 2;
+          const special = showcase === 3;
+          const castSeed = special ? 104 : showcase < 3 ? showcase : id;
+          const rig = createNpc(
+            scene,
+            special ? 'glanzmann-special-seated' : `passenger-${id}`,
+            npcPalette(scene, castSeed),
+            shadows,
+            true,
+          );
+          rig.castRole = special ? 'special' : 'passenger';
+          const anchor = anchors.get(`railway-seat-${carriage}-${row}-${column}`);
+          if (!anchor) throw new Error(`Missing SeatAnchor for railway passenger ${id}`);
+          rig.seatAnchor = anchor;
+          anchor.occupied = true;
+          const pelvis = anchor.worldPosition;
+          rig.root.position.set(pelvis.x, 0, pelvis.z);
+          rig.root.rotation.y = anchor.yaw;
           this.people.push({ rig, seated: true, home: rig.root.position.clone(), startled: 0, id });
           id++;
+          showcase++;
         }
     }
     const rig = createNpc(scene, 'conductor', npcPalette(scene, 1), shadows);
@@ -141,6 +161,9 @@ export class RailwayPassengers implements LevelNpcs {
       Math.hypot(player.x - at.x, player.z - at.z) < railwayLayout.conductor.bodyRadius + 0.15;
     for (const person of this.people) {
       person.startled = Math.max(0, person.startled - delta);
+      person.rig.gesture(
+        person.startled > 0 && !person.seated ? 'flee' : person.seated ? 'sit' : 'idle',
+      );
       const sway = Math.sin(this.time * 2.2 + person.id) * (person.startled > 0 ? 3 : 1);
       person.rig.head.rotation.z = sway * 0.05;
       for (const [index, arm] of person.rig.arms.entries())
@@ -148,7 +171,7 @@ export class RailwayPassengers implements LevelNpcs {
           index,
           person.startled > 0 ? 1.3 + sway * 0.2 : 0.1 + sway * 0.06,
         );
-      person.rig.root.position.y = person.home.y + (person.seated ? 0 : Math.abs(sway) * 0.02);
+      if (!person.seated) person.rig.root.position.y = person.home.y + Math.abs(sway) * 0.02;
     }
   }
 

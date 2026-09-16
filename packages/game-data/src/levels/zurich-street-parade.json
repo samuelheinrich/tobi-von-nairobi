@@ -3,7 +3,7 @@
   "id": "zurich_street_parade",
   "worldId": "zurich",
   "title": "Zürich Street Parade",
-  "subtitle": "Vom Utoquai über die Quaibrücke bis zum Hafendamm Enge. Und Karl regelt das.",
+  "subtitle": "Vom Zürich HB durch die Bahnhofstrasse bis an den See – inklusive S16 nach Stadelhofen.",
   "atmosphere": "night",
   "scenery": "street-parade",
   "maxWanted": 3,
@@ -24,10 +24,10 @@
     "radius": 3.0
   },
   "navigationBounds": {
-    "minX": -50,
-    "maxX": 50,
+    "minX": -118,
+    "maxX": 118,
     "minZ": -52,
-    "maxZ": 52
+    "maxZ": 122
   },
   "policeSpawns": [
     {
@@ -316,6 +316,66 @@
         "y": 0.0,
         "z": -41.0
       }
+    },
+    {
+      "id": "zurich_hb_bottle_31",
+      "itemId": "bottle",
+      "position": { "x": -34, "y": 0, "z": 43 }
+    },
+    {
+      "id": "zurich_hb_bottle_32",
+      "itemId": "bottle",
+      "position": { "x": -34, "y": 0, "z": 50 }
+    },
+    {
+      "id": "zurich_hb_bottle_33",
+      "itemId": "bottle",
+      "position": { "x": -42, "y": 0, "z": 63 }
+    },
+    {
+      "id": "zurich_hb_bottle_34",
+      "itemId": "bottle",
+      "position": { "x": -66, "y": 0.32, "z": 83 }
+    },
+    {
+      "id": "zurich_hb_bottle_35",
+      "itemId": "bottle",
+      "position": { "x": -54, "y": 0.32, "z": 106 }
+    },
+    {
+      "id": "zurich_hb_bottle_36",
+      "itemId": "bottle",
+      "position": { "x": -30, "y": 0.32, "z": 86 }
+    },
+    {
+      "id": "zurich_hb_bottle_37",
+      "itemId": "bottle",
+      "position": { "x": -6, "y": 0.32, "z": 106 }
+    },
+    {
+      "id": "zurich_hb_bottle_38",
+      "itemId": "bottle",
+      "position": { "x": -43, "y": -4.68, "z": 91 }
+    },
+    {
+      "id": "zurich_hb_bottle_39",
+      "itemId": "bottle",
+      "position": { "x": -27, "y": -4.68, "z": 103 }
+    },
+    {
+      "id": "stadelhofen_bottle_40",
+      "itemId": "bottle",
+      "position": { "x": 62, "y": 0.32, "z": 78 }
+    },
+    {
+      "id": "stadelhofen_bottle_41",
+      "itemId": "bottle",
+      "position": { "x": 70, "y": 0.32, "z": 96 }
+    },
+    {
+      "id": "stadelhofen_bottle_42",
+      "itemId": "bottle",
+      "position": { "x": 76, "y": 0.32, "z": 84 }
     }
   ],
   "powerups": [
@@ -405,7 +465,7 @@
       "id": "collect_bottles",
       "type": "collect",
       "itemId": "bottle",
-      "amount": 30,
+      "amount": 42,
       "after": []
     },
     {

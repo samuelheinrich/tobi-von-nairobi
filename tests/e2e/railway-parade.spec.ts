@@ -36,7 +36,7 @@ test('Thailand Railway: drink, hold, throw, get past the conductor and reach car
   expect(errors).toEqual([]);
 });
 
-test('Street Parade: 240 people react and a tablet changes only the game colors', async ({
+test('Street Parade: 180 people react and a tablet changes only the game colors', async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -49,11 +49,11 @@ test('Street Parade: 240 people react and a tablet changes only the game colors'
     timeout: 45000,
   });
   await page.getByRole('button', { name: 'FLUCHT STARTEN' }).press('Enter');
-  await expect(page.getByTestId('crowd-count')).toContainText('0 / 240');
+  await expect(page.getByTestId('crowd-count')).toContainText('0 / 180');
   await page.keyboard.press('KeyR');
   await expect(page.getByTestId('crowd-count')).not.toContainText('· 0 /');
   await page.keyboard.down('KeyW');
-  await expect(page.getByTestId('bottle-count')).toContainText('2 / 30', { timeout: 20000 });
+  await expect(page.getByTestId('bottle-count')).toContainText('2 / 42', { timeout: 20000 });
   await page.keyboard.up('KeyW');
   await page.keyboard.down('KeyD');
   await expect(page.getByTestId('color-trip')).toBeVisible({ timeout: 12000 });

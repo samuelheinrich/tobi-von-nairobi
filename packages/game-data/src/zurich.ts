@@ -233,3 +233,126 @@ export const zurichLayout = {
     { x: -40, z: -44 },
   ],
 } as const;
+
+export const zurichWorldBounds = { minX: -124, maxX: 124, minZ: -54, maxZ: 124 } as const;
+
+/** The original lake basin remains the party core. These sectors extend it north into a
+ * walkable city and keep expensive station decoration eligible for distance culling. */
+export const zurichSectors = [
+  { id: 'street_parade', x: 0, z: -24, radius: 76, visibilityMargin: 30 },
+  { id: 'old_town', x: -3, z: 31, radius: 48, visibilityMargin: 30 },
+  { id: 'bahnhofstrasse', x: -34, z: 45, radius: 38, visibilityMargin: 30 },
+  { id: 'zurich_hb', x: -35, z: 86, radius: 64, visibilityMargin: 30 },
+  { id: 'train_tunnel', x: 28, z: 116, radius: 58, visibilityMargin: 30 },
+  { id: 'stadelhofen', x: 70, z: 78, radius: 42, visibilityMargin: 30 },
+] as const;
+
+export const zurichStations = {
+  hb: {
+    id: 'zurich_hb',
+    label: 'ZÜRICH HB',
+    centre: { x: -35, y: 0, z: 86 },
+    surfaceTracks: 12,
+    undergroundTracks: 4,
+  },
+  stadelhofen: {
+    id: 'stadelhofen',
+    label: 'ZÜRICH STADELHOFEN',
+    centre: { x: 68, y: 0, z: 84 },
+    surfaceTracks: 3,
+    undergroundTracks: 0,
+  },
+} as const;
+
+/** Centre-line followed by the reusable train runtime. The northern arc is enclosed by tunnel
+ * portals, so its finite turnaround never reads as the edge of the world. */
+export const zurichTrainRoute = {
+  id: 'hb_stadelhofen_loop',
+  label: 'S16 Zürich HB – Stadelhofen',
+  points: [
+    { x: -3, y: 0.38, z: 60 },
+    { x: -3, y: 0.38, z: 87 },
+    { x: -3, y: 0.38, z: 116 },
+    { x: 18, y: 0.38, z: 122 },
+    { x: 48, y: 0.38, z: 122 },
+    { x: 68, y: 0.38, z: 112 },
+    { x: 68, y: 0.38, z: 86 },
+    { x: 68, y: 0.38, z: 60 },
+  ],
+  stops: [
+    { id: 'zurich_hb', label: 'Zürich HB', distance: 0.148188 },
+    { id: 'stadelhofen', label: 'Zürich Stadelhofen', distance: 0.8573 },
+  ],
+  maxSpeed: 10,
+} as const;
+
+export const zurichPassengerSpawns = [
+  [-66, 0.35, 82, 'platform'],
+  [-54, 0.35, 94, 'platform'],
+  [-6.8, 0.35, 84.5, 'train_door'],
+  [-42, 0.35, 78, 'platform'],
+  [-6.8, 0.35, 96.5, 'train_door'],
+  [-30, 0.35, 88, 'platform'],
+  [-30, 0.35, 98, 'waiting_area'],
+  [-6.8, 0.35, 78, 'train_door'],
+  [-18, 0.35, 82, 'platform'],
+  [-18, 0.35, 103, 'platform'],
+  [-51, 0.1, 64, 'shop'],
+  [-43, 0.1, 61, 'exit'],
+  [-35, 0.1, 67, 'waiting_area'],
+  [-67, 0.1, 58, 'stairs'],
+  [-18, 0.1, 68, 'shop'],
+  [63, 0.35, 78, 'platform'],
+  [72, 0.35, 99, 'train_door'],
+  [76, 0.1, 67, 'exit'],
+  [83, 0.1, 78, 'waiting_area'],
+  [59, 0.1, 70, 'shop'],
+] as const;
+
+export const zurichBuildings = [
+  {
+    id: 'bahnhofstrasse-kiosk',
+    label: 'KIOSK',
+    position: { x: -48, y: 0, z: 49 },
+    width: 10,
+    depth: 9,
+    height: 7,
+    enterable: 'fully_enterable',
+    roofWalkable: true,
+    interiorType: 'shop',
+    collisionMode: 'compound',
+    color: '#d8c9ad',
+    doors: [{ x: 0, width: 2.4 }],
+    spawnPoints: [{ x: -48, y: 0, z: 49 }],
+  },
+  {
+    id: 'limmatquai-cafe',
+    label: 'CAFÉ LIMMAT',
+    position: { x: 16, y: 0, z: 48 },
+    width: 12,
+    depth: 10,
+    height: 8,
+    enterable: 'fully_enterable',
+    roofWalkable: true,
+    interiorType: 'bar',
+    collisionMode: 'compound',
+    color: '#cda886',
+    doors: [{ x: -2, width: 2.5 }],
+    spawnPoints: [{ x: 16, y: 0, z: 48 }],
+  },
+  {
+    id: 'stadelhofen-shop',
+    label: 'STADelHOFEN SHOP',
+    position: { x: 85, y: 0, z: 62 },
+    width: 12,
+    depth: 9,
+    height: 7,
+    enterable: 'shallow_interior',
+    roofWalkable: false,
+    interiorType: 'shop',
+    collisionMode: 'compound',
+    color: '#d0b899',
+    doors: [{ x: 0, width: 2.4 }],
+    spawnPoints: [{ x: 85, y: 0, z: 62 }],
+  },
+] as const;
