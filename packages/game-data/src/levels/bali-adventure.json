@@ -3,230 +3,38 @@
   "id": "bali_adventure",
   "worldId": "bali",
   "title": "Bali: Beach, Market & Escape",
-  "subtitle": "Erst die Strandbar, dann der Nachtmarkt. Am Ende sucht die halbe Küste Tobi.",
+  "subtitle": "Strand, Warungs, Dschungel und eine Insel. Sammle alle Flaschen – Karl hat den Scooter stehen lassen.",
   "scenery": "bali-adventure",
   "atmosphere": "sunset",
-  "maxWanted": 3,
-  "chaosPerBottle": 16,
-  "policeSpeed": 5.2,
+  "maxWanted": 0,
+  "chaosPerBottle": 3,
   "spawn": {
-    "x": -28,
+    "x": -60,
     "y": 1.5,
-    "z": -32
+    "z": -88
   },
   "destination": {
     "id": "casa_coast",
     "position": {
-      "x": 4,
+      "x": -14,
       "y": 0,
-      "z": 76
+      "z": -8
     },
-    "radius": 2.8
+    "radius": 3
   },
-  "navigationBounds": {
-    "minX": -40,
-    "maxX": 56,
-    "minZ": -48,
-    "maxZ": 88
-  },
-  "policeSpawns": [
-    {
-      "x": 44,
-      "y": 0,
-      "z": 46
-    },
-    {
-      "x": 42,
-      "y": 0,
-      "z": 66
-    },
-    {
-      "x": 18,
-      "y": 0,
-      "z": 73
-    }
-  ],
-  "pickups": [
-    {
-      "id": "bali_coast_bottle_01",
-      "itemId": "bottle",
-      "position": {
-        "x": -20,
-        "y": 0,
-        "z": -32
-      }
-    },
-    {
-      "id": "bali_coast_bottle_02",
-      "itemId": "bottle",
-      "position": {
-        "x": -12,
-        "y": 0,
-        "z": -32
-      }
-    },
-    {
-      "id": "bali_coast_bottle_03",
-      "itemId": "bottle",
-      "position": {
-        "x": -4,
-        "y": 0,
-        "z": -32
-      }
-    },
-    {
-      "id": "bali_coast_bottle_04",
-      "itemId": "bottle",
-      "position": {
-        "x": 4,
-        "y": 0,
-        "z": -24
-      }
-    },
-    {
-      "id": "bali_coast_bottle_05",
-      "itemId": "bottle",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": -16
-      }
-    },
-    {
-      "id": "bali_coast_bottle_06",
-      "itemId": "bottle",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": -8
-      }
-    },
-    {
-      "id": "bali_coast_bottle_07",
-      "itemId": "bottle",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": 2
-      }
-    },
-    {
-      "id": "bali_coast_bottle_08",
-      "itemId": "bottle",
-      "position": {
-        "x": 4,
-        "y": 0,
-        "z": 12
-      }
-    },
-    {
-      "id": "bali_coast_bottle_09",
-      "itemId": "bottle",
-      "position": {
-        "x": 12,
-        "y": 0,
-        "z": 12
-      }
-    },
-    {
-      "id": "bali_coast_bottle_10",
-      "itemId": "bottle",
-      "position": {
-        "x": 20,
-        "y": 0,
-        "z": 12
-      }
-    },
-    {
-      "id": "bali_coast_bottle_11",
-      "itemId": "bottle",
-      "position": {
-        "x": 28,
-        "y": 0,
-        "z": 12
-      }
-    },
-    {
-      "id": "bali_coast_bottle_12",
-      "itemId": "bottle",
-      "position": {
-        "x": 36,
-        "y": 0,
-        "z": 20
-      }
-    },
-    {
-      "id": "bali_coast_bottle_13",
-      "itemId": "bottle",
-      "position": {
-        "x": 40,
-        "y": 0,
-        "z": 30
-      }
-    },
-    {
-      "id": "bali_coast_bottle_14",
-      "itemId": "bottle",
-      "position": {
-        "x": 40,
-        "y": 0,
-        "z": 40
-      }
-    },
-    {
-      "id": "bali_coast_bottle_15",
-      "itemId": "bottle",
-      "position": {
-        "x": 40,
-        "y": 0,
-        "z": 48
-      }
-    },
-    {
-      "id": "bali_coast_bottle_16",
-      "itemId": "bottle",
-      "position": {
-        "x": 32,
-        "y": 0,
-        "z": 66
-      }
-    },
-    {
-      "id": "bali_coast_bottle_17",
-      "itemId": "bottle",
-      "position": {
-        "x": 16,
-        "y": 0,
-        "z": 68
-      }
-    },
-    {
-      "id": "bali_coast_bottle_18",
-      "itemId": "bottle",
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": 72
-      }
-    }
-  ],
+  "pickups": [],
   "objectives": [
     {
       "id": "collect_coast",
       "type": "collect",
       "itemId": "bottle",
-      "amount": 18
-    },
-    {
-      "id": "escape_coast",
-      "type": "escapePolice",
-      "after": ["collect_coast"]
+      "amount": 36
     },
     {
       "id": "reach_casa",
       "type": "reach",
       "targetId": "casa_coast",
-      "after": ["escape_coast"]
+      "after": ["collect_coast"]
     }
   ]
 }

@@ -5,9 +5,9 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Position3 } from '@tobi/contracts';
 import { NpcVoices, ProximityGreeter } from '@tobi/game-core';
-import { hippieHouseLayout, socialBalance } from '@tobi/game-data';
+import { insideHippieHouse, hippieHouseLayout, socialBalance } from '@tobi/game-data';
 import type { BottleTarget } from '../items/thrown-bottles.js';
-import { material } from './materials.js';
+import { material, solidBox } from './materials.js';
 import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
 import type { SpeechBubbles } from './speech-bubbles.js';
 import { replyCue, type LevelNpcs, type NpcReply } from './level-npcs.js';
@@ -57,6 +57,15 @@ export class HouseResidents implements LevelNpcs {
       rig.root.position.set(x, floor * hippieHouseLayout.floorHeight, z);
       rig.castRole = activity === 'yoga' || activity === 'meditate' ? 'yoga' : 'resident';
       rig.root.rotation.y = facing;
+      rig.seatHeight = activity === 'yoga' || activity === 'meditate' ? 0.2 : 0.5;
+      if (activity === 'sit')
+        solidBox(
+          scene,
+          'resident-seat',
+          [0.9, 0.5, 0.85],
+          [x, floor * hippieHouseLayout.floorHeight + 0.25, z],
+          mat,
+        );
       this.people.push({ rig, floor, activity, phase: id * 0.7, startled: 0, id });
       id++;
     };
@@ -128,7 +137,7 @@ export class HouseResidents implements LevelNpcs {
     for (const person of this.people) {
       // Same cutaway rule the level uses: never draw a storey above Tobi's head.
       const y = person.floor * hippieHouseLayout.floorHeight;
-      person.rig.root.setEnabled(y < player.y + 1.5);
+      person.rig.root.setEnabled(insideHippieHouse(player) && y < player.y + 1.5);
       person.startled = Math.max(0, person.startled - delta);
       const breath = Math.sin(this.time * (person.startled > 0 ? 8 : 1.1) + person.phase);
       const [leftArm, rightArm] = person.rig.arms;

@@ -77,8 +77,9 @@ export function buildPlaza(b: NanaBuilder): void {
   b.sign('ENTERTAINMENT / SOI 4', [0, 6.4, -5.7], 12, '#f2ca68');
   // High, skeletal canopy echoes the real cover without hiding the courtyard from balconies.
   for (const x of [-15, 15])
-    for (const z of [8, 48]) b.prop('canopy-column', [0.18, 17, 0.18], [x, 8.5, z], '#495166');
-  for (const z of [8, 20, 34, 48]) b.prop('canopy-truss', [31, 0.25, 0.2], [0, 17, z], '#6a7284');
-  b.prop('canopy-ridge', [0.3, 0.3, 45], [0, 18, 28], '#728399');
+    for (const z of [8, 48]) b.massive('canopy-column', [0.18, 17, 0.18], [x, 8.5, z], '#495166');
+  for (const z of [8, 20, 34, 48])
+    b.massive('canopy-truss', [31, 0.25, 0.2], [0, 17, z], '#6a7284');
+  b.massive('canopy-ridge', [0.3, 0.3, 45], [0, 18, 28], '#728399');
   b.sign('BTS / SOI 4  ←  EXIT', [0, 3.5, 4], 9, '#57edd2', Math.PI);
 }

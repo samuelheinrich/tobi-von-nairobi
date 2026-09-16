@@ -12,7 +12,7 @@ test('Hippie-WG opens on the top floor and collects only that storeys bottle', a
   await start.press('Enter');
   await expect(page.getByTestId('interior-floor')).toContainText('2. OBERGESCHOSS');
   await page.keyboard.down('KeyW');
-  await expect(page.getByTestId('bottle-count')).toContainText('1 / 18', { timeout: 15000 });
+  await expect(page.getByTestId('bottle-count')).toContainText('1 / 36', { timeout: 15000 });
   await page.keyboard.up('KeyW');
   await expect(page.getByTestId('empty-bottles')).toHaveText('1', { timeout: 10000 });
   await page.screenshot({ path: '.artifacts/screenshots/arlesheim-hippie-wg.png' });
@@ -21,6 +21,6 @@ test('Hippie-WG opens on the top floor and collects only that storeys bottle', a
   await expect(start).toBeEnabled({ timeout: 45000 });
   await start.press('Enter');
   await expect(page.getByTestId('interior-floor')).toContainText('2. OBERGESCHOSS');
-  await expect(page.getByTestId('bottle-count')).toContainText('0 / 18');
+  await expect(page.getByTestId('bottle-count')).toContainText('0 / 36');
   expect(errors).toEqual([]);
 });

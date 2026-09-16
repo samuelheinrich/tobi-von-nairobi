@@ -1,3 +1,5 @@
+import { arlesheimOutdoorPickups } from './arlesheim/world.js';
+import { baliPickups } from './bali-world/content.js';
 import rawAdventure from './levels/bali-adventure.json' with { type: 'json' };
 import rawFlight from './levels/fly-high.json' with { type: 'json' };
 import rawRailway from './levels/thailand-railway.json' with { type: 'json' };
@@ -12,18 +14,32 @@ import { levelSchema, type LevelDefinition } from '@tobi/contracts';
 import rawLevel from './levels/welcome-to-bali.json' with { type: 'json' };
 
 export const welcomeToBali = levelSchema.parse(rawLevel);
-export const contentVersion = 'prototype-5-nana';
+export const contentVersion = 'prototype-7-arlesheim';
 export const baliEscape = levelSchema.parse(rawEscape);
 export const beachBar = levelSchema.parse(rawBar);
 export const nightMarket = levelSchema.parse(rawMarket);
 export const thailandRailway = levelSchema.parse(rawRailway);
 export const streetParade = levelSchema.parse(rawParade);
-export const hippieHouse = levelSchema.parse(rawHouse);
+export const hippieHouse = levelSchema.parse({
+  ...rawHouse,
+  pickups: [...rawHouse.pickups, ...arlesheimOutdoorPickups],
+  objectives: rawHouse.objectives.map((o) =>
+    o.type === 'collect'
+      ? { ...o, amount: rawHouse.pickups.length + arlesheimOutdoorPickups.length }
+      : o,
+  ),
+});
 export const nanaPlaza = levelSchema.parse(rawNana);
 /** Reached only by being caught, therefore never offered in the gallery. */
 export const drunkTank = levelSchema.parse(rawCell);
 
-export const baliAdventure = levelSchema.parse(rawAdventure);
+export const baliAdventure = levelSchema.parse({
+  ...rawAdventure,
+  pickups: baliPickups,
+  objectives: rawAdventure.objectives.map((o) =>
+    o.type === 'collect' ? { ...o, amount: baliPickups.length } : o,
+  ),
+});
 export const flyHigh = levelSchema.parse(rawFlight);
 
 export const playableLevels = [
@@ -73,4 +89,6 @@ export { aircraftLayout } from './aircraft.js';
 
 export { tutorialLessons, tutorialLayout } from './tutorial.js';
 
-export { baliAdventureLayout, baliGroundAt } from './bali-adventure.js';
+export * from './bali-adventure.js';
+
+export * from './arlesheim/world.js';

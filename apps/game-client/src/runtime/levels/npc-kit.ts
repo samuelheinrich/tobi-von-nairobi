@@ -1,3 +1,4 @@
+import { registerNpcGrounding } from '../physics/npc-grounding.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -43,6 +44,7 @@ export function createNpc(
 ): NpcRig {
   const a = appearance(category ?? categoryFromName(name), palette.seed ?? 0, female, thai);
   const rig = createCharacter(scene, name, a, shadows, seated);
+  registerNpcGrounding(scene, rig, seated);
   registerNpcModel(scene, rig, seated);
   return rig;
 }

@@ -1,3 +1,4 @@
+import { setNpcPhysicsDelta } from '../physics/npc-grounding.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
@@ -157,7 +158,7 @@ class NpcModels {
         sitting: actor.seated,
         drinking: false,
         holding: false,
-        seatHeight: actor.seated ? 0.25 : 0.42,
+        seatHeight: (actor.rig.seatHeight ?? 0.5) / Math.max(0.1, actor.rig.root.scaling.y),
       });
       model.root.setEnabled(true);
       model.root.metadata = { npcModel: config.id, role: npcRole(actor.rig), identity };
@@ -235,7 +236,7 @@ class NpcModels {
         sitting: seated,
         drinking: action === 'drink',
         holding: false,
-        seatHeight: actor.seated ? 0.25 : 0.42,
+        seatHeight: (actor.rig.seatHeight ?? 0.5) / Math.max(0.1, actor.rig.root.scaling.y),
       };
       model.pose(actor.elapsed, state);
       rig.root.rotation.z = 0;
@@ -256,6 +257,7 @@ export function registerNpcModel(scene: Scene, rig: CharacterRig, seated: boolea
 }
 /** Called by the game host so pause/custody never advance an NPC's animation clock. */
 export function setNpcAnimationDelta(scene: Scene, delta: number): void {
+  setNpcPhysicsDelta(scene, delta);
   const models = scenes.get(scene);
   if (models) models.delta = delta;
 }

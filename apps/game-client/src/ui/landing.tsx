@@ -74,7 +74,9 @@ export function Landing({
                       ? 'REIN IN DIE WG'
                       : level.scenery === 'railway'
                         ? 'EINSTEIGEN'
-                        : 'FLUCHT STARTEN'}
+                        : level.scenery === 'bali-adventure'
+                          ? 'BALI ERKUNDEN'
+                          : 'FLUCHT STARTEN'}
               <span aria-hidden="true">↗</span>
             </button>
             <p className="guest-note">

@@ -6,7 +6,7 @@ import type { StandardMaterial } from '@babylonjs/core/Materials/standardMateria
 import type { LevelDefinition } from '@tobi/contracts';
 import { zurichLayout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
-import { box, material } from './materials.js';
+import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
 
 /** Zurich's lake basin as an original low-poly blockout: no map data, no photographic textures.
@@ -138,6 +138,7 @@ export function createParadeScene(scene: Scene, world: HavokWorld, level: LevelD
     hat.rotation.y = Math.PI / 4;
     hat.position.set(block.x, block.height + (block.style === 'church' ? 1.7 : 1.1), block.z);
     hat.material = block.style === 'church' ? copper : roof;
+    world.addCollider(hat, { collision: 'convex' });
     hat.isPickable = false;
     kit.shadows.addShadowCaster(hat);
     for (let row = 2; row < block.height - 1.5; row += 3.4)
@@ -188,7 +189,7 @@ export function createParadeScene(scene: Scene, world: HavokWorld, level: LevelD
       ),
     );
     for (const dz of [-truck.depth / 2 + 1.4, truck.depth / 2 - 1.4]) {
-      box(
+      solidBox(
         scene,
         'speaker-stack',
         [truck.width * 0.75, 2.4, 1.8],
@@ -233,6 +234,7 @@ export function createParadeScene(scene: Scene, world: HavokWorld, level: LevelD
     );
     stem.position.set(x, height / 2, z);
     stem.material = trunk;
+    world.addCollider(stem, { collision: 'capsule' });
     stem.isPickable = false;
     const crown = MeshBuilder.CreateSphere('quay-crown', { diameter: 4.4, segments: 5 }, scene);
     crown.scaling.y = 0.8;

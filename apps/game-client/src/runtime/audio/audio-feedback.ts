@@ -90,6 +90,23 @@ export class AudioFeedback {
           type: 'highpass',
           delay: 0.2,
         });
+      } else if (zone.kind === 'surf') {
+        this.noise({ duration: 3, volume: gain, from: 450, to: 1800, type: 'lowpass' });
+      } else if (zone.kind === 'nature') {
+        this.tone({
+          frequency: zone.note,
+          end: zone.note * 1.4,
+          duration: 0.6,
+          volume: gain * 0.5,
+          type: 'sine',
+        });
+        this.tone({
+          frequency: zone.note * 1.5,
+          duration: 0.25,
+          delay: 0.4,
+          volume: gain * 0.3,
+          type: 'sine',
+        });
       } else if (zone.kind === 'traffic') {
         this.noise({ duration: 2.6, volume: gain, from: 350, to: 700, type: 'lowpass' });
         if (beat % 4 === 0)

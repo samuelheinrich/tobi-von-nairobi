@@ -1,5 +1,11 @@
 # Implementierungsstand
 
+> 16. September 2026: [Arlesheimer WG-Quartier](../gameplay/arlesheim-hippie-wg.md): echte Haustür nach draussen, Garten, neun Häuser, Dorfplatz/Dom, Fahnen, Quartierplan, 36 Flaschen und optionaler Scooter. [Übergabe](handover-2026-09-16-arlesheim.md).
+
+> 16. September 2026: [Bali-Erkundungswelt](../gameplay/bali-open-world.md) mit 36 Flaschen, 11 Sektoren, Innenräumen/Dächern, Scooter und Bootsreise zur Insel. [Übergabe und Prüfstand](handover-2026-09-16-bali-world.md). Keine Polizei als Hauptziel, keine GitHub-CI.
+
+> Neu: [Gemeinsame Collision-/Physics-Pipeline](physics-upgrade.md) — 15. September 2026. Massive Möbel/Dächer, fahrende Plattformen, NPC-Fussanker, Havok-Wurfflaschen, F1-Layer-Debug, Physics Playground und GLB-Collision-Studio. Sechs gezielte lokale Physics-Tests sowie bestehende Level-Probes geprüft; keine GitHub-CI. Hardware-/Animationsgrenzen sind dort ausdrücklich dokumentiert.
+
 > Neueste Übergabe: [Charaktermodelle, Besetzung und offene Defekte](handover-2026-09-15-charaktere.md) — 15. September 2026.
 
 **NPCs im Spiel auf GLB umgestellt:** Die vorhandene Besetzung aus `characters/casting.ts` wird jetzt vom gemeinsamen NPC-Erzeuger verwendet – einschliesslich Polizei, Security, Zug, Flugzeug, WG und Bali. Nana-/Parade-Pools wechseln Modelle passend zur Rolle; die Fernmengen verwenden instanzierte GLB-Posen. Fehlende Rollen verwenden die definierten Platzhalter, Ladefehler behalten die prozedurale Darstellung. [Anbindung und Prüfstand](npc-glb-rollout.md).
@@ -44,7 +50,7 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 - Registrierung/Login/Logout mit Argon2id, serverseitigen Sessions, Origin-/CSRF-Prüfung und Rate Limits.
 - Angemeldete Levelversuche, atomare Abschlüsse, Bestwerte und Gesamtpunkte in PostgreSQL. Dauerhafte lokale Ergebniswarteschlange mit idempotenter Wiederholung nach Verbindungsabbruch oder Reload. Gastspiel bleibt möglich.
 
-- **Bali: Beach, Market & Escape** führt Beach Bar, Night Market und Bali Escape zu einer zusammenhängenden Küste mit 18 Flaschen, Strandbar, Markt und Fluchtgassen zusammen. Meer, Kaimauern und Gebäude begrenzen den verzweigten Grundriss. Die drei alten IDs bleiben für gespeicherte Ergebnisse erhalten und verschwinden aus der Galerie.
+- **Bali: Beach, Market & Escape** führt Beach Bar, Night Market und Bali Escape zu einer zusammenhängenden Erkundungswelt mit jetzt 36 Flaschen, Strandbar, Markt, Tempel, Terrassen und Boot/Scooter zusammen. Meer, Kaimauern und Gebäude begrenzen den verzweigten Grundriss. Die drei alten IDs bleiben für gespeicherte Ergebnisse erhalten und verschwinden aus der Galerie.
 - Ansteigender Cartoon-Pegel, artikulierte Tobi-Animation, animierte Guards/Passanten, elf Sound-Cues, Sirenen und Ambient-Cues mit Pause-/Mute-Lebenszyklus. [Details](../gameplay/bali-venues-and-feedback.md).
 
 - Thailand Railway mit fünf offenen Wagen, Barwagen, sitzenden Reisenden, blockierendem Schaffner, benutzbaren Sitzen und zwölf Flaschen. Gebäude, Palmen, Felder und Schwellen ziehen endlos am Zug vorbei; eine feste Anzahl wiederverwendeter Landschaftsstreifen begrenzt den Speicherverbrauch. Zürich Street Parade als Ausschnitt des Zürcher Seebeckens: Utoquai, Bellevue, Quaibrücke, Bürkliplatz, Hafendamm Enge, dazu Bahnhofstrasse, Hauptbahnhof, Altstadt, Fraumünster, Grossmünster und Opernhaus. See und Limmat sind echte Hindernisse, die Brücken die einzigen Übergänge; 30 verteilte Flaschen, 24 Tabletten, vier Musik-Trucks und 240 entlang der Route ausgestreute Tänzer.

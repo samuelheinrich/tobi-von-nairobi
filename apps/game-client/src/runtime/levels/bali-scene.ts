@@ -99,6 +99,7 @@ export function createBaliScene(
     hat.position.set(x, 4.3, z);
     hat.rotation.y = Math.PI / 4;
     hat.material = roof;
+    physics.addCollider(hat, { collision: 'convex' });
     shadows.addShadowCaster(hat);
     box(scene, 'door', [1.25, 2.4, 0.08], [x, 1.2, z - depth / 2 - 0.04], dark);
     for (const offset of [-2.2, 2.2]) {

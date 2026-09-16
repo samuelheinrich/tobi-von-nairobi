@@ -4,7 +4,7 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import { aircraftLayout as layout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
-import { box, material } from './materials.js';
+import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
 import { createNpc, npcPalette } from './npc-kit.js';
 
@@ -79,7 +79,7 @@ export function createAircraftScene(scene: Scene, world: HavokWorld, level: Leve
         window.isPickable = false;
       }
       // Outer overhead lockers keep the aisles visible from above.
-      box(
+      solidBox(
         scene,
         'overhead-bin',
         [0.6, 0.38, 64],
@@ -96,7 +96,7 @@ export function createAircraftScene(scene: Scene, world: HavokWorld, level: Leve
             s.kind === 'seat' &&
             s.position.x === x &&
             s.position.z === z &&
-            Math.abs(s.position.y - floor - 1.45) < 0.01,
+            Math.abs(s.position.y - floor - 0.9) < 0.01,
         );
         const surface = free ? green : upper ? brass : navy;
         const seatWidth = upper ? 1.3 : 0.95;
@@ -115,7 +115,7 @@ export function createAircraftScene(scene: Scene, world: HavokWorld, level: Leve
           cream,
         );
         for (const side of [-1, 1])
-          box(
+          solidBox(
             scene,
             'seat-armrest',
             [0.08, 0.12, 0.8],
@@ -130,7 +130,8 @@ export function createAircraftScene(scene: Scene, world: HavokWorld, level: Leve
             null,
             true,
           );
-          rig.root.position.set(x, floor + 0.45, z);
+          rig.root.position.set(x, floor, z);
+          rig.seatHeight = 0.48;
           rig.root.scaling.setAll(0.8);
         }
       }

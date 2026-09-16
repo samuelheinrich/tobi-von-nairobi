@@ -24,22 +24,34 @@ export class ThirdPersonCamera {
   public yaw = 0;
   private currentPitch: number;
   private distance: number;
-  private readonly profile: (typeof profiles)[CameraMode];
+  private vehicleDistance: number | null = null;
+  public setVehicle(kind: 'boat' | 'scooter' | null): void {
+    this.vehicleDistance = kind === 'boat' ? 11 : kind === 'scooter' ? 8 : null;
+  }
+  private mode: CameraMode;
+  private profile: (typeof profiles)[CameraMode];
 
   public constructor(
     private readonly scene: Scene,
     mode: CameraMode = 'follow',
   ) {
+    this.mode = mode;
     this.profile = profiles[mode];
     this.currentPitch = this.profile.pitch;
     this.distance = this.profile.distance;
     this.camera = new FreeCamera('third-person', new Vector3(0, 4, -25), scene);
     this.camera.minZ = 0.15;
-    this.camera.maxZ = 320;
+    this.camera.maxZ = 900;
     this.camera.fov = (65 * Math.PI) / 180;
     this.camera.inputs.clear();
   }
 
+  public setMode(mode: CameraMode): void {
+    if (mode === this.mode) return;
+    this.mode = mode;
+    this.profile = profiles[mode];
+    this.currentPitch = this.profile.pitch;
+  }
   public get pitch(): number {
     return this.currentPitch;
   }
@@ -60,7 +72,7 @@ export class ThirdPersonCamera {
       Math.sin(this.currentPitch),
       -Math.cos(this.yaw) * Math.cos(this.currentPitch),
     );
-    let allowed: number = this.profile.distance;
+    let allowed: number = this.vehicleDistance ?? this.profile.distance;
     // Five parallel probes approximate a camera radius and cover wall edges in this blockout.
     for (const offset of [
       Vector3.Zero(),

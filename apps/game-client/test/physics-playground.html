@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+  <meta charset="utf-8" /><title>Physics Playground · Tobi</title>
+  <style>
+    body {
+      margin: 0;
+      background: #17232d;
+      color: white;
+      font: 14px system-ui;
+    }
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    aside {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      background: #16202de8;
+      padding: 15px;
+      max-width: 380px;
+    }
+    button,
+    a {
+      margin: 5px;
+      color: inherit;
+    }
+    button {
+      background: #3b5367;
+      border: 0;
+      padding: 8px;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+  </style>
+  <canvas></canvas>
+  <aside>
+    <b>PHYSICS PLAYGROUND</b>
+    <p>WASD: Bewegung · Space: Sprung · Shift: Sprint<br />Maus ziehen: Kamera · G: Flasche</p>
+    <button id="reset">Zurücksetzen</button><button id="car">Auto starten/stoppen</button
+    ><button id="debug">Collider</button
+    ><a href="/test/collision-studio.html">GLB Collision Studio</a>
+    <pre id="state"></pre>
+  </aside>
+  <script type="module" src="./physics-playground.ts"></script>
+</html>

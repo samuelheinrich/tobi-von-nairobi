@@ -76,7 +76,7 @@ export class FarNpcModels {
           sitting: seated,
           drinking: false,
           holding: false,
-          seatHeight: 0.42,
+          seatHeight: 0.5,
         });
         for (const node of model.root.getChildTransformNodes()) node.computeWorldMatrix(true);
         for (const mesh of model.root.getChildMeshes()) {

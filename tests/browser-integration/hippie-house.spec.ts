@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-test('Hippie-WG: eighteen rooms on three storeys, real stairs down to the ground-floor exit', async ({
+test('Hippie-WG: eighteen rooms on three storeys, stairs, garden and Arlesheim neighbourhood', async ({
   page,
 }) => {
   await page.goto('/test/physics.html');
@@ -15,6 +15,9 @@ test('Hippie-WG: eighteen rooms on three storeys, real stairs down to the ground
   expect(result.hiddenUpper).toBe(true);
   expect(result.groundVisible).toBe(true);
   expect(result.completed).toBe(true);
-  expect(result.score).toBe(2300);
+  expect(result.score).toBe(4100);
+  expect(result.collected).toBe(36);
+  expect(result.exteriorVisible).toBe(true);
+  expect(result.interiorRestored).toBe(true);
   expect(result.position[1]).toBeCloseTo(1, 0);
 });

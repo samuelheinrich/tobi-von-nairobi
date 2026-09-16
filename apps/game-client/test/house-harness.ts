@@ -1,7 +1,13 @@
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { Locomotion, PrototypeSession } from '@tobi/game-core';
-import { hippieHouse, hippieHouseLayout, movement, prototypeBalance } from '@tobi/game-data';
+import {
+  arlesheimOutdoorRoute,
+  hippieHouse,
+  hippieHouseLayout,
+  movement,
+  prototypeBalance,
+} from '@tobi/game-data';
 import {
   HavokWorld,
   HavokCharacterMotor,
@@ -107,7 +113,16 @@ export async function exerciseHouseRoute() {
     walk(0, -13);
     const hiddenUpper = scene.getMeshByName('wg-floor-2')?.isVisible === false;
     const groundVisible = scene.getMeshByName('wg-floor-0')?.isVisible === true;
+    for (const [x, z] of arlesheimOutdoorRoute) walk(x, z);
+    const exteriorVisible =
+      scene.clipPlane === null && scene.getMeshByName('wg-floor-2')?.isVisible === true;
+    walk(0, -13);
+    const interiorRestored =
+      scene.clipPlane !== null && scene.getMeshByName('wg-floor-2')?.isVisible === false;
+    walk(0, -22);
     return {
+      exteriorVisible,
+      interiorRestored,
       completed: session.reach(hippieHouse.destination.id),
       backtrackHeight,
       blockedExit,

@@ -2,7 +2,7 @@ import type { Position3 } from '@tobi/contracts';
 export interface AmbientZone extends Position3 {
   id: string;
   radius: number;
-  kind: 'music' | 'traffic' | 'train' | 'voices';
+  kind: 'music' | 'traffic' | 'train' | 'voices' | 'surf' | 'nature';
   tempo: number;
   note: number;
   volume: number;

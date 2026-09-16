@@ -12,6 +12,8 @@ import type { CastRole } from '../characters/casting.js';
 
 export interface CharacterRig {
   castRole?: CastRole;
+  /** Seat surface height above the foot anchor, in metres. */
+  seatHeight?: number;
   action: string;
   modelActive: boolean;
   root: TransformNode;

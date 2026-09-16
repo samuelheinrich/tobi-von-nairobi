@@ -4,7 +4,7 @@ import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import type { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
-import type { LevelDefinition } from '@tobi/contracts';
+import type { LevelDefinition, VehicleKind } from '@tobi/contracts';
 import { prototypeBalance } from '@tobi/game-data';
 import { material } from '../levels/materials.js';
 
@@ -12,6 +12,7 @@ export class BottlePickups {
   private readonly pickups = new Map<string, TransformNode>();
   private readonly heights = new Map<string, number>();
   private time = 0;
+  private readonly requiredVehicles = new Map<string, VehicleKind>();
 
   public constructor(scene: Scene, level: LevelDefinition, shadows: ShadowGenerator) {
     const green = material(scene, 'bottle-green', '#3d977a');
@@ -20,6 +21,7 @@ export class BottlePickups {
     const gold = material(scene, 'pickup-gold', '#ffca57');
     gold.emissiveColor = Color3.FromHexString('#685025');
     for (const pickup of level.pickups) {
+      if (pickup.requiredVehicle) this.requiredVehicles.set(pickup.id, pickup.requiredVehicle);
       const root = new TransformNode(pickup.id, scene);
       root.position.set(pickup.position.x, pickup.position.y + 0.65, pickup.position.z);
       this.heights.set(pickup.id, pickup.position.y);
@@ -69,12 +71,14 @@ export class BottlePickups {
     }
   }
 
-  public nearby(position: Vector3): string[] {
+  public nearby(position: Vector3, vehicle?: VehicleKind): string[] {
     return [...this.pickups]
       .filter(
-        ([, pickup]) =>
+        ([id, pickup]) =>
+          (!this.requiredVehicles.has(id) || this.requiredVehicles.get(id) === vehicle) &&
           Math.hypot(pickup.position.x - position.x, pickup.position.z - position.z) <
-            prototypeBalance.pickupRadius && Math.abs(position.y - pickup.position.y) < 2,
+            prototypeBalance.pickupRadius &&
+          Math.abs(position.y - pickup.position.y) < 2,
       )
       .map(([id]) => id);
   }

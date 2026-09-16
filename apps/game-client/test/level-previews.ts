@@ -1,3 +1,4 @@
+import { VehicleRuntime } from '../src/runtime/vehicles/vehicle-runtime.js';
 import { FlightRuntime } from '../src/runtime/flight/flight-runtime.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
@@ -22,12 +23,12 @@ const poses: Record<string, { eye: [number, number, number]; target: [number, nu
   village: { eye: [17, 20, -28], target: [0, 0, 1] },
   'beach-bar': { eye: [41, 15, -41], target: [22, 1, -18] },
   'night-market': { eye: [16, 17, -31], target: [0, 1, -8] },
-  'bali-adventure': { eye: [95, 120, -100], target: [5, 0, 20] },
+  'bali-adventure': { eye: [-152, 100, -155], target: [-26, 0, 4] },
   tutorial: { eye: [15, 18, -12], target: [0, 0, 7] },
   aircraft: { eye: [15, 21, -42], target: [0, 0, -13] },
   railway: { eye: [12, 23, -38], target: [0, 0, -19] },
   'street-parade': { eye: [23, 20, -37], target: [0, 1, -3] },
-  'hippie-house': { eye: [22, 42, -28], target: [0, 9, 4] },
+  'hippie-house': { eye: [-65, 65, -80], target: [8, 3, 1] },
   'nana-plaza': { eye: [-12, 14, 7], target: [2, 3.5, 34] },
   'drunk-tank': { eye: [9, 7, -9], target: [0, 1, 0] },
 };
@@ -36,6 +37,9 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true });
 const scene = new Scene(engine);
 const world = new HavokWorld(scene, await preparePhysics());
 const environment = createLevelScene(scene, world, level);
+const vehicles = environment.vehicles
+  ? new VehicleRuntime(scene, world, environment.vehicles)
+  : null;
 const bottles = new BottlePickups(scene, level, environment.shadows);
 const tobi = new TobiVisual(scene, environment.shadows);
 tobi.root.position.set(level.spawn.x, level.spawn.y - 1.5, level.spawn.z + 2);
@@ -66,7 +70,13 @@ flight?.step(0.4, level.spawn, null);
 const npcs = createLevelNpcs(scene, level, environment, bubbles);
 npcs?.update(0.4, level.scenery === 'nana-plaza' ? { x: 0, y: 1, z: 24 } : level.spawn);
 bubbles.update(0, new Vector3(...pose.eye));
-environment.focus?.(level.scenery === 'nana-plaza' ? { x: 0, y: 5.8, z: 24 } : level.spawn);
+environment.focus?.(
+  level.scenery === 'nana-plaza'
+    ? { x: 0, y: 5.8, z: 24 }
+    : level.scenery === 'hippie-house'
+      ? { x: 0, y: 1, z: -22 }
+      : level.spawn,
+);
 bottles.cutaway(level.spawn.y);
 // Let pulsing materials — disco tiles, neon, love-mobile speakers — settle into a lit frame.
 for (let i = 0; i < 4; i++) environment.update?.(0.12);
@@ -76,6 +86,7 @@ document.body.dataset.previewReady = 'true';
 window.addEventListener(
   'pagehide',
   () => {
+    vehicles?.dispose();
     police?.dispose();
     flight?.dispose();
     npcs?.dispose();

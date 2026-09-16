@@ -1,3 +1,4 @@
+import type { CharacterCategory } from '../character/modular/presets.js';
 import { outwardArmAngle } from '../character/modular/arm-pose.js';
 import { animateCharacter } from '../character/modular/animation.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
@@ -21,6 +22,8 @@ export class LocalBystanders implements LevelNpcs {
     positions: readonly (readonly [number, number])[],
     private readonly line: string,
     beachZone = false,
+    heightAt: (x: number, z: number) => number = () => 0,
+    categories: readonly CharacterCategory[] = [],
   ) {
     this.people = positions.map(([x, z], i) => {
       const rig = createNpc(
@@ -29,15 +32,19 @@ export class LocalBystanders implements LevelNpcs {
         npcPalette(scene, i),
         shadows,
         false,
-        beachZone && z < -25 ? 'beach_guest' : 'local',
+        categories[i] ?? (beachZone && z < -25 ? 'beach_guest' : 'local'),
       );
-      rig.root.position.set(x, 0, z);
+      rig.root.position.set(x, heightAt(x, z), z);
       return { rig, startled: 0 };
     });
   }
   public get targets() {
     return this.people.map((p) => ({
-      position: { x: p.rig.root.position.x, y: 1.2, z: p.rig.root.position.z },
+      position: {
+        x: p.rig.root.position.x,
+        y: p.rig.root.position.y + 1.2,
+        z: p.rig.root.position.z,
+      },
       radius: 0.65,
       hit: () => {
         p.startled = 3;
@@ -47,7 +54,13 @@ export class LocalBystanders implements LevelNpcs {
   public taunt(position: Position3): number {
     let count = 0;
     for (const p of this.people)
-      if (Math.hypot(position.x - p.rig.root.position.x, position.z - p.rig.root.position.z) < 8) {
+      if (
+        Math.hypot(
+          position.x - p.rig.root.position.x,
+          position.z - p.rig.root.position.z,
+          position.y - p.rig.root.position.y - 1,
+        ) < 8
+      ) {
         p.startled = 3;
         count++;
         if (count === 1) {
@@ -57,9 +70,14 @@ export class LocalBystanders implements LevelNpcs {
       }
     return count;
   }
-  public update(delta: number): void {
+  public update(delta: number, player?: Position3): void {
     this.time += delta;
     for (const p of this.people) {
+      const near =
+        !player ||
+        Math.hypot(player.x - p.rig.root.position.x, player.z - p.rig.root.position.z) < 65;
+      p.rig.root.setEnabled(near);
+      if (!near) continue;
       p.startled = Math.max(0, p.startled - delta);
       if (p.rig.appearance.femaleStyle && !p.startled) {
         animateCharacter(p.rig, 'idle', this.time, p.rig.appearance.seed);

@@ -8,6 +8,7 @@ export const pickupSchema = z
   .object({
     id: z.string().min(1),
     itemId: z.literal('bottle'),
+    requiredVehicle: z.enum(['boat', 'scooter']).optional(),
     position: positionSchema,
   })
   .strict();

@@ -62,8 +62,17 @@ export function nanaBuilder(scene: Scene, world: HavokWorld) {
     mesh.position.set(...at);
     mesh.scaling.set(...size);
     mesh.isPickable = false;
+    mesh.metadata = { collision: { collision: 'none', reason: 'decoration' } };
     return mesh;
   };
+  const massive = (...args: Parameters<typeof prop>) => {
+    const mesh = prop(...args);
+    const handle = world.addCollider(mesh, { collision: 'box', walkable: true })!;
+    handle.mesh.metadata.navigationObstacle = args[2][1] - args[1][1] / 2 < 1.5;
+    collidersForProps.push(handle.mesh);
+    return mesh;
+  };
+  const collidersForProps = kit.colliders;
   // All signs occupy cells of one atlas and share a single material, including repeated signs.
   const texture = new DynamicTexture(
     'nana-sign-atlas',
@@ -113,6 +122,16 @@ export function nanaBuilder(scene: Scene, world: HavokWorld) {
     mesh.isPickable = false;
     return mesh;
   };
-  return { ...kit, scene, world, palette, solid, prop, sign, finish: () => texture.update() };
+  return {
+    ...kit,
+    scene,
+    world,
+    palette,
+    solid,
+    prop,
+    massive,
+    sign,
+    finish: () => texture.update(),
+  };
 }
 export type NanaBuilder = ReturnType<typeof nanaBuilder>;

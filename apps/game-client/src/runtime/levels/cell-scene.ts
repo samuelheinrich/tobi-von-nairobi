@@ -3,7 +3,7 @@ import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
 import type { HavokWorld } from '../physics/havok-world.js';
-import { box, material } from './materials.js';
+import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
 
 /** One cell, one corridor, no way out. The only interaction left is the bunk that ends the run. */
@@ -47,10 +47,10 @@ export function createCellScene(scene: Scene, world: HavokWorld, level: LevelDef
   for (const x of [-0.6, -0.15, 0.3])
     box(scene, 'cell-window-bar', [0.07, 0.75, 0.16], [x, 2.4, 3.46], steel);
 
-  // The bunk has no body of its own: walking into the corner is enough to lie down.
-  const frame = box(scene, 'cell-bunk-frame', [2.2, 0.36, 2.4], [-1.4, 0.18, -2.2], bunk);
+  // The bunk is physical; its top remains reachable by jumping.
+  const frame = solidBox(scene, 'cell-bunk-frame', [2.2, 0.36, 2.4], [-1.4, 0.18, -2.2], bunk);
   frame.isPickable = false;
-  const mattress = box(scene, 'cell-mattress', [2.1, 0.18, 2.3], [-1.4, 0.44, -2.2], blanket);
+  const mattress = solidBox(scene, 'cell-mattress', [2.1, 0.18, 2.3], [-1.4, 0.44, -2.2], blanket);
   mattress.isPickable = false;
   box(scene, 'cell-pillow', [0.5, 0.16, 1.4], [-2.1, 0.6, -2.2], porcelain).isPickable = false;
 
@@ -61,10 +61,11 @@ export function createCellScene(scene: Scene, world: HavokWorld, level: LevelDef
   );
   bowl.position.set(1.55, 0.21, 2.7);
   bowl.material = porcelain;
+  kit.solid(bowl, false);
   kit.solid(box(scene, 'cell-cistern', [0.6, 0.5, 0.25], [1.55, 0.75, 3.2], porcelain), false);
   kit.solid(box(scene, 'cell-table', [1.1, 0.08, 0.7], [1.5, 0.72, -2.6], bunk), false);
   for (const dx of [-0.45, 0.45])
-    box(scene, 'cell-table-leg', [0.08, 0.72, 0.08], [1.5 + dx, 0.36, -2.6], steel);
+    solidBox(scene, 'cell-table-leg', [0.08, 0.72, 0.08], [1.5 + dx, 0.36, -2.6], steel);
   const stool = MeshBuilder.CreateCylinder(
     'cell-stool',
     { height: 0.46, diameter: 0.4, tessellation: 8 },
@@ -72,6 +73,7 @@ export function createCellScene(scene: Scene, world: HavokWorld, level: LevelDef
   );
   stool.position.set(0.9, 0.23, -1.6);
   stool.material = steel;
+  kit.solid(stool, false);
 
   const bulb = MeshBuilder.CreateSphere('cell-bulb', { diameter: 0.32, segments: 6 }, scene);
   bulb.position.set(-0.15, 2.75, 0);
@@ -82,7 +84,7 @@ export function createCellScene(scene: Scene, world: HavokWorld, level: LevelDef
   kit.solid(box(scene, 'corridor-end-north', [10, 3.4, 0.3], [4.5, 1.7, 6.9], wall));
   kit.solid(box(scene, 'corridor-end-south', [10, 3.4, 0.3], [4.5, 1.7, -6.9], wall));
   box(scene, 'corridor-door', [0.14, 2.2, 1.1], [7.3, 1.1, 5.4], steel);
-  box(scene, 'corridor-bench', [0.5, 0.1, 2.2], [6.8, 0.5, -4], bunk);
+  solidBox(scene, 'corridor-bench', [0.5, 0.1, 2.2], [6.8, 0.5, -4], bunk);
 
   const graffiti = sceneSign(scene, 'KARL WAR HIER', -2.45, 1.7, -0.4, 2.6, {
     ink: '#c8c2ad',

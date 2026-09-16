@@ -3,3 +3,4 @@ export * from './content.js';
 export * from './game.js';
 export * from './api.js';
 export * from './progress.js';
+export * from './world.js';

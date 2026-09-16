@@ -1,4 +1,6 @@
 export interface DebugCommands {
+  togglePhysics?(): void;
+  togglePhysicsLayer?(layer: string): void;
   respawn(): void;
   teleportHome(): void;
   inspect(): string;
@@ -19,6 +21,34 @@ export function createDeveloperPanel(commands: DebugCommands): () => void {
     button.textContent = label;
     button.onclick = action;
     panel.append(button);
+  }
+  if (commands.togglePhysics) {
+    const button = document.createElement('button');
+    button.textContent = 'Collider / Bodenabfrage';
+    button.onclick = commands.togglePhysics;
+    panel.append(button);
+  }
+  if (commands.togglePhysicsLayer) {
+    const layers = document.createElement('div');
+    for (const layer of [
+      'PLAYER',
+      'NPC',
+      'WORLD_STATIC',
+      'WORLD_DYNAMIC',
+      'PROP',
+      'VEHICLE',
+      'PROJECTILE',
+      'TRIGGER',
+    ]) {
+      const label = document.createElement('label'),
+        input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = true;
+      input.onchange = () => commands.togglePhysicsLayer?.(layer);
+      label.append(input, layer + ' ');
+      layers.append(label);
+    }
+    panel.append(layers);
   }
   const state = document.createElement('pre');
   panel.append(state);

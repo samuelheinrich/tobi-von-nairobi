@@ -41,7 +41,7 @@ export class RailwayPassengers implements LevelNpcs {
       if (carriage === layout.barCarriageIndex) {
         for (const [index, dz] of [-4.4, -2.2, 1.1, 3.3, 5.5].entries()) {
           const rig = createNpc(scene, `bar-guest-${id}`, npcPalette(scene, id), shadows);
-          rig.root.position.set(1.5, 0.6, z + dz);
+          rig.root.position.set(0.85, 0, z + dz);
           rig.root.rotation.y = Math.PI / 2;
           this.people.push({
             rig,
@@ -75,7 +75,8 @@ export class RailwayPassengers implements LevelNpcs {
             continue;
           }
           const rig = createNpc(scene, `passenger-${id}`, npcPalette(scene, id), shadows, true);
-          rig.root.position.set(x, 0.52, z + offset);
+          rig.root.position.set(x, 0, z + offset);
+          rig.seatHeight = 0.55;
           rig.root.rotation.y = x > 0 ? -Math.PI / 2 : Math.PI / 2;
           this.people.push({ rig, seated: true, home: rig.root.position.clone(), startled: 0, id });
           id++;

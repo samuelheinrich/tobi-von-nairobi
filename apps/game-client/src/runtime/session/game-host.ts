@@ -1,3 +1,6 @@
+import { VehicleRuntime } from '../vehicles/vehicle-runtime.js';
+import { groundedVisualFeet } from '../physics/ground-detection.js';
+import type { PhysicsDebug } from '../physics/debug-physics.js';
 import { Tutorial, type LessonSignals } from '@tobi/game-core';
 import { setNpcAnimationDelta } from '../character/npc-models.js';
 import { tutorialLessons, tutorialLayout } from '@tobi/game-data';
@@ -74,6 +77,8 @@ export class GameHost {
   private tauntCount = 0;
   private readonly npcs: LevelNpcs | null;
   private readonly environment: LevelScene;
+  private readonly vehicles: VehicleRuntime | null;
+  private lastSafePosition: Vector3 | null = null;
   private readonly seating = new Seating();
   private readonly facing = new CharacterFacing();
   private readonly tutorial: Tutorial | null;
@@ -90,6 +95,7 @@ export class GameHost {
   private toastUntil = 0;
   private removeDebug: (() => void) | undefined;
   private debugLoading = false;
+  private physicsDebug: PhysicsDebug | null = null;
 
   public static async create(
     canvas: HTMLCanvasElement,
@@ -131,6 +137,9 @@ export class GameHost {
     this.world = new HavokWorld(this.scene, module);
     const environment = createLevelScene(this.scene, this.world, level);
     this.environment = environment;
+    this.vehicles = environment.vehicles
+      ? new VehicleRuntime(this.scene, this.world, environment.vehicles)
+      : null;
     this.flight = level.scenery === 'aircraft' ? new FlightRuntime(this.scene, environment) : null;
     this.pills = new ColorPickups(this.scene, level);
     this.projectiles = new ThrownBottles(this.scene, environment.colliders, () =>
@@ -177,6 +186,11 @@ export class GameHost {
     this.motor.support(1 / 60);
     this.syncVisual(0);
     this.camera.update(this.motor.position, 0, true);
+    if (import.meta.env.DEV)
+      this.scene.metadata = {
+        ...this.scene.metadata,
+        physicsProbe: { motor: this.motor, world: this.world },
+      };
     window.addEventListener('resize', this.onResize);
     window.addEventListener('blur', this.onBlur);
     window.addEventListener('keydown', this.onKey);
@@ -272,8 +286,12 @@ export class GameHost {
     this.debugLoading = true;
     try {
       const { createDeveloperPanel } = await import('../devtools/developer-panel.js');
+      const { PhysicsDebug } = await import('../physics/debug-physics.js');
+      this.physicsDebug ??= new PhysicsDebug(this.scene, this.world, this.motor);
       if (this.disposed) return;
       this.removeDebug = createDeveloperPanel({
+        togglePhysics: () => this.physicsDebug?.toggle(),
+        togglePhysicsLayer: (layer) => this.physicsDebug?.toggleLayer(layer),
         respawn: () => {
           this.store.update({ debug: true });
           this.respawn();
@@ -288,6 +306,12 @@ export class GameHost {
             {
               position: this.motor.position.asArray().map((n) => Number(n.toFixed(2))),
               grounded: this.motor.grounded,
+              physics: {
+                bodies: this.world.colliders.length,
+                nearNPCs: this.scene.metadata?.npcPhysicsCount,
+                surfaceVelocity: this.motor.surfaceVelocity.asArray(),
+                nearby: this.physicsDebug?.inspect(),
+              },
               fps: Math.round(this.engine.getFps()),
               droppedSeconds: Number(this.clock.droppedSeconds.toFixed(3)),
               objective: this.session.mission.active?.id,
@@ -337,13 +361,16 @@ export class GameHost {
     if (this.flight) return this.flight.puzzle.hint;
     if (this.level.scenery === 'drunk-tank') return 'Ausnüchtern und die Nacht beenden';
     const active = this.session.mission.active?.type;
-    if (active === 'collect') return `Sammle ${this.level.pickups.length} Flaschen`;
+    if (active === 'collect')
+      return `Sammle ${this.level.pickups.length} Flaschen${this.environment.worldLabel ? ' · ' + this.environment.worldLabel(this.motor.position) : ''}`;
     if (active === 'escapePolice') return 'Hänge die Polizei ab';
     return `Erreiche ${destinationName(this.level)}`;
   }
 
   private respawn(): void {
     this.seating.leave();
+    this.vehicles?.cancel();
+    this.motor.setCollisionEnabled(true);
     this.motor.teleport(this.level.spawn);
     this.locomotion.reset();
     this.camera.reset();
@@ -364,7 +391,17 @@ export class GameHost {
       const exit = this.seating.leave();
       if (exit) this.motor.teleport(exit);
     }
-    if (actions.interactPressed) {
+    if (actions.interactPressed && !this.seating.active && this.vehicles) {
+      const result = this.vehicles.interact(this.motor.position);
+      usedInteraction = result.handled;
+      if (result.handled) {
+        this.toastUntil = this.session.elapsedSeconds + 5;
+        this.store.update({ toast: this.vehicles.message });
+        this.locomotion.halt();
+        if (result.exit) this.motor.teleport(result.exit);
+      }
+    }
+    if (actions.interactPressed && !usedInteraction) {
       const exit = this.seating.leave();
       const spot = exit
         ? null
@@ -395,7 +432,7 @@ export class GameHost {
         this.store.update({ toast: result.text });
       }
     }
-    const sitting = this.seating.active !== null;
+    const sitting = this.seating.active !== null || !!this.vehicles?.active;
     const movementActions = escort
       ? { ...actions, moveX: escort.x, moveZ: escort.z, jumpPressed: false, sprintHeld: false }
       : sitting
@@ -416,21 +453,38 @@ export class GameHost {
     if (this.motor.grounded && !this.wasGrounded) this.audio.play('land');
     this.wasGrounded = this.motor.grounded;
     this.facing.update(velocity);
+    this.environment.update?.(delta);
+    this.vehicles?.step(delta, actions);
+    this.motor.setCollisionEnabled(!this.vehicles?.active);
     this.world.step(delta);
     if (this.flight) {
       velocity.x *= 0.5;
       velocity.z *= 0.5;
     }
-    if (this.seating.active) this.motor.teleport(this.seating.active.position);
+    if (this.vehicles?.active) {
+      this.motor.teleport(
+        this.vehicles.active.riderFeet.add(new Vector3(0, movement.capsuleHeight / 2, 0)),
+      );
+      this.facing.yaw = this.vehicles.active.yaw;
+    } else if (this.seating.active) this.motor.teleport(this.seating.active.position);
     else this.motor.move(velocity, delta);
     if (velocity.y > 0 && this.motor.velocity.y < velocity.y)
       this.locomotion.velocity.y = this.motor.velocity.y;
     const position = this.motor.position;
+    if (!this.vehicles?.active && this.environment.safeGround) {
+      if (!this.environment.safeGround(position)) {
+        this.motor.teleport(this.lastSafePosition ?? this.level.spawn);
+        this.locomotion.reset();
+        position.copyFrom(this.motor.position);
+        this.toastUntil = this.session.elapsedSeconds + 3;
+        this.store.update({ toast: 'Zu tief! Zurück ans sichere Ufer.' });
+      } else if (this.motor.grounded && position.y > 0) this.lastSafePosition = position.clone();
+    }
     if (position.y < -8) this.respawn();
     this.session.elapsedSeconds += delta;
     this.parade?.update(delta);
     const beforeBottles = this.session.collected.size;
-    for (const id of this.bottles.nearby(position)) {
+    for (const id of this.bottles.nearby(position, this.vehicles?.active?.definition.kind)) {
       if (!this.session.collect(id)) continue;
       this.bottles.collect(id);
       this.police?.system.disrupt();
@@ -574,7 +628,7 @@ export class GameHost {
     this.npcs?.context?.(this.police?.system.chaos.value ?? 0, this.store.getSnapshot().mood);
     this.npcs?.update(delta, position);
     // A blocking NPC pushes Tobi back out of its body; it never reports him to anyone.
-    const pushed = this.npcs?.resolve(position) ?? null;
+    const pushed = this.vehicles?.active ? null : (this.npcs?.resolve(position) ?? null);
     if (pushed) {
       this.motor.teleport({ x: pushed.x, y: position.y, z: pushed.z });
       this.audio.play('block');
@@ -710,13 +764,20 @@ export class GameHost {
   private syncVisual(delta: number): void {
     const position = this.motor.position;
     this.environment.focus?.(position);
-    if (this.level.scenery === 'hippie-house') this.bottles.cutaway(position.y);
+    const cameraMode = this.environment.cameraMode?.(position);
+    if (cameraMode) this.camera.setMode(cameraMode);
+    if (this.level.scenery === 'hippie-house')
+      this.bottles.cutaway(cameraMode === 'interior' ? position.y : Number.POSITIVE_INFINITY);
     this.visual.root.position.copyFrom(
-      position.subtract(new Vector3(0, movement.capsuleHeight / 2, 0)),
+      groundedVisualFeet(
+        this.scene,
+        this.motor.feet,
+        this.motor.grounded && !this.seating.active && !this.vehicles?.active,
+      ),
     );
-    const velocity = this.motor.velocity;
-    const speed = Math.hypot(velocity.x, velocity.z);
-    if (speed > 0.1 && this.store.getSnapshot().phase === 'playing') {
+    const velocity = this.motor.relativeVelocity;
+    const speed = this.vehicles?.active ? 0 : Math.hypot(velocity.x, velocity.z);
+    if (!this.vehicles?.active && speed > 0.1 && this.store.getSnapshot().phase === 'playing') {
       const target = Math.atan2(velocity.x, velocity.z);
       const difference = Math.atan2(
         Math.sin(target - this.visual.root.rotation.y),
@@ -725,18 +786,19 @@ export class GameHost {
       this.visual.root.rotation.y += difference * Math.min(1, delta * 14);
     }
     if (this.seating.active) this.visual.root.rotation.y = this.seating.active.yaw;
+    if (this.vehicles?.active) this.visual.root.rotation.y = this.vehicles.active.yaw;
     this.visual.root.setEnabled(this.seating.active?.kind !== 'toilet');
     const tripped = this.visual.animate(
       ['paused', 'caught'].includes(this.store.getSnapshot().phase) ? 0 : delta,
       this.store.getSnapshot().phase === 'playing' ? speed : 0,
-      this.motor.grounded,
+      this.motor.grounded || !!this.vehicles?.active,
       this.store.getSnapshot().phase === 'complete',
       this.mood.amount,
       this.locomotion.stamina,
       this.hands.holding || this.barDrinkSeconds > 0,
       Math.max(this.hands.drinkPose, Math.sin((Math.PI * this.barDrinkSeconds) / 1.2)),
-      this.seating.active?.kind === 'seat',
-      this.seating.active?.seatHeight ?? 0.42,
+      this.seating.active?.kind === 'seat' || !!this.vehicles?.active,
+      this.vehicles?.active?.seatHeight ?? this.seating.active?.seatHeight ?? 0.42,
     );
     if (tripped) this.audio.play('stumble');
   }
@@ -754,7 +816,6 @@ export class GameHost {
         this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.05) : 0,
       );
       if (this.store.getSnapshot().phase === 'playing') {
-        this.environment.update?.(Math.min(delta, 0.1));
         this.pills.update(Math.min(delta, 0.1));
       }
       this.crowd.update(
@@ -776,6 +837,7 @@ export class GameHost {
         this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
         this.camera.camera.position,
       );
+      this.camera.setVehicle(this.vehicles?.active?.definition.kind ?? null);
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       // Read-only position projection for local route diagnostics; no mutation/test commands.
       this.canvas.dataset.playerPosition = `${this.motor.position.x.toFixed(2)},${this.motor.position.y.toFixed(2)},${this.motor.position.z.toFixed(2)}`;
@@ -797,7 +859,8 @@ export class GameHost {
               : 0
             : this.level.scenery === 'nana-plaza' && this.motor.position.z > 4
               ? Math.max(0, Math.min(2, Math.floor((this.motor.position.y - 0.5) / 4.8)))
-              : this.level.scenery === 'hippie-house'
+              : this.level.scenery === 'hippie-house' &&
+                  this.environment.cameraMode?.(this.motor.position) === 'interior'
                 ? Math.max(
                     0,
                     Math.min(
@@ -815,17 +878,19 @@ export class GameHost {
               : this.seating.active
                 ? 'hidden'
                 : 'standing',
-          interaction: this.seating.active
-            ? 'E · AUFSTEHEN / VERSTECK VERLASSEN'
-            : (() => {
-                const spot = this.seating.nearest(
-                  this.motor.position,
-                  this.environment.restSpots ?? [],
-                );
-                return spot
-                  ? `E · ${spot.label}`
-                  : (this.environment.interactionPrompt?.(this.motor.position) ?? '');
-              })(),
+          interaction:
+            this.vehicles?.prompt(this.motor.position) ||
+            (this.seating.active
+              ? 'E · AUFSTEHEN / VERSTECK VERLASSEN'
+              : (() => {
+                  const spot = this.seating.nearest(
+                    this.motor.position,
+                    this.environment.restSpots ?? [],
+                  );
+                  return spot
+                    ? `E · ${spot.label}`
+                    : (this.environment.interactionPrompt?.(this.motor.position) ?? '');
+                })()),
           lesson: this.tutorialView(),
           cabin: this.flight
             ? {
@@ -889,6 +954,8 @@ export class GameHost {
     this.motor.dispose();
     this.visual.dispose();
     this.crowd.dispose();
+    this.physicsDebug?.dispose();
+    this.vehicles?.dispose();
     this.world.dispose();
     this.scene.dispose();
     this.engine.dispose();

@@ -129,15 +129,17 @@ export async function exerciseNanaRoute() {
         walk({ x: lastSide * 19, y, z: 58 });
         walk({ x: venue.side * 19, y, z: 58 });
         walk({ x: venue.side * 19, y, z: venue.z });
-        walk({ x: venue.side * 26, y, z: venue.z });
+        walk({ x: venue.side * 23.2, y, z: venue.z });
         npcs.update(3, motor.position);
         if (!npcs.flirt(motor.position)) throw new Error(`No visible flirt target in ${venue.id}`);
-        walk({ x: venue.side * 28.3, y, z: venue.z });
+        walk({ x: venue.side * 23.2, y, z: venue.z + 1.75 });
+        walk({ x: venue.side * 28.3, y, z: venue.z + 1.75 });
         const menu = environment.interact(motor.position);
         const purchase = environment.interact(motor.position);
         if (!menu || !purchase || !environment.interactionPrompt(motor.position).includes('THB'))
           throw new Error('Drink menu failed');
         entries.push(venue.id);
+        walk({ x: venue.side * 23.2, y, z: venue.z + 1.75 });
         walk({ x: venue.side * 19, y, z: venue.z });
         lastSide = venue.side;
       }

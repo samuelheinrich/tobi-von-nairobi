@@ -1,3 +1,4 @@
+import { physicsWorld } from '../physics/havok-world.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -49,5 +50,17 @@ export function cylinderBetween(
   mesh.rotationQuaternion = Quaternion.Identity();
   Quaternion.FromUnitVectorsToRef(Vector3.Up(), delta.normalize(), mesh.rotationQuaternion);
   mesh.material = surface;
+  return mesh;
+}
+
+/** Explicit solid prop authoring; ordinary box() remains a rendering primitive. */
+export function solidBox(...args: Parameters<typeof box>): Mesh {
+  const mesh = box(...args);
+  const world = physicsWorld(args[0]);
+  if (!world) {
+    mesh.dispose();
+    throw new Error('Solid props require the scene HavokWorld.');
+  }
+  world.addStatic(mesh);
   return mesh;
 }

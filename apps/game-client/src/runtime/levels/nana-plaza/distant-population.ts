@@ -26,7 +26,7 @@ export class DistantPopulation {
         id: p.id,
         role: npcCategoryRoles[nanaCategory[p.role]],
         position: () => p.position,
-        yaw: p.id * 1.3,
+        yaw: p.action === 'sit' ? 0 : p.id * 1.3,
         seated: p.action === 'sit',
       })),
     );

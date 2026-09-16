@@ -10,21 +10,20 @@ it('retains old saved-level identities while presenting one merged Bali adventur
   for (const id of ['bali_beach_bar', 'bali_night_market', 'bali_mvp_escape'])
     expect(allLevels.find((l) => l.id === id)?.selectable).toBe(false);
 });
-it('places every pickup and guard on real nonrectangular ground outside solid buildings', () => {
-  expect(baliGroundAt(-30, 70)).toBe(false);
-  expect(baliGroundAt(40, -35)).toBe(false);
-  for (const p of [
-    ...baliAdventure.pickups.map((p) => p.position),
-    ...baliAdventure.policeSpawns!,
-    baliAdventure.spawn,
-    baliAdventure.destination.position,
-  ]) {
-    expect(baliGroundAt(p.x, p.z), JSON.stringify(p)).toBe(true);
-    expect(
-      baliAdventureLayout.buildings.some(
-        (h) => Math.abs(p.x - h.x) < h.w / 2 + 0.5 && Math.abs(p.z - h.z) < h.d / 2 + 0.5,
-      ),
-      JSON.stringify(p),
-    ).toBe(false);
-  }
+it('keeps exploration pickups on mainland/island and makes buildings explicit', () => {
+  expect(baliGroundAt(-160, 70)).toBe(false);
+  expect(baliGroundAt(-235, 70)).toBe(true);
+  expect(baliAdventure.maxWanted).toBe(0);
+  expect(baliAdventure.objectives.some((o) => o.type === 'escapePolice')).toBe(false);
+  expect(baliAdventure.pickups.length).toBeGreaterThanOrEqual(36);
+  for (const p of baliAdventure.pickups)
+    expect(baliGroundAt(p.position.x, p.position.z), p.id).toBe(true);
+  expect(baliAdventure.pickups.some((p) => p.requiredVehicle === 'scooter')).toBe(true);
+  expect(baliAdventure.pickups.filter((p) => p.position.x < -180).length).toBeGreaterThanOrEqual(5);
+  expect(
+    baliAdventureLayout.buildings.filter((b) => b.enterable === 'fully_enterable').length,
+  ).toBeGreaterThanOrEqual(4);
+  expect(baliAdventureLayout.buildings.filter((b) => b.roofWalkable).length).toBeGreaterThanOrEqual(
+    3,
+  );
 });

@@ -3,7 +3,7 @@
   "id": "arlesheim_hippie_wg",
   "worldId": "arlesheim",
   "title": "Arlesheim Hippie-WG",
-  "subtitle": "Drei Etagen. Achtzehn Zimmer. Und niemand weiss, wer den Abwasch macht.",
+  "subtitle": "Drei Etagen, ein wilder Garten und ein ganzes Dorf voller Leergut.",
   "maxWanted": 0,
   "spawn": {
     "x": -9,
@@ -15,9 +15,9 @@
     "position": {
       "x": 0,
       "y": 0,
-      "z": -13
+      "z": -22
     },
-    "radius": 1.8
+    "radius": 2
   },
   "pickups": [
     {
@@ -201,9 +201,9 @@
   "scenery": "hippie-house",
   "atmosphere": "sunset",
   "navigationBounds": {
-    "minX": -15,
-    "maxX": 15,
-    "minZ": -15,
-    "maxZ": 31
+    "minX": -90,
+    "maxX": 112,
+    "minZ": -105,
+    "maxZ": 100
   }
 }

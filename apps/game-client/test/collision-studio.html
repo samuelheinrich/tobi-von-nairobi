@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+  <meta charset="utf-8" /><title>GLB Collision Studio</title
+  ><style>
+    body {
+      margin: 0;
+      background: #17232d;
+      color: white;
+      font: 14px system-ui;
+    }
+    canvas {
+      width: 100vw;
+      height: 100vh;
+    }
+    aside {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 340px;
+      background: #17232de8;
+      padding: 16px;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    input,
+    select {
+      max-width: 310px;
+    }
+    input[type='number'] {
+      width: 65px;
+    }
+    pre {
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow: auto;
+    }</style
+  ><canvas></canvas>
+  <aside>
+    <b>GLB COLLISION STUDIO</b>
+    <p>Lokale Datei; bleibt im Browser. Export erzeugt eine separate JSON-Konfiguration.</p>
+    <input id="file" type="file" accept=".glb" /><label
+      >Mesh
+      <select id="mesh"></select></label
+    ><label
+      >Collision
+      <select id="shape">
+        <option>none</option>
+        <option>box</option>
+        <option>capsule</option>
+        <option>convex</option>
+        <option>mesh</option>
+      </select></label
+    ><label><input id="walkable" type="checkbox" checked /> Begehbar</label>
+    <div id="values"></div>
+    <button id="apply">Vorschau aktualisieren</button
+    ><button id="export">Config exportieren</button>
+    <pre id="status"></pre>
+  </aside>
+  <script type="module" src="./collision-studio.ts"></script>
+</html>

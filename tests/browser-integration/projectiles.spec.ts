@@ -6,7 +6,7 @@ test('swept bottles hit and stagger guards once; a wall blocks the hit and stun 
   const result = await page.evaluate(async () => {
     const path = '/test/projectile-harness.ts';
     const m = await import(path);
-    return { open: m.exerciseProjectiles(false), wall: m.exerciseProjectiles(true) };
+    return { open: await m.exerciseProjectiles(false), wall: await m.exerciseProjectiles(true) };
   });
   expect(result.open).toEqual({
     hits: 1,

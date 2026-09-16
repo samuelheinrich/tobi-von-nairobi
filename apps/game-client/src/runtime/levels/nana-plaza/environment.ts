@@ -1,3 +1,5 @@
+import { MovingPlatform } from '../../physics/moving-platform.js';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { NanaBuilder } from './builder.js';
 
 /** Modular frontage kit; doors are visual on closed shops, clear ground remains continuous. */
@@ -17,7 +19,7 @@ export function buildStreets(b: NanaBuilder) {
       colors[i % 4],
     );
     const front = z - 5.08;
-    b.prop('shop-awning', [11, 0.18, 2], [x, 3.5, front - 0.5], '#84596d');
+    b.massive('shop-awning', [11, 0.18, 2], [x, 3.5, front - 0.5], '#84596d');
     b.prop('shop-window', [7, 2, 0.08], [x, 1.7, front], '#dbb881', true);
     b.sign(
       ['MANGO HOTEL', 'OPEN BAR', 'MASSAGE', 'NOODLES 24H', 'MINI MART', 'ATM / EXCHANGE'][i % 6]!,
@@ -42,7 +44,7 @@ export function buildStreets(b: NanaBuilder) {
     b.solid('soi-building-row', [9, 10, 30], [side * 12, 5, -17], '#554657');
     for (let i = 0; i < 5; i++) {
       const z = -36 + i * 7;
-      b.prop('soi-awning', [2.8, 0.2, 5.8], [side * 7, 3.2, z], '#8f5875');
+      b.massive('soi-awning', [2.8, 0.2, 5.8], [side * 7, 3.2, z], '#8f5875');
       b.sign(
         ['SOI 4', 'BEER / FOOD', 'MANGO MASSAGE', 'HOTEL NANA NIGHTS', 'EXCHANGE'][i]!,
         [side * 7.35, 4.2, z],
@@ -53,10 +55,10 @@ export function buildStreets(b: NanaBuilder) {
       b.prop('bar-window', [0.08, 1.5, 4], [side * 7.4, 1.8, z], '#f4aa76', true);
       b.prop('cables', [0.04, 0.06, 46], [side * 6.8, 5.1 + i * 0.12, -23], '#171d2a');
       b.prop('ac-compressor', [0.5, 0.7, 1.1], [side * 7.2, 6, z], '#adb2ae');
-      b.prop('food-cart', [1.2, 0.9, 1.8], [side * 5.8, 0.45, z + 1], '#6e9289');
-      b.prop('food-cart-canopy', [1.8, 0.15, 2.2], [side * 5.8, 2.2, z + 1], '#dc8a54');
-      b.prop('bin', [0.6, 0.8, 0.6], [side * 6.3, 0.4, z + 3], '#314b49');
-      b.prop('scooter-body', [0.55, 0.7, 1.5], [side * 5.7, 0.5, z - 2], '#ce6489');
+      b.massive('food-cart', [1.2, 0.9, 1.8], [side * 5.8, 0.45, z + 1], '#6e9289');
+      b.massive('food-cart-canopy', [1.8, 0.15, 2.2], [side * 5.8, 2.2, z + 1], '#dc8a54');
+      b.massive('bin', [0.6, 0.8, 0.6], [side * 6.3, 0.4, z + 3], '#314b49');
+      b.massive('scooter-body', [0.55, 0.7, 1.5], [side * 5.7, 0.5, z - 2], '#ce6489');
     }
   }
   const traffic = Array.from({ length: 10 }, (_, i) => {
@@ -67,12 +69,22 @@ export function buildStreets(b: NanaBuilder) {
       [0, bus ? 1.3 : 0.7, -68 + (i % 2) * 10],
       bus ? '#d55d4b' : i % 2 ? '#eace43' : '#ed6698',
     );
-    return { body, offset: i * 16, direction: i % 2 ? 1 : -1 };
+    const direction = i % 2 ? 1 : -1;
+    const offset = (i * 16) % 148;
+    body.position.x = (offset - 74) * direction;
+    const platform = new MovingPlatform(b.world, body);
+    return { body, offset, direction, platform, x: body.position.x };
   });
   let time = 0;
   return (delta: number) => {
     time += delta;
-    for (const car of traffic)
-      car.body.position.x = (((time * 7 + car.offset) % 148) - 74) * car.direction;
+    for (const car of traffic) {
+      car.platform.sync();
+      const x = (((time * 7 + car.offset) % 148) - 74) * car.direction;
+      const target = new Vector3(x, car.body.position.y, car.body.position.z);
+      if (Math.abs(x - car.x) > 50) car.platform.reset(target);
+      else car.platform.moveTo(target);
+      car.x = x;
+    }
   };
 }

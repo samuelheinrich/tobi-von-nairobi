@@ -5,7 +5,7 @@ import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
 import { railwayLayout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
-import { box, material } from './materials.js';
+import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
 
 /** Five open-top carriages, one of them a bar, with continuous physical gangways.
@@ -47,7 +47,7 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
     if (bar) {
       // Bar carriage: counter and back-bar on the right, standing space on the left.
       kit.solid(box(scene, 'bar-counter', [1.4, 1.1, 12], [2.6, 0.55, z], teak), false);
-      box(scene, 'bar-counter-top', [1.7, 0.09, 12.3], [2.6, 1.14, z], brass);
+      solidBox(scene, 'bar-counter-top', [1.7, 0.09, 12.3], [2.6, 1.14, z], brass);
       kit.solid(box(scene, 'bar-backboard', [0.5, 1.9, 12], [3.6, 1.5, z], teak));
       for (let i = -5; i <= 5; i++) {
         const stool = MeshBuilder.CreateCylinder(
@@ -57,6 +57,7 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
         );
         stool.position.set(1.55, 0.41, z + i * 1.1);
         stool.material = dark;
+        kit.solid(stool, false);
         const shelf = MeshBuilder.CreateCylinder(
           'bar-bottle',
           { height: 0.5, diameter: 0.18, tessellation: 6 },
@@ -71,7 +72,7 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
           box(scene, 'standing-table', [0.9, 1.05, 0.9], [-2.6, 0.52, z + dz], teak),
           false,
         );
-        box(scene, 'standing-table-top', [1.25, 0.08, 1.25], [-2.6, 1.08, z + dz], brass);
+        solidBox(scene, 'standing-table-top', [1.25, 0.08, 1.25], [-2.6, 1.08, z + dz], brass);
       }
       sceneSign(scene, 'BARWAGEN', -3.7, 2.1, z, 3.4, { ink: '#ffe6a8', plate: '#5b2f1c' });
     } else {
@@ -114,16 +115,18 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
       {
         id: 'train-rear-seat',
         label: 'FREIER SITZ',
+        seatHeight: 0.55,
         kind: 'seat' as const,
-        position: { x: -2.8, y: 1.45, z: -44 },
+        position: { x: -2.8, y: 0.9, z: -44 },
         exit: { x: -1.3, y: 1.1, z: -44 },
         yaw: Math.PI,
       },
       {
         id: 'train-rear-seat-2',
         label: 'FREIER SITZ',
+        seatHeight: 0.55,
         kind: 'seat' as const,
-        position: { x: 2.8, y: 1.45, z: -36 },
+        position: { x: 2.8, y: 0.9, z: -36 },
         exit: { x: 1.3, y: 1.1, z: -36 },
         yaw: Math.PI,
       },

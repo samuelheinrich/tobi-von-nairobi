@@ -1,3 +1,5 @@
+import { NpcGroup } from './npc-group.js';
+import { arlesheimNeighbours, baliResidents, baliTerrainHeight } from '@tobi/game-data';
 import { LocalBystanders } from './local-bystanders.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
@@ -29,23 +31,25 @@ export function createLevelNpcs(
       scene,
       environment.shadows,
       bubbles,
-      [
-        [-18, -36],
-        [-10, -36],
-        [5, -20],
-        [10, 18],
-        [22, 18],
-        [46, 27],
-        [36, 38],
-        [50, 70],
-      ],
-      'He! Karl bezahlt deine Rechnung auch nicht!',
+      baliResidents.map((p) => [p.x, p.z]),
+      'Santai, Tobi! Der Tempel läuft dir nicht davon.',
       true,
+      baliTerrainHeight,
+      baliResidents.map((p) => p.role),
     );
   if (level.scenery === 'railway')
     return new RailwayPassengers(scene, environment.shadows, bubbles);
   if (level.scenery === 'hippie-house')
-    return new HouseResidents(scene, environment.shadows, bubbles);
+    return new NpcGroup([
+      new HouseResidents(scene, environment.shadows, bubbles),
+      new LocalBystanders(
+        scene,
+        environment.shadows,
+        bubbles,
+        arlesheimNeighbours,
+        'Tobi! Mir hei do au no Nachbere.',
+      ),
+    ]);
   if (level.scenery === 'nana-plaza')
     return new NanaVenue(scene, environment.shadows, environment.colliders, bubbles);
   if (level.scenery === 'drunk-tank') return new CellGuard(scene, environment.shadows, bubbles);

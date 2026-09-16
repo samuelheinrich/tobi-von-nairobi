@@ -110,3 +110,19 @@ Die neue Tutorial-Lektion und der vorhandene E2E-Helfer sind angepasst. Ein voll
 ### GLB-NPCs in allen Levels
 
 Gezielt geprüft: alle 17 Rollen über den echten NPC-Erzeuger, Ferninstanzen, Slot-Wechsel und Dispose sowie Zugpassagiere. Noch offen: längere Hardware-/Speichermessung, komplette Runden mit Verfolgung/Festnahme, alle Sitz-/Yoga-/Telefon-Gesten und sämtliche Stockwerkswechsel. Die Fernstufe verwendet statische instanzierte Modellposen; keine allgemeine 60-FPS-Zusage. Nur lokal auf ausdrücklichen Folgeauftrag, keine CI.
+
+### Gemeinsame Physics-Pipeline · 15. September 2026
+
+- **Betrifft:** Havok-Furniture/Moving Platforms, NPC-Grounding, Nana und migrierte weitere Level.
+- **Bereits lokal geprüft:** sechs kurze Browser-/Havok-Tests, bestehende Nana-/WG-/Flugzeug-/Bali-Wege, Zuglandschaft, Collision Studio und F1-Sichtkontrolle; siehe [Physics-Übergabe](physics-upgrade.md).
+- **Noch offene Abnahme:** längere Runde auf durchschnittlicher GPU, alle GLB-Sitz-/Yogaposen, sämtliche kleinen Props, Safari, vollständige UI-Festnahme → Zelle → Ende. Kein Auftrag für eine volle automatisierte Suite.
+- **Aufwand:** M, gezielt lokal auf Bedarf.
+- **Risiko:** Framezeit bei dichter Crowd, einzelne Animation-/Möbelüberschneidungen und bislang nicht begangene Nebenrouten. Keine allgemeine 60-FPS- oder vollständige Asset-Abnahme.
+
+### Bali-Erkundungswelt · 16. September 2026
+
+Lokal: vollständige Route mit allen 36 Flaschen, tatsächlichen Fahrzeugen und aktivierten Dekorations-Collidern; keine Wasserabkürzung; Offshore-Ausstieg blockiert. Kleine bestehende Physics-Suite geprüft. Noch offen: längere Runde auf Referenzhardware/Safari, alle NPC-/Fahrersitz-GLB-Posen, freies extremes Offroad-Fahren und Speicherverhalten nach mehrfacher kompletter Inselrunde. Aktuell Sichtbarkeitssektoren mit Lazy-Dekoration, kein GPU-/Collider-Unloading. Fahrlektionen im Tutorial und getrennte historische Bali-Bestwerte sind mögliche Folgeaufgaben. Keine GitHub-CI oder pauschale Gesamtsuite daraus ableiten.
+
+### Arlesheimer Quartier · 16. September 2026
+
+Gezielt lokal geprüft: vollständige WG-/Quartierroute, alle 36 Flaschen, Indoor/Outdoor-Cutaway und Bali-Regression nach Builder-Extraktion. Offen: längere Hardware-/Safari-Runde, alle NPC-Posen im Quartier, freies Scooterfahren zwischen Gartenmöbeln und vollständiger angemeldeter Speicherlauf mit neuen Pickups. Der bestehende E2E-Test hat aktualisierte Flaschenzahlen, wurde in dieser Änderung nicht komplett ausgeführt. Keine GitHub-CI daraus ableiten.

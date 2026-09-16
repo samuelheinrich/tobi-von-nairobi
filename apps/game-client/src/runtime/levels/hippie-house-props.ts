@@ -2,7 +2,7 @@ import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { hippieHouseLayout } from '@tobi/game-data';
-import { box, material, cylinderBetween } from './materials.js';
+import { box, solidBox, material, cylinderBetween } from './materials.js';
 
 /** Original low-poly WG furniture, away from the door and central pickup in every room. */
 export function houseProps(scene: Scene, floor: number, x: number, z: number, room: number): void {
@@ -28,23 +28,23 @@ export function houseProps(scene: Scene, floor: number, x: number, z: number, ro
     ring.position.set(x, y + 0.05, z);
     ring.material = coral;
   }
-  // Low furniture remains decorative so it never traps a player in a narrow furnished room.
+  // Furniture is physical; paths through the room remain clear.
   const outer = x + Math.sign(x) * 3;
   const style = floor === 2 && room === 0 ? 0 : (room + floor) % 3;
   if (style === 0) {
-    box(scene, 'pallet-bed', [3, 0.25, 2], [outer, y + 0.2, z + 2.5], wood);
-    box(scene, 'patchwork-mattress', [2.8, 0.3, 1.9], [outer, y + 0.47, z + 2.5], cloth);
+    solidBox(scene, 'pallet-bed', [3, 0.25, 2], [outer, y + 0.2, z + 2.5], wood);
+    solidBox(scene, 'patchwork-mattress', [2.8, 0.3, 1.9], [outer, y + 0.47, z + 2.5], cloth);
     box(scene, 'pillow', [0.7, 0.22, 1.6], [outer + 0.8, y + 0.73, z + 2.5], coral);
   } else if (style === 1) {
-    box(scene, 'communal-table', [2.5, 0.15, 1.8], [outer, y + 0.8, z + 2.5], wood);
+    solidBox(scene, 'communal-table', [2.5, 0.15, 1.8], [outer, y + 0.8, z + 2.5], wood);
     for (const dx of [-0.9, 0.9])
-      box(scene, 'table-leg', [0.18, 0.8, 1.3], [outer + dx, y + 0.4, z + 2.5], wood);
+      solidBox(scene, 'table-leg', [0.18, 0.8, 1.3], [outer + dx, y + 0.4, z + 2.5], wood);
     for (const dz of [-1.6, 1.6])
-      box(scene, 'floor-cushion', [1, 0.25, 0.9], [outer, y + 0.15, z + 2.5 + dz], cloth);
+      solidBox(scene, 'floor-cushion', [1, 0.25, 0.9], [outer, y + 0.15, z + 2.5 + dz], cloth);
   } else {
     for (const dz of [-0.5, 0.6])
       box(scene, 'yoga-mat', [3, 0.05, 0.85], [outer, y + 0.05, z + 2.5 + dz], cloth);
-    box(scene, 'vinyl-shelf', [0.5, 1.5, 2.5], [outer + Math.sign(x), y + 0.75, z - 2], wood);
+    solidBox(scene, 'vinyl-shelf', [0.5, 1.5, 2.5], [outer + Math.sign(x), y + 0.75, z - 2], wood);
     for (let i = 0; i < 8; i++)
       box(
         scene,

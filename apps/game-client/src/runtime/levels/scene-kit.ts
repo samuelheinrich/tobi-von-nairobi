@@ -1,3 +1,4 @@
+import { CollisionLayer } from '../physics/collision-layers.js';
 import '@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent.js';
 import { Color3, Color4 } from '@babylonjs/core/Maths/math.color.js';
 import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js';
@@ -52,7 +53,7 @@ export function sceneKit(
   /** Invisible boundary: it stops Tobi, and nothing else. It is deliberately kept out of the
    * collider list, so it never blocks a sightline, a patrol route or a thrown bottle in mid-air. */
   const barrier = (mesh: Mesh): Mesh => {
-    world.addStatic(mesh);
+    world.addCollider(mesh, { collision: 'box', walkable: false, mask: CollisionLayer.PLAYER });
     mesh.metadata = { ...mesh.metadata, cameraObstacle: false };
     mesh.isVisible = false;
     mesh.isPickable = false;

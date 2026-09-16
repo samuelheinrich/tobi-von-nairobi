@@ -73,8 +73,8 @@ export function buildVenueInteriors(b: NanaBuilder) {
       v.floor === 0,
     );
     const before = b.scene.meshes.length;
-    b.prop('counter-top', [1.5, 0.12, depth - 2.8], [v.side * 30, y + 1.1, v.z], v.color, true);
-    b.prop('drink-shelf', [0.2, 2, depth - 2], [v.side * 31.6, y + 1.8, v.z], '#806c73');
+    b.massive('counter-top', [1.5, 0.12, depth - 2.8], [v.side * 30, y + 1.1, v.z], v.color, true);
+    b.massive('drink-shelf', [0.2, 2, depth - 2], [v.side * 31.6, y + 1.8, v.z], '#806c73');
     for (let i = 0; i < 7; i++) {
       b.prop(
         'beer-bottle',
@@ -90,9 +90,14 @@ export function buildVenueInteriors(b: NanaBuilder) {
         true,
       );
     }
-    b.prop('bar-fridge', [0.9, 1.8, 1], [v.side * 31, y + 0.9, v.z + depth / 2 - 0.8], '#a1bdbd');
+    b.massive(
+      'bar-fridge',
+      [0.9, 1.8, 1],
+      [v.side * 31, y + 0.9, v.z + depth / 2 - 0.8],
+      '#a1bdbd',
+    );
     b.prop('venue-screen', [0.09, 1.2, 2], [v.side * 31.7, y + 3.1, v.z], '#748aec', true);
-    b.prop(
+    b.massive(
       'bar-speaker',
       [0.7, 1.3, 0.7],
       [v.side * 23, y + 2.8, v.z - depth / 2 + 0.6],
@@ -105,7 +110,7 @@ export function buildVenueInteriors(b: NanaBuilder) {
     if (v.floor > 0) {
       b.prop('stage-floor', [3.4, 0.035, v.signature ? 7 : 4.5], [x, y + 0.04, v.z], '#a1417c');
       for (const dz of v.signature ? [-2.5, 0, 2.5] : [-1, 1])
-        b.prop('dance-pole', [0.1, 3.8, 0.1], [x, y + 1.9, v.z + dz], '#c5d0dc');
+        b.massive('dance-pole', [0.1, 3.8, 0.1], [x, y + 1.9, v.z + dz], '#c5d0dc');
       b.prop(
         'stage-back-led',
         [0.08, 2.5, depth - 1],
@@ -114,20 +119,21 @@ export function buildVenueInteriors(b: NanaBuilder) {
         true,
       );
       if (v.signature) {
-        b.prop('dj-desk', [2, 1.2, 1], [x, y + 0.6, v.z + 5], '#43485c');
+        b.massive('dj-desk', [2, 1.2, 1], [x, y + 0.6, v.z + 5], '#43485c');
         b.sign('DJ KARL / LIVE FROM SOMEWHERE', [x, y + 3, v.z + 6], 8, v.color);
       }
     }
     for (const dz of [-1, 1]) {
       const z = v.z + dz * (depth / 2 - 1.2);
-      b.prop('bar-bench', [4.4, 0.5, 0.8], [x, y + 0.25, z], '#7c475d');
-      b.prop('bench-back', [4.4, 0.7, 0.12], [x, y + 0.75, z + dz * 0.45], '#7c475d');
+      b.massive('bar-bench', [4.4, 0.5, 0.8], [x, y + 0.25, z], '#7c475d');
+      b.massive('bench-back', [4.4, 0.7, 0.12], [x, y + 0.75, z + dz * 0.45], '#7c475d');
       const id = `${v.id}-seat-${dz}`;
       restSpots.push({
         id,
         label: `${v.name} · HINSETZEN`,
         kind: 'seat',
-        position: { x, y: y + 1.1, z },
+        position: { x, y: y + 0.9, z },
+        seatHeight: 0.5,
         exit: { x: x - v.side * 1.5, y: y + 1.1, z: z - dz },
         yaw: dz < 0 ? 0 : Math.PI,
       });
@@ -137,10 +143,10 @@ export function buildVenueInteriors(b: NanaBuilder) {
   for (const x of [-9, 9])
     for (const z of [16, 30, 44]) {
       b.solid('beer-bar-counter', [3, 1.1, 1], [x, 0.55, z], '#64513f');
-      b.prop('beer-bar-roof', [4, 0.12, 2.5], [x, 3.3, z], '#855557');
+      b.massive('beer-bar-roof', [4, 0.12, 2.5], [x, 3.3, z], '#855557');
       b.sign('GECKO BEER', [x, 2.8, z - 0.6], 4, '#e6bd60');
       for (const dx of [-1, 1]) {
-        b.prop('bar-stool', [0.45, 0.75, 0.45], [x + dx, 0.375, z - 1.4], '#978368');
+        b.massive('bar-stool', [0.45, 0.75, 0.45], [x + dx, 0.375, z - 1.4], '#978368');
       }
     }
   let elapsed = 0;

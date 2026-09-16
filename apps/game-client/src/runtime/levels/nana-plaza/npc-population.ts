@@ -1,3 +1,4 @@
+import { crowdMove, findGroundedSpawn } from '../../physics/ground-detection.js';
 import { diversifyFemaleGroup } from '../../character/modular/female/presets.js';
 import { animateFemale } from '../../character/modular/female/animation.js';
 import { animateCharacter, type CharacterAction } from '../../character/modular/animation.js';
@@ -76,6 +77,11 @@ export class NanaVenue implements LevelNpcs {
       scene,
       this.slots.map((slot) => slot.rig),
     );
+    for (const p of this.people)
+      if (p.action !== 'sit') {
+        const spawn = findGroundedSpawn(scene, p.position);
+        if (spawn) p.position.copyFrom(spawn);
+      }
     this.security = new NanaSecurity(scene, colliders, bubbles);
     this.distant = new DistantPopulation(scene, this.people, this.looks);
     this.bottleTargets = this.people.map((p) => ({
@@ -124,15 +130,18 @@ export class NanaVenue implements LevelNpcs {
     for (const p of this.people) {
       p.startled = Math.max(0, p.startled - delta);
       if (p.action === 'walk' || p.action === 'cross') {
-        p.position.x =
-          p.x + Math.sin(this.time * 0.32 + p.id) * (p.action === 'cross' ? 1.8 : 0.35);
-        p.position.z = p.z + Math.sin(this.time * 0.4 + p.id) * 0.75;
+        const desired = new Vector3(
+          p.x + Math.sin(this.time * 0.32 + p.id) * (p.action === 'cross' ? 1.8 : 0.35),
+          p.position.y,
+          p.z + Math.sin(this.time * 0.4 + p.id) * 0.75,
+        );
+        p.position.copyFrom(crowdMove(this.scene, p.position, desired));
       }
     }
     for (const p of this.people) {
       const target = this.bottleTargets[p.id]!.position;
       target.x = p.position.x;
-      target.y = p.y + 1.15;
+      target.y = p.position.y + 1.15;
       target.z = p.position.z;
     }
     if (this.allocation >= 0.4) {
@@ -162,7 +171,8 @@ export class NanaVenue implements LevelNpcs {
           slot.resident = p;
           slot.rig.dressAppearance(this.looks[p.id]!);
           slot.rig.gesture(p.action);
-          slot.rig.root.rotation.set(0, p.id * 1.3, 0);
+          slot.rig.root.rotation.set(0, p.action === 'sit' ? 0 : p.id * 1.3, 0);
+          slot.rig.seatHeight = 0.5;
           for (const limb of [...slot.rig.arms, ...slot.rig.legs]) limb.rotation.set(0, 0, 0);
           slot.rig.root.setEnabled(true);
         }
@@ -177,7 +187,6 @@ export class NanaVenue implements LevelNpcs {
       const p = slot.resident;
       if (!p) continue;
       slot.rig.root.position.copyFrom(p.position);
-      if (p.action === 'sit') slot.rig.root.position.y -= 0.22;
       const distance = Math.hypot(player.x - p.position.x, player.z - p.position.z, player.y - p.y);
       const head = slot.rig.head;
       const visible =

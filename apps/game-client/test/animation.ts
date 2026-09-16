@@ -1,3 +1,4 @@
+import { HavokWorld, preparePhysics } from '../src/runtime/physics/havok-world.js';
 import { Engine } from '@babylonjs/core/Engines/engine.js';
 import { Scene } from '@babylonjs/core/scene.js';
 import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js';
@@ -24,6 +25,7 @@ const element = <T extends HTMLElement>(id: string) => document.getElementById(i
 const canvas = document.querySelector('canvas')!;
 const engine = new Engine(canvas, true),
   scene = new Scene(engine);
+const physics = new HavokWorld(scene, await preparePhysics());
 scene.clearColor = new Color4(0.08, 0.11, 0.16, 1);
 const camera = new ArcRotateCamera('camera', Math.PI / 2, 1.35, 5.5, new Vector3(0, 1.1, 0), scene);
 camera.attachControl(canvas, true);
@@ -32,6 +34,7 @@ const floor = MeshBuilder.CreateGround('ground', { width: 20, height: 20 }, scen
 const floorMaterial = new StandardMaterial('ground-material', scene);
 floorMaterial.diffuseColor = new Color3(0.18, 0.23, 0.29);
 floor.material = floorMaterial;
+physics.addCollider(floor, { collision: 'box', size: [20, 0.2, 20], position: [0, -0.1, 0] });
 const anchor = new TransformNode('player', scene);
 let character: HumanoidCharacter | null = null,
   bottle = createBottleModel(scene, 'held'),
@@ -226,6 +229,7 @@ const studio = {
 (window as unknown as { characterStudio: typeof studio }).characterStudio = studio;
 engine.runRenderLoop(() => {
   const delta = Math.min(0.05, engine.getDeltaTime() / 1000);
+  physics.step(delta);
   if (character) {
     const timeScale = Number(speed.value);
     character.controller.playbackSpeed = timeScale;

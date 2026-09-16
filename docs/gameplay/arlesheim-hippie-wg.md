@@ -1,10 +1,12 @@
-# Arlesheim Hippie-WG
+# Arlesheim Hippie-WG und Nachbarschaft
 
-Ein komplettes Innenraumlevel mit **drei real übereinanderliegenden Etagen und sechs getrennten Zimmern pro Etage**. Start in Tobis Zimmer im zweiten Obergeschoss, Ziel an der Haustür im Erdgeschoss. Über **LEVEL WÄHLEN → Arlesheim Hippie-WG → REIN IN DIE WG** direkt spielbar.
+Stand: 16. September 2026. Die drei begehbaren Stockwerke mit je sechs Zimmern bleiben erhalten. Neu führt die Haustür ohne Teleport in einen Gemeinschaftsgarten und ein zusammenhängendes Arlesheimer Quartier. Direkt als Gast über **Arlesheim Hippie-WG → REIN IN DIE WG** spielbar.
 
-## Aufgabe und Wege
+## Aufgabe
 
-Tobi wollte nur kurz jemanden besuchen. Jetzt soll er vor dem Gehen die leeren Flaschen wegräumen. **18 Flaschen**, eine pro Zimmer, führen ihn durch alle Stockwerke. Die vorhandene automatische Trink-/Leergutmechanik bleibt aktiv. Erst nach allen Flaschen lässt sich die Tür im Erdgeschoss mit **E** bestätigen. Der Abschluss gibt **2'300 Punkte** und wird für angemeldete Spieler gespeichert.
+Start in Tobis Zimmer im zweiten Obergeschoss. **36 Flaschen sammeln:** die bisherigen 18 in den Zimmern plus 18 im Garten, in Nachbarhäusern, im Lädeli, Café, auf dessen Dach, auf dem Dorfplatz und am Waldweg. Anschliessend vor der WG mit **E** abschliessen. Grundwert ohne weitere Aktionen: 4'100 Punkte. Keine Polizei-Pflicht; Trinken, Werfen, Pöbeln und Bewohnerreaktionen bleiben erhalten.
+
+Die Haustür ist jetzt eine echte Öffnung, kein Abschluss vor einer verschlossenen Wand. Tobi kann das Haus beliebig verlassen und wieder betreten. Die ursprünglichen Treppen, Yoga-/Meditationsgruppen und Zimmeraufteilungen bleiben bestehen:
 
 | Etage                | Zimmer                                                                      |
 | -------------------- | --------------------------------------------------------------------------- |
@@ -12,30 +14,35 @@ Tobi wollte nur kurz jemanden besuchen. Jetzt soll er vor dem Gehen die leeren F
 | Erstes Obergeschoss  | Atelier, Yoga, Bibliothek, Musikzimmer, Teestube, Gemeinschaftsbad          |
 | Erdgeschoss          | Küche, Esszimmer, Plattenzimmer, Pflanzenzimmer, Velo-Werkstatt, Wohnzimmer |
 
-Je drei Zimmer liegen links und rechts eines zentralen Flurs. Jedes besitzt eine eigene Türöffnung. Das innenliegende Treppenhaus liegt im Norden: links hinunter, auf dem Zwischenpodest wenden, rechts weiter hinunter. Zwei solche Treppen verbinden die drei Etagen. Der Weg ist in beide Richtungen begehbar; vergessene Zimmer bleiben erreichbar. Der Ausgang liegt im Süden des Erdgeschosses. Stockwerksanzeige und Bodenbeschriftungen helfen bei der Orientierung.
+## Umgebung
 
-**Die WG ist bewohnt.** Im ersten Obergeschoss übt eine Gruppe auf fünf Matten Yoga, angeleitet von einer Lehrerin; unter dem Dach sitzt ein Meditationskreis. In weiteren Zimmern wird gerührt, getanzt und gesessen. Ein Zuruf mit **R** lässt sie zusammenzucken und antworten — «Namasteee.», «Der Abwasch macht sich nicht selber.», im Yogaraum «Bitte leise, wir atmen gerade.». Die Bewohner sind reine Kulisse ohne eigene Physikkörper, damit kein enges Zimmer zur Falle wird; die Stockwerksausblendung gilt für sie wie für alles andere.
+- **WG-Garten:** Hochbeete, Gewächshausgerüst, Kompost, Grill, Tisch, benutzbare Gartenbank, Wäscheleine und Peace-Fahne.
+- **Wohnquartier:** neun zusätzliche Gebäude mit geneigten Ziegeldächern bzw. Café-Dachterrasse, Fensterläden, Blumenkästen, Briefkästen und Vorgärten. Mehrere echte Innenräume, darunter Nachbarhäuser, Quartierladen und Atelier.
+- **Strasse:** Gehwege, gelber Fussgängerstreifen, Tempo-30-Schild, Laternen und geparkte Autos mit Collision. Ein mit E fahrbarer WG-Scooter nutzt dieselbe Fahrzeugbasis wie Bali; er ist optional.
+- **Dorfplatz:** Brunnen, Café, Kulturhaus und ein vereinfachter Dom mit zwei Türmen. Der Dom ist eine solide Landmarke, kein begehbarer Kircheninnenraum.
+- **Waldweg:** Laubbäume und Juralandschaft im Hintergrund. Sichtbare Hecken begrenzen das Quartier; der Boden setzt sich dahinter fort.
+- **Orientierung:** Ortsnamen im HUD, Wegweiser und ein gezeichneter Quartierplan vor der WG. Der Plan zeigt die Spielwelt, keine amtliche Karte.
+- **Fahnen:** Schweizerkreuz, Peace und stilisierter roter Baselstab als regionales Baselland-Motiv. Kleine lokal erzeugte Texturen werden geteilt. Es handelt sich beim Baselstab ausdrücklich nicht um das Arlesheimer Gemeindewappen.
 
-Die Palette verändert sich je Etage. Runde gewebte Teppiche, Peace-Wandbehänge, Pflanzen, Palettenmöbel, Kissen, Yogamatten und Plattenregale prägen den Hippie-Stil. Die Zimmernamen und Running Gags wie **KARL SPÜLT SPÄTER** stehen auf Bodenmarkierungen. Ein langsames synthetisiertes Zupfmotiv begleitet den Rundgang. Möbel sind aktuell exemplarische Kulisse; individuelle Küchen-/Bad-/Werkstatt-Interaktionen sind noch nicht umgesetzt.
+Die Gestaltung orientiert sich lose an [Ortskern und Domplatz laut Gemeinde Arlesheim](https://www.arlesheim.ch/de/portrait/das_dorf/sehenswuerdigkeiten.php). Das [Arlesheimer Gemeindewappen verwendet einen Flügel](https://www.arlesheim.ch/de/portrait/das_dorf/geschichte.php). Gebäude, Strassenverlauf und Namen im Spiel sind eine stilisierte Interpretation; keine massstabsgetreue Rekonstruktion oder Behauptung über konkrete Privatwohnungen.
 
-![Tobi im obersten WG-Stockwerk](../screenshots/arlesheim-hippie-wg.png)
+## Gemeinsame Technik
 
-## Vertikale Technik
+- `packages/game-data/src/arlesheim/world.ts`: Gebäude, Sektoren, Nachbarn, Fahrzeug, zusätzliche Flaschen und Referenzroute. Die ursprünglichen Haus-Pickup-IDs und Level-ID bleiben bestehen. Neue Content-Version `prototype-7-arlesheim`.
+- `runtime/levels/hippie-house-scene.ts`: Stockwerke, Treppen, offene Haustür, sichtbares Dach und Übergang zwischen Innen- und Aussenansicht.
+- `runtime/levels/arlesheim/`: Strassen/Landschaft, Hausgestaltung, Garten, Dorfdetails und Szenenkomposition.
+- `runtime/world/scene-builder.ts`: aus Bali extrahierte gemeinsame Instanz-/Material-/Collider-Erzeugung. Bali verwendet denselben Builder weiter.
+- `runtime/world/buildings.ts`, `sectors.ts`, `flags.ts`: Gebäude mit Türlücken und Dachzugang, Distanzsichtbarkeit, wiederverwendbare Fahnen.
+- `NpcGroup`: komponiert bestehende WG-Bewohner und elf zusätzliche Nachbarn ohne Änderungen an den Gameplay-Verträgen.
 
-Die begehbaren Bodenhöhen sind 0, 4,5 und 9 Meter. Wände, Böden, Treppen und Podeste haben echte Havok-Kollider. Die beiden Treppen verwenden kontinuierliche geneigte Kollisionsflächen mit sichtbaren Stufenmarkierungen, damit die Kapsel nicht an kleinen Stufenkanten hängenbleibt. Es gibt keine Stockwerks-Teleports.
+Böden, Wände, Möbel, Dachflächen, Hecken, Baumstämme und Autos nutzen die bestehende Havok-Pipeline. Dächer erhalten ihre Collider erst nach der endgültigen Rotation. Blätter, Fahnen, Wäsche und Kleindetails bleiben explizit dekorativ. Hausdächer werden beim Betreten optisch ausgeblendet; Collision bleibt erhalten.
 
-Die erhöhte Innenraumkamera folgt der Spielerhöhe. Oberhalb von Tobi werden die Darstellung der Etagen und ihre Flaschen ausgeblendet; eine grafische Schnittfläche entfernt darüberliegende Wandteile. **Die Physik bleibt erhalten**, auch bei unsichtbaren oberen Stockwerken. Die Kamera lässt sich inzwischen **vollständig um die Figur drehen**: der frühere Gierbereich von ±0,3 Radiant machte gerade dieses Level unübersichtlich, weil sich ein Flur nicht nach hinten einsehen liess. Jedes Rig — Aussen, Zug, Innenraum, Zelle — besitzt nur noch eigene Abstands- und Neigungsgrenzen, während der Gierwinkel überall frei läuft.
+Innerhalb der WG bleibt der grafische Stockwerksschnitt aktiv. Draussen wird er aufgehoben, sonst würden Bäume, Häuser und Dom auf Kopfhöhe abgeschnitten. `LevelScene.cameraMode()` und `ThirdPersonCamera.setMode()` ermöglichen den wiederverwendbaren Wechsel Innen/Aussen bei gleicher freier Kameradrehung. Die Stockwerksanzeige erscheint nur in der WG. Rückkehr ins Haus aktiviert die bisherige Innenansicht wieder.
 
-Flaschen beachten jetzt beim Platzieren und Animieren ihre Datenhöhe. Nahaufnahme bleibt räumlich begrenzt: Ein Gegenstand an derselben X/Z-Position auf einer anderen Etage wird nicht eingesammelt. Zielabstände berücksichtigen ebenfalls die Datenhöhe. Das Missionssystem verwendet weiterhin Collect und Reach; es enthält keine WG-spezifischen Objective-Handler.
+## Lokal geprüft und Grenzen
 
-- `game-data/hippie-house.ts`: Etagenabstand, Raumaufteilung, Farben und Namen.
-- `game-data/levels/arlesheim-hippie-wg.json`: Spawn, 18 eindeutige Flaschen, Missionsabhängigkeit und Erdgeschossziel.
-- `runtime/levels/hippie-house-scene.ts`: Haus, Türöffnungen, Treppen und grafischer Ausschnitt.
-- `runtime/levels/hippie-house-props.ts`: wiederverwendbare Möbel und Hippie-Dekoration.
-- Bestehende Session-, Score-, Trink-, Sound- und Speicheradapter; keine Datenbankmigration.
+Der bestehende kurze Havok-Routentest wurde erweitert: 18 Zimmer, beide Treppen, Rückweg nach oben, echte Haustür, Garten, Nachbar-Innenräume, Café-Dach, Dorf-/Waldweg, alle 36 Flaschen und Levelabschluss. Er prüft zusätzlich das Ein-/Ausschalten des grafischen Schnitts beim Verlassen und erneuten Betreten. Der Bali-Routentest lief als gezielte Regression nach der Builder-Extraktion ebenfalls erfolgreich. Keine Teleport-Abkürzung im Routentest. Kein GitHub-CI-Lauf.
 
-## Prüfung und Grenzen
+Der vorhandene UI-Test wurde an die neue Flaschenzahl angepasst, aber keine vollständige E2E-/Datenbank-Suite ausgeführt. Separate visuelle Prüfungen setzen die Figur gezielt an Ansichtspunkte; diese ersetzen keinen manuellen Komplettdurchlauf.
 
-Der Browser-Routentest läuft mit tatsächlicher Havok-Bewegung durch alle 18 Zimmer und beide Treppen bis zur Haustür. Er prüft sechs neue Flaschen pro Etage, reale Spielerhöhen, Rückweg nach oben, Abschlusswert und das Ausblenden der oberen Böden. Kein Teleport oder Missionsabschluss-Hook. Der UI-Test prüft Levelauswahl, Start oben, höhenkorrekte Aufnahme, Trinken und Neustart. PostgreSQL-Integration prüft den eigenen gespeicherten WG-Abschluss ohne Polizeibedingung.
-
-Das Level ist ein kompakter Erkundungsprototyp ohne Polizei, Bewohnerdialoge oder Nebenquests. Möbel haben keine eigenen Physikkörper; Wände und Türen begrenzen die Räume. Die endgültige 5–15-Minuten-Abnahme sowie Safari und Performance auf Referenzhardware bleiben spätere Prüfungen. Die aktuelle Aufgabe lässt sich auf bekanntem Weg deutlich schneller abschliessen.
+Das Quartier ist prozedural stilisiert. Häuser sind überwiegend eingeschossig, Dom und einige Wohnhäuser sind Fassaden. Kein fahrender Strassenverkehr; der Scooter ist das einzige steuerbare Fahrzeug. Keine Hardware-/Safari-/Langzeitabnahme, kein vollständiges Asset-Unloading. Historische WG-Bestwerte bleiben erhalten und sind wegen der grösseren Route nicht direkt vergleichbar.

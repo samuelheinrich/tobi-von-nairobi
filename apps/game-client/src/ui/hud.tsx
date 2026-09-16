@@ -34,7 +34,7 @@ export function Hud({ view }: { view: GameView }) {
               ? 'R: rumpöbeln, bis der Wärter vorbeischaut. E auf der Pritsche beendet die Nacht.'
               : view.collected < view.total
                 ? level.scenery === 'hippie-house'
-                  ? 'In jedem Zimmer eine Flasche. Treppen im Norden führen nach unten.'
+                  ? '18 Flaschen in der WG, 18 im Quartier. Treppen im Norden, Haustür im Süden. E: Scooter / Sitz.'
                   : level.scenery === 'railway'
                     ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
                     : level.scenery === 'nana-plaza'

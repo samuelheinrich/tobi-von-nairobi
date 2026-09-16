@@ -1,20 +1,23 @@
+import { createWorldBuilder } from '../world/scene-builder.js';
+import { buildNeighbourhood } from './arlesheim/neighbourhood.js';
 import { Plane } from '@babylonjs/core/Maths/math.plane.js';
 import type { Scene } from '@babylonjs/core/scene.js';
-import type { Mesh } from '@babylonjs/core/Meshes/mesh.js';
+import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
-import { hippieHouseLayout } from '@tobi/game-data';
+import { arlesheimSectors, insideHippieHouse, hippieHouseLayout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
 import { box, material } from './materials.js';
-import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
+import { destinationRing, sceneSign } from './scene-kit.js';
 import { houseProps } from './hippie-house-props.js';
 
 /** Three real stacked storeys, six rooms each, connected by two continuous U-shaped stairways. */
 export function createHippieHouseScene(scene: Scene, world: HavokWorld, level: LevelDefinition) {
-  const kit = sceneKit(scene, world, '#c6b6a2');
+  const kit = createWorldBuilder(scene, world, arlesheimSectors, '#c7d9df');
+  const neighbourhood = buildNeighbourhood(kit);
   const wood = material(scene, 'wg-wood', '#926842');
   const stairs = material(scene, 'wg-stairs', '#c9a575');
   const trim = material(scene, 'wg-trim', '#eed5ae');
-  const groups: { height: number; meshes: Mesh[] }[] = [];
+  const groups: { height: number; meshes: AbstractMesh[] }[] = [];
   const floorHeight = hippieHouseLayout.floorHeight;
   for (const [floor, data] of hippieHouseLayout.floors.entries()) {
     const before = scene.meshes.length;
@@ -29,7 +32,10 @@ export function createHippieHouseScene(scene: Scene, world: HavokWorld, level: L
     solid(`wg-floor-${floor}`, [30, 0.25, 30], [0, y - 0.125, 0], stairs);
     // Fully collidable walls; the cutaway shader reveals their lower portions from above.
     for (const x of [-15, 15]) solid('wg-exterior-wall', [0.3, 3.8, 30], [x, y + 1.9, 0]);
-    solid('wg-south-wall', [30, 3.8, 0.3], [0, y + 1.9, -15]);
+    if (floor === 0) {
+      for (const x of [-8.25, 8.25]) solid('wg-south-wall', [13.5, 3.8, 0.3], [x, y + 1.9, -15]);
+      solid('wg-entry-lintel', [3, 0.7, 0.3], [0, 3.45, -15]);
+    } else solid('wg-south-wall', [30, 3.8, 0.3], [0, y + 1.9, -15]);
     for (const x of [-9.5, 9.5]) solid('wg-north-wall', [11, 3.8, 0.3], [x, y + 1.9, 15]);
     for (const x of [-9, 9]) {
       for (const z of [-5, 5]) solid('wg-room-divider', [12, 3.8, 0.22], [x, y + 1.9, z]);
@@ -66,7 +72,19 @@ export function createHippieHouseScene(scene: Scene, world: HavokWorld, level: L
     for (const x of [-4.8, 4.8])
       solid('stairwell-outer-wall', [0.25, floorHeight, 16], [x, y + floorHeight / 2, 23]);
     solid('stairwell-back-wall', [9.6, floorHeight, 0.25], [0, y + floorHeight / 2, 31]);
-    groups.push({ height: y, meshes: scene.meshes.slice(before) as Mesh[] });
+    for (const x of [-10, -6, 6, 10]) {
+      box(
+        scene,
+        'wg-window',
+        [1.7, 1.6, 0.08],
+        [x, y + 2, -15.19],
+        material(scene, 'wg-window-glass', '#536e71'),
+      );
+      for (const side of [-1, 1])
+        box(scene, 'wg-shutter', [0.5, 1.8, 0.1], [x + side * 1.12, y + 2, -15.23], wood);
+      box(scene, 'wg-window-sill', [2, 0.14, 0.4], [x, y + 1.16, -15.32], trim);
+    }
+    groups.push({ height: y, meshes: scene.meshes.slice(before) as AbstractMesh[] });
   }
   for (const upper of [floorHeight, floorHeight * 2]) {
     const before = scene.meshes.length;
@@ -111,20 +129,58 @@ export function createHippieHouseScene(scene: Scene, world: HavokWorld, level: L
       ),
       false,
     );
-    groups.push({ height: lower, meshes: scene.meshes.slice(before) as Mesh[] });
+    groups.push({ height: lower, meshes: scene.meshes.slice(before) as AbstractMesh[] });
   }
-  // No false door on the upper floors. E completes the actual ground-floor exit threshold.
-  const door = box(scene, 'wg-exit-door', [2.2, 2.8, 0.15], [0, 1.4, -14.8], wood);
-  const exitSign = sceneSign(scene, 'AUSGANG', 0, 3, -14.65, 3);
+  // The front door is now a physical opening into a connected neighbourhood.
+  const door = box(scene, 'wg-open-door', [0.14, 2.8, 2.2], [1.6, 1.4, -16], wood);
+  kit.solid(door);
+  const exitSign = sceneSign(scene, 'GARTEN / DORF', 0, 3, -15.3, 4);
   const destination = destinationRing(scene, level);
-  scene.clipPlane = new Plane(0, 1, 0, -20);
+  const roof = kit.prop('wg', 'wg-roof', [31, 0.3, 31], [0, 13.15, 0], '#936853', true);
+  for (const side of [-1, 1]) {
+    const slope = kit.prop(
+      'wg',
+      'wg-pitched-roof',
+      [16.5, 0.25, 32],
+      [side * 7.8, 15.1, 0],
+      '#a66f52',
+    );
+    slope.rotation.z = -side * 0.24;
+    const collider = world.addCollider(slope, { collision: 'box', walkable: true })!;
+    kit.colliders.push(collider.mesh);
+    groups.push({ height: 13, meshes: [slope] });
+  }
+  groups.push({ height: 13, meshes: [roof] });
+  const cutPlane = new Plane(0, 1, 0, -20);
   const focus = (position: Position3): void => {
-    // Clip graphics only; all floors/walls keep their Havok bodies and block thrown bottles.
-    scene.clipPlane!.d = -(position.y + 1.5);
+    const inside = insideHippieHouse(position);
+    scene.clipPlane = inside ? cutPlane : null;
+    cutPlane.d = -(position.y + 1.5);
     for (const group of groups)
-      for (const mesh of group.meshes) mesh.isVisible = group.height < position.y - 0.2;
-    door.isVisible = exitSign.isVisible = destination.isVisible = position.y < floorHeight;
+      for (const mesh of group.meshes) mesh.isVisible = !inside || group.height < position.y - 0.2;
+    door.isVisible =
+      exitSign.isVisible =
+      destination.isVisible =
+        !inside || position.y < floorHeight;
+    neighbourhood.focus(position);
   };
   focus(level.spawn);
-  return { ...kit, destination, focus };
+  return {
+    ...kit,
+    ...neighbourhood,
+    destination,
+    focus,
+    cameraMode: (p: Position3) =>
+      insideHippieHouse(p) ? ('interior' as const) : ('follow' as const),
+    worldLabel: (p: Position3) =>
+      insideHippieHouse(p)
+        ? 'HIPPIE-WG'
+        : p.z > 55
+          ? 'WALDWEG'
+          : p.x > 35 && p.z > 0
+            ? 'DORFPLATZ'
+            : p.x < -22 && p.z > -25
+              ? 'WG-GARTEN'
+              : 'ARLESHEIM',
+  };
 }

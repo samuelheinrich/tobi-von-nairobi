@@ -9,7 +9,8 @@ const spot = (id: string, label: string, x: number, y: number, z: number, exitX:
   id,
   label,
   kind: 'seat' as const,
-  position: { x, y: y + 1.45, z },
+  position: { x, y: y + 0.9, z },
+  seatHeight: 0.48,
   exit: { x: exitX, y: y + 1.1, z },
   yaw: 0,
 });
