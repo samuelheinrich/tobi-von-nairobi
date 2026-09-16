@@ -34,12 +34,43 @@ describe('casting', () => {
     expect(casting.pick('tourist', 2)?.id).toBe('chris');
   });
 
+  it('hands Glanzmann out once per level', () => {
+    const casting = new Casting();
+    expect(casting.pick('special', 0)?.id).toBe('glanzmann');
+    expect(casting.pick('special', 0)).toBeNull();
+  });
+
   it('is deterministic for a given seed', () => {
     const a = new Casting();
     const b = new Casting();
     for (const role of Object.keys(cast) as CastRole[]) {
       expect(a.pick(role, 7)?.id).toBe(b.pick(role, 7)?.id);
     }
+  });
+
+  it('spreads the bar dancers so neighbouring venues differ', () => {
+    const casting = new Casting();
+    // Nana seeds each slot with the resident id, so consecutive ids must not all land on one model.
+    const picked = Array.from({ length: 12 }, (_, seed) => casting.pick('dancer', seed)?.id);
+    expect(new Set(picked).size).toBeGreaterThanOrEqual(4);
+    // The four that arrived with their own clip have to be reachable at all.
+    for (const id of ['bar-dancer-hard', 'bar-dancer-naked', 'bar-dancer-heels']) {
+      expect(picked, id).toContain(id);
+    }
+  });
+
+  it('keeps the witch to the hippie house and to one', () => {
+    const casting = new Casting();
+    expect(casting.pick('witch', 0)?.id).toBe('hippie-witch');
+    expect(casting.pick('witch', 1)).toBeNull();
+  });
+
+  it('no longer casts the two hopeless dancers', () => {
+    const everywhere = new Set<string>();
+    for (const role of Object.keys(cast) as CastRole[])
+      for (const member of cast[role]) everywhere.add(member.config.id);
+    expect(everywhere).not.toContain('dancer-slip');
+    expect(everywhere).not.toContain('dancer-ely');
   });
 
   it('casts every role with something', () => {

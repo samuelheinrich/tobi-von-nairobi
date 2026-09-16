@@ -128,6 +128,8 @@ const profiles: Record<SpeechTopic, VoiceProfile> = {
     volume: 0.8,
     spread: true,
   },
+  // Dreamy and unhurried; she is not talking to you so much as near you.
+  witch: { prefer: ['Shelley', 'Anna', 'Sandy'], pitch: 1.2, rate: 0.72, volume: 0.66 },
   // Slow and low-effort on purpose: nobody in a yoga room raises their voice.
   yoga: { prefer: ['Shelley', 'Sandy', 'Anna'], pitch: 1.12, rate: 0.78, volume: 0.72 },
   passenger: {

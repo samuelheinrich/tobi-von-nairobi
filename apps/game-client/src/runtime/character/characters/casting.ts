@@ -1,17 +1,22 @@
 import type { CharacterConfig } from '../humanoid/schema.js';
 import {
+  barHardConfig,
+  barHeelsConfig,
+  barNakedConfig,
+  barWalkerConfig,
   chrisConfig,
   copConfig,
-  elyConfig,
   fitnessConfig,
   hipHopConfig,
   ladyboyConfig,
   miaConfig,
   samConfig,
   valeryConfig,
+  witchConfig,
 } from './cast.js';
-import { dancerBeachConfig, dancerClubConfig, dancerSlipConfig } from './dancers.js';
+import { dancerBeachConfig, dancerClubConfig } from './dancers.js';
 import { townsfolkConfigs } from './townsfolk.js';
+import { glanzmannConfig, joeConfig, joshConfig, womanConfig } from './civilians.js';
 
 /** Which model plays which part, and how often it may appear.
  *
@@ -35,7 +40,9 @@ export type CastRole =
   | 'passenger'
   | 'yoga'
   | 'beach'
-  | 'raver';
+  | 'raver'
+  | 'witch'
+  | 'special';
 
 export interface CastMember {
   config: CharacterConfig;
@@ -58,27 +65,44 @@ export const cast: Record<CastRole, CastMember[]> = {
   cellGuard: uniformed,
   // Meant to be the captain model, which turned out to have no skeleton at all. Standing in until
   // a rigged crew model exists.
-  flightAttendant: [stand(valeryConfig)],
-  tourist: [stand(townsfolkConfigs[2]!), stand(townsfolkConfigs[3]!), one(chrisConfig)],
-  expat: [stand(townsfolkConfigs[0]!), stand(townsfolkConfigs[1]!), one(samConfig)],
+  flightAttendant: [{ config: womanConfig }],
+  tourist: [
+    stand(townsfolkConfigs[2]!),
+    stand(townsfolkConfigs[3]!),
+    one(chrisConfig),
+    { config: joeConfig },
+    { config: joshConfig },
+    { config: womanConfig },
+  ],
+  expat: [
+    stand(townsfolkConfigs[0]!),
+    stand(townsfolkConfigs[1]!),
+    one(samConfig),
+    { config: joeConfig },
+    { config: joshConfig },
+  ],
   bargirl: [
     { config: miaConfig },
     { config: hipHopConfig },
-    { config: elyConfig },
+    { config: barWalkerConfig },
+    { config: barHeelsConfig },
     stand(valeryConfig),
   ],
+  // Four bar dancers, each with its own clip, so neighbouring venues never run the same routine.
   dancer: [
+    { config: barHardConfig },
+    { config: barNakedConfig },
+    { config: barHeelsConfig },
     { config: dancerBeachConfig },
     { config: dancerClubConfig },
-    { config: dancerSlipConfig },
     { config: hipHopConfig },
-    { config: elyConfig },
   ],
   ladyboyDancer: [{ config: ladyboyConfig }],
-  vendor: [stand(townsfolkConfigs[2]!), stand(valeryConfig)],
-  taxi: [stand(townsfolkConfigs[3]!)],
-  resident: [stand(townsfolkConfigs[0]!), stand(townsfolkConfigs[1]!)],
-  passenger: [stand(townsfolkConfigs[1]!), stand(townsfolkConfigs[2]!)],
+  vendor: [{ config: womanConfig }, { config: joeConfig }],
+  taxi: [{ config: joshConfig }, { config: joeConfig }],
+  resident: [{ config: joeConfig }, { config: joshConfig }, { config: womanConfig }],
+  // Public transport and aircraft deliberately use only fully dressed civilians.
+  passenger: [{ config: joeConfig }, { config: joshConfig }, { config: womanConfig }],
   yoga: [stand(fitnessConfig)],
   beach: [{ config: fitnessConfig }, stand(townsfolkConfigs[0]!)],
   // Street Parade. Thin instances carry the route; these are the figures near the camera.
@@ -90,7 +114,15 @@ export const cast: Record<CastRole, CastMember[]> = {
   // FBX round-trip and baking the wrapper rotation all left it unchanged, so the flat rest pose is
   // in the downloads themselves. They need re-exporting with a standing rest pose before they can
   // come back. Placeholders hold the part meanwhile.
-  raver: [stand(townsfolkConfigs[2]!), stand(townsfolkConfigs[3]!), stand(dancerBeachConfig)],
+  raver: [
+    { config: joeConfig },
+    { config: joshConfig },
+    { config: womanConfig },
+    stand(dancerBeachConfig),
+  ],
+  special: [{ config: glanzmannConfig, unique: true }],
+  // One fixture in the hippie house, never repeated.
+  witch: [{ config: witchConfig, unique: true }],
 };
 
 /** Tracks which one-per-level models a level has already handed out. */

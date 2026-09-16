@@ -52,6 +52,7 @@ const cues: Record<SpeechTopic, SoundCue> = {
   conductor: 'grumble',
   cellGuard: 'grumble',
   resident: 'flirt',
+  witch: 'flirt',
   yoga: 'flirt',
   passenger: 'grumble',
   barGuest: 'cheer',

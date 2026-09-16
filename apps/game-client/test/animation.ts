@@ -18,6 +18,7 @@ import { tobiConfig, tobiDrunkConfig } from '../src/runtime/character/characters
 import { dancerConfigs } from '../src/runtime/character/characters/dancers.js';
 import { townsfolkConfigs } from '../src/runtime/character/characters/townsfolk.js';
 import { castConfigs } from '../src/runtime/character/characters/cast.js';
+import { civilianConfigs } from '../src/runtime/character/characters/civilians.js';
 import { createBottleModel } from '../src/runtime/items/bottle-model.js';
 import { ThrownBottles } from '../src/runtime/items/thrown-bottles.js';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js';
@@ -83,7 +84,7 @@ async function load() {
   lines?.dispose();
   lines = null;
   const choice = element<HTMLSelectElement>('model').value;
-  const dancer = [...dancerConfigs, ...townsfolkConfigs, ...castConfigs].find(
+  const dancer = [...dancerConfigs, ...townsfolkConfigs, ...castConfigs, ...civilianConfigs].find(
     (entry) => entry.id === choice,
   );
   const config = dancer
@@ -133,6 +134,19 @@ async function load() {
       return Number.isFinite(hi - lo) ? Number((hi - lo).toFixed(3)) : null;
     })(),
     configured: character?.config.height,
+    // Local Euler of both knees. A knee should turn on X alone; motion on Y or Z means the
+    // retarget put the rotation on the wrong axis.
+    knees: (() => {
+      if (!character) return null;
+      const out: Record<string, number[]> = {};
+      for (const key of ['leftLowerLeg', 'rightLowerLeg'] as const) {
+        const n = character!.rig.joints.get(key)?.node;
+        if (!n) continue;
+        const e = n.rotationQuaternion ? n.rotationQuaternion.toEulerAngles() : n.rotation;
+        out[key] = [e.x, e.y, e.z].map((v) => Number(v.toFixed(3)));
+      }
+      return out;
+    })(),
     // Joint-based height for comparison: head to the lower foot, in world units.
     joints: (() => {
       if (!character) return null;

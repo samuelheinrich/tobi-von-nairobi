@@ -14,6 +14,7 @@ export type SpeechTopic =
   | 'cellGuard'
   | 'resident'
   | 'yoga'
+  | 'witch'
   | 'passenger'
   | 'barGuest'
   | 'policeSpotted'
@@ -290,6 +291,21 @@ const lines: Record<SpeechTopic, readonly string[]> = {
     '«Wir essen um sieben.»',
     '«Bist du der Neue?»',
     '«Mach die Tür zu, bitte.»',
+  ],
+  // Die Hexe im Kreis: freundlich weggetreten, nie belehrend.
+  witch: [
+    '«Kannst du die Farben riechen?»',
+    '«Der Teppich atmet mit.»',
+    '«Ich höre gerade Dienstag.»',
+    '«Dreh dich mit, dann wird das Zimmer rund.»',
+    '«Die Wand hat mir zugezwinkert.»',
+    '«Schmeckst du das Licht?»',
+    '«Meine Hände sind heute aus Wasser.»',
+    '«Alles hier ist nur geliehen, auch der Boden.»',
+    '«Ich tanze schon seit Donnerstag.»',
+    '«Hörst du, wie die Pflanze summt?»',
+    '«Die Zeit läuft hier im Kreis, wie ich.»',
+    '«Fass mal die Luft an, die ist ganz weich.»',
   ],
   yoga: [
     '«Und einatmen …»',

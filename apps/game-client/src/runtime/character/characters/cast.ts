@@ -115,14 +115,24 @@ export const valeryConfig: CharacterConfig = {
   motionDurations: { dance: 9.33, celebrate: 9.33 },
 };
 
+/** No borrowed clips: this rig cannot take them.
+ *
+ * Its Character Creator bones roll differently from the Mixamo skeletons the clips were authored
+ * on, and Babylon's retargeter does not correct for it. The knee then turns sideways instead of
+ * back — measured as a swing of 1.12 rad on Z against 0.33 on X for `dance`, and 0.43 against 0.20
+ * for `celebrate`. The same knee under the shared motion library moves 0.65 on X and nothing else,
+ * because those poses are written in humanoid space and applied relative to each joint's rest
+ * frame rather than as raw local rotations.
+ *
+ * Correcting that belongs in the retargeter and would touch every character that currently looks
+ * right, so both clips are blocked here instead. `dance` falls through to the procedural one.
+ */
 export const ladyboyConfig: CharacterConfig = {
   ...shared,
   id: 'ladyboy',
   model: '/characters/cast/ladyboy.glb',
   height: 1.76,
   bones: ccBones,
-  clipSources: [dance('dance-tut', 'dance'), dance('dance-belly', 'celebrate')],
-  motionDurations: { dance: 16.9, celebrate: 19.6 },
 };
 
 export const miaConfig: CharacterConfig = {
@@ -192,21 +202,6 @@ export const gabberFemaleConfig = gabber('gabber-female', 'gabber-female', 1.72,
 export const gabberSjonnieConfig = gabber('gabber-sjonnie', 'gabber-sjonnie', 1.84, 8.3);
 export const gabberDutchConfig = gabber('gabber-dutch', 'gabber-dutch', 1.86, null);
 
-/** Bar dancer that arrived with twelve Mixamo clips; three of them are used directly. */
-export const elyConfig: CharacterConfig = {
-  ...shared,
-  id: 'dancer-ely',
-  model: '/characters/cast/dancer-ely.glb',
-  height: 1.73,
-  bones: mixamoBones,
-  animations: {
-    dance: 'Armature.010|mixamo.com|Layer0',
-    celebrate: 'Armature.003|mixamo.com|Layer0',
-    taunt: 'Armature.004|mixamo.com|Layer0',
-  },
-  motionDurations: { dance: 25.57, celebrate: 15.27, taunt: 3.23 },
-};
-
 /** The body that came with those dances. */
 export const poleConfig: CharacterConfig = {
   ...shared,
@@ -216,6 +211,91 @@ export const poleConfig: CharacterConfig = {
   bones: mixamoBones,
   clipSources: [poseDance(1, 'dance'), poseDance(4, 'celebrate'), poseDance(10, 'taunt')],
   motionDurations: { dance: POSE_SECONDS, celebrate: POSE_SECONDS, taunt: POSE_SECONDS },
+};
+
+/** Character Creator rigs without the numeric suffix a round-trip adds.
+ *
+ * Each of these files numbers its joints differently — `CC_Base_Hip_99`, `_101`, `_02` — so the
+ * plain names are written once and the adapter's normalised lookup finds the rest.
+ */
+const ccBonesPlain: BoneMap = {
+  hips: 'CC_Base_Hip',
+  spine: 'CC_Base_Waist',
+  chest: 'CC_Base_Spine02',
+  neck: 'CC_Base_NeckTwist01',
+  head: 'CC_Base_Head',
+  leftUpperArm: 'CC_Base_L_Upperarm',
+  leftLowerArm: 'CC_Base_L_Forearm',
+  leftHand: 'CC_Base_L_Hand',
+  rightUpperArm: 'CC_Base_R_Upperarm',
+  rightLowerArm: 'CC_Base_R_Forearm',
+  rightHand: 'CC_Base_R_Hand',
+  leftUpperLeg: 'CC_Base_L_Thigh',
+  leftLowerLeg: 'CC_Base_L_Calf',
+  leftFoot: 'CC_Base_L_Foot',
+  rightUpperLeg: 'CC_Base_R_Thigh',
+  rightLowerLeg: 'CC_Base_R_Calf',
+  rightFoot: 'CC_Base_R_Foot',
+};
+
+/** Bar staff for Nana, each with the dance it arrived with. No clip is borrowed here — they all
+ * brought their own, which is why they read as different people rather than the same routine. */
+const barDancer = (
+  id: string,
+  file: string,
+  height: number,
+  clip: string,
+  seconds: number,
+  action: 'dance' | 'walk' = 'dance',
+): CharacterConfig => ({
+  ...shared,
+  id,
+  model: `/characters/nana/${file}.glb`,
+  height,
+  bones: ccBonesPlain,
+  animations: { [action]: clip },
+  motionDurations: { [action]: seconds },
+});
+
+export const barHardConfig = barDancer(
+  'bar-dancer-hard',
+  'bar-dancer-hard',
+  1.72,
+  'allmot|FBXExportClip_0',
+  18.5,
+);
+export const barNakedConfig = barDancer(
+  'bar-dancer-naked',
+  'bar-dancer-naked',
+  1.7,
+  'Armature|1746722837904_TempMotion',
+  24.2,
+);
+export const barHeelsConfig = barDancer(
+  'bar-dancer-heels',
+  'bar-dancer-heels',
+  1.76,
+  'Animation',
+  22.5,
+);
+/** Walks rather than dances: she works the floor between the tables. */
+export const barWalkerConfig = barDancer('bar-walker', 'bar-walker', 1.73, 'Animation', 13, 'walk');
+
+/** The hippie house's witch. One of a kind, and she keeps her own dance.
+ *
+ * Her rig mixes an Unreal pelvis with Character Creator limbs, which the adapter resolves through
+ * the plain names below. At 137'627 triangles she is the heaviest figure in the game — the mesh is
+ * split into many small shells, so the simplifier stops early. She is a single fixture in one
+ * room, never a crowd, which is the only reason that is acceptable.
+ */
+export const witchConfig: CharacterConfig = {
+  ...shared,
+  id: 'hippie-witch',
+  model: '/characters/arlesheim/hippie-witch.glb',
+  height: 1.74,
+  bones: { ...ccBonesPlain, hips: 'pelvis' },
+  animations: { dance: 'Animation' },
+  motionDurations: { dance: 9.1 },
 };
 
 /** Avaturn avatars of real people. One each per level, never a crowd of them. */
@@ -243,8 +323,12 @@ export const chrisConfig: CharacterConfig = {
 
 export const castConfigs = [
   copConfig,
+  barHardConfig,
+  barNakedConfig,
+  barHeelsConfig,
+  barWalkerConfig,
+  witchConfig,
   hipHopConfig,
-  elyConfig,
   poleConfig,
   gabberAnitaConfig,
   gabberFemaleConfig,

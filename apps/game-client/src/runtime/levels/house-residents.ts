@@ -12,7 +12,7 @@ import { createNpc, npcPalette, type NpcRig } from './npc-kit.js';
 import type { SpeechBubbles } from './speech-bubbles.js';
 import { replyCue, type LevelNpcs, type NpcReply } from './level-npcs.js';
 
-type Activity = 'yoga' | 'meditate' | 'sit' | 'stir' | 'dance';
+type Activity = 'yoga' | 'meditate' | 'sit' | 'stir' | 'dance' | 'witch';
 
 interface Resident {
   rig: NpcRig;
@@ -21,6 +21,8 @@ interface Resident {
   phase: number;
   startled: number;
   id: number;
+  /** Centre of the circle the witch walks, in room coordinates. */
+  orbit?: { x: number; z: number; radius: number };
 }
 
 /** One resident per occupied room plus two breathing groups: yoga on the first floor,
@@ -55,7 +57,12 @@ export class HouseResidents implements LevelNpcs {
         activity === 'sit' || activity === 'yoga' || activity === 'meditate',
       );
       rig.root.position.set(x, floor * hippieHouseLayout.floorHeight, z);
-      rig.castRole = activity === 'yoga' || activity === 'meditate' ? 'yoga' : 'resident';
+      rig.castRole =
+        activity === 'yoga' || activity === 'meditate'
+          ? 'yoga'
+          : activity === 'witch'
+            ? 'witch'
+            : 'resident';
       rig.root.rotation.y = facing;
       rig.seatHeight = activity === 'yoga' || activity === 'meditate' ? 0.2 : 0.5;
       if (activity === 'sit')
@@ -85,6 +92,10 @@ export class HouseResidents implements LevelNpcs {
     place(1, 10.5, -10, 'yoga', -Math.PI / 2);
     // Meditation circle under the roof.
     for (let i = 0; i < 3; i++) place(2, 6.5, -11.5 + i * 1.5, 'meditate', Math.PI / 2);
+    // Sie kreist im Erdgeschoss-Wohnraum, weit genug von Wänden und vom Weg durch die Tür.
+    place(0, -3, 6, 'witch', 0);
+    const witch = this.people[this.people.length - 1];
+    if (witch) witch.orbit = { x: -3, z: 6, radius: 1.8 };
     for (const [floor, x, z, activity, facing] of [
       [0, -7, -12, 'stir', 0],
       [0, 7, 9, 'sit', Math.PI],
@@ -130,15 +141,18 @@ export class HouseResidents implements LevelNpcs {
     if (neighbour)
       this.speak(
         neighbour,
-        neighbour.activity === 'yoga' || neighbour.activity === 'meditate'
-          ? 'greetingYoga'
-          : 'greeting',
+        neighbour.activity === 'witch'
+          ? 'witch'
+          : neighbour.activity === 'yoga' || neighbour.activity === 'meditate'
+            ? 'greetingYoga'
+            : 'greeting',
       );
     for (const person of this.people) {
       // Same cutaway rule the level uses: never draw a storey above Tobi's head.
       const y = person.floor * hippieHouseLayout.floorHeight;
       person.rig.root.setEnabled(insideHippieHouse(player) && y < player.y + 1.5);
       person.startled = Math.max(0, person.startled - delta);
+      person.rig.gesture(person.startled > 0 ? 'flee' : person.activity);
       const breath = Math.sin(this.time * (person.startled > 0 ? 8 : 1.1) + person.phase);
       const [leftArm, rightArm] = person.rig.arms;
       if (!leftArm || !rightArm) continue;
@@ -147,6 +161,17 @@ export class HouseResidents implements LevelNpcs {
         leftArm.rotation.z = outwardArmAngle(0, lift);
         rightArm.rotation.z = outwardArmAngle(1, lift);
         person.rig.root.position.y = y + Math.abs(breath) * 0.05;
+      } else if (person.activity === 'witch' && person.orbit) {
+        // Sie geht den Kreis ab und dreht sich dabei mit, damit sie nie rückwärts läuft.
+        const angle = this.time * 0.55 + person.phase;
+        person.rig.root.position.set(
+          person.orbit.x + Math.cos(angle) * person.orbit.radius,
+          y + Math.abs(breath) * 0.04,
+          person.orbit.z + Math.sin(angle) * person.orbit.radius,
+        );
+        person.rig.root.rotation.y = -angle + Math.PI / 2;
+        leftArm.rotation.z = outwardArmAngle(0, 1.35 + breath * 0.45);
+        rightArm.rotation.z = outwardArmAngle(1, 1.35 + breath * 0.45);
       } else if (person.activity === 'dance') {
         leftArm.rotation.z = outwardArmAngle(0, 1.2 + breath * 0.5);
         rightArm.rotation.z = outwardArmAngle(1, 1.2 + breath * 0.5);
@@ -174,15 +199,19 @@ export class HouseResidents implements LevelNpcs {
       count++;
       speaker ??= person;
     }
-    if (speaker)
-      this.speak(
-        speaker,
-        speaker.activity === 'yoga' || speaker.activity === 'meditate' ? 'yoga' : 'resident',
-      );
+    if (speaker) this.speak(speaker, this.topicFor(speaker));
     return count;
   }
 
-  private speak(person: Resident, topic: 'yoga' | 'resident' | 'greeting' | 'greetingYoga'): void {
+  private topicFor(person: Resident): 'yoga' | 'resident' | 'witch' {
+    if (person.activity === 'witch') return 'witch';
+    return person.activity === 'yoga' || person.activity === 'meditate' ? 'yoga' : 'resident';
+  }
+
+  private speak(
+    person: Resident,
+    topic: 'yoga' | 'resident' | 'witch' | 'greeting' | 'greetingYoga',
+  ): void {
     const line = this.voices.next(topic, person.id);
     this.reply = { text: line, cue: replyCue(topic) };
     this.bubbles.say(

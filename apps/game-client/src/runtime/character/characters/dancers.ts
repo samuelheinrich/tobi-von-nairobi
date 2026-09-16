@@ -77,13 +77,4 @@ export const dancerClubConfig: CharacterConfig = {
   motionDurations: { dance: 19.6, celebrate: 16.9 },
 };
 
-/** Second club dancer; the cheapest of the three at 25'553 triangles. */
-export const dancerSlipConfig: CharacterConfig = {
-  ...dancerBase,
-  id: 'dancer-slip',
-  model: '/characters/dancer-slip.glb',
-  clipSources: [clip('dance-tut', 'dance'), clip('dance-belly', 'celebrate')],
-  motionDurations: { dance: 16.9, celebrate: 19.6 },
-};
-
-export const dancerConfigs = [dancerBeachConfig, dancerClubConfig, dancerSlipConfig];
+export const dancerConfigs = [dancerBeachConfig, dancerClubConfig];
