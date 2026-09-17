@@ -1,4 +1,5 @@
 import type { VehicleDefinition, WorldSectorDefinition } from '@tobi/contracts';
+import { keepClear, rectFrom, roadRect, type Rect2 } from './spawn-safety.js';
 
 export const phuketSectors = [
   { id: 'station', x: -25, z: 38, radius: 28, visibilityMargin: 30 },
@@ -79,7 +80,34 @@ const roles: readonly PhuketResidentRole[] = [
 ];
 const actions = ['idle', 'walk', 'phone', 'drink'] as const;
 
-export const phuketResidents: readonly PhuketResident[] = Array.from({ length: 62 }, (_, id) => {
+/** The carriageways, and the shophouse row, as areas nobody should be standing in.
+ *
+ * Kept next to the residents on purpose: the moment a road moves, the spawns move with it. The
+ * numbers mirror `phuket/world.ts`, which builds the roads and the sixteen shophouses.
+ */
+/** The sixteen shophouses of the old town, as the single source both the scene builder and the
+ * validator read. The south row sat underneath the party road until 17.09.2026; scooters and
+ * tuk-tuks drove through three of the houses. */
+export const phuketShophouses = Array.from({ length: 16 }, (_, i) => {
+  const x = -50 - i * 8.2;
+  const side = i % 2 ? -1 : 1;
+  const z = side > 0 ? 34 + (i % 3) * 2.2 : -(18 + (i % 3) * 2.2);
+  return { id: `shophouse-${i}`, x, z, side, width: 7.2, depth: 10, enterable: i % 4 === 0 };
+});
+
+/** Carriageways, as rectangles. Mirrors the roads laid in `phuket/world.ts`. */
+export const phuketRoads = [
+  { id: 'hauptstrasse', from: { x: -192, z: 0 }, to: { x: -18, z: 0 }, width: 15 },
+  { id: 'partystrasse', from: { x: -165, z: 21 }, to: { x: -87, z: 21 }, width: 14 },
+  { id: 'marktstrasse', from: { x: -142, z: -47 }, to: { x: -80, z: -47 }, width: 10 },
+] as const;
+
+export const phuketNoSpawnAreas: readonly Rect2[] = [
+  ...phuketRoads.map((r) => roadRect(r.from, r.to, r.width, 1)),
+  ...phuketShophouses.map((h) => rectFrom(h.x, h.z, h.width, h.depth)),
+];
+
+const rawResidents: readonly PhuketResident[] = Array.from({ length: 62 }, (_, id) => {
   const area = id % 4;
   const nightlife = area === 1;
   const beach = area === 2;
@@ -120,3 +148,10 @@ export const phuketResidents: readonly PhuketResident[] = Array.from({ length: 6
     female: role === 'dancer' || role === 'cabaret' || (role === 'beach_guest' && id % 3 !== 0),
   };
 });
+
+/** The formula above scatters people around four centres and knows nothing about the world it
+ * scatters them into. This pushes them off the carriageways and out of the shophouses. */
+export const phuketResidents: readonly PhuketResident[] = keepClear(
+  rawResidents,
+  phuketNoSpawnAreas,
+);

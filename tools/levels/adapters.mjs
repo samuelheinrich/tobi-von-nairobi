@@ -96,15 +96,11 @@ function zurich() {
 
 function phuket() {
   const level = levelFile('thailand-railway.json');
-  // Reconstructed from apps/game-client/src/runtime/levels/phuket/world.ts, which builds the
-  // sixteen shophouses in a loop. Geometry authored in the client cannot be imported here.
-  const solids = [];
-  for (let i = 0; i < 16; i++) {
-    const x = -50 - i * 8.2;
-    const side = i % 2 ? -1 : 1;
-    const z = side * (18 + (i % 3) * 2.2);
-    solids.push({ id: `shophouse-${i}`, rect: rect(x, z, 7.2, 10), enterable: i % 4 === 0 });
-  }
+  const solids = data.phuketShophouses.map((h) => ({
+    id: h.id,
+    rect: rect(h.x, h.z, h.width, h.depth),
+    enterable: h.enterable,
+  }));
   const npcs = data.phuketResidents.map((r) => ({ id: `resident-${r.id}`, x: r.x, z: r.z }));
   return base(level, {
     solids,
@@ -136,10 +132,7 @@ function phuket() {
       },
     ],
     npcs,
-    notes: [
-      'Gebäude aus der Schleife in phuket/world.ts rekonstruiert, nicht aus game-data gelesen.',
-      'Strand, Nachtmarkt-Stände und Bahnhof sind nicht modelliert.',
-    ],
+    notes: ['Strand, Nachtmarkt-Stände und Bahnhof sind nicht modelliert.'],
   });
 }
 

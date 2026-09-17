@@ -1,3 +1,4 @@
+import { phuketShophouses } from '@tobi/game-data';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
@@ -136,9 +137,10 @@ export function createPhuketWorld(
   // Modular town façades. Selected units have shallow or complete open interiors.
   const buildingColours = ['#dcc9a5', '#d89b7b', '#7eb4a5', '#c7a7ce', '#d4d0bf'];
   for (let i = 0; i < 16; i++) {
-    const x = -50 - i * 8.2;
-    const side = i % 2 ? -1 : 1;
-    const z = side * (18 + (i % 3) * 2.2);
+    // Footprints come from game-data so the residents, the validator and these boxes can never
+    // disagree. The south row used to sit underneath the party road, and scooters drove through
+    // three of the houses.
+    const { x, z, side } = phuketShophouses[i]!;
     const height = 5.5 + (i % 4) * 1.5;
     const facade = material(
       scene,

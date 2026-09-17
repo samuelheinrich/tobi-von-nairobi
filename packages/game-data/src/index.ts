@@ -106,6 +106,8 @@ export {
   zurichWorldBounds,
 } from './zurich.js';
 export { railwayLayout } from './railway.js';
+export { keepClear, rectFrom, roadRect, type Rect2, type Spot2 } from './spawn-safety.js';
+export { phuketShophouses, phuketRoads, phuketNoSpawnAreas } from './phuket.js';
 export {
   distributeBottles,
   bottleWeight,
