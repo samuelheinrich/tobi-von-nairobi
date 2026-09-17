@@ -186,6 +186,31 @@ Das Ziel sagt jetzt selbst, wie man hinkommt. `carried: true` heisst «ein Fahrz
 hin», und beide Leser handeln danach: der Server misst die begehbare Fläche statt der Luftlinie,
 die Levelprüfung nennt ein Ziel ausserhalb der Grenzen keinen Mangel mehr.
 
+### Die Fahrt, nachgemessen
+
+`probe-ride.mjs` hat den kompletten Umlauf mitgeschrieben:
+
+```
+  1s  STOPPED  · Zürich HB → Stadelhofen · Türen CLOSED
+ 16s  BOARDING · Türen OPENING
+ 31s  BOARDING · Türen OPEN
+252s  BOARDING · Türen CLOSING
+289s  DEPARTING
+360s  APPROACHING
+569s  ARRIVING
+766s  STOPPED  · Zürich Stadelhofen → Zürich HB · Türen CLOSED
+799s  BOARDING · Türen OPENING
+820s  BOARDING · Türen OPEN
+```
+
+Der Zug fährt ab, legt die ganze Strecke zurück, hält in Stadelhofen, dreht die Richtung und
+öffnet dort die Türen — an der Kante, auf der vorher eine Betonscheibe stand. Die Zeiten sind
+Wanduhrsekunden im Headless-Browser mit Software-Rendering; der simuliert rund zehnmal langsamer
+als das Spiel auf echter Hardware, acht Sekunden Türöffnung werden hier zu gut 200.
+
+**Nicht geprüft:** der Spieler an Bord. Die Sonde liest die Zustandsmaschine des Zuges, nicht
+jemanden, der mitfährt.
+
 ## Neue Prüfungen
 
 | Prüfung                   | Was sie findet                              |
