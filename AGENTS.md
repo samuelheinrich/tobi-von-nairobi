@@ -22,3 +22,14 @@ Diese aktuelle Eigentümerentscheidung ersetzt widersprechende Test-/CI-Pflichte
 ## Weiterhin gültig
 
 Saubere Modulgrenzen, verständliche Änderungen und bestehende Formatkonventionen beibehalten. Fremde Änderungen erhalten. Keine Secrets, `.env`-Dateien oder private Referenzbilder committen. Keine Nachrichten an Dritte ohne Auftrag.
+
+## Webserver-Deployment
+
+Ausdrückliche Eigentümerentscheidung vom 17. September 2026:
+
+- Jeder erfolgreich erstellte Game-Client-Build wird anschliessend automatisch auf den in der lokalen Root-`.env` konfigurierten FTP-Webserver hochgeladen.
+- Der Client-Build ruft dafür `tools/deploy/upload-client.mjs` auf. Das Script ersetzt den vollständigen Inhalt von `FTP_path` mit `apps/game-client/dist` und gibt danach eine eindeutige Erfolgsmeldung aus.
+- FTP-Zugangsdaten bleiben ausschliesslich in der ignorierten `.env`. Passwörter niemals in Logs, Dokumentation, Commits oder Antworten ausgeben.
+- Das Deploy-Script darf nur das explizit konfigurierte Unterverzeichnis unter `/public_html/` leeren. Root- oder übergeordnete Verzeichnisse sind abzulehnen.
+- Wenn auf einem fremden Entwicklungsrechner überhaupt keine FTP-Konfiguration vorhanden ist, darf der lokale Build ohne Upload fertig werden. Eine teilweise vorhandene Konfiguration ist dagegen ein Fehler.
+- Nach einem beauftragten Build die Upload-Erfolgsmeldung prüfen. Dafür keine GitHub-CI starten.

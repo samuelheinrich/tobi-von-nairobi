@@ -20,6 +20,9 @@ importers:
       '@types/node':
         specifier: 24.10.1
         version: 24.10.1
+      basic-ftp:
+        specifier: 5.2.1
+        version: 5.2.1
       eslint:
         specifier: 10.10.0
         version: 10.10.0(jiti@2.7.0)
@@ -1049,6 +1052,10 @@ packages:
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
+
+  basic-ftp@5.2.1:
+    resolution: {integrity: sha512-0yaL8JdxTknKDILitVpfYfV2Ob6yb3udX/hK97M7I3jOeznBNxQPtVvTUtnhUkyHlxFWyr5Lvknmgzoc7jf+1Q==}
+    engines: {node: '>=10.0.0'}
 
   better-result@2.10.0:
     resolution: {integrity: sha512-oQhh0y1qo2/ZKdAAEvHZAqKKiHOFU5k/bW96fE2ScgQOVkJRiHwB+nOS1SgFsYqRlxMDWvefXi9Q3px7QvgNDw==}
@@ -2900,6 +2907,8 @@ snapshots:
   babylonjs-gltf2interface@9.26.1: {}
 
   balanced-match@4.0.4: {}
+
+  basic-ftp@5.2.1: {}
 
   better-result@2.10.0: {}
 
