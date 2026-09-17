@@ -200,6 +200,15 @@ export class GameHost {
         bounds: this.level.navigationBounds ?? null,
         bodies: this.world.describeGeometry(),
       });
+      // The running level, from outside. Geometry answers «is there a floor»; this answers «what
+      // is actually happening» — where Tobi stands, where the trains are and whether their doors
+      // opened. Used by tools/levels/probe-ride.mjs. Stripped from a build.
+      (window as unknown as Record<string, unknown>).__levelProbe = () => ({
+        level: this.level.id,
+        player: { ...this.motor.position },
+        trains: (this.scene.metadata as { trains?: unknown } | undefined)?.trains ?? null,
+        label: this.scene.metadata?.worldLabel ?? null,
+      });
     }
     window.addEventListener('resize', this.onResize);
     window.addEventListener('blur', this.onBlur);

@@ -1,6 +1,6 @@
 # Level-Audit und Validierungs-Framework
 
-Stand: 17. September 2026. Erster Durchgang als QA-Rolle.
+Stand: 17. September 2026, zweiter Durchgang. Alle elf Level stehen auf **CRITICAL 0**.
 
 Ausführen: `npx tsx tools/levels/validate.mjs [filter] [--json]`. Exitcode 1 bei jedem CRITICAL,
 damit der Lauf später eine Änderung blockieren kann.
@@ -104,6 +104,133 @@ breit ist; als Begrenzung zählt, was mindestens 0,8 m hoch ist.
 
 Türbreiten, Sitzbelegung, Deckenlücken und Z-Fighting. Türen und Sitze brauchen eine Auszeichnung
 im Level, keine Form-Heuristik.
+
+## Zweiter Durchgang — was repariert ist
+
+| Level                | vorher             | jetzt               |
+| -------------------- | ------------------ | ------------------- |
+| thailand-railway     | CRITICAL 4, HIGH 5 | CRITICAL 0, HIGH 10 |
+| zurich-street-parade | CRITICAL 2, HIGH 8 | CRITICAL 0, HIGH 2  |
+| fly-high             | CRITICAL 2         | CRITICAL 0, HIGH 0  |
+| bali-adventure       | CRITICAL 2         | CRITICAL 0, HIGH 3  |
+| welcome-to-bali      | CRITICAL 1, HIGH 1 | CRITICAL 0, HIGH 1  |
+| bangkok-nana-plaza   | CRITICAL 0         | CRITICAL 0, HIGH 3  |
+| übrige               | CRITICAL 0         | CRITICAL 0          |
+
+Die HIGH-Zahlen steigen teilweise, weil zwei neue Prüfungen dazugekommen sind. Das ist kein
+Rückschritt: es waren vorher dieselben Mängel, nur unsichtbar.
+
+### Flaschen — Standard statt Einzelplatzierung
+
+`packages/game-data/src/bottles.ts` beschreibt, **wo** eine Flasche in einer Szene plausibel liegt
+(Bar, DJ-Pult, Tisch, Gepäckablage, Vestibül …), gewichtet die Sorten und verteilt sie
+abwechselnd von beiden Enden der Liste, damit sie über das ganze Level streuen statt sich an der
+besten Stelle zu häufen. Bahn (14) und Flugzeug (16) sind darüber bestückt.
+
+### Phuket
+
+Die Südreihe der sechzehn Shophäuser lag bei z 13,0 bis 27,4, die Partystrasse bei z 14 bis 28 —
+Scooter und Tuk-Tuks fuhren 21 m weit durch Häuser. Die Reihe steht jetzt bei z 34 aufwärts.
+Die Grundrisse sind als `phuketShophouses` in die Daten gewandert; Szenenbauer, Bewohner und
+Validator lesen dieselbe Quelle statt drei auseinandergelaufener Kopien derselben Schleife.
+
+30 von 62 Bewohnern standen auf Fahrbahnen, 3 in Gebäuden. `packages/game-data/src/spawn-safety.ts`
+ist die allgemeine Antwort: `keepClear` schiebt Standorte aus Rechtecken heraus, in denen sie
+nichts zu suchen haben, und verwirft dabei nie einen. Seine Strassenrechtecke reichen über beide
+Enden der Fahrbahn hinaus — eine Route ist eine Linie mit Breite, und knapp hinter dem letzten
+Wegpunkt zu stehen ist nicht sicherer als daneben.
+
+### Zürich — neu gebaut
+
+Vier gemeldete Fehler, hinter zweien davon dieselbe Ursache.
+
+**Der Zug fuhr durch Wände und sperrte einen aus beiden Bahnhöfen aus.** Die Einhausung entstand
+als ein achsparalleler Kasten je Wegpunkt. Die S16 nimmt auf ihrem Nordbogen zwei Kurven, und ein
+an z ausgerichteter Kasten steht quer zu einem in x laufenden Gleis — auf dem Oststück fuhr der
+Zug also mitten durch seinen eigenen Tunnel, und zwischen den Stücken klafften ohnehin 14 bis 18 m.
+Schlimmer: die Schleife ummauerte **jeden** Wegpunkt, auch die beiden Halte. Damit stand eine
+Betonscheibe auf der Bahnsteigkante von HB Gleis 12 und auf beiden Kanten in Stadelhofen — genau
+dort, wo die Türen aufgehen.
+
+Die Einhausung folgt jetzt dem Gleis: zur Strecke gedrehte Wände mit Überlappung an den Stössen,
+und nur auf dem offenen Bogen zwischen den Bahnhöfen. `zurichStationBoxes` in den Daten sagt, wo
+ein Bahnhof anfängt; Bauer und Validator lesen dieselbe Angabe.
+
+**Der Weg nach Stadelhofen war versperrt.** Er war mehr als versperrt: es gab überhaupt keine
+begehbare Linie. Die Zufahrtsstrasse begann bei x 41 hinter einer Fassadenreihe, die auf ihr
+stand, und die Südwand des Bahnhofs war über dem Ostperron geschlossen und über den Gleisen offen
+— der einzige Zugang führte über die Schienen. Die Strasse läuft jetzt von der Promenade bis zum
+Vorplatz, zwei Fassaden und der Shop sind von ihr heruntergerückt, und die Wand hat einen sechs
+Meter breiten Eingang auf Perron 3, während die Gleismündung zu ist.
+
+**Man sah nicht, dass dort ein Bahnhof ist.** Stadelhofens Sektor wurde auf 72 m sichtbar und
+tauchte aus dem Nichts auf. Bahnhöfe sind Landmarken; ihre Sichtweiten reichen jetzt auf 130 m
+und mehr.
+
+**Ein Drittel des Levels hatte keinen Boden.** Zwei Lücken, 70 m und 50 m breit, zwischen drei
+getrennten Platten. Die Platte ist durchgehend, nur dort offen, wo der HB eigene Böden trägt, und
+hat an der Aussenkante eine Brüstung statt eines Sturzes in den See.
+
+Dazu: zwei Flaschen lagen im Tramwagen, und die Paradenroute lief drei Meter durch den
+Hafenschuppen.
+
+### Fly High liess sich nie abschliessen
+
+Der Server leitet die schnellstmögliche ehrliche Zeit aus der Luftlinie zwischen Start und Ziel
+im Sprint ab. Fly High endet auf einem Flughafen 1,5 km von der Kabine entfernt — die Untergrenze
+lag bei 152 Sekunden und **jedes** Ergebnis wurde als unplausibel abgelehnt. Aufgefallen ist es
+niemandem, weil die Server-Integrationstests `apps/game-server/dist` importieren: sie prüften
+einen Build vom 13.
+
+Das Ziel sagt jetzt selbst, wie man hinkommt. `carried: true` heisst «ein Fahrzeug bringt dich
+hin», und beide Leser handeln danach: der Server misst die begehbare Fläche statt der Luftlinie,
+die Levelprüfung nennt ein Ziel ausserhalb der Grenzen keinen Mangel mehr.
+
+## Neue Prüfungen
+
+| Prüfung                   | Was sie findet                              |
+| ------------------------- | ------------------------------------------- |
+| `DESTINATION_UNREACHABLE` | Ziel vom Start aus nicht zu Fuss erreichbar |
+| `BOTTLES_UNREACHABLE`     | Flaschen, zu denen kein Weg führt           |
+
+Die Erreichbarkeit flutet vom Startpunkt über die erfassten Körper, stockwerkweise, und nimmt
+Treppen, Rampen und Rolltreppen als Verbindung zwischen Ebenen. Sie ist die Prüfung, die den
+Zürcher Fall überhaupt hätte finden können: **jede Fläche war da, keine davon nützte etwas.**
+
+## Drei Korrekturen an den Prüfungen selbst
+
+1. **`prop(solid)` machte jeden Körper begehbar.** Damit war jedes Dach, jedes Vordach und die
+   Glashalle eine Terrasse in elf Metern Höhe ohne Geländer — 47 Meldungen aus einer einzigen
+   Zeile. `prop` nimmt jetzt `'barrier'`: massiv, aber kein Boden. Die Geometrieprüfung glaubt
+   dem Kennzeichen und rät nur noch, wo keines gesetzt ist.
+2. **Die Leerraumprüfung tastete `navigationBounds` ab.** Das ist das Gitter, auf dem NPCs laufen,
+   nicht der Zaun um den Spieler — in Zürich reicht es 118 m in den See hinaus. Ein Drittel des
+   Levels las sich als Loch und begrub die zwei echten Lücken im Rauschen. Level erklären jetzt
+   die Flächen, die sie gepflastert haben.
+3. **`WORLD_BOUNDS_MISSING` war CRITICAL und die Meldung falsch.** Fehlende `navigationBounds`
+   halten niemanden im Gebiet; sie kosten NPCs ihr Gitter und dem Server seinen Massstab. MEDIUM,
+   mit einer Meldung, die sagt, was wirklich fehlt.
+
+## Was ich nicht belegen kann
+
+`DESTINATION_UNREACHABLE` und `BOTTLES_UNREACHABLE` schlagen in **Nana Plaza** und der
+**Arlesheimer WG** an. Beide sind mehrstöckig, und eine Treppe ist ein schräger Körper, den der
+Schnappschuss als achsparallelen Klotz ablegt — die Flutfüllung nähert sie nur an. Ich konnte in
+keinem der beiden Fälle zeigen, dass es ein echter Levelfehler ist. Deshalb melden mehrstöckige
+Level diese Befunde als HIGH mit dem Vorbehalt in der Meldung, nicht als CRITICAL. **Beide Level
+gehören einmal zu Fuss abgelaufen**, bevor man daran etwas ändert.
+
+## Werkzeuge
+
+| Befehl                                                 | Zweck                                        |
+| ------------------------------------------------------ | -------------------------------------------- |
+| `npx tsx tools/levels/validate.mjs [filter]`           | alle Prüfungen, Exitcode 1 bei CRITICAL      |
+| `node tools/levels/capture-geometry.mjs [filter]`      | Körper aus der laufenden Szene abholen       |
+| `node tools/levels/probe-ride.mjs "Street Parade" 480` | Zustände eines laufenden Levels mitschreiben |
+
+`probe-ride.mjs` liest `window.__levelProbe()`: Spielerposition, Zugzustände, Türen. Geometrie
+beantwortet «ist da ein Boden», das hier beantwortet «passiert das Richtige». Vorsicht bei der
+Auslegung: der Headless-Browser rendert per Software und läuft rund zehnmal langsamer als Echtzeit.
 
 ## Vier Irrtümer aus dem ersten Lauf
 

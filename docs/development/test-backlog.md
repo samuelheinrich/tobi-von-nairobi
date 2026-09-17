@@ -134,3 +134,29 @@ Gezielt lokal geprüft: vollständige WG-/Quartierroute, alle 36 Flaschen, Indoo
 - **Aufwand:** M, lokal auf ausdrücklichen Bedarf.
 - **Risiko solange offen:** einzelne Randkontakte an Türpaneelen oder Tunnelkurven, Jitter bei sehr niedriger Framezeit und noch nicht begangene Nebenwege im Untergeschoss.
 - **Bereits geprüft:** GLB-Inventar, Typecheck, kleiner Datentest, Client-Smoke/Preview und lokaler Build. Nach der Kollisionskorrektur zusätzlich Hallenquerung auf `y=1,04`, Rampenweg von `y=0,76` bis `y=-4,18`, der Durchgang ins Untergeschoss bis `x=-45,30` sowie der offene S16-Türweg durch den Wagen. Keine Browserfehler und kein Respawn in diesen Pfaden. Keine GitHub-CI daraus ableiten.
+
+### Erreichbarkeit in mehrstöckigen Leveln · 17. September 2026
+
+- **Betrifft:** `bangkok-nana-plaza` und `arlesheim-hippie-wg`.
+- **Fehlender Test:** einmal zu Fuss ablaufen und entscheiden, ob `DESTINATION_UNREACHABLE` und
+  `BOTTLES_UNREACHABLE` dort echte Mängel sind. Die neue Erreichbarkeitsprüfung flutet über die
+  erfassten Körper, und eine Treppe ist ein schräger Körper, den der Schnappschuss als
+  achsparallelen Klotz ablegt — die Näherung kann in beide Richtungen irren. Nana meldet 15 von 16
+  Flaschen, Arlesheim 18 von 36.
+- **Aufwand:** S, eine Runde je Level.
+- **Risiko solange offen:** entweder stehen dort tatsächlich unerreichbare Flaschen, oder die
+  Prüfung meldet in jedem Haus falsch — beides muss man wissen, bevor man daran etwas ändert.
+  Deshalb melden mehrstöckige Level diese Befunde als HIGH mit Vorbehalt und nicht als CRITICAL.
+
+### Zürich nach dem Umbau · 17. September 2026
+
+- **Betrifft:** `runtime/levels/zurich`, `runtime/trains/train-station.ts`, `world/scene-builder.ts`.
+- **Geprüft:** alle elf Level auf CRITICAL 0; Flutfüllung vom Spawn erreicht Vorplatz, Perron 3,
+  HB-Halle und HB Gleis 12; 388 Körper neu erfasst; Typecheck, Lint, 81 Unit-/Integrationstests,
+  Client-Build.
+- **Fehlender Test:** die Fahrt mit dem Spieler an Bord, von Hand. `probe-ride.mjs` zeigt die
+  Zustandsmaschine des Zuges, nicht den mitfahrenden Spieler. Ausserdem: ob der neue Eingang auf
+  Perron 3 sich mit der Kapsel angenehm durchqueren lässt, und ob die Brüstung an der Plattenkante
+  nicht wie eine Mauer mitten in der Stadt wirkt.
+- **Aufwand:** S.
+- **Risiko solange offen:** Restkontakte an den gedrehten Trassenwänden in den beiden Kurven.
