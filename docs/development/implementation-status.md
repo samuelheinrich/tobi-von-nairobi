@@ -1,5 +1,10 @@
 # Implementierungsstand
 
+> 17. September 2026: Thailand Railway öffnet nach dem Halt eine sektorisierte Phuket-Welt mit
+>     Town, Nightlife, Night Market, Patong Beach, begehbaren Venues, Crowd-LOD, Scooter und Tuk-Tuks.
+>     Das Fly-High-Terminal besitzt eine begehbare Partyhalle mit Scanner-Eingang, DJs sowie Laser- und
+>     Bodenlichtshow. Geprüft wurde lokal; GitHub-CI blieb deaktiviert.
+
 > 16. September 2026: [Arlesheimer WG-Quartier](../gameplay/arlesheim-hippie-wg.md): echte Haustür nach draussen, Garten, neun Häuser, Dorfplatz/Dom, Fahnen, Quartierplan, 36 Flaschen und optionaler Scooter. [Übergabe](handover-2026-09-16-arlesheim.md).
 
 > 16. September 2026: [Bali-Erkundungswelt](../gameplay/bali-open-world.md) mit 36 Flaschen, 11 Sektoren, Innenräumen/Dächern, Scooter und Bootsreise zur Insel. [Übergabe und Prüfstand](handover-2026-09-16-bali-world.md). Keine Polizei als Hauptziel, keine GitHub-CI.
@@ -53,7 +58,7 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 - **Bali: Beach, Market & Escape** führt Beach Bar, Night Market und Bali Escape zu einer zusammenhängenden Erkundungswelt mit jetzt 36 Flaschen, Strandbar, Markt, Tempel, Terrassen und Boot/Scooter zusammen. Meer, Kaimauern und Gebäude begrenzen den verzweigten Grundriss. Die drei alten IDs bleiben für gespeicherte Ergebnisse erhalten und verschwinden aus der Galerie.
 - Ansteigender Cartoon-Pegel, artikulierte Tobi-Animation, animierte Guards/Passanten, elf Sound-Cues, Sirenen und Ambient-Cues mit Pause-/Mute-Lebenszyklus. [Details](../gameplay/bali-venues-and-feedback.md).
 
-- Thailand Railway mit fünf offenen Wagen, Barwagen, sitzenden Reisenden, blockierendem Schaffner, benutzbaren Sitzen und zwölf Flaschen. Gebäude, Palmen, Felder und Schwellen ziehen endlos am Zug vorbei; eine feste Anzahl wiederverwendeter Landschaftsstreifen begrenzt den Speicherverbrauch. Zürich Street Parade als Ausschnitt des Zürcher Seebeckens: Utoquai, Bellevue, Quaibrücke, Bürkliplatz, Hafendamm Enge, dazu Bahnhofstrasse, Hauptbahnhof, Altstadt, Fraumünster, Grossmünster und Opernhaus. See und Limmat sind echte Hindernisse, die Brücken die einzigen Übergänge; 30 verteilte Flaschen, 24 Tabletten, vier Musik-Trucks und 240 entlang der Route ausgestreute Tänzer.
+- Thailand Railway mit fünf physischen Wagen, Barwagen, WC, Gepäck, sitzenden Reisenden, blockierendem Schaffner und funktionierender Notbremse. Gebäude, Palmen, Felder und Schwellen ziehen geschwindigkeitsabhängig am Zug vorbei. Nach einer sicht- und hörbaren Bremssequenz erscheinen Halt und Bahnsteig; erst dann öffnet sich die Seitentür und Tobi kann neben Lokomotive und Wagen treten. Der Phuket-Free-Roam beginnt als nächste Phase. Zürich Street Parade als Ausschnitt des Zürcher Seebeckens: Utoquai, Bellevue, Quaibrücke, Bürkliplatz, Hafendamm Enge, dazu Bahnhofstrasse, Hauptbahnhof, Altstadt, Fraumünster, Grossmünster und Opernhaus. See und Limmat sind echte Hindernisse, die Brücken die einzigen Übergänge; 30 verteilte Flaschen, 24 Tabletten, vier Musik-Trucks und 240 entlang der Route ausgestreute Tänzer.
 - Referenzbasierte prozedurale Tobi-Figur mit Locken, Sonnenbrille, Bart, Trägershirt und Zigarette. Automatische Trinkfolge, Leergut in der Hand, Wurfgeschosse mit Hindernisprüfung, kurze Guard-Taumelei und verscheuchbare Passanten. Reduzierbarer Farbrausch und vier zusätzliche Sound-Cues. [Details](../gameplay/railway-parade-and-bottles.md).
 
 - Arlesheim Hippie-WG mit drei realen Stockwerken, je sechs Zimmern, zwei begehbaren Treppen, 18 weiteren Flaschen und Ausgang im Erdgeschoss. Höhenkorrekte Pickups und grafischer Stockwerksausschnitt. [Details](../gameplay/arlesheim-hippie-wg.md).
@@ -68,9 +73,14 @@ Stand: 14. September 2026. Erstveröffentlichung: `feature/tobi-branding`. Fluch
 
 - Klang vollständig überarbeitet: Oszillatoren plus gefiltertes Rauschen ergeben Glasklirren, Gluck-gluck, Schluckauf, europäische Zweiton-Sirene, Pöbel- und Flirtrufe, Anprall und Jubel; `SoundBank` erlaubt später echte CC0-Samples ohne Codeänderung. [Details](../gameplay/audio.md).
 
-- **Fly High:** A380-Kabinenrätsel mit zwei physischen Decks, 204 Sitzen, Crew-Patrouillen, Sitz- und WC-Verstecken, Getränkewagen, stehenden Passagieren und bewegten Wolken. Wiederverwendbare Sitzaktion mit E auch im Zug; drei Beschwerden oder Entdeckung setzen Tobi auf seinen Platz zurück. [Regeln, Referenzen und Testgrenzen](../gameplay/fly-high.md).
+- **Fly High:** zwei physische A380-Decks mit 204 Sitzen, schiebbarer Servicewagen, aufbrechbare Cockpittür, begehbares GLB-Cockpit und unverändertes Lufthansa-A380-Außenmodell. Tobi fliegt selbst, startet mit **L** einen kurzen Landeanflug, evakuiert danach mit den Passagieren über Rollfeld und Terminal und beendet das Level an der Party-Bar. [Ablauf und technische Grenzen](../gameplay/fly-high.md).
 
 - **Geführtes Tutorial:** elf Lektionen mit bestätigten Aktionen, grossen Hinweisen und Richtungs-/Entfernungsanzeige. Eine Übungswand und Bank führen Deckung und Sitzen ein. Lektionen stehen in `game-data/tutorial.ts`; früh gesammelte Flaschen zählen mit, spätere Übungen müssen an ihrer Station ausgeführt werden. Die Tutorial-ID bleibt kompatibel. [Tutorial und Küste](../gameplay/tutorial-and-bali-coast.md).
+
+- NPC-Animationen verwenden explizite Loop-/Root-Motion-Metadaten und behalten abgeschlossene
+  Translationszyklen bei. Ein szenenweites Occupancy-System schützt Sitz- und Spawnplätze und
+  trennt überlappende Figuren sanft. Ein Geometrie-Audit markiert coplanare Bodenflächen; die
+  überlappenden Nana-Galerien wurden geometrisch korrigiert. [Audit und lokale Nachweise](animation-occupancy-rendering-audit-2026-09-17.md).
 
 ## Bewusst noch offen
 

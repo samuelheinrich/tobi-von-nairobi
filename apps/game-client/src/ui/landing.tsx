@@ -55,8 +55,10 @@ export function Landing({
             </p>
             <div className="selected-mission">
               {level.scenery === 'aircraft'
-                ? 'Kabinen-Rätsel · 2 Decks'
-                : `${level.pickups.length} Flaschen`}{' '}
+                ? 'Cockpit stürmen · selbst fliegen'
+                : level.scenery === 'railway'
+                  ? 'Notbremse · Zug verlassen'
+                  : `${level.pickups.length} Flaschen`}{' '}
               <span>→ {destinationName(level)}</span>
             </div>
             <button
@@ -69,7 +71,7 @@ export function Landing({
                 : tutorial
                   ? 'TUTORIAL STARTEN'
                   : level.scenery === 'aircraft'
-                    ? 'ABHEBEN'
+                    ? 'COCKPIT STÜRMEN'
                     : level.scenery === 'hippie-house'
                       ? 'REIN IN DIE WG'
                       : level.scenery === 'railway'

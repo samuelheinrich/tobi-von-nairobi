@@ -1,7 +1,7 @@
 import { AnimatorAvatar } from '@babylonjs/core/Animations/animatorAvatar.js';
 import { LoadAssetContainerAsync } from '@babylonjs/core/Loading/sceneLoader.js';
 import type { Scene } from '@babylonjs/core/scene.js';
-import type { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
+import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import type { AnimationGroup } from '@babylonjs/core/Animations/animationGroup.js';
 import { normaliseBoneName, type BoneMap, type ClipSource } from './schema.js';
 
@@ -36,6 +36,12 @@ export async function importRetargetedClips(
     for (const [action, name] of Object.entries(source.animations)) {
       const clip = container.animationGroups.find((c) => c.name === name);
       if (!clip) throw new Error('Source clip missing: ' + name);
+      // Do not ask Babylon to retarget fingers/toes that the target rig does not expose. Besides
+      // producing no useful motion, each absent track emitted a warning for every source clip and
+      // made loading Character Creator/Blender rigs needlessly noisy and slower.
+      for (const track of [...clip.targetedAnimations])
+        if (track.target instanceof TransformNode && !mapNodeNames.has(track.target.name))
+          clip.removeTargetedAnimation(track.animation);
       const retargeted = avatar.retargetAnimationGroup(clip, {
         animationGroupName: action,
         mapNodeNames,

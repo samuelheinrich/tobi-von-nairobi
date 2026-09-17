@@ -140,7 +140,9 @@ export class GameHost {
     this.vehicles = environment.vehicles
       ? new VehicleRuntime(this.scene, this.world, environment.vehicles)
       : null;
-    this.flight = level.scenery === 'aircraft' ? new FlightRuntime(this.scene, environment) : null;
+    this.flight = environment.aircraft
+      ? new FlightRuntime(this.scene, this.world, environment.aircraft)
+      : null;
     this.pills = new ColorPickups(this.scene, level);
     this.projectiles = new ThrownBottles(this.scene, environment.colliders, () =>
       this.audio.play('smash'),
@@ -322,6 +324,44 @@ export class GameHost {
               physics: {
                 bodies: this.world.colliders.length,
                 nearNPCs: this.scene.metadata?.npcPhysicsCount,
+                npcOccupancy: Array.isArray(this.scene.metadata?.npcOccupancy)
+                  ? {
+                      total: this.scene.metadata.npcOccupancy.length,
+                      overlapping: this.scene.metadata.npcOccupancy.filter(
+                        (entry: { overlapping?: boolean }) => entry.overlapping,
+                      ).length,
+                      seats: this.scene.metadata.npcOccupancy
+                        .filter((entry: { seatAnchor?: string | null }) => entry.seatAnchor)
+                        .map(
+                          (entry: {
+                            id: string;
+                            seatAnchor: string;
+                            occupiedBy: string | null;
+                          }) => ({
+                            npc: entry.id,
+                            anchor: entry.seatAnchor,
+                            owner: entry.occupiedBy,
+                          }),
+                        )
+                        .slice(0, 12),
+                    }
+                  : null,
+                coplanarSurfaces: Array.isArray(this.scene.metadata?.coplanarConflicts)
+                  ? this.scene.metadata.coplanarConflicts
+                      .slice(0, 8)
+                      .map(
+                        (entry: {
+                          first: { name: string };
+                          second: { name: string };
+                          yDifference: number;
+                          overlapArea: number;
+                        }) => ({
+                          meshes: [entry.first.name, entry.second.name],
+                          y: Number(entry.yDifference.toFixed(5)),
+                          area: Number(entry.overlapArea.toFixed(2)),
+                        }),
+                      )
+                  : [],
                 surfaceVelocity: this.motor.surfaceVelocity.asArray(),
                 nearby: this.physicsDebug?.inspect(),
               },
@@ -330,6 +370,7 @@ export class GameHost {
               objective: this.session.mission.active?.id,
               pursuit: this.police?.system.snapshot(),
               level: this.environment.debugState?.(),
+              flight: this.flight?.snapshot,
               agents: this.police?.system.agents.map((a) => ({
                 id: a.id,
                 state: a.state,
@@ -372,7 +413,8 @@ export class GameHost {
 
   private objectiveText(): string {
     if (this.tutorial?.active) return this.tutorial.active.title;
-    if (this.flight) return this.flight.puzzle.hint;
+    if (this.flight) return this.flight.objective;
+    if (this.environment.railway) return this.environment.railway.objective;
     if (this.level.scenery === 'drunk-tank') return 'Ausnüchtern und die Nacht beenden';
     const active = this.session.mission.active?.type;
     if (active === 'collect')
@@ -415,6 +457,30 @@ export class GameHost {
         if (result.exit) this.motor.teleport(result.exit);
       }
     }
+    if (actions.interactPressed && !usedInteraction && this.flight) {
+      usedInteraction = this.flight.interact(this.motor.position);
+      if (usedInteraction) {
+        const exit = this.seating.leave();
+        if (exit && !this.flight.flying) this.motor.teleport(exit);
+        const flightExit = this.flight.takeTeleport();
+        if (flightExit) {
+          this.motor.teleport(flightExit);
+          this.locomotion.reset();
+          this.camera.reset();
+        }
+        this.locomotion.halt();
+        this.toastUntil = this.session.elapsedSeconds + 4;
+        this.store.update({
+          toast: this.flight.exploringAirport
+            ? 'EVAKUIERUNG · Folge den Passagieren ins Terminal und finde die Partyhalle.'
+            : this.flight.flying
+              ? 'FLIGHT MODE · W/S PITCH · A/D ROLL · SHIFT/SPACE SCHUB · L LANDEN'
+              : this.flight.trolley.grabbed
+                ? 'SERVICEWAGEN GEPACKT · Mit WASD gegen die Cockpittür.'
+                : 'Servicewagen losgelassen.',
+        });
+      }
+    }
     if (actions.interactPressed && !usedInteraction) {
       const exit = this.seating.leave();
       const spot = exit
@@ -446,7 +512,8 @@ export class GameHost {
         this.store.update({ toast: result.text });
       }
     }
-    const sitting = this.seating.active !== null || !!this.vehicles?.active;
+    const sitting =
+      this.seating.active !== null || !!this.vehicles?.active || !!this.flight?.flying;
     const movementActions = escort
       ? { ...actions, moveX: escort.x, moveZ: escort.z, jumpPressed: false, sprintHeld: false }
       : sitting
@@ -468,14 +535,22 @@ export class GameHost {
     this.wasGrounded = this.motor.grounded;
     this.facing.update(velocity);
     this.environment.update?.(delta);
+    const environmentSound = this.environment.takeSound?.();
+    if (environmentSound) this.audio.play(environmentSound);
     this.vehicles?.step(delta, actions);
-    this.motor.setCollisionEnabled(!this.vehicles?.active);
-    this.world.step(delta);
-    if (this.flight) {
+    if (this.flight && !this.flight.flying) {
       velocity.x *= 0.5;
       velocity.z *= 0.5;
     }
-    if (this.vehicles?.active) {
+    this.flight?.step(delta, actions, this.motor.position, velocity, this.facing.yaw);
+    const flightSound = this.flight?.takeSound();
+    if (flightSound) this.audio.play(flightSound);
+    this.motor.setCollisionEnabled(!this.vehicles?.active && !this.flight?.flying);
+    this.world.step(delta);
+    if (this.flight?.flying) {
+      this.motor.teleport(this.flight.controller.position);
+      this.facing.yaw = this.flight.controller.heading;
+    } else if (this.vehicles?.active) {
       this.motor.teleport(
         this.vehicles.active.riderFeet.add(new Vector3(0, movement.capsuleHeight / 2, 0)),
       );
@@ -532,7 +607,11 @@ export class GameHost {
     this.trip.step(delta);
     if (this.environment.audioZones)
       this.audio.spatialEnvironment(delta, position, this.environment.audioZones);
-    else this.audio.environment(delta, this.level.scenery);
+    else
+      this.audio.environment(
+        delta,
+        this.environment.railway?.journey.speed === 0 ? 'railway-stopped' : this.level.scenery,
+      );
     for (const id of this.pills.nearby(position))
       if (this.trip.collect(id)) {
         this.pills.collect(id);
@@ -598,7 +677,6 @@ export class GameHost {
       this.police?.system.provoke();
       this.audio.play('provoke');
       if (count > 0) lessonSignals.taunts = 1;
-      this.flight?.puzzle.taunt();
       // Tobi says something different every time; the cell and the cabin have their own registers.
       const shoutTopic =
         this.level.scenery === 'drunk-tank'
@@ -626,11 +704,7 @@ export class GameHost {
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({
         speech: shout,
-        toast: this.flight
-          ? `${shout} · Beschwerde ${this.flight.puzzle.strikes}/3`
-          : count
-            ? `${shout} · ${count} Leute reagieren.`
-            : shout,
+        toast: this.flight ? shout : count ? `${shout} · ${count} Leute reagieren.` : shout,
       });
     }
     if (
@@ -652,22 +726,6 @@ export class GameHost {
       this.audio.play(reply.cue);
       this.toastUntil = this.session.elapsedSeconds + 3;
       this.store.update({ speech: reply.text, toast: reply.text });
-    }
-    const cabinOutcome = this.flight?.step(delta, position, this.seating.active);
-    if (cabinOutcome) {
-      const home = this.environment.restSpots?.find((spot) => spot.id === 'tobi-seat');
-      if (home) this.motor.teleport(this.seating.enter(home));
-      this.locomotion.reset();
-      this.camera.reset();
-      this.audio.play('grumble');
-      this.toastUntil = this.session.elapsedSeconds + 5;
-      this.store.update({
-        toast:
-          cabinOutcome === 'disruptive'
-            ? 'DREI BESCHWERDEN. Zurück auf Platz 42C! E zum Aufstehen.'
-            : '«Bitte zurück auf Ihren Platz!» E zum Aufstehen.',
-      });
-      return;
     }
     const outcome = this.police?.system.step(delta, position);
     const wanted = this.police?.system.wanted.level ?? 0;
@@ -747,7 +805,8 @@ export class GameHost {
     if (
       actions.interactPressed &&
       !usedInteraction &&
-      (!this.flight || this.flight.puzzle.ready) &&
+      (!this.flight || this.flight.exploringAirport) &&
+      (this.environment.railway?.allowsCompletion ?? true) &&
       (!this.tutorial || this.tutorial.complete) &&
       nearDestination &&
       !this.police?.system.wanted.level &&
@@ -782,13 +841,18 @@ export class GameHost {
     if (cameraMode) this.camera.setMode(cameraMode);
     if (this.level.scenery === 'hippie-house')
       this.bottles.cutaway(cameraMode === 'interior' ? position.y : Number.POSITIVE_INFINITY);
-    this.visual.root.position.copyFrom(
-      groundedVisualFeet(
-        this.scene,
-        this.motor.feet,
-        this.motor.grounded && !this.seating.active && !this.vehicles?.active,
-      ),
-    );
+    if (this.flight?.flying)
+      this.visual.root.position.copyFrom(
+        this.flight.pilotSeatAnchor.worldPosition.subtract(new Vector3(0, 0.72, 0)),
+      );
+    else
+      this.visual.root.position.copyFrom(
+        groundedVisualFeet(
+          this.scene,
+          this.motor.feet,
+          this.motor.grounded && !this.seating.active && !this.vehicles?.active,
+        ),
+      );
     const velocity = this.motor.relativeVelocity;
     const speed = this.vehicles?.active ? 0 : Math.hypot(velocity.x, velocity.z);
     if (!this.vehicles?.active && speed > 0.1 && this.store.getSnapshot().phase === 'playing') {
@@ -801,12 +865,22 @@ export class GameHost {
     }
     if (this.seating.active) this.visual.root.rotation.y = this.seating.active.yaw;
     if (this.vehicles?.active) this.visual.root.rotation.y = this.vehicles.active.yaw;
+    if (this.flight?.flying) this.visual.root.rotation.y = this.flight.controller.heading;
+    if (this.flight?.flying) {
+      this.visual.root.rotation.x = this.flight.controller.pitch;
+      this.visual.root.rotation.z = this.flight.controller.roll;
+    } else {
+      this.visual.root.rotation.x = 0;
+      this.visual.root.rotation.z = 0;
+    }
     this.visual.root.setEnabled(this.seating.active?.kind !== 'toilet');
-    const activeSeatAnchor = this.seating.active?.seatAnchorId
-      ? this.environment.seatAnchors?.find(
-          (anchor) => anchor.id === this.seating.active?.seatAnchorId,
-        )
-      : undefined;
+    const activeSeatAnchor = this.flight?.flying
+      ? this.flight.pilotSeatAnchor
+      : this.seating.active?.seatAnchorId
+        ? this.environment.seatAnchors?.find(
+            (anchor) => anchor.id === this.seating.active?.seatAnchorId,
+          )
+        : undefined;
     const tripped = this.visual.animate(
       ['paused', 'caught'].includes(this.store.getSnapshot().phase) ? 0 : delta,
       this.store.getSnapshot().phase === 'playing' ? speed : 0,
@@ -816,7 +890,7 @@ export class GameHost {
       this.locomotion.stamina,
       this.hands.holding || this.barDrinkSeconds > 0,
       Math.max(this.hands.drinkPose, Math.sin((Math.PI * this.barDrinkSeconds) / 1.2)),
-      this.seating.active?.kind === 'seat' || !!this.vehicles?.active,
+      this.seating.active?.kind === 'seat' || !!this.vehicles?.active || !!this.flight?.flying,
       this.vehicles?.active?.seatHeight ?? this.seating.active?.seatHeight ?? 0.42,
       activeSeatAnchor,
     );
@@ -857,13 +931,19 @@ export class GameHost {
         this.store.getSnapshot().phase === 'playing' ? Math.min(delta, 0.1) : 0,
         this.camera.camera.position,
       );
-      this.camera.setVehicle(this.vehicles?.active?.definition.kind ?? null);
+      this.camera.setVehicle(
+        this.flight?.flying ? 'aircraft' : (this.vehicles?.active?.definition.kind ?? null),
+      );
       this.camera.update(this.motor.position, Math.min(delta, 0.1));
       // Read-only position projection for local route diagnostics; no mutation/test commands.
       this.canvas.dataset.playerPosition = `${this.motor.position.x.toFixed(2)},${this.motor.position.y.toFixed(2)},${this.motor.position.z.toFixed(2)}`;
       const train = this.environment.transit?.primary?.snapshot;
       if (train)
         this.canvas.dataset.trainState = `${train.state}|${train.doorState}|${train.currentStation}|${train.nextStation}|${train.speed.toFixed(2)}`;
+      if (this.flight) {
+        const flight = this.flight.snapshot;
+        this.canvas.dataset.flightState = `${flight.phase}|${flight.doorIntegrity}|${flight.speed}|${flight.altitude}|${Math.round(flight.throttle * 100)}`;
+      }
       this.uiTime += delta;
       if (this.uiTime >= 0.1) {
         this.uiTime = 0;
@@ -877,9 +957,11 @@ export class GameHost {
           tripIntensity: this.trip.intensity,
           crowdCount: this.parade?.system.people.length ?? 0,
           interiorFloor: this.flight
-            ? this.motor.position.y > 4.4
-              ? 1
-              : 0
+            ? this.flight.flying || this.flight.exploringAirport
+              ? null
+              : this.motor.position.y > 4.4
+                ? 1
+                : 0
             : this.level.scenery === 'nana-plaza' && this.motor.position.z > 4
               ? Math.max(0, Math.min(2, Math.floor((this.motor.position.y - 0.5) / 4.8)))
               : this.level.scenery === 'hippie-house' &&
@@ -896,12 +978,13 @@ export class GameHost {
           flirts: this.flirts,
           blocked: this.npcs?.blocked ?? false,
           posture:
-            this.seating.active?.kind === 'seat'
+            this.flight?.flying || this.seating.active?.kind === 'seat'
               ? 'sitting'
               : this.seating.active
                 ? 'hidden'
                 : 'standing',
           interaction:
+            this.flight?.interactionPrompt(this.motor.position) ||
             this.vehicles?.prompt(this.motor.position) ||
             (this.seating.active
               ? 'E · AUFSTEHEN / VERSTECK VERLASSEN'
@@ -915,14 +998,9 @@ export class GameHost {
                     : (this.environment.interactionPrompt?.(this.motor.position) ?? '');
                 })()),
           lesson: this.tutorialView(),
-          cabin: this.flight
-            ? {
-                stage: this.flight.puzzle.stage,
-                strikes: this.flight.puzzle.strikes,
-                returns: this.flight.puzzle.returns,
-                ready: this.flight.puzzle.ready,
-              }
-            : null,
+          cabin: null,
+          flight: this.flight?.snapshot ?? null,
+          railway: this.environment.railway?.journey.snapshot ?? null,
           stamina: Math.round(this.locomotion.stamina),
           score: this.session.score,
           elapsedSeconds: Math.floor(this.session.elapsedSeconds),
@@ -932,7 +1010,8 @@ export class GameHost {
           canCheckIn:
             this.session.mission.active?.type === 'reach' &&
             !this.police?.system.wanted.level &&
-            (!this.flight || this.flight.puzzle.ready) &&
+            (!this.flight || this.flight.exploringAirport) &&
+            (this.environment.railway?.allowsCompletion ?? true) &&
             (!this.tutorial || this.tutorial.complete),
           ...(this.session.elapsedSeconds > this.toastUntil ? { toast: '', speech: '' } : {}),
         });

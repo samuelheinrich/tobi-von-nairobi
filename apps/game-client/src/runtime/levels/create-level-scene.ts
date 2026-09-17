@@ -17,6 +17,10 @@ import { createHippieHouseScene } from './hippie-house-scene.js';
 import { createNanaPlazaScene } from './nana-plaza-scene.js';
 import { createCellScene } from './cell-scene.js';
 import type { SeatAnchor } from '../character/seating/seat-anchor.js';
+import type { AircraftEnvironment } from '../aircraft/types.js';
+import type { RailwayEnvironment } from '../trains/railway-environment.js';
+import type { SoundCue } from '../audio/sound-cues.js';
+import { updateGeometryAudit } from '../rendering/geometry-validation.js';
 
 export interface LevelScene extends BaliScene {
   readonly vehicles?: readonly VehicleDefinition[];
@@ -25,14 +29,17 @@ export interface LevelScene extends BaliScene {
   worldLabel?(position: Position3): string;
   readonly restSpots?: readonly RestSpot[];
   readonly seatAnchors?: readonly SeatAnchor[];
-  readonly audioZones?: readonly AmbientZone[];
+  readonly audioZones?: readonly AmbientZone[] | undefined;
   readonly transit?: TrainSystem;
+  readonly aircraft?: AircraftEnvironment;
+  readonly railway?: RailwayEnvironment;
   interact?(position: Position3): SceneInteractionResult | null;
   cycleInteraction?(position: Position3): boolean;
   interactionPrompt?(position: Position3): string;
   update?(delta: number): void;
   focus?(position: Position3): void;
   debugState?(): object;
+  takeSound?(): SoundCue | null;
   readonly debugTeleports?: readonly { label: string; position: Position3 }[];
 }
 function buildLevelScene(scene: Scene, world: HavokWorld, level: LevelDefinition): LevelScene {
@@ -63,5 +70,6 @@ export function createLevelScene(
     environment.colliders.push(c.mesh);
     present.add(c.mesh);
   }
+  updateGeometryAudit(scene);
   return environment;
 }

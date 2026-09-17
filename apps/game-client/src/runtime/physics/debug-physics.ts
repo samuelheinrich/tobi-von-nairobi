@@ -10,6 +10,8 @@ import type { ColliderHandle } from './collider-factory.js';
 import type { HavokWorld, HavokCharacterMotor } from './havok-world.js';
 import { groundBelow } from './ground-detection.js';
 import { movement } from '@tobi/game-data';
+import type { NpcOccupancyDebug } from '../npc/occupancy.js';
+import { updateGeometryAudit } from '../rendering/geometry-validation.js';
 
 /** Lazy developer-only view of actual Havok shapes, not inferred render bounding boxes. */
 export class PhysicsDebug {
@@ -23,6 +25,8 @@ export class PhysicsDebug {
   private enabled = false;
   private hidden = new Set<string>();
   private readonly contacts: Mesh[] = [];
+  private readonly npcAreas = new Map<string, Mesh>();
+  private readonly depthConflicts: Mesh[] = [];
   constructor(
     private readonly scene: Scene,
     private readonly world: HavokWorld,
@@ -73,6 +77,8 @@ export class PhysicsDebug {
             VEHICLE: '#eb52ea',
             PROJECTILE: '#ff6050',
             TRIGGER: '#ffee44',
+            OVERLAP: '#ff3030',
+            ZFIGHT: '#ff00aa',
           } as Record<string, string>
         )[layer] ?? '#bbbbff',
       );
@@ -95,7 +101,12 @@ export class PhysicsDebug {
       this.viewer?.dispose();
       this.viewer = null;
       this.shown.clear();
-    } else this.viewer = new PhysicsViewer(this.scene);
+      for (const marker of this.npcAreas.values()) marker.setEnabled(false);
+      for (const marker of this.depthConflicts) marker.setEnabled(false);
+    } else {
+      this.viewer = new PhysicsViewer(this.scene);
+      this.refreshDepthConflicts();
+    }
     this.player.setEnabled(this.enabled && !this.hidden.has('PLAYER'));
     this.ray.setEnabled(this.enabled);
     this.point.setEnabled(this.enabled);
@@ -131,6 +142,53 @@ export class PhysicsDebug {
     const hit = groundBelow(this.scene, feet);
     this.point.setEnabled(!!hit);
     if (hit) this.point.position.copyFrom(hit.hitPointWorld);
+    this.updateNpcAreas();
+  }
+
+  private updateNpcAreas(): void {
+    const entries = (this.scene.metadata?.npcOccupancy ?? []) as NpcOccupancyDebug[];
+    const live = new Set(entries.map((entry) => entry.id));
+    for (const [id, marker] of this.npcAreas)
+      if (!live.has(id)) {
+        marker.dispose();
+        this.npcAreas.delete(id);
+      }
+    for (const entry of entries) {
+      let marker = this.npcAreas.get(entry.id);
+      if (!marker) {
+        marker = MeshBuilder.CreateCylinder(
+          `debug-npc-area-${entry.id}`,
+          { diameter: 1, height: 0.05, tessellation: 16 },
+          this.scene,
+        );
+        marker.isPickable = false;
+        this.npcAreas.set(entry.id, marker);
+      }
+      marker.position.set(entry.position[0], entry.position[1] + 0.03, entry.position[2]);
+      marker.scaling.set(entry.radius * 2, 1, entry.radius * 2);
+      marker.material = this.surface(entry.overlapping ? 'OVERLAP' : 'NPC');
+      marker.setEnabled(this.enabled && !this.hidden.has('NPC'));
+    }
+  }
+
+  private refreshDepthConflicts(): void {
+    for (const marker of this.depthConflicts) marker.dispose();
+    this.depthConflicts.length = 0;
+    for (const conflict of updateGeometryAudit(this.scene).slice(0, 40)) {
+      const minX = Math.max(conflict.first.bounds.min[0], conflict.second.bounds.min[0]);
+      const maxX = Math.min(conflict.first.bounds.max[0], conflict.second.bounds.max[0]);
+      const minZ = Math.max(conflict.first.bounds.min[2], conflict.second.bounds.min[2]);
+      const maxZ = Math.min(conflict.first.bounds.max[2], conflict.second.bounds.max[2]);
+      const marker = MeshBuilder.CreateBox(
+        `debug-zfight-${conflict.first.uniqueId}-${conflict.second.uniqueId}`,
+        { width: maxX - minX, height: 0.04, depth: maxZ - minZ },
+        this.scene,
+      );
+      marker.position.set((minX + maxX) / 2, conflict.first.topY + 0.025, (minZ + maxZ) / 2);
+      marker.material = this.surface('ZFIGHT');
+      marker.isPickable = false;
+      this.depthConflicts.push(marker);
+    }
   }
   inspect() {
     return this.world.colliders
@@ -143,6 +201,8 @@ export class PhysicsDebug {
     this.viewer?.dispose();
     this.motor.debugContacts(false);
     for (const contact of this.contacts) contact.dispose();
+    for (const marker of this.npcAreas.values()) marker.dispose();
+    for (const marker of this.depthConflicts) marker.dispose();
     this.player.dispose();
     this.ray.dispose();
     this.point.dispose();

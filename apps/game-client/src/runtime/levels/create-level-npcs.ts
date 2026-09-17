@@ -1,9 +1,5 @@
 import { NpcGroup } from './npc-group.js';
-import {
-  arlesheimNeighbours,
-  baliResidents,
-  baliTerrainHeight,
-} from '@tobi/game-data';
+import { arlesheimNeighbours, baliResidents, baliTerrainHeight } from '@tobi/game-data';
 import { LocalBystanders } from './local-bystanders.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
@@ -16,6 +12,7 @@ import { NanaVenue } from './nana-venue.js';
 import { CellGuard } from './cell-guard.js';
 import { StationPassengers } from './zurich/passengers.js';
 import { GlanzmannNpc } from './glanzmann-npc.js';
+import { PhuketPopulation } from './phuket/population.js';
 
 function glanzmannFor(
   scene: Scene,
@@ -27,12 +24,12 @@ function glanzmannFor(
     level.scenery === 'bali-adventure'
       ? [42, baliTerrainHeight(42, 45), 45]
       : level.scenery === 'street-parade'
-          ? [-51, 0.1, 64]
-          : level.scenery === 'hippie-house'
-            ? [12, 0, -24]
-            : level.scenery === 'nana-plaza'
-              ? [4.5, 0, -18]
-              : null;
+        ? [-51, 0.1, 64]
+        : level.scenery === 'hippie-house'
+          ? [12, 0, -24]
+          : level.scenery === 'nana-plaza'
+            ? [4.5, 0, -18]
+            : null;
   return placement
     ? new GlanzmannNpc(scene, environment.shadows, bubbles, placement, Math.PI)
     : null;
@@ -66,12 +63,10 @@ export function createLevelNpcs(
       baliResidents.map((p) => p.role),
     );
   if (level.scenery === 'railway')
-    residents = new RailwayPassengers(
-      scene,
-      environment.shadows,
-      bubbles,
-      environment.seatAnchors ?? [],
-    );
+    residents = new NpcGroup([
+      new RailwayPassengers(scene, environment.shadows, bubbles, environment.seatAnchors ?? []),
+      new PhuketPopulation(scene, environment.shadows, bubbles),
+    ]);
   if (level.scenery === 'street-parade' && environment.transit)
     residents = new StationPassengers(scene, environment.shadows, bubbles, environment.transit);
   if (level.scenery === 'hippie-house')

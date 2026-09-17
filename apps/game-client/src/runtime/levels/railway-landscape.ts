@@ -40,10 +40,13 @@ export function createRailwayLandscape(scene: Scene, shadows: ShadowGenerator) {
   });
   return {
     chunks,
-    update(delta: number) {
+    update(delta: number, speed = 14) {
       for (const chunk of chunks)
         chunk.position.z =
-          ((((chunk.position.z + span / 2 - delta * 14) % span) + span) % span) - span / 2;
+          ((((chunk.position.z + span / 2 - delta * speed) % span) + span) % span) - span / 2;
+    },
+    setEnabled(active: boolean) {
+      for (const chunk of chunks) chunk.setEnabled(active);
     },
   };
 }

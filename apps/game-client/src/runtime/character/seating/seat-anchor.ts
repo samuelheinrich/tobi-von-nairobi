@@ -4,14 +4,7 @@ import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 
 export type SeatType =
-  | 'chair'
-  | 'bench'
-  | 'sofa'
-  | 'barstool'
-  | 'train'
-  | 'airplane'
-  | 'vehicle'
-  | 'floor';
+  'chair' | 'bench' | 'sofa' | 'barstool' | 'train' | 'airplane' | 'vehicle' | 'floor';
 
 export interface SeatSurfaceOptions {
   id: string;
@@ -79,7 +72,7 @@ export class SeatAnchor {
   readonly node: TransformNode;
   readonly footTargetLeft: TransformNode | undefined;
   readonly footTargetRight: TransformNode | undefined;
-  occupied = false;
+  private owner: string | null = null;
 
   constructor(options: SeatAnchorOptions) {
     this.id = options.id;
@@ -111,6 +104,31 @@ export class SeatAnchor {
   get worldPosition(): Vector3 {
     this.node.computeWorldMatrix(true);
     return this.node.getAbsolutePosition().clone();
+  }
+
+  /** Stable ownership prevents two characters from being assigned to the same authored place. */
+  get occupiedBy(): string | null {
+    return this.owner;
+  }
+
+  get occupied(): boolean {
+    return this.owner !== null;
+  }
+
+  /** Compatibility for old level builders while they migrate to named ownership. */
+  set occupied(value: boolean) {
+    if (!value) this.owner = null;
+    else if (!this.owner) this.owner = '__legacy__';
+  }
+
+  claim(characterId: string): boolean {
+    if (this.owner && this.owner !== characterId && this.owner !== '__legacy__') return false;
+    this.owner = characterId;
+    return true;
+  }
+
+  release(characterId: string): void {
+    if (this.owner === characterId || this.owner === '__legacy__') this.owner = null;
   }
 
   /**

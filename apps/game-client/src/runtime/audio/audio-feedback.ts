@@ -377,6 +377,26 @@ export class AudioFeedback {
             type: 'triangle',
           });
         return;
+      case 'brake':
+        // Long metal-on-rail scrape with a descending wheel rumble.
+        this.noise({
+          duration: 2.8,
+          volume: 0.075,
+          type: 'bandpass',
+          from: 3200,
+          to: 520,
+          q: 1.1,
+        });
+        this.tone({ frequency: 118, duration: 3, end: 42, volume: 0.055, type: 'sawtooth' });
+        for (let i = 0; i < 5; i++)
+          this.tone({
+            frequency: 780 - i * 95,
+            duration: 0.18,
+            delay: i * 0.42,
+            end: 430 - i * 45,
+            volume: 0.022,
+          });
+        return;
       case 'powerup':
         this.tone({ frequency: 330, duration: 0.15, end: 660, volume: 0.06 });
         this.tone({ frequency: 660, duration: 0.3, delay: 0.15, end: 1320, volume: 0.05 });

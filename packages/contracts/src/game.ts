@@ -42,6 +42,34 @@ export interface GameView {
   posture: 'standing' | 'sitting' | 'hidden';
   interaction: string;
   cabin: { stage: number; strikes: number; returns: number; ready: boolean } | null;
+  flight: {
+    phase:
+      | 'find_trolley'
+      | 'breach_door'
+      | 'enter_cockpit'
+      | 'flying'
+      | 'landing'
+      | 'landed'
+      | 'airport';
+    trolleyGrabbed: boolean;
+    doorIntegrity: number;
+    speed: number;
+    altitude: number;
+    pitch: number;
+    roll: number;
+    heading: number;
+    throttle: number;
+    gearDown: boolean;
+    landingProgress: number;
+    evacuation: { active: boolean; total: number; arrived: number };
+  } | null;
+  railway: {
+    state: 'RUNNING' | 'BRAKING' | 'STOPPED' | 'DOORS_OPEN';
+    speed: number;
+    brakeProgress: number;
+    distance: number;
+    vibration: number;
+  } | null;
   score: number;
   elapsedSeconds: number;
   objective: string;

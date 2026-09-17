@@ -22,6 +22,7 @@ export const soundCues = [
   'reject',
   'grumble',
   'block',
+  'brake',
   'cheer',
 ] as const;
 

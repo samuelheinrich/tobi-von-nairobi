@@ -29,20 +29,34 @@ export function Hud({ view }: { view: GameView }) {
         <h2>{view.objective}</h2>
         <p>
           {level.scenery === 'aircraft'
-            ? 'E: sitzen / verstecken / aufstehen. Crew beobachten. Drei Pöbeleien schicken dich zurück. Kein Springen in der Kabine.'
+            ? view.flight?.phase === 'flying'
+              ? 'W/S: Nase · A/D: Rollen · Shift: mehr Schub · Space: weniger Schub · L: landen.'
+              : view.flight?.phase === 'landing'
+                ? 'Der kurze Arcade-Landeanflug läuft. Tobi sollte sich vorsichtshalber festhalten.'
+                : view.flight?.phase === 'landed'
+                  ? 'Saubere Landung. Verlasse mit E den Pilotensitz und geh zum Terminal.'
+                  : view.flight?.phase === 'airport'
+                    ? 'Folge der Evakuierung über das Rollfeld und erreiche die Partyhalle im Terminal.'
+                    : 'Finde den Servicewagen, greife ihn mit E und ramme damit die Cockpittür.'
             : level.scenery === 'drunk-tank'
               ? 'R: rumpöbeln, bis der Wärter vorbeischaut. E auf der Pritsche beendet die Nacht.'
-              : view.collected < view.total
-                ? level.scenery === 'hippie-house'
-                  ? '18 Flaschen in der WG, 18 im Quartier. Treppen im Norden, Haustür im Süden. E: Scooter / Sitz.'
-                  : level.scenery === 'railway'
-                    ? 'Durch die offenen Wagen nach vorne. Der Schaffner steht gerne im Weg.'
+              : level.scenery === 'railway'
+                ? view.railway?.state === 'BRAKING'
+                  ? 'NOTBREMSUNG · Passagiere halten sich fest, Landschaft und Schienengeräusch werden langsamer.'
+                  : view.railway?.state === 'STOPPED'
+                    ? 'Der Zug steht. Öffne die markierte Seitentür mit E.'
+                    : view.railway?.state === 'DOORS_OPEN'
+                      ? 'Der Ausstieg ist offen. Verlasse den Zug auf der linken Seite.'
+                      : 'Durchquere Sitz-, Gepäck-, WC- und Barwagen bis zur roten Notbremse.'
+                : view.collected < view.total
+                  ? level.scenery === 'hippie-house'
+                    ? '18 Flaschen in der WG, 18 im Quartier. Treppen im Norden, Haustür im Süden. E: Scooter / Sitz.'
                     : level.scenery === 'nana-plaza'
                       ? 'BTS → Soi 4 → Plaza. Treppen hinten im Hof. E: Bar / Sitz, F: flirten, R: pöbeln. Danach zurück zum BTS.'
                       : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
-                : view.pursuit && !view.canCheckIn
-                  ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
-                  : `${destinationName(level)} wartet am Ende des Wegs.`}
+                  : view.pursuit && !view.canCheckIn
+                    ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
+                    : `${destinationName(level)} wartet am Ende des Wegs.`}
         </p>
         {view.total > 0 && (
           <div className="bottle-progress">
@@ -74,10 +88,42 @@ export function Hud({ view }: { view: GameView }) {
         <small>«Ich laufe noch absolut gerade.»</small>
       </div>
       <div className="hands-card">
-        {view.cabin && (
-          <span data-testid="cabin-status">
-            KABINEN-RÄTSEL {Math.min(3, view.cabin.stage + 1)}/3 · BESCHWERDEN {view.cabin.strikes}
-            /3 · ZURÜCKGESCHICKT {view.cabin.returns}
+        {view.flight &&
+          ['find_trolley', 'breach_door', 'enter_cockpit'].includes(view.flight.phase) && (
+            <span data-testid="cabin-status">
+              COCKPITTÜR · {view.flight.doorIntegrity}% ·{' '}
+              {view.flight.trolleyGrabbed ? 'SERVICEWAGEN IN DER HAND' : 'SERVICEWAGEN SUCHEN'}
+            </span>
+          )}
+        {view.flight?.phase === 'flying' && (
+          <span data-testid="flight-status">
+            AIRSPEED {view.flight.speed} · ALT {view.flight.altitude} m · SCHUB{' '}
+            {Math.round(view.flight.throttle * 100)}% · PITCH{' '}
+            {Math.round((view.flight.pitch * 180) / Math.PI)}° · ROLL{' '}
+            {Math.round((view.flight.roll * 180) / Math.PI)}°
+          </span>
+        )}
+        {view.flight?.phase === 'landing' && (
+          <span data-testid="landing-status">
+            LANDEANFLUG · {Math.round(view.flight.landingProgress * 100)}% · AIRSPEED{' '}
+            {view.flight.speed} · ALT {view.flight.altitude} m
+          </span>
+        )}
+        {view.flight?.phase === 'landed' && (
+          <strong data-testid="landing-status">TOUCHDOWN · GELANDET</strong>
+        )}
+        {view.flight?.phase === 'airport' && (
+          <span data-testid="evacuation-status">
+            EVAKUIERUNG · {view.flight.evacuation.arrived}/{view.flight.evacuation.total} IM
+            TERMINAL
+          </span>
+        )}
+        {view.railway && (
+          <span data-testid="railway-status">
+            ZUG · {view.railway.state} · {Math.round(view.railway.speed * 3.6)} KM/H
+            {view.railway.state === 'BRAKING'
+              ? ` · BREMSE ${Math.round(view.railway.brakeProgress * 100)}%`
+              : ''}
           </span>
         )}
         {view.posture !== 'standing' && (
@@ -90,7 +136,7 @@ export function Hud({ view }: { view: GameView }) {
           <strong data-testid="interior-floor">
             {level.scenery === 'nana-plaza'
               ? `NANA PLAZA · FLOOR ${view.interiorFloor + 1} · TREPPEN HINTEN`
-              : view.cabin
+              : view.flight
                 ? view.interiorFloor === 0
                   ? 'A380 · HAUPTDECK · ECONOMY'
                   : 'A380 · OBERDECK · BUSINESS'
@@ -167,15 +213,15 @@ export function Hud({ view }: { view: GameView }) {
         <div className="interact-prompt">
           {view.lesson ? (
             <>ERST DIE ÜBUNGEN ABSCHLIESSEN.</>
-          ) : view.cabin && !view.canCheckIn ? (
-            <>ERST SITZ UND WC, DANN ZUR LOUNGE.</>
+          ) : view.flight && view.flight.phase !== 'airport' ? (
+            <>COCKPIT ÜBERNEHMEN UND FLUGZEUG STEUERN.</>
           ) : view.pursuit && view.collected === view.total && !view.canCheckIn ? (
             <>ERST DIE POLIZEI ABHÄNGEN.</>
           ) : view.collected === view.total ? (
             <>
               <kbd>E</kbd>{' '}
               {level.scenery === 'aircraft'
-                ? 'LOUNGE ERREICHT'
+                ? 'PARTY-BAR BETRETEN'
                 : level.scenery === 'hippie-house'
                   ? 'WG VERLASSEN'
                   : level.scenery === 'railway'
@@ -197,7 +243,9 @@ export function Hud({ view }: { view: GameView }) {
         <span>◉</span> {destinationName(level).toUpperCase()}{' '}
         <small>
           {level.scenery === 'railway'
-            ? 'BITTE NICHT AUSSTEIGEN.'
+            ? view.railway?.state === 'DOORS_OPEN'
+              ? 'AUSSTEIGEN ERLAUBT.'
+              : 'NOTBREMSE GANZ VORNE.'
             : level.scenery === 'drunk-tank'
               ? 'KARL IST NICHT ERREICHBAR.'
               : 'KARL HAT EINEN PLAN.'}

@@ -27,6 +27,7 @@ export const idleInput: InputActions = {
   specialPressed: false,
   throwPressed: false,
   flirtPressed: false,
+  landPressed: false,
   celebratePressed: false,
 };
 export async function playground(canvas: HTMLCanvasElement) {

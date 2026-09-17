@@ -1,6 +1,29 @@
 # Asset provenance
 
-The technical prototype uses original procedural geometry from `apps/game-client/src/runtime/levels/`, `character/` and `items/`. It contains no downloaded character models, environment meshes or audio samples. Every sound is synthesized at runtime by `AudioFeedback` from oscillators and filtered white noise.
+The technical prototype combines original procedural geometry from `apps/game-client/src/runtime/levels/`, `character/` and `items/` with the attributed character assets below. Most sounds are synthesized at runtime by `AudioFeedback`; the exceptions are listed in the audio section.
+
+## Character models added on 17 September 2026
+
+The source GLBs retain their Sketchfab metadata. Production copies were reduced locally and their
+animations are supplied separately through the shared humanoid pipeline. CC-BY attribution remains
+required. The Indian officer is CC-BY-NC and may only be used in this noncommercial project build.
+
+| Game role          | Author                                                     | Licence                                                        | Source                                                                                                                           |
+| ------------------ | ---------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Hippie worker      | [Aayush.Bhattarai](https://sketchfab.com/Aayush.Bhattarai) | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Worker Man Rigged](https://sketchfab.com/3d-models/worker-man-rigged-ca5d218c51e04c3ba96929dbe8f9b68e)                          |
+| Police officer     | [LegendKanwar](https://sketchfab.com/LegendKanwar)         | [CC-BY-NC-4.0](http://creativecommons.org/licenses/by-nc/4.0/) | [Indian Police Cop](https://sketchfab.com/3d-models/indian-police-cop-3d-model-rigged-979ca6cea5df419697d16c81bf48aecc)          |
+| Casual man         | [ijiklvn](https://sketchfab.com/kelvin-carvalho)           | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Casual Male](https://sketchfab.com/3d-models/casual-male-char-rigged-9034a1acc95e494592441a057d319953)                          |
+| Xander             | [xander.dice](https://sketchfab.com/xander.dice)           | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Xander](https://sketchfab.com/3d-models/xander-model-character-man-rigged-realisitc-ae935d7b05b943b3809c72a781cb074c)           |
+| Party woman        | [gog619](https://sketchfab.com/gog619)                     | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Female Rigged Character](https://sketchfab.com/3d-models/female-rigged-character-free-861a81c388884c66bf6839bd89cd4d44)         |
+| Black-suit woman   | [edu](https://sketchfab.com/edovvsky)                      | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Black Suit](https://sketchfab.com/3d-models/sexy-girl-in-black-suit-6ac6ce7599dc4faeb170e78147cae98e)                           |
+| Yinn               | [tonyflanagan](https://sketchfab.com/tonyflanagan)         | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Yinn](https://sketchfab.com/3d-models/yinn-young-asian-female-rigged-d549647cfae245679fe761babe4e3427)                          |
+| Ruffle-dress woman | [florah](https://sketchfab.com/florahhs)                   | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Ruffle Dress](https://sketchfab.com/3d-models/rigged-female-fashion-character-in-ruffle-dress-8290d9dbb229407592e4a0209d4a3e12) |
+| Anita gabber       | [ustoopia](https://sketchfab.com/ustoopia)                 | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Anita](https://sketchfab.com/3d-models/anita-female-gabber-from-the-90s-8f3f1bf05b254418841b556338a53614)                       |
+| Dutch male gabber  | [ustoopia](https://sketchfab.com/ustoopia)                 | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Dutch Male Gabber](https://sketchfab.com/3d-models/dutch-male-gabber-from-the-90s-6fe50837398e4cda85d60a364b761fd8)             |
+| Female gabber      | [ustoopia](https://sketchfab.com/ustoopia)                 | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Female Dutch Gabber](https://sketchfab.com/3d-models/female-dutch-gabber-from-the-90s-4964616949bd46c298c1ff4bed793c0b)         |
+| Sjonnie            | [ustoopia](https://sketchfab.com/ustoopia)                 | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Sjonnie](https://sketchfab.com/3d-models/sjonnie-dutch-male-gabber-from-the-90s-7348a6ad1ca14b58b07cf9ad6369880b)               |
+| Sci-fi party man   | [LokitoBlu](https://sketchfab.com/martinezequielgorno)     | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [Character Male (Sci-fi)](https://sketchfab.com/3d-models/character-male-sci-fi-0010a35d806a470b8b01b3496b7dc631)                |
+| Cyberpunk girl     | [Toni García Vilche](https://sketchfab.com/zul_gv)         | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)       | [CyberPunk Girl](https://sketchfab.com/3d-models/cyberpunk-girl-3844ffc78a214f479079b82605336f12)                                |
 
 ## Audio
 

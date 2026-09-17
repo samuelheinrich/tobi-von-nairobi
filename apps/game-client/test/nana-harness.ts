@@ -58,6 +58,7 @@ export async function exerciseNanaRoute() {
         specialPressed: false,
         throwPressed: false,
         flirtPressed: false,
+        landPressed: false,
         celebratePressed: false,
       },
       0,

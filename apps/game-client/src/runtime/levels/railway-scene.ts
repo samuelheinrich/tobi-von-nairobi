@@ -2,13 +2,15 @@ import { createRailwayLandscape } from './railway-landscape.js';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
-import type { LevelDefinition } from '@tobi/contracts';
+import type { LevelDefinition, Position3 } from '@tobi/contracts';
 import { railwayLayout } from '@tobi/game-data';
 import type { HavokWorld } from '../physics/havok-world.js';
 import { box, solidBox, material } from './materials.js';
 import { destinationRing, sceneKit, sceneSign } from './scene-kit.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
 import { SeatAnchor, SeatSurface } from '../character/seating/seat-anchor.js';
+import { TrainJourney } from '../trains/train-journey.js';
+import { createPhuketWorld } from './phuket/world.js';
 
 /** Five open-top carriages, one of them a bar, with continuous physical gangways.
  * Moving scenery never moves colliders: only the sleepers slide to fake the ride.
@@ -27,7 +29,12 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
   brass.emissiveColor = Color3.FromHexString('#4a3714');
   const bottleGlass = material(scene, 'bar-bottles', '#3f8f74');
   const layout = railwayLayout;
+  const journey = new TrainJourney(layout.journey);
+  const phuket = createPhuketWorld(scene, world, kit);
   const seatAnchors: SeatAnchor[] = [];
+  const cabinMotion = new TransformNode('railway-cabin-vibration', scene);
+  let exitDoor: ReturnType<typeof box> | null = null;
+  let exitDoorCollider: ReturnType<typeof world.addCollider> = null;
   const front = layout.carriageCentres[layout.carriageCentres.length - 1]!;
   box(scene, 'thai-landscape', [140, 0.4, 220], [0, -1.8, 0], grass);
   kit.solid(box(scene, 'island-ground', [8, 0.6, 100], [0, -0.3, 0], floor));
@@ -40,15 +47,61 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
     carriageRoot.position.z = z;
     const bar = index === layout.barCarriageIndex;
     for (const x of [-4, 4]) {
-      kit.solid(box(scene, 'carriage-side', [0.3, 1.0, 17], [x, 0.5, z], green));
-      const boundary = kit.solid(
-        box(scene, 'carriage-safety', [0.25, 5, 19], [x, 2.5, z], green),
-        false,
-      );
-      boundary.isVisible = false;
+      const isExit = index === layout.carriageCentres.length - 1 && x < 0;
+      const sections = isExit
+        ? [
+            { z: z - 5.1, length: 6.8 },
+            { z: z + 5.1, length: 6.8 },
+          ]
+        : [{ z, length: 17 }];
+      for (const section of sections) {
+        kit.solid(
+          box(scene, 'carriage-side', [0.3, 1.0, section.length], [x, 0.5, section.z], green),
+        );
+        const boundary = kit.solid(
+          box(scene, 'carriage-safety', [0.25, 5, section.length], [x, 2.5, section.z], green),
+          false,
+        );
+        boundary.isVisible = false;
+      }
+      if (isExit) {
+        exitDoor = box(scene, 'train-exit-door', [0.35, 3.2, 3.2], [x, 1.6, z], cream);
+        exitDoorCollider = world.addCollider(exitDoor, {
+          collision: 'box',
+          layer: 'WORLD_STATIC',
+          walkable: false,
+        });
+        kit.colliders.push(exitDoor);
+        sceneSign(scene, 'AUSSTIEG', x - 0.2, 2.8, z, 2.5).rotation.y = Math.PI / 2;
+      }
       for (const offset of layout.seatOffsets)
-        box(scene, 'window-post', [0.18, 1.6, 0.16], [x, 1.8, z + offset], cream);
+        if (!isExit || Math.abs(offset) > 2)
+          box(scene, 'window-post', [0.18, 1.6, 0.16], [x, 1.8, z + offset], cream);
     }
+    // Split roof keeps the cabin readable from the gameplay camera and solid from outside.
+    for (const x of [-2.8, 2.8])
+      kit.solid(box(scene, 'carriage-roof', [2.5, 0.22, 17], [x, 3.45, z], cream), false);
+    for (const lightZ of [-5, 0, 5]) {
+      const light = box(
+        scene,
+        'carriage-vibration-light',
+        [1.4, 0.12, 0.35],
+        [0, 3.18, z + lightZ],
+        brass,
+      );
+      light.parent = cabinMotion;
+    }
+    for (const wheelZ of [-5.7, 5.7])
+      for (const x of [-3.2, 3.2]) {
+        const wheel = MeshBuilder.CreateCylinder(
+          'train-wheel',
+          { diameter: 1.15, height: 0.45, tessellation: 12 },
+          scene,
+        );
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(x, -0.7, z + wheelZ);
+        wheel.material = dark;
+      }
     if (bar) {
       // Bar carriage: counter and back-bar on the right, standing space on the left.
       kit.solid(box(scene, 'bar-counter', [1.4, 1.1, 12], [2.6, 0.55, z], teak), false);
@@ -133,7 +186,12 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
     );
     for (const x of [-2.8, 2.8])
       kit.solid(box(scene, 'carriage-end', [2.4, 1.25, 0.35], [x, 0.625, z + 8.6], cream));
-    if (z < front) box(scene, 'gangway', [2.9, 0.06, 2.4], [0, 0.02, z + 9.5], dark);
+    if (z < front) {
+      box(scene, 'gangway', [2.9, 0.06, 2.4], [0, 0.02, z + 9.5], dark);
+      // Open inter-car doors remain solid at the sides and frame the traversable passage.
+      for (const x of [-2.05, 2.05])
+        kit.solid(box(scene, 'inter-car-door-open', [1.2, 2.7, 0.18], [x, 1.35, z + 8.75], cream));
+    }
   }
   for (const z of [-layout.endWallZ, layout.endWallZ])
     kit.solid(box(scene, 'train-end-wall', [8, 4, 0.3], [0, 2, z], green));
@@ -141,16 +199,126 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
   const luggage = material(scene, 'luggage', '#956ba8');
   for (const z of [-33, -14, 24, 42])
     kit.solid(box(scene, 'luggage-stack', [1.1, 0.8, 1.2], [2.5, 0.4, z], luggage));
+  // Compact toilet and luggage vestibule in the second carriage.
+  for (const z of [-26.5, -21.5])
+    kit.solid(box(scene, 'train-toilet-wall', [2.2, 2.8, 0.18], [2.8, 1.4, z], cream));
+  kit.solid(box(scene, 'train-toilet-side', [0.18, 2.8, 5], [1.7, 1.4, -24], cream));
+  sceneSign(scene, 'WC', 1.6, 2.5, -21.7, 1.4).rotation.y = -Math.PI / 2;
+
+  // Exterior locomotive: visible once Tobi steps onto the platform, but cheap enough to keep loaded.
+  const locomotiveZ = layout.endWallZ + 13;
+  kit.solid(box(scene, 'train-locomotive-body', [7.5, 3.3, 18], [0, 0.65, locomotiveZ], green));
+  kit.solid(box(scene, 'train-locomotive-cab', [7.2, 3.8, 7], [0, 2.2, locomotiveZ - 4], cream));
+  const nose = MeshBuilder.CreateCylinder(
+    'train-locomotive-boiler',
+    { diameter: 4.4, height: 10, tessellation: 16 },
+    scene,
+  );
+  nose.rotation.x = Math.PI / 2;
+  nose.position.set(0, 1.4, locomotiveZ + 4);
+  nose.material = green;
+  for (const x of [-2.8, 2.8])
+    for (const z of [locomotiveZ - 5, locomotiveZ, locomotiveZ + 5]) {
+      const wheel = MeshBuilder.CreateCylinder(
+        'locomotive-wheel',
+        { diameter: 1.8, height: 0.55, tessellation: 14 },
+        scene,
+      );
+      wheel.rotation.z = Math.PI / 2;
+      wheel.position.set(x, -0.5, z);
+      wheel.material = dark;
+    }
+  const stack = MeshBuilder.CreateCylinder(
+    'locomotive-stack',
+    { diameterBottom: 1.1, diameterTop: 1.8, height: 3.4, tessellation: 12 },
+    scene,
+  );
+  stack.position.set(0, 4.2, locomotiveZ + 4);
+  stack.material = dark;
+
+  // Emergency brake is the new journey objective.
+  const brakeBase = box(
+    scene,
+    'emergency-brake-base',
+    [1.1, 1.8, 0.4],
+    [0, 1.2, layout.journey.brakePosition.z],
+    brass,
+  );
+  const brakeLever = box(
+    scene,
+    'emergency-brake-lever',
+    [0.22, 1.1, 0.22],
+    [0, 1.65, layout.journey.brakePosition.z - 0.35],
+    dark,
+  );
+  brakeLever.parent = brakeBase;
+  sceneSign(scene, 'NOTBREMSE · E', 0, 3, layout.journey.brakePosition.z - 0.25, 4.2, {
+    plate: '#a92525',
+  });
+
   const landscape = createRailwayLandscape(scene, kit.shadows);
+  const stationRoot = new TransformNode('railway-stop', scene);
+  const platform = kit.solid(
+    box(scene, 'railway-platform', [12, 0.65, 130], [-10, -0.25, 8], cream),
+  );
+  platform.parent = stationRoot;
+  const stationGround = kit.solid(
+    box(scene, 'railway-stop-ground', [180, 0.5, 180], [-65, -0.75, 12], grass),
+  );
+  stationGround.parent = stationRoot;
+  const shelter = kit.solid(
+    box(scene, 'railway-station-shelter', [22, 3.8, 14], [-24, 1.3, 38], cream),
+  );
+  shelter.parent = stationRoot;
+  const stopSign = sceneSign(scene, 'PHUKET · VORLÄUFIGER HALT', -15, 4.6, 38, 9, {
+    plate: '#275f50',
+  });
+  stopSign.parent = stationRoot;
+  stationRoot.setEnabled(false);
+  const destination = destinationRing(scene, level);
+  destination.setEnabled(false);
   scene.metadata = {
     ...scene.metadata,
     seatValidationWarnings: seatAnchors.flatMap((anchor) => anchor.validate()),
+    railwayJourney: journey.snapshot,
   };
   let offset = 0;
+  let doorOpen = 0;
+  let stationVisible = false;
+  let motionTime = 0;
+  const sounds: ('brake' | 'land')[] = [];
+  const near = (position: { x: number; y: number; z: number }, target: { x: number; z: number }) =>
+    Math.hypot(position.x - target.x, position.z - target.z) < 2.4;
   return {
     ...kit,
-    destination: destinationRing(scene, level),
+    destination,
     seatAnchors,
+    railway: {
+      journey,
+      get objective() {
+        if (journey.state === 'RUNNING') return 'Durchquere den Zug und finde die Notbremse';
+        if (journey.state === 'BRAKING') return 'Halte dich fest – der Zug bremst';
+        if (journey.state === 'STOPPED') return 'Öffne die Ausstiegstür mit E';
+        return 'Erkunde Phuket: Town, Night Market, Nightlife und Patong Beach';
+      },
+      allowsCompletion: false,
+    },
+    vehicles: phuket.vehicles,
+    get audioZones() {
+      return stationVisible ? phuket.audioZones : undefined;
+    },
+    worldLabel(position: Position3) {
+      return stationVisible ? phuket.worldLabel(position) : 'THAILAND NIGHT TRAIN';
+    },
+    cameraMode(position: Position3) {
+      return stationVisible && position.x < -16 ? ('follow' as const) : ('railway' as const);
+    },
+    safeGround(position: Position3) {
+      return !stationVisible || (position.y > -2 && phuket.safeGround(position));
+    },
+    focus(position: Position3) {
+      if (stationVisible) phuket.focus(position);
+    },
     // These are the deterministic empty benches skipped by RailwayPassengers.
     restSpots: [
       {
@@ -174,10 +342,100 @@ export function createRailwayScene(scene: Scene, world: HavokWorld, level: Level
         yaw: -Math.PI / 2,
       },
     ],
-    update(delta: number) {
-      landscape.update(delta);
-      offset = (offset + delta * 8) % 3;
-      for (const [i, sleeper] of sleepers.entries()) sleeper.position.z = i * 3 - 80 - offset;
+    interactionPrompt(position: Position3) {
+      if (
+        journey.state === 'RUNNING' &&
+        near(position, { x: layout.journey.brakePosition.x, z: layout.journey.brakePosition.z })
+      )
+        return 'E · NOTBREMSE ZIEHEN';
+      if (
+        journey.state === 'STOPPED' &&
+        near(position, {
+          x: layout.journey.exitDoorPosition.x,
+          z: layout.journey.exitDoorPosition.z,
+        })
+      )
+        return 'E · ZUGTÜR ÖFFNEN';
+      if (
+        journey.state === 'DOORS_OPEN' &&
+        near(position, {
+          x: layout.journey.exitDoorPosition.x,
+          z: layout.journey.exitDoorPosition.z,
+        })
+      )
+        return 'AUSSTIEG LINKS · PHUKET WARTET';
+      if (stationVisible) {
+        const prompt = phuket.interactionPrompt(position);
+        if (prompt) return prompt;
+      }
+      return '';
     },
+    interact(position: Position3) {
+      if (
+        journey.state === 'RUNNING' &&
+        near(position, { x: layout.journey.brakePosition.x, z: layout.journey.brakePosition.z }) &&
+        journey.pullEmergencyBrake()
+      ) {
+        sounds.push('brake');
+        return { text: 'NOTBREMSE! Der ganze Zug legt sich ins Zeug.', energy: 0, drink: false };
+      }
+      if (
+        journey.state === 'STOPPED' &&
+        near(position, {
+          x: layout.journey.exitDoorPosition.x,
+          z: layout.journey.exitDoorPosition.z,
+        }) &&
+        journey.openDoors()
+      ) {
+        if (exitDoorCollider) world.remove(exitDoorCollider);
+        return {
+          text: 'TÜR OFFEN · Willkommen am improvisierten Phuket-Halt.',
+          energy: 0,
+          drink: false,
+        };
+      }
+      return stationVisible ? phuket.interact(position) : null;
+    },
+    update(delta: number) {
+      journey.step(delta);
+      motionTime += delta;
+      landscape.update(delta, journey.speed);
+      offset = (offset + delta * journey.speed * 0.58) % 3;
+      for (const [i, sleeper] of sleepers.entries()) sleeper.position.z = i * 3 - 80 - offset;
+      brakeLever.rotation.x = -journey.brakeProgress * 1.05;
+      cabinMotion.position.x = Math.sin(motionTime * 21) * 0.025 * journey.vibration;
+      cabinMotion.position.y = Math.sin(motionTime * 31) * 0.018 * journey.vibration;
+      if (journey.state === 'STOPPED' && !stationVisible) {
+        stationVisible = true;
+        stationRoot.setEnabled(true);
+        landscape.setEnabled(false);
+        phuket.setEnabled(true);
+        scene.fogStart = 95;
+        scene.fogEnd = 235;
+        scene.clearColor.set(0.08, 0.1, 0.2, 1);
+        scene.fogColor = Color3.FromHexString('#20243b');
+        sounds.push('land');
+      }
+      phuket.update(delta);
+      if (journey.state === 'DOORS_OPEN' && exitDoor && doorOpen < 1) {
+        doorOpen = Math.min(1, doorOpen + delta * 1.8);
+        exitDoor.position.z = layout.journey.exitDoorPosition.z - doorOpen * 3.4;
+      }
+      scene.metadata.railwayJourney = journey.snapshot;
+    },
+    takeSound() {
+      return sounds.shift() ?? null;
+    },
+    debugState() {
+      return { railway: journey.snapshot, doorOpen, stationVisible };
+    },
+    debugTeleports: [
+      { label: 'Notbremse', position: { x: 0, y: 1.5, z: 43.5 } },
+      { label: 'Ausstieg', position: { x: -2, y: 1.5, z: 38 } },
+      { label: 'Phuket Town', position: { x: -72, y: 1.5, z: 0 } },
+      { label: 'Nightlife', position: { x: -126, y: 1.5, z: 21 } },
+      { label: 'Night Market', position: { x: -111, y: 1.5, z: -52 } },
+      { label: 'Patong Beach', position: { x: -185, y: 1.5, z: 0 } },
+    ],
   };
 }

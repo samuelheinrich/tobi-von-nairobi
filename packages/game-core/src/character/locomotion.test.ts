@@ -28,6 +28,7 @@ const idle: InputActions = {
   celebratePressed: false,
   throwPressed: false,
   flirtPressed: false,
+  landPressed: false,
 };
 
 describe('Locomotion', () => {

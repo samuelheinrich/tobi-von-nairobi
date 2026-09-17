@@ -36,7 +36,7 @@ Aus Mixamo kamen nur Tänze. `idle`, `walk` und alles Übrige liefert die gemein
 ## Bekleidete Alltagsfiguren und Glanzmann
 
 Joe, Josh und Woman sind die bekleidete Standardbesetzung für Bahnhof, Zug und Flugzeug. Ihre
-reduzierten Körperdateien liegen unter `civilians/`; die acht Bewegungsdateien liegen separat unter
+reduzierten Körperdateien liegen unter `civilians/`; die dreizehn Bewegungsdateien liegen separat unter
 `animations/civilians/`. Jede Figur kann dadurch dieselben Walk-, Sit-, Flucht- und Dance-Clips
 verwenden, ohne den Körper und seine Texturen in jeder Bewegungsdatei erneut auszuliefern.
 
@@ -50,6 +50,36 @@ verwenden, ohne den Körper und seine Texturen in jeder Bewegungsdatei erneut au
 Glanzmann verwendet die V2-Datei mit separaten Gesichts-/Augenmeshes und eigenem Idle-Clip. Das
 Casting markiert ihn als `unique`; `GlanzmannNpc` ergänzt die wiederkehrenden iPhone-/iReparatur-
 Sprüche. Er wird nie als zufälliges Crowd-Duplikat erzeugt.
+
+Seit dem 17. September ergänzen Casual Man und Xander die bekleideten Passagiere. Die neuen
+Joe-Clips `drunk-walk`, `drunk-walk-alt`, `sitting-idle-alt`, `sitting-talking` und `walk-circle`
+sind körperlos extrahiert. Sitzvarianten werden deterministisch über den NPC-Seed gemischt;
+betrunkene Walks bleiben auf Nightlife-Rollen beschränkt. `walk-circle` steht im Model Studio für
+lokale Routen bereit und wird nicht blind auf zielgerichtete Navigation gelegt.
+
+Weitere neue Rollen sind ein Hippie-Bewohner, ein zusätzlicher Officer sowie Yinn, Ruffle Dress,
+Black Suit und Party Woman für Nana und die Street Parade. Die 23-MiB-Party Woman ist im Casting
+`unique` und wird wie alle GLB-Casts erst innerhalb der Sichtdistanz geladen.
+
+## Street-Parade- und Party-Cast
+
+Die bisher unbesetzten Party-Assets werden nun für die `raver`-Rolle verwendet: Anita, Dutch Male,
+Female Dutch, Sjonnie, Sci-Fi Man und Cyberpunk Girl. Der deterministische Cast mischt sie mit den
+bisherigen Tänzerinnen und Alltagsfiguren, ohne ungeeignete Party-Outfits in Zug oder Flugzeug zu
+verwenden.
+
+Die vier Gabber-Downloads sind Showcase-Szenen mit mehreren vollständigen Figuren. Die öffentlichen
+Spieldateien enthalten deshalb jeweils nur **eine** isolierte, stehende und vollständig bekleidete
+Skin. Ihre Körperachse liegt in der Quelldatei auf +Z; `sourceHeightAxis: 'z'` normalisiert Grösse
+und Ausrichtung beim Laden. So bleibt Sjonnie sichtbar, statt als überlagerte Bind-Pose beziehungsweise
+scheinbares Skelett zu erscheinen. Die Originaldateien unter `models/` bleiben unverändert.
+
+Beim bisherigen Cop war das Material `Body` im Export als transparentes `BLEND` markiert. Babylon
+sortierte dadurch Gesicht, Uniform und innere Geometrie abhängig vom Blickwinkel falsch. Die
+Produktionskopie behandelt `Body` als `OPAQUE`; nur die Brille bleibt transparent. Beim neuen
+Indian Officer sind Körper, Uniform, Schuhe und Mütze ebenfalls opak, während Haare, Bart und Brille
+ihre Alpha-Kanten behalten. Dieselben Overrides sind in `tools/models/reduce.mjs` hinterlegt und
+überleben damit einen erneuten Asset-Build.
 
 ## Nana-Bars und die Hexe
 

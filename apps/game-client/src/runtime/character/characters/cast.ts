@@ -173,34 +173,27 @@ export const hipHopConfig: CharacterConfig = {
   motionDurations: { dance: 4.4666666984558105 },
 };
 
-/** Ravers for the Street Parade: 90s Dutch gabbers, all on Mixamo rigs.
+/** Detailed Street-Parade gabbers extracted as one standing skin per source showcase.
  *
- * Three brought a clip of their own; the fourth borrows one. They are the detailed figures near
- * the camera — the route itself stays on thin instances.
+ * The downloads contain several complete people, including a flat animated copy. Loading the
+ * complete scene therefore produced overlapping bodies and exposed the rig. The game copies keep
+ * only one standing skinned figure. Their source height runs along +Z, which the generic character
+ * loader rotates to world Y before applying procedural humanoid motion.
  */
-const gabber = (
-  id: string,
-  file: string,
-  height: number,
-  seconds: number | null,
-): CharacterConfig => ({
+const standingGabber = (id: string, file: string, height: number): CharacterConfig => ({
   ...shared,
   id,
   model: `/characters/party/${file}.glb`,
   height,
   bones: mixamoBones,
-  ...(seconds === null
-    ? {
-        animations: {},
-        clipSources: [dance('dance-club', 'dance')],
-        motionDurations: { dance: 10.83 },
-      }
-    : { animations: { dance: 'Animation' }, motionDurations: { dance: seconds } }),
+  animations: {},
+  sourceHeightAxis: 'z',
+  rotation: [-Math.PI / 2, 0, 0],
 });
-export const gabberAnitaConfig = gabber('gabber-anita', 'gabber-anita', 1.7, 10.97);
-export const gabberFemaleConfig = gabber('gabber-female', 'gabber-female', 1.72, 8.3);
-export const gabberSjonnieConfig = gabber('gabber-sjonnie', 'gabber-sjonnie', 1.84, 8.3);
-export const gabberDutchConfig = gabber('gabber-dutch', 'gabber-dutch', 1.86, null);
+export const gabberAnitaConfig = standingGabber('gabber-anita', 'gabber-anita', 1.7);
+export const gabberFemaleConfig = standingGabber('gabber-female', 'gabber-female', 1.72);
+export const gabberSjonnieConfig = standingGabber('gabber-sjonnie', 'gabber-sjonnie', 1.84);
+export const gabberDutchConfig = standingGabber('gabber-dutch', 'gabber-dutch', 1.86);
 
 /** The body that came with those dances. */
 export const poleConfig: CharacterConfig = {
@@ -255,6 +248,24 @@ const barDancer = (
   bones: ccBonesPlain,
   animations: { [action]: clip },
   motionDurations: { [action]: seconds },
+  animationMetadata: {
+    [action]:
+      action === 'walk'
+        ? {
+            loopMode: 'repeat',
+            rootMotion: true,
+            inPlace: false,
+            crossfadeDuration: 0.1,
+          }
+        : {
+            // Source dances contain metres of accidental root/hips travel and must stay on stage.
+            loopMode: id === 'bar-dancer-hard' ? 'pingpong' : 'repeat',
+            rootMotion: false,
+            inPlace: true,
+            crossfadeDuration: id === 'bar-dancer-naked' ? 0.35 : 0.2,
+            reverseAllowed: id === 'bar-dancer-hard',
+          },
+  },
 });
 
 export const barHardConfig = barDancer(

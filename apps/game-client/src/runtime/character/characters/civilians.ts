@@ -45,6 +45,11 @@ export const civilianMotionLibrary: ClipSource[] = [
   clip('sitting', civilianBones.josh, 'sit_idle'),
   clip('dance-hard', civilianBones.joe, 'dance_hard'),
   clip('dance-medium', civilianBones.joe, 'dance_medium'),
+  clip('drunk-walk', civilianBones.joe, 'drunk_walk'),
+  clip('drunk-walk-alt', civilianBones.joe, 'drunk_walk_alt'),
+  clip('sitting-idle-alt', civilianBones.joe, 'sit_idle_alt'),
+  clip('sitting-talking', civilianBones.joe, 'sit_talk'),
+  clip('walk-circle', civilianBones.joe, 'walk_circle'),
 ];
 
 const shared = {
@@ -65,6 +70,81 @@ const shared = {
   runSpeed: 9,
   cycleSpeeds: { walk: 2.3, run: 4.6 },
   crossfade: 0.18,
+  animationMetadata: {
+    walk: { loopMode: 'repeat' as const, rootMotion: false, inPlace: true, crossfadeDuration: 0.1 },
+    walk_alt: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.1,
+    },
+    walk_alt_2: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.1,
+    },
+    walk_backward: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.1,
+    },
+    run_away: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.08,
+    },
+    sit_idle: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.18,
+    },
+    dance_hard: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.18,
+    },
+    dance_medium: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.18,
+    },
+    drunk_walk: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.16,
+    },
+    drunk_walk_alt: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.16,
+    },
+    sit_idle_alt: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.2,
+    },
+    sit_talk: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.25,
+    },
+    walk_circle: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.2,
+    },
+  },
   throwReleaseTime: 0.4,
   motionDurations: {
     walk: 1.17,
@@ -75,6 +155,11 @@ const shared = {
     sit_idle: 5.93,
     dance_hard: 10.83,
     dance_medium: 2.33,
+    drunk_walk: 3,
+    drunk_walk_alt: 2.5,
+    sit_idle_alt: 6.4,
+    sit_talk: 44.07,
+    walk_circle: 17.37,
   },
 };
 

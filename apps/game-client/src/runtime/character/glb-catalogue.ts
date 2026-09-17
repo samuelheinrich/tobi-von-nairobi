@@ -76,6 +76,24 @@ const ROLE_BY_SOURCE: Record<string, ModelRole> = {
   'tpose/18+/sexy_girl_dancing.glb': 'adult',
   'tpose/beige_athleisure_silhouette-woman-sport.glb': 'beach',
   'tpose/basic_model_of_a_female_character__t-pose_asset-beach.glb': 'beach',
+  'hippie/worker_man_rigged.glb': 'resident',
+  'cop/indian_police_cop_3d_model_rigged.glb': 'police',
+  'normal-ppl/casual_male_char__rigged.glb': 'tourist',
+  'normal-ppl/xander_model_character_man_rigged_realisitc.glb': 'tourist',
+  'party/female_rigged_character_free.glb': 'dancer',
+  'party/sexy_girl_in_black_suit.glb': 'dancer',
+  'skellet-rigged/party/anita_female_gabber_from_the_90s.glb': 'dancer',
+  'skellet-rigged/party/character_male_sci-fi.glb': 'dancer',
+  'skellet-rigged/party/cyberpunk_girl.glb': 'dancer',
+  'skellet-rigged/party/dutch_male_gabber_from_the_90s.glb': 'dancer',
+  'skellet-rigged/party/female_dutch_gabber_from_the_90s.glb': 'dancer',
+  'skellet-rigged/party/female_rigged_character_free.glb': 'dancer',
+  'skellet-rigged/party/sexy_girl_in_black_suit.glb': 'dancer',
+  'skellet-rigged/party/sjonnie_dutch_male_gabber_from_the_90s.glb': 'dancer',
+  'skellet-rigged/cop.glb': 'police',
+  'skellet-rigged/cop/indian_police_cop_3d_model_rigged.glb': 'police',
+  'bar/yinn_-_young_asian_female_-_rigged.glb': 'bargirl',
+  'bar/rigged_female_fashion_character_in_ruffle_dress.glb': 'bargirl',
 };
 
 /** Correction for models the automatic sizing gets wrong, keyed by source file name.
@@ -101,6 +119,20 @@ const CAVEATS: Record<string, string> = {
   'nina-dancer.glb':
     'Von Hand gerigged und animiert, siehe docs/development/nina-dancer-optimierung.md. Der Reduzierer baut diese Datei nicht neu.',
   'girl_sexy.glb': 'Nutzt KHR_materials_unlit und ignoriert damit die Szenenbeleuchtung.',
+  'party/female_rigged_character_free.glb':
+    'Mit 23 MiB trotz Reduktion sehr schwer; wird pro Level höchstens einmal besetzt und lazy geladen.',
+  'party/sexy_girl_in_black_suit.glb':
+    'Mit 8 MiB ein Near-LOD-Partymodell; nur in Nightlife-Rollen verwenden.',
+  'skellet-rigged/party/anita_female_gabber_from_the_90s.glb':
+    'Showcase mit mehreren Figuren; im Spiel nur die isolierte stehende Skin verwenden.',
+  'skellet-rigged/party/dutch_male_gabber_from_the_90s.glb':
+    'Showcase mit mehreren Figuren; im Spiel nur die isolierte stehende Skin verwenden.',
+  'skellet-rigged/party/female_dutch_gabber_from_the_90s.glb':
+    'Showcase mit mehreren Figuren; im Spiel nur die isolierte stehende Skin verwenden.',
+  'skellet-rigged/party/sjonnie_dutch_male_gabber_from_the_90s.glb':
+    'Showcase mit mehreren Figuren und +Z-Körperachse; im Spiel nur die isolierte stehende Skin verwenden.',
+  'cop/indian_police_cop_3d_model_rigged.glb':
+    'CC-BY-NC-4.0: nur für die nichtkommerzielle Projektfassung verwenden.',
 };
 
 export interface CatalogueEntry {

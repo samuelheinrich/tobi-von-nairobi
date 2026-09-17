@@ -32,7 +32,7 @@ export class RailwayPassengers implements LevelNpcs {
   private touching = false;
 
   public constructor(
-    scene: Scene,
+    private readonly scene: Scene,
     shadows: ShadowGenerator,
     private readonly bubbles: SpeechBubbles,
     seatAnchors: readonly SeatAnchor[],
@@ -93,7 +93,6 @@ export class RailwayPassengers implements LevelNpcs {
           const anchor = anchors.get(`railway-seat-${carriage}-${row}-${column}`);
           if (!anchor) throw new Error(`Missing SeatAnchor for railway passenger ${id}`);
           rig.seatAnchor = anchor;
-          anchor.occupied = true;
           const pelvis = anchor.worldPosition;
           rig.root.position.set(pelvis.x, 0, pelvis.z);
           rig.root.rotation.y = anchor.yaw;
@@ -146,8 +145,15 @@ export class RailwayPassengers implements LevelNpcs {
     );
     const neighbour = this.people.find((candidate) => candidate.id === greeted);
     if (neighbour) this.say(neighbour.rig, 'greetingTrain', `seat-${neighbour.id}`, neighbour.id);
-    const shouting = this.conductor.brain.step(delta, player);
+    const trainState = (this.scene.metadata?.railwayJourney as { state?: string } | undefined)
+      ?.state;
+    const emergency = trainState === 'BRAKING';
+    const shouting = emergency ? false : this.conductor.brain.step(delta, player);
     const at = this.conductor.brain.position;
+    if (emergency || trainState === 'STOPPED' || trainState === 'DOORS_OPEN') {
+      at.x += (0 - at.x) * Math.min(1, delta * 3);
+      at.z += (43 - at.z) * Math.min(1, delta * 1.4);
+    }
     this.conductor.rig.root.position.set(at.x, 0, at.z);
     this.conductor.rig.root.rotation.y = this.conductor.brain.facing;
     const stride = Math.sin(this.time * 7) * 0.5;
@@ -160,6 +166,7 @@ export class RailwayPassengers implements LevelNpcs {
       this.conductor.brain.state === 'BLOCK' &&
       Math.hypot(player.x - at.x, player.z - at.z) < railwayLayout.conductor.bodyRadius + 0.15;
     for (const person of this.people) {
+      if (emergency) person.startled = Math.max(person.startled, 0.8);
       person.startled = Math.max(0, person.startled - delta);
       person.rig.gesture(
         person.startled > 0 && !person.seated ? 'flee' : person.seated ? 'sit' : 'idle',

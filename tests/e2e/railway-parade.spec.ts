@@ -1,38 +1,21 @@
 import { expect, test } from '@playwright/test';
 
-test('Thailand Railway: drink, hold, throw, get past the conductor and reach carriage one', async ({
+test('Thailand Railway starts as a moving train with the emergency brake objective', async ({
   page,
 }) => {
   const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
   const select = page.getByRole('combobox', { name: 'Level wählen' });
   await expect(select).toBeEnabled({ timeout: 45000 });
   await select.selectOption('thailand_railway');
-  await expect(page.getByRole('button', { name: 'EINSTEIGEN' })).toBeEnabled({ timeout: 45000 });
   await page.getByRole('button', { name: 'EINSTEIGEN' }).press('Enter');
-  await expect(page.getByRole('heading', { name: 'Sammle 12 Flaschen' })).toBeVisible();
-  await page.keyboard.down('KeyW');
-  await expect(page.getByTestId('bottle-count')).toContainText('1 / 12', { timeout: 20000 });
-  await page.keyboard.up('KeyW');
-  await expect(page.getByTestId('bottle-hand')).toHaveText('FLASCHE IN DER HAND', {
-    timeout: 15000,
-  });
-  await expect(page.getByTestId('empty-bottles')).toHaveText('1');
-  await page.screenshot({ path: '.artifacts/screenshots/thailand-railway.png' });
-  await page.keyboard.press('KeyG');
-  await expect(page.getByTestId('empty-bottles')).toHaveText('0');
-  await page.keyboard.down('KeyW');
-  // The conductor blocks the aisle, complains and eventually steps aside; the run still finishes.
-  await expect(page.getByTestId('npc-speech')).toBeVisible({ timeout: 60000 });
-  await expect(page.getByTestId('bottle-count')).toContainText('12 / 12', { timeout: 120000 });
-  await expect(page.getByText('WAGEN 1 ERREICHT', { exact: false })).toBeVisible({
-    timeout: 20000,
-  });
-  await page.keyboard.up('KeyW');
-  await page.keyboard.press('KeyE');
-  await expect(page.getByRole('dialog', { name: 'Zugfahrt abgeschlossen' })).toBeVisible();
-  await expect(page.getByRole('dialog').getByText(/^1['’]700$/)).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Durchquere den Zug und finde die Notbremse' }),
+  ).toBeVisible();
+  await expect(page.getByTestId('railway-status')).toContainText('RUNNING');
+  await expect(page.getByTestId('railway-status')).not.toContainText('0 KM/H');
+  await expect(page.getByTestId('bottle-count')).not.toBeVisible();
   expect(errors).toEqual([]);
 });
 

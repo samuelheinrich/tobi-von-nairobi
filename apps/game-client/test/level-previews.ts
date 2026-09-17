@@ -65,8 +65,10 @@ const police =
 police?.system.provoke();
 // The resident cast belongs in the thumbnail: a carriage without passengers sells nothing.
 const bubbles = new SpeechBubbles(scene, 2);
-const flight = level.scenery === 'aircraft' ? new FlightRuntime(scene, environment) : null;
-flight?.step(0.4, level.spawn, null);
+const flight =
+  level.scenery === 'aircraft' && environment.aircraft
+    ? new FlightRuntime(scene, world, environment.aircraft)
+    : null;
 const npcs = createLevelNpcs(scene, level, environment, bubbles);
 npcs?.update(0.4, level.scenery === 'nana-plaza' ? { x: 0, y: 1, z: 24 } : level.spawn);
 bubbles.update(0, new Vector3(...pose.eye));

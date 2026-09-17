@@ -47,6 +47,7 @@ export async function exerciseHouseRoute() {
         specialPressed: false,
         throwPressed: false,
         flirtPressed: false,
+        landPressed: false,
         celebratePressed: false,
       },
       0,

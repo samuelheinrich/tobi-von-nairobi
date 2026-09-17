@@ -3,6 +3,7 @@ import { Ray } from '@babylonjs/core/Culling/ray.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import { prototypeBalance } from '@tobi/game-data';
+import type { VehicleKind } from '@tobi/contracts';
 
 export type CameraMode = 'follow' | 'railway' | 'interior' | 'cell';
 
@@ -25,8 +26,23 @@ export class ThirdPersonCamera {
   private currentPitch: number;
   private distance: number;
   private vehicleDistance: number | null = null;
-  public setVehicle(kind: 'boat' | 'scooter' | null): void {
-    this.vehicleDistance = kind === 'boat' ? 11 : kind === 'scooter' ? 8 : null;
+  private vehicleKind: VehicleKind | 'aircraft' | null = null;
+  public setVehicle(kind: VehicleKind | 'aircraft' | null): void {
+    if (kind !== this.vehicleKind) {
+      if (kind === 'aircraft') this.currentPitch = 0.32;
+      else if (this.vehicleKind === 'aircraft') this.currentPitch = this.profile.pitch;
+      this.vehicleKind = kind;
+    }
+    this.vehicleDistance =
+      kind === 'aircraft'
+        ? 78
+        : kind === 'boat'
+          ? 11
+          : kind === 'tuk-tuk'
+            ? 10
+            : kind === 'scooter'
+              ? 8
+              : null;
   }
   private mode: CameraMode;
   private profile: (typeof profiles)[CameraMode];

@@ -81,10 +81,8 @@ class NpcModels {
       elapsed: 0,
     };
     this.actors.add(actor);
-    if (rig.seatAnchor) rig.seatAnchor.occupied = true;
     rig.root.onDisposeObservable.add(() => {
       this.actors.delete(actor);
-      if (rig.seatAnchor) rig.seatAnchor.occupied = false;
       // The root already owns/disposes its meshes; dispose the instance's skeleton and clips too.
       actor.character?.dispose();
       actor.character = null;
@@ -193,7 +191,8 @@ class NpcModels {
       // Crowd pool slots share the far batch's resident identity. Independent authored NPCs
       // may reuse palette seeds, but must not receive the same unique portrait twice.
       const pooled = /^(nana-resident-|parade-near-)/.test(rig.root.name);
-      const identity = `${pooled ? '' : rig.root.uniqueId + ':'}${npcRole(rig)}:${rig.appearance.seed}`;
+      const role = npcRole(rig);
+      const identity = `${pooled ? '' : rig.root.uniqueId + ':'}${role}:${rig.appearance.seed}`;
       if (identity !== actor.identity) {
         this.release(actor);
         actor.identity = identity;
@@ -213,36 +212,61 @@ class NpcModels {
       const seated =
         actor.seated || rig.action === 'sit' || rig.legs.every((l) => l.rotation.x < -1);
       const baseAction: HumanoidAction = seated
-          ? 'sit_idle'
-          : rig.action === 'flee'
-            ? 'run_away'
-            : speed > 0.2
-              ? speed > 3.5
-                ? 'run'
-                : 'walk'
-              : ['dance', 'club', 'pole'].includes(rig.action)
-                ? 'dance'
-                : rig.action === 'drink'
-                  ? 'drink'
-                  : ['angry', 'talk', 'arrest', 'phone', 'smoke'].includes(rig.action)
-                    ? 'taunt'
-                    : rig.action === 'cheer'
-                      ? 'celebrate'
-                      : 'idle',
-        action = model.config.actionOverrides?.[baseAction] ?? baseAction;
+        ? 'sit_idle'
+        : rig.action === 'flee'
+          ? 'run_away'
+          : speed > 0.2
+            ? speed > 3.5
+              ? 'run'
+              : 'walk'
+            : ['dance', 'club', 'pole'].includes(rig.action)
+              ? 'dance'
+              : rig.action === 'drink'
+                ? 'drink'
+                : ['angry', 'talk', 'arrest', 'phone', 'smoke'].includes(rig.action)
+                  ? 'taunt'
+                  : rig.action === 'cheer'
+                    ? 'celebrate'
+                    : 'idle';
+      let contextualAction: HumanoidAction = baseAction;
+      if (baseAction === 'sit_idle') {
+        // Longer talking and relaxed-idle clips belong on explicit seats. The deterministic seed
+        // keeps a coach/aircraft cabin stable after reload and prevents every row moving in sync.
+        const preferred =
+          rig.appearance.seed % 5 === 0
+            ? 'sit_talk'
+            : rig.appearance.seed % 2 === 0
+              ? 'sit_idle_alt'
+              : 'sit_idle';
+        if (model.clips.has(preferred)) contextualAction = preferred;
+      } else if (
+        baseAction === 'walk' &&
+        ['raver', 'bargirl', 'dancer'].includes(role) &&
+        rig.appearance.seed % 3 !== 0
+      ) {
+        // Drunken walks are nightlife flavour, never commuter or aircraft locomotion.
+        const preferred = rig.appearance.seed % 2 === 0 ? 'drunk_walk' : 'drunk_walk_alt';
+        if (model.clips.has(preferred)) contextualAction = preferred;
+      }
+      const action =
+        model.config.actionOverrides?.[baseAction] ??
+        model.config.actionOverrides?.[contextualAction] ??
+        contextualAction;
       if (model.controller.action !== action || model.controller.serial === 0) {
         model.controller.preview(action);
         model.controller.time = (rig.appearance.seed * 0.713) % model.controller.timing().duration;
       }
-      model.controller.time =
-        (model.controller.time + actor.elapsed * (0.9 + (rig.appearance.seed % 7) * 0.035)) %
-        model.controller.timing().duration;
+      // Keep an unbounded clock: loop policy/root-motion need to know when a cycle was crossed.
+      model.controller.time += actor.elapsed * (0.9 + (rig.appearance.seed % 7) * 0.035);
       const state: AnimationState = {
         speed,
         grounded: true,
         sitting: seated,
         drinking: action === 'drink',
         holding: false,
+        // Crowd/navigation code owns rig.root. A standalone actor may use source root motion;
+        // applying it here as well would move twice and be corrected on the next navigation tick.
+        applyRootMotion: false,
         seatHeight: (actor.rig.seatHeight ?? 0.5) / Math.max(0.1, actor.rig.root.scaling.y),
         anchoredSeat: !!actor.rig.seatAnchor,
       };

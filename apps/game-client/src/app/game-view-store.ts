@@ -23,6 +23,8 @@ export class GameViewStore {
     posture: 'standing',
     interaction: '',
     cabin: null,
+    flight: null,
+    railway: null,
     lesson: null,
     score: 0,
     elapsedSeconds: 0,

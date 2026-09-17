@@ -213,6 +213,30 @@
     "licence": "CC-BY-SA-4.0"
   },
   {
+    "file": "skellet-rigged/bar/rigged_female_fashion_character_in_ruffle_dress-game.glb",
+    "source": "skellet-rigged/bar/rigged_female_fashion_character_in_ruffle_dress.glb",
+    "megabytes": 2.78,
+    "triangles": 24924,
+    "sourceTriangles": 442569,
+    "joints": 66,
+    "animations": [
+      "mixamo.com"
+    ],
+    "author": "florah",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/bar/yinn_-_young_asian_female_-_rigged-game.glb",
+    "source": "skellet-rigged/bar/yinn_-_young_asian_female_-_rigged.glb",
+    "megabytes": 2.33,
+    "triangles": 25128,
+    "sourceTriangles": 56200,
+    "joints": 138,
+    "animations": [],
+    "author": "tonyflanagan",
+    "licence": "CC-BY-4.0"
+  },
+  {
     "file": "skellet-rigged/beach/angela_white-game.glb",
     "source": "skellet-rigged/beach/angela_white.glb",
     "megabytes": 6.14,
@@ -284,6 +308,32 @@
     "licence": "CC-BY-4.0"
   },
   {
+    "file": "skellet-rigged/cop/indian_police_cop_3d_model_rigged-game.glb",
+    "source": "skellet-rigged/cop/indian_police_cop_3d_model_rigged.glb",
+    "megabytes": 2.16,
+    "triangles": 25518,
+    "sourceTriangles": 36708,
+    "joints": 66,
+    "animations": [
+      "mixamo.com"
+    ],
+    "author": "LegendKanwar",
+    "licence": "CC-BY-NC-4.0"
+  },
+  {
+    "file": "skellet-rigged/hippie/worker_man_rigged-game.glb",
+    "source": "skellet-rigged/hippie/worker_man_rigged.glb",
+    "megabytes": 0.67,
+    "triangles": 21214,
+    "sourceTriangles": 21214,
+    "joints": 66,
+    "animations": [
+      "mixamo.com"
+    ],
+    "author": "Aayush.Bhattarai",
+    "licence": "CC-BY-4.0"
+  },
+  {
     "file": "skellet-rigged/ladyboy/trans_non_binary_rigged__blendshapes-game.glb",
     "source": "skellet-rigged/ladyboy/trans_non_binary_rigged__blendshapes.glb",
     "megabytes": 26.16,
@@ -295,6 +345,30 @@
       "AvatarCurrentMotion"
     ],
     "author": "Lucid Dreams",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/normal-ppl/casual_male_char__rigged-game.glb",
+    "source": "skellet-rigged/normal-ppl/casual_male_char__rigged.glb",
+    "megabytes": 1.41,
+    "triangles": 18931,
+    "sourceTriangles": 18931,
+    "joints": 102,
+    "animations": [
+      "Default"
+    ],
+    "author": "ijiklvn",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/normal-ppl/xander_model_character_man_rigged_realisitc-game.glb",
+    "source": "skellet-rigged/normal-ppl/xander_model_character_man_rigged_realisitc.glb",
+    "megabytes": 1.56,
+    "triangles": 18023,
+    "sourceTriangles": 18023,
+    "joints": 53,
+    "animations": [],
+    "author": "xander.dice",
     "licence": "CC-BY-4.0"
   },
   {
@@ -358,6 +432,32 @@
       "Animation"
     ],
     "author": "ustoopia",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/female_rigged_character_free-game.glb",
+    "source": "skellet-rigged/party/female_rigged_character_free.glb",
+    "megabytes": 24.75,
+    "triangles": 26136,
+    "sourceTriangles": 95906,
+    "joints": 102,
+    "animations": [
+      "Calibration"
+    ],
+    "author": "gog619",
+    "licence": "CC-BY-4.0"
+  },
+  {
+    "file": "skellet-rigged/party/sexy_girl_in_black_suit-game.glb",
+    "source": "skellet-rigged/party/sexy_girl_in_black_suit.glb",
+    "megabytes": 9.43,
+    "triangles": 25885,
+    "sourceTriangles": 43482,
+    "joints": 74,
+    "animations": [
+      "AvatarCurrentMotion"
+    ],
+    "author": "edu",
     "licence": "CC-BY-4.0"
   },
   {

@@ -133,3 +133,23 @@ export function stripUnusedUVs(inPath, outPath) {
   writeGlb(outPath, json, bin);
   return removed;
 }
+
+/** Reclassifies known opaque materials without touching texture pixels or the source asset. */
+export function setMaterialAlphaModes(inPath, outPath, modes) {
+  const { json, bin } = readGlb(inPath);
+  let changed = 0;
+  for (const material of json.materials ?? []) {
+    const mode = modes[material.name];
+    if (!mode) continue;
+    if (mode === 'OPAQUE') {
+      if (material.alphaMode !== undefined || material.alphaCutoff !== undefined) changed++;
+      delete material.alphaMode;
+      delete material.alphaCutoff;
+    } else if (material.alphaMode !== mode) {
+      material.alphaMode = mode;
+      changed++;
+    }
+  }
+  writeGlb(outPath, json, bin);
+  return changed;
+}

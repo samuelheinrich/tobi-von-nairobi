@@ -2,6 +2,23 @@
 
 Stand: 14. September 2026. **LEVEL WÄHLEN** bietet acht direkt startbare Level. Neue Inhalte ergänzen die vier Bali-Level unter eigenen IDs. Vor dem Start anmelden, um Abschlüsse zu speichern; als Gast sind sämtliche Level ebenfalls spielbar.
 
+## Phuket Free-Roam nach dem Railway-Halt
+
+Nach der Notbremsung endet die Reise nicht mehr am Bahnsteig. Der geöffnete Zug führt ohne
+Teleport in fünf verbundene Sektoren: Railway Stop, Phuket Town, Bangla Night Walk, Night Market
+und Patong Beach. Die Welt nutzt eine zusammenhängende physische Bodenfläche, eine natürliche
+Küstenbegrenzung, begehbare Shop-/Warung-Innenräume und ausgewählte Dachrouten.
+
+Die Nightlife-Zone enthält sieben offene, vollständig begehbare Venues mit eigenem Bühnen-, Bar-
+und Neonprofil. Cabaret- und Ladyboy-Figuren sind Teil der normalen erwachsenen Clubbevölkerung;
+die Show-Venue bleibt atmosphärisch und zeigt keine expliziten Handlungen. `F` flirtet mit passenden
+NPCs, `R` löst Reaktionen aus und `E` bestellt an Venue- und Beach-Bars einen Arcade-Drink.
+
+Vier Fahrzeuge verwenden die gemeinsame Vehicle-Runtime: zwei Scooter und zwei neue
+`TukTukVehicle`. Das Tuk-Tuk besitzt eine eigene Masse, Fahrdynamik, Silhouette und eine leichte
+visuelle Karosseriebewegung. Strassenverkehr, Markt, Strandwellen, Palmen und die Bevölkerung
+werden abhängig von Distanz und Sektor aktualisiert.
+
 ## Comic-Figur aus den Referenzen
 
 Die prozedurale Spielfigur übernimmt braune Locken mit kurzen Seiten, kantige dunkle Sonnenbrille, kurzen Bart, breites Gesicht, kräftige Schultern, schwarzen Tanktop mit hellem Rand und eigenem Bärenmotiv, schwarze Shorts, blaue Schuhe und Zigarette. Die Geometrie ist eine stilisierte Annäherung; sie verwendet keine Fototexturen. Die gelieferten Originalfotos in `tmp/` bleiben lokal und sind in Git ausgeschlossen.
@@ -26,9 +43,9 @@ Handbestand, Flugbahnen, Pegel und Farbzustand sind Runtime-Daten. Pause friert 
 
 ## Thailand Railway
 
-**Aufgabe:** „Falscher Wagen. Richtige Richtung.“ Tobi startet im hintersten Wagen, sammelt zwölf Flaschen und erreicht Wagen 1. Dort schliesst **E** die Zugfahrt ab. Keine Polizei; 1'700 Punkte inklusive Abschlussbonus.
+**Aktueller Phasenstand 1–4:** Tobi startet im hintersten Wagen und durchquert den gesamten fahrenden Zug. Ganz vorne zieht er mit **E** die Notbremse. Nach einer neunsekündigen Bremssequenz hält der Zug am improvisierten Phuket-Halt. Erst dann kann Tobi die markierte Seitentür mit **E** öffnen und auf den Bahnsteig treten. Das frühere Sammelziel und der unmittelbare Abschluss in Wagen 1 wurden entfernt; der spätere Phuket-Free-Roam folgt erst im nächsten Ausbau.
 
-Eigenständige Kulisse mit **fünf** offenen Wagen, Sitzreihen, Gepäck, Türen, Übergängen, Gleisen und vorbeiziehenden Schwellen. Die Kamera blickt erhöht in den Innenraum; das Dach verdeckt die Figur nicht. Sie lässt sich inzwischen **vollständig um die Figur drehen**, damit auch der Rückweg lesbar bleibt; nur die Neigung ist begrenzt. Unsichtbare seitliche Sicherheitswände verhindern das Herausspringen, ohne die Kamera zu blockieren. Die Physik verwendet einen zusammenhängenden Boden; die Fahrbewegung der Umgebung ist visuell.
+Eigenständige Kulisse mit **fünf** Wagen, Sitzreihen, Gepäck, WC, Türen, Übergängen, geteilten Dächern, Rädern, Gleisen und vorbeiziehenden Schwellen. Die geteilten Dächer lassen die erhöhte Kamera weiterhin in den Innenraum blicken. Sie lässt sich vollständig um die Figur drehen; nur die Neigung ist begrenzt. Unsichtbare seitliche Sicherheitswände verhindern das Herausspringen, ohne die Kamera zu blockieren. Die Physik verwendet einen zusammenhängenden Boden; die Fahrbewegung der Umgebung ist visuell.
 
 **Der mittlere Wagen ist ein Barwagen:** durchgehende Teaktheke, Messingauflage, elf Hocker, ein Flaschenregal an der Wand und drei Stehtische auf der anderen Seite. Statt Sitzreihen gibt es hier Barpersonal und stehende Gäste.
 
@@ -40,7 +57,9 @@ Ein **Schaffner** patrouilliert den Mittelgang und nimmt seine Zuständigkeit se
 
 Er ist ausdrücklich **kein Polizist**: er erzeugt kein Chaos, keine Fahndung und keine Festnahme. Und er gibt immer nach — nach fünf Sekunden Blockade stellt er sich sieben Sekunden lang an die Sitze, und ein Zuruf mit **R** oder eine Flasche an die Mütze lässt ihn sofort Platz machen. Damit kann ein Gang-Level nie unpassierbar werden; ein Unit-Test hält genau das fest.
 
-Der Mittelgang bleibt durchgängig begehbar, Gepäck und Sitzreihen laden zu kleinen Umwegen ein. Wagenbeschriftungen geben die Richtung vor. Eigener rhythmischer Schienen-Sound begleitet die Fahrt. Tickets, Fahrplan, Getränkebestellung und endgültige 5–15-Minuten-Dauer sind spätere Erweiterungen.
+Der Mittelgang bleibt durchgängig begehbar, Gepäck und Sitzreihen laden zu kleinen Umwegen ein. Wagenbeschriftungen geben die Richtung vor. Die generische `TrainJourney`-Zustandsmaschine führt `RUNNING → BRAKING → STOPPED → DOORS_OPEN`, reduziert Landschaft und Schwellen synchron zur Geschwindigkeit und liefert den Debug-State für Geschwindigkeit, Bremsfortschritt, Distanz und Vibration. Ein eigener Metall-/Brems-Sound startet mit dem Hebel; nach Stillstand verstummen die laufenden Schienenstösse.
+
+Beim Halt werden Bahnsteig, Gelände, Stationsunterstand und Beschilderung sichtbar. Die komplette Lokomotive, Wagenwände, geteilten Dächer, Räder, Fenster und Tür sind nun von außen lesbar. Der Seitentür-Collider wird erst beim Öffnen entfernt; das Türblatt fährt sichtbar zur Seite. Die zukünftige Phuket-Stadt ist absichtlich noch nicht gebaut, entsprechend der vereinbarten Pause nach Phase 4.
 
 ![Thailand Railway mit Barwagen, Reisenden und Schaffner](../screenshots/thailand-railway.png)
 

@@ -38,7 +38,7 @@ export abstract class VehicleBase {
       collision: 'box',
       layer: 'VEHICLE',
       motion: 'dynamic',
-      mass: definition.kind === 'boat' ? 240 : 110,
+      mass: definition.kind === 'boat' ? 240 : definition.kind === 'tuk-tuk' ? 310 : 110,
       friction: 0.08,
       restitution: 0,
       walkable: true,
@@ -74,10 +74,20 @@ export abstract class VehicleBase {
     return this.body.getLinearVelocity();
   }
   get riderFeet(): Vector3 {
-    return this.position.add(new Vector3(0, this.definition.kind === 'boat' ? 0.42 : -0.55, 0));
+    return this.position.add(
+      new Vector3(
+        0,
+        this.definition.kind === 'boat' ? 0.42 : this.definition.kind === 'tuk-tuk' ? 0.15 : -0.55,
+        0,
+      ),
+    );
   }
   get seatHeight(): number {
-    return this.definition.kind === 'boat' ? 0.36 : 0.95;
+    return this.definition.kind === 'boat'
+      ? 0.36
+      : this.definition.kind === 'tuk-tuk'
+        ? 1.18
+        : 0.95;
   }
   enterVehicle(driver: string): boolean {
     if (this.driver) return false;

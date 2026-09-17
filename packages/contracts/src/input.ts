@@ -11,6 +11,7 @@ export interface InputActions {
   celebratePressed: boolean;
   throwPressed: boolean;
   flirtPressed: boolean;
+  landPressed: boolean;
 }
 
 export interface InputSource {

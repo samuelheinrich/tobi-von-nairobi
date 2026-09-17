@@ -73,4 +73,20 @@ export class SkeletonAdapter {
     Quaternion.FromUnitVectorsToRef(from, to, q);
     return q;
   }
+
+  /** Mapped joint plus animated skeleton ancestors up to the imported model root. */
+  chainFrom(key: HumanoidBone): Joint[] {
+    const byNode = new Map(
+      [...this.joints.values(), ...this.extraJoints.values()].map((joint) => [joint.node, joint]),
+    );
+    const chain: Joint[] = [];
+    for (let node: TransformNode | null = this.joints.get(key)!.node; node;) {
+      const joint = byNode.get(node);
+      if (joint) chain.push(joint);
+      const parent = node.parent;
+      if (node === this.root || !parent || !('position' in parent)) break;
+      node = parent as TransformNode;
+    }
+    return chain;
+  }
 }

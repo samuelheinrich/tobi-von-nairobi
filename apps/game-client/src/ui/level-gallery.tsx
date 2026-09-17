@@ -80,14 +80,18 @@ export function LevelGallery({
                 <strong>{level.title}</strong>
                 <span className="level-card-details">
                   {level.scenery === 'aircraft'
-                    ? '2 Decks · Sitzverstecke'
-                    : `${level.pickups.length} Flaschen`}{' '}
+                    ? '2 Decks · Flight Mode'
+                    : level.scenery === 'railway'
+                      ? '5 Wagen · Notbremse'
+                      : `${level.pickups.length} Flaschen`}{' '}
                   <span>
                     {level.scenery === 'aircraft'
-                      ? 'Crew austricksen'
-                      : level.maxWanted
-                        ? `${'★'.repeat(level.maxWanted)} Verfolgung`
-                        : 'In Ruhe erkunden'}
+                      ? 'Cockpit übernehmen'
+                      : level.scenery === 'railway'
+                        ? 'Fahrender Nachtzug'
+                        : level.maxWanted
+                          ? `${'★'.repeat(level.maxWanted)} Verfolgung`
+                          : 'In Ruhe erkunden'}
                   </span>
                 </span>
               </div>

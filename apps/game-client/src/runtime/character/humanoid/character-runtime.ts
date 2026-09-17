@@ -2,7 +2,7 @@ import { LoadAssetContainerAsync } from '@babylonjs/core/Loading/sceneLoader.js'
 import '@babylonjs/loaders/glTF/2.0/glTFLoader.js';
 import '@babylonjs/loaders/glTF/2.0/Extensions/EXT_texture_webp.js';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode.js';
-import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
+import { Matrix, Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { AssetContainer } from '@babylonjs/core/assetContainer.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import { SkeletonAdapter } from './skeleton-adapter.js';
@@ -18,6 +18,7 @@ import type {
   PropAttachmentPreset,
 } from './schema.js';
 import type { SeatAnchor } from '../seating/seat-anchor.js';
+import { resolveLoopTime } from './animation-metadata.js';
 
 /** One skinned character, one pose writer, shared action vocabulary and no root-motion gameplay. */
 export class HumanoidCharacter {
@@ -32,6 +33,8 @@ export class HumanoidCharacter {
   private readonly restHipHeight: number;
   private readonly restFootHeight: number;
   private readonly neutralRootPosition: Vector3;
+  private rootMotionSerial = -1;
+  private rootMotionTime = 0;
   private constructor(
     readonly root: TransformNode,
     readonly rig: SkeletonAdapter,
@@ -45,6 +48,8 @@ export class HumanoidCharacter {
       config.throwReleaseTime,
       undefined,
       config.motionDurations,
+      config.animationMetadata,
+      config.crossfade,
     );
     this.armNeutral = {
       left: rig.neutralArm('left', config.armClearance),
@@ -118,17 +123,28 @@ export class HumanoidCharacter {
         max = Vector3.Maximize(max, b.maximumWorld);
         mesh.isPickable = false;
       }
-      const height = max.y - min.y;
+      const sourceHeightAxis = config.sourceHeightAxis ?? 'y';
+      const height = sourceHeightAxis === 'z' ? max.z - min.z : max.y - min.y;
       if (!Number.isFinite(height) || height < 0.01) throw new Error('Invalid character bounds');
       const scale = config.height / height;
       mount = new TransformNode(config.id + '-animated', scene);
       source.parent = mount;
       mount.scaling.setAll(scale);
-      mount.position.set(
-        -(min.x + max.x) * 0.5 * scale,
-        -min.y * scale,
-        -(min.z + max.z) * 0.5 * scale,
-      );
+      if (sourceHeightAxis === 'z') {
+        // A few Sketchfab showcases store a standing person along +Z. With a -90° X correction,
+        // source Z becomes world Y and source Y becomes -world Z.
+        mount.position.set(
+          -(min.x + max.x) * 0.5 * scale,
+          -min.z * scale,
+          (min.y + max.y) * 0.5 * scale,
+        );
+      } else {
+        mount.position.set(
+          -(min.x + max.x) * 0.5 * scale,
+          -min.y * scale,
+          -(min.z + max.z) * 0.5 * scale,
+        );
+      }
       mount.rotationQuaternion = Quaternion.FromEulerAngles(...config.rotation);
       // Capture measurements before parenting under the moving gameplay root.
       const result = new HumanoidCharacter(
@@ -228,12 +244,16 @@ export class HumanoidCharacter {
         ]),
       );
     }
-    this.blend = Math.min(1, this.blend + delta / Math.max(0.001, this.config.crossfade));
+    const policy = controller.policy();
+    this.blend = Math.min(1, this.blend + delta / Math.max(0.001, policy.crossfadeDuration));
     const alpha = this.blend * this.blend * (3 - 2 * this.blend);
     const timing = controller.timing(),
-      t = timing.loop
-        ? controller.time % timing.duration
-        : Math.min(controller.time, timing.duration);
+      loop = resolveLoopTime(
+        controller.time,
+        timing.duration,
+        timing.loop ? policy.loopMode : 'once',
+      ),
+      t = loop.time;
     const motion = sampleMotion(
         controller.action,
         (t / timing.duration) * motionTiming[controller.action].duration,
@@ -247,8 +267,59 @@ export class HumanoidCharacter {
         : (range[0] + (t / timing.duration) * (range[1] - range[0])) * imported.duration
       : 0;
     const seatedOverlay =
-      state.sitting && !['sit_down', 'sit_idle', 'stand_up'].includes(controller.action);
-    imported?.sampleFacial(controller.time, delta);
+      state.sitting &&
+      !['sit_down', 'sit_idle', 'sit_idle_alt', 'sit_talk', 'stand_up'].includes(controller.action);
+    if (this.rootMotionSerial !== controller.serial) {
+      this.rootMotionSerial = controller.serial;
+      this.rootMotionTime = controller.time;
+    } else if (
+      imported &&
+      policy.rootMotion &&
+      !policy.inPlace &&
+      state.applyRootMotion !== false &&
+      !state.sitting
+    ) {
+      // A few exporters animate both a scene root and Hips. Accumulate the complete ancestor
+      // chain so extracting root motion exactly replaces what was removed from the sampled pose.
+      const deltaMotion = this.rig
+        .chainFrom('hips')
+        .filter((joint) => imported.hasTranslation(joint.node))
+        .reduce(
+          (sum, joint) =>
+            sum.addInPlace(
+              imported.rootMotionDelta(
+                joint.node,
+                joint,
+                this.rootMotionTime,
+                controller.time,
+                timing.duration,
+                range,
+                policy.loopMode,
+              ),
+            ),
+          Vector3.Zero(),
+        );
+      const parent = this.root.parent;
+      if (parent instanceof TransformNode && deltaMotion.lengthSquared() > 0) {
+        const parentRotation =
+          parent.rotationQuaternion ?? Quaternion.FromEulerVector(parent.rotation);
+        const modelRotation =
+          this.root.rotationQuaternion ?? Quaternion.FromEulerVector(this.root.rotation);
+        const transform = Matrix.Compose(
+          this.root.scaling,
+          parentRotation.multiply(modelRotation),
+          Vector3.Zero(),
+        );
+        parent.position.addInPlace(Vector3.TransformNormal(deltaMotion, transform));
+      }
+      this.rootMotionTime = controller.time;
+    } else this.rootMotionTime = controller.time;
+    imported?.sampleFacial(
+      clipTime,
+      delta,
+      timing.loop && policy.loopMode === 'repeat',
+      policy.crossfadeDuration,
+    );
     if (seatedOverlay) {
       const seated = sampleMotion('sit_idle', t, this.config.armClearance);
       for (const key of ['leftUpperLeg', 'rightUpperLeg', 'leftLowerLeg', 'rightLowerLeg'] as const)
@@ -259,7 +330,13 @@ export class HumanoidCharacter {
       let rotation: Quaternion,
         position = j.position.clone();
       if (imported && !(seatedOverlay && (key === 'hips' || /Leg|Foot/.test(key)))) {
-        const sampled = imported.sample(j.node, j, clipTime, timing.loop);
+        const sampled = imported.sample(
+          j.node,
+          j,
+          clipTime,
+          timing.loop && policy.loopMode === 'repeat',
+          policy.crossfadeDuration,
+        );
         rotation = sampled.rotation;
         if (key === 'hips') position = sampled.position;
       } else {
@@ -282,7 +359,10 @@ export class HumanoidCharacter {
           let offset = motion.hipOffset;
           if (
             !state.anchoredSeat &&
-            (state.sitting || ['sit_down', 'sit_idle', 'stand_up'].includes(controller.action))
+            (state.sitting ||
+              ['sit_down', 'sit_idle', 'sit_idle_alt', 'sit_talk', 'stand_up'].includes(
+                controller.action,
+              ))
           ) {
             const amount = -motion.hipOffset / 0.5;
             offset =
@@ -300,7 +380,13 @@ export class HumanoidCharacter {
     // Imported clips also animate clavicles, the intermediate spine and fingers.
     // Restore their bind pose smoothly when returning to a procedural action.
     for (const [name, j] of this.rig.extraJoints) {
-      const sampled = imported?.sample(j.node, j, clipTime, timing.loop);
+      const sampled = imported?.sample(
+        j.node,
+        j,
+        clipTime,
+        timing.loop && policy.loopMode === 'repeat',
+        policy.crossfadeDuration,
+      );
       Quaternion.SlerpToRef(
         this.extraFrom.get(name) ?? j.rest,
         sampled?.rotation ?? j.rest,
@@ -338,6 +424,32 @@ export class HumanoidCharacter {
       height: this.config.height,
       hipsToGround: this.restHipHeight - this.restFootHeight,
     };
+  }
+
+  /** Source-space trajectory used by the Animation Studio; gameplay uses the same joint chain. */
+  rootMotionTrajectory(action: HumanoidAction, samples = 48): Vector3[] {
+    const clip = this.clips.get(action);
+    if (!clip) return [Vector3.Zero(), Vector3.Zero()];
+    const range = this.config.clipRanges?.[action] ?? [0, 1];
+    const sources = this.rig.chainFrom('hips').filter((joint) => clip.hasTranslation(joint.node));
+    const combined = Array.from({ length: samples + 1 }, () => Vector3.Zero());
+    for (const joint of sources) {
+      const points = clip.trajectory(joint.node, joint, samples, range);
+      const first = points[0]!;
+      for (const [index, point] of points.entries())
+        combined[index]!.addInPlace(point.subtract(first));
+    }
+    return combined;
+  }
+
+  rootMotionBoneNames(action: HumanoidAction): string[] {
+    const clip = this.clips.get(action);
+    return clip
+      ? this.rig
+          .chainFrom('hips')
+          .filter((joint) => clip.hasTranslation(joint.node))
+          .map((joint) => joint.node.name)
+      : [];
   }
   attachProp(
     prop: TransformNode,

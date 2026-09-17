@@ -43,6 +43,7 @@ export async function exercisePhysics() {
     specialPressed: false,
     throwPressed: false,
     flirtPressed: false,
+    landPressed: false,
     celebratePressed: false,
   };
   const tick = (input = idle): void => {

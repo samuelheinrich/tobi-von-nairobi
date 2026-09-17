@@ -7,6 +7,10 @@ import {
   chrisConfig,
   copConfig,
   fitnessConfig,
+  gabberAnitaConfig,
+  gabberDutchConfig,
+  gabberFemaleConfig,
+  gabberSjonnieConfig,
   hipHopConfig,
   ladyboyConfig,
   miaConfig,
@@ -17,6 +21,18 @@ import {
 import { dancerBeachConfig, dancerClubConfig } from './dancers.js';
 import { townsfolkConfigs } from './townsfolk.js';
 import { glanzmannConfig, joeConfig, joshConfig, womanConfig } from './civilians.js';
+import {
+  blackSuitWomanConfig,
+  casualManConfig,
+  cyberpunkGirlConfig,
+  hippieWorkerConfig,
+  indianOfficerConfig,
+  partyWomanConfig,
+  ruffleDressConfig,
+  sciFiManConfig,
+  xanderConfig,
+  yinnConfig,
+} from './new-cast.js';
 
 /** Which model plays which part, and how often it may appear.
  *
@@ -55,11 +71,12 @@ export interface CastMember {
 const stand = (config: CharacterConfig): CastMember => ({ config, placeholder: true });
 const one = (config: CharacterConfig): CastMember => ({ config, unique: true, placeholder: true });
 
-/** The uniformed roles all share the one model that actually wears a uniform. */
+/** The generic uniform remains the fallback for guards and conductors; the additional officer is
+ * reserved for actual police so he does not appear behind a bar or check railway tickets. */
 const uniformed: CastMember[] = [{ config: copConfig }];
 
 export const cast: Record<CastRole, CastMember[]> = {
-  police: uniformed,
+  police: [...uniformed, { config: indianOfficerConfig }],
   security: uniformed,
   conductor: uniformed,
   cellGuard: uniformed,
@@ -73,6 +90,8 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: joeConfig },
     { config: joshConfig },
     { config: womanConfig },
+    { config: casualManConfig },
+    { config: xanderConfig },
   ],
   expat: [
     stand(townsfolkConfigs[0]!),
@@ -80,6 +99,8 @@ export const cast: Record<CastRole, CastMember[]> = {
     one(samConfig),
     { config: joeConfig },
     { config: joshConfig },
+    { config: casualManConfig },
+    { config: xanderConfig },
   ],
   bargirl: [
     { config: miaConfig },
@@ -87,6 +108,9 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: barWalkerConfig },
     { config: barHeelsConfig },
     stand(valeryConfig),
+    { config: yinnConfig },
+    { config: ruffleDressConfig },
+    { config: blackSuitWomanConfig },
   ],
   // Four bar dancers, each with its own clip, so neighbouring venues never run the same routine.
   dancer: [
@@ -96,28 +120,48 @@ export const cast: Record<CastRole, CastMember[]> = {
     { config: dancerBeachConfig },
     { config: dancerClubConfig },
     { config: hipHopConfig },
+    { config: yinnConfig },
+    { config: ruffleDressConfig },
+    { config: blackSuitWomanConfig },
+    { config: partyWomanConfig, unique: true },
   ],
   ladyboyDancer: [{ config: ladyboyConfig }],
-  vendor: [{ config: womanConfig }, { config: joeConfig }],
+  vendor: [{ config: womanConfig }, { config: joeConfig }, { config: hippieWorkerConfig }],
   taxi: [{ config: joshConfig }, { config: joeConfig }],
-  resident: [{ config: joeConfig }, { config: joshConfig }, { config: womanConfig }],
-  // Public transport and aircraft deliberately use only fully dressed civilians.
-  passenger: [{ config: joeConfig }, { config: joshConfig }, { config: womanConfig }],
-  yoga: [stand(fitnessConfig)],
-  beach: [{ config: fitnessConfig }, stand(townsfolkConfigs[0]!)],
-  // Street Parade. Thin instances carry the route; these are the figures near the camera.
-  //
-  // The four gabbers and the pole dancer are *not* cast, although their configs still exist. Their
-  // rest pose lies flat along Z — head at +3.6, feet at -4.0 — and only the animation stands them
-  // up. The runtime measures a character at rest to scale it, so it reads a height of 0.36 and
-  // scales by five: they rendered between 3.4 and 9 metres tall. Splitting them differently, an
-  // FBX round-trip and baking the wrapper rotation all left it unchanged, so the flat rest pose is
-  // in the downloads themselves. They need re-exporting with a standing rest pose before they can
-  // come back. Placeholders hold the part meanwhile.
-  raver: [
+  resident: [
     { config: joeConfig },
     { config: joshConfig },
     { config: womanConfig },
+    { config: casualManConfig },
+    { config: xanderConfig },
+    { config: hippieWorkerConfig },
+  ],
+  // Public transport and aircraft deliberately use only fully dressed civilians.
+  passenger: [
+    { config: joeConfig },
+    { config: joshConfig },
+    { config: womanConfig },
+    { config: casualManConfig },
+    { config: xanderConfig },
+  ],
+  yoga: [stand(fitnessConfig)],
+  beach: [{ config: fitnessConfig }, stand(townsfolkConfigs[0]!)],
+  // Detailed near-camera Street Parade cast. The four showcase gabbers now use their isolated
+  // standing skins; the original multi-character files and flat animated bind poses stay offline.
+  raver: [
+    { config: gabberAnitaConfig },
+    { config: gabberDutchConfig },
+    { config: gabberFemaleConfig },
+    { config: gabberSjonnieConfig },
+    { config: sciFiManConfig },
+    { config: cyberpunkGirlConfig },
+    { config: joeConfig },
+    { config: joshConfig },
+    { config: womanConfig },
+    { config: casualManConfig },
+    { config: xanderConfig },
+    { config: blackSuitWomanConfig },
+    { config: partyWomanConfig, unique: true },
     stand(dancerBeachConfig),
   ],
   special: [{ config: glanzmannConfig, unique: true }],

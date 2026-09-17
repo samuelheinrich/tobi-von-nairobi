@@ -64,11 +64,11 @@ export const worldNames = {
 } as const;
 export function destinationName(level: { scenery: string }): string {
   return level.scenery === 'aircraft'
-    ? 'Lounge im Oberdeck'
+    ? 'Flughafen-Party'
     : level.scenery === 'hippie-house'
       ? 'WG-Ausgang'
       : level.scenery === 'railway'
-        ? 'Wagen 1'
+        ? 'Phuket Free-Roam'
         : level.scenery === 'street-parade'
           ? 'Hafendamm Enge'
           : level.scenery === 'nana-plaza'
@@ -91,6 +91,8 @@ export {
   zurichWorldBounds,
 } from './zurich.js';
 export { railwayLayout } from './railway.js';
+export { phuketSectors, phuketVehicles, phuketResidents } from './phuket.js';
+export type { PhuketResident, PhuketResidentRole } from './phuket.js';
 export * from './nana-plaza.js';
 
 export { aircraftLayout } from './aircraft.js';

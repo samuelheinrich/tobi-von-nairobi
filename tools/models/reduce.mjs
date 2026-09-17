@@ -28,7 +28,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join, basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { summarise, stripUnusedUVs } from './glb.mjs';
+import { setMaterialAlphaModes, summarise, stripUnusedUVs } from './glb.mjs';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const MODELS = join(repoRoot, 'models');
@@ -49,6 +49,19 @@ const OVERRIDES = {
   'nina-dancer.glb': { target: 30_000 },
   'kayla-dancer.glb': { target: 30_000 },
   'locker_room_glamour-dancer.glb': { target: 30_000 },
+};
+
+/** Exporters occasionally mark an opaque body as BLEND because eyelashes share the texture.
+ * Babylon then depth-sorts the whole head/torso and internal skin/bones become visible. */
+const MATERIAL_ALPHA_OVERRIDES = {
+  'cop.glb': { Body: 'OPAQUE' },
+  'indian_police_cop_3d_model_rigged.glb': {
+    Bodymat: 'OPAQUE',
+    Bottommat: 'OPAQUE',
+    Shoesmat: 'OPAQUE',
+    Topmat: 'OPAQUE',
+    Hatmat: 'OPAQUE',
+  },
 };
 
 const argv = process.argv.slice(2);
@@ -250,6 +263,14 @@ function reduceModel(name) {
     [inp, out] = next('prune');
     gltf('prune', inp, out);
     step = out;
+
+    const alphaModes = MATERIAL_ALPHA_OVERRIDES[basename(name)];
+    if (alphaModes) {
+      [inp, out] = next('material-alpha');
+      const changed = setMaterialAlphaModes(inp, out, alphaModes);
+      step = out;
+      console.log(`  ${changed} Material-Alpha-Modus korrigiert`);
+    }
 
     copyFileSync(step, target);
     const after = summarise(target);

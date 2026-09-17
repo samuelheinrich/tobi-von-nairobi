@@ -8,6 +8,12 @@ export const railwayLayout = {
   seatColumns: [-2.8, 2.8],
   laneHalfWidth: 3.2,
   endWallZ: 47.5,
+  journey: {
+    cruiseSpeed: 14,
+    brakeDuration: 9,
+    brakePosition: { x: 0, y: 1.35, z: 45.8 },
+    exitDoorPosition: { x: -4, y: 1.15, z: 38 },
+  },
   conductor: {
     patrolMin: -30,
     patrolMax: 34,

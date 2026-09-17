@@ -42,8 +42,25 @@ export const actions = [
   'run_away',
   'dance_hard',
   'dance_medium',
+  'drunk_walk',
+  'drunk_walk_alt',
+  'sit_idle_alt',
+  'sit_talk',
+  'walk_circle',
 ] as const;
 export type HumanoidAction = (typeof actions)[number];
+export type AnimationLoopMode = 'repeat' | 'pingpong' | 'once';
+export interface AnimationMetadata {
+  name: HumanoidAction;
+  loopMode: AnimationLoopMode;
+  /** Apply horizontal hips/root travel to the character's gameplay transform. */
+  rootMotion: boolean;
+  /** Remove horizontal translation from the sampled skeleton pose. */
+  inPlace: boolean;
+  crossfadeDuration: number;
+  playbackSpeed?: number;
+  reverseAllowed?: boolean;
+}
 export type Tuple3 = [number, number, number];
 export type BoneMap = Record<HumanoidBone, string>;
 export interface PropAttachmentPreset {
@@ -57,13 +74,15 @@ export interface ClipSource {
   model: string;
   bones: BoneMap;
   animations: Partial<Record<HumanoidAction, string>>;
-  /** Gameplay movement is authoritative; imported wrapper/root translation is discarded. */
+  /** Legacy import flag. New code should use CharacterConfig.animationMetadata. */
   rootMotion?: 'ignore';
 }
 export interface CharacterConfig {
   id: string;
   model: string;
   height: number;
+  /** Axis along which the source mesh stores body height before the configured rotation. */
+  sourceHeightAxis?: 'y' | 'z';
   mouthOffset: Tuple3;
   rotation: Tuple3;
   bones: BoneMap;
@@ -81,6 +100,8 @@ export interface CharacterConfig {
   crossfade: number;
   throwReleaseTime: number;
   motionDurations?: Partial<Record<HumanoidAction, number>>;
+  /** Explicit clip policy. No runtime name guessing is used. */
+  animationMetadata?: Partial<Record<HumanoidAction, Partial<AnimationMetadata>>>;
   /** Normalized source-clip windows; retain the complete source asset for the studio. */
   clipRanges?: Partial<Record<HumanoidAction, [number, number]>>;
 }
@@ -91,6 +112,8 @@ export interface AnimationState {
   drinking: boolean;
   holding: boolean;
   victory?: boolean;
+  /** False when navigation/AI already writes the character world transform this frame. */
+  applyRootMotion?: boolean;
   /** Seat surface above the character origin, in game metres. */
   seatHeight?: number;
   /** A SeatAnchor will solve the sampled pelvis pose; disables the legacy foot-origin correction. */

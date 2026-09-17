@@ -7,8 +7,17 @@ export function buildPlaza(b: NanaBuilder): void {
   const h = nanaWorld.floorHeight;
   for (let floor = 0; floor < 3; floor++) {
     const y = floor * h;
+    // The authored walk surface sits clear of the island base. Side wings end where the rear
+    // gallery starts; the old 62 m slabs overlapped it by 14 m and caused severe Z-fighting.
+    const surfaceY = floor === 0 ? y + 0.025 : y;
     for (const side of [-1, 1]) {
-      b.solid(`nana-floor-${floor}`, [16, 0.24, 62], [side * 24, y - 0.12, 35], '#66525a', false);
+      b.solid(
+        `nana-floor-${floor}`,
+        [16, 0.24, 48],
+        [side * 24, surfaceY - 0.12, 28],
+        '#66525a',
+        false,
+      );
       b.solid('plaza-exterior', [0.3, h, 62], [side * 32, y + h / 2, 35], '#403d49', floor === 0);
       if (floor > 0) {
         // Small gaps between bars and courtyard remain fully protected by real rail collision.
@@ -31,12 +40,12 @@ export function buildPlaza(b: NanaBuilder): void {
         true,
       );
     }
-    b.solid(`nana-rear-floor-${floor}`, [64, 0.24, 14], [0, y - 0.12, 59], '#6a5553', false);
+    b.solid(`nana-rear-floor-${floor}`, [64, 0.24, 14], [0, surfaceY - 0.12, 59], '#6a5553', false);
     for (const side of [-1, 1])
       b.solid('back-wall', [27, h, 0.25], [side * 18.5, y + h / 2, 66], '#37303f', floor === 0);
     if (floor > 0)
       b.solid('rear-gallery-railing', [32, 1.15, 0.14], [0, y + 0.58, 52], '#435264', false);
-    b.solid('stair-front-landing', [10, 0.24, 2], [0, y - 0.12, 67], '#8e919c', false);
+    b.solid('stair-front-landing', [10, 0.24, 2], [0, surfaceY - 0.12, 67], '#8e919c', false);
     for (const x of [-5, 5])
       b.solid('stairwell-wall', [0.25, h, 18], [x, y + h / 2, 76], '#484857', floor === 0);
     b.solid('stairwell-back', [10, h, 0.25], [0, y + h / 2, 85], '#484857', floor === 0);

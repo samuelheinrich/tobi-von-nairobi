@@ -1,5 +1,5 @@
 import type { Position3 } from './input.js';
-export type VehicleKind = 'scooter' | 'boat';
+export type VehicleKind = 'scooter' | 'boat' | 'tuk-tuk';
 export interface LandingZone {
   id: string;
   mooring: Position3;

@@ -56,6 +56,20 @@ const dancerBase = {
   runSpeed: 8,
   cycleSpeeds: { walk: 2.2, run: 4.4 },
   crossfade: 0.2,
+  animationMetadata: {
+    dance: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.25,
+    },
+    celebrate: {
+      loopMode: 'repeat' as const,
+      rootMotion: false,
+      inPlace: true,
+      crossfadeDuration: 0.25,
+    },
+  },
   throwReleaseTime: 0.4,
 };
 

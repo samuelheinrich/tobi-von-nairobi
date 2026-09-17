@@ -304,7 +304,7 @@ export function App() {
             <div className="result-star">✳</div>
             <h2>
               {level.scenery === 'aircraft'
-                ? 'Economy gebucht. Lounge erreicht.'
+                ? 'Gelandet. Terminal-Party erreicht.'
                 : level.scenery === 'hippie-house'
                   ? 'Namaste. Und tschüss.'
                   : level.scenery === 'railway'
@@ -321,10 +321,8 @@ export function App() {
             </h2>
             <div className="result-stats">
               <div>
-                <span>{view.cabin ? 'ZURÜCKGESCHICKT' : 'FLASCHEN'}</span>
-                <strong>
-                  {view.cabin ? view.cabin.returns : `${view.collected}/${view.total}`}
-                </strong>
+                <span>{view.flight ? 'LANDUNG' : 'FLASCHEN'}</span>
+                <strong>{view.flight ? 'GESCHAFFT' : `${view.collected}/${view.total}`}</strong>
               </div>
               <div>
                 <span>ZEIT</span>

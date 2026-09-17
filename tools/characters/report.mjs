@@ -83,10 +83,56 @@ export function report(file) {
         const ac = d.accessors[s.input];
         return ac.min && ac.max ? [ac.min[0], ac.max[0]] : accessor(d, bin, s.input).flat();
       });
+      const rotationTracks = a.channels.flatMap((channel) => {
+        if (channel.target.path !== 'rotation') return [];
+        const sampler = a.samplers[channel.sampler],
+          values = accessor(d, bin, sampler.output),
+          first = values[0],
+          last = values.at(-1),
+          firstLength = Math.hypot(...first),
+          lastLength = Math.hypot(...last),
+          dot = Math.min(
+            1,
+            Math.abs(
+              first.reduce((sum, value, index) => sum + value * last[index], 0) /
+                Math.max(0.000001, firstLength * lastLength),
+            ),
+          );
+        return [
+          {
+            node: d.nodes[channel.target.node]?.name ?? String(channel.target.node),
+            endpointAngle: 2 * Math.acos(dot),
+          },
+        ];
+      });
       return {
         name: a.name,
         duration: Math.max(...times) - Math.min(...times),
         channels: a.channels.length,
+        translationTracks: a.channels.flatMap((channel) => {
+          if (channel.target.path !== 'translation') return [];
+          const sampler = a.samplers[channel.sampler],
+            values = accessor(d, bin, sampler.output),
+            first = values[0],
+            last = values.at(-1),
+            delta = last.map((value, index) => value - first[index]);
+          return [
+            {
+              node: d.nodes[channel.target.node]?.name ?? String(channel.target.node),
+              start: first,
+              end: last,
+              delta,
+              horizontal: Math.hypot(delta[0] ?? 0, delta[2] ?? 0),
+            },
+          ];
+        }),
+        maximumRotationSeam: rotationTracks.reduce(
+          (maximum, track) => Math.max(maximum, track.endpointAngle),
+          0,
+        ),
+        worstRotationSeams: rotationTracks
+          .sort((left, right) => right.endpointAngle - left.endpointAngle)
+          .slice(0, 5),
       };
     }),
     geometryBounds: (d.meshes ?? []).flatMap((m) =>

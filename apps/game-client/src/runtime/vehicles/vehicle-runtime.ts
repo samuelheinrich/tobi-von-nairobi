@@ -5,13 +5,18 @@ import type { HavokWorld } from '../physics/havok-world.js';
 import { ScooterVehicle } from './scooter-vehicle.js';
 import { BoatVehicle } from './boat-vehicle.js';
 import type { VehicleBase } from './vehicle-base.js';
+import { TukTukVehicle } from './tuk-tuk-vehicle.js';
 export class VehicleRuntime {
   public readonly vehicles: VehicleBase[];
   public active: VehicleBase | null = null;
   public message = '';
   constructor(scene: Scene, world: HavokWorld, definitions: readonly VehicleDefinition[]) {
     this.vehicles = definitions.map((d) =>
-      d.kind === 'boat' ? new BoatVehicle(scene, world, d) : new ScooterVehicle(scene, world, d),
+      d.kind === 'boat'
+        ? new BoatVehicle(scene, world, d)
+        : d.kind === 'tuk-tuk'
+          ? new TukTukVehicle(scene, world, d)
+          : new ScooterVehicle(scene, world, d),
     );
   }
   private nearest(position: Position3) {
@@ -20,7 +25,7 @@ export class VehicleRuntime {
         (v) =>
           !v.driver &&
           Vector3.Distance(v.position, new Vector3(position.x, position.y, position.z)) <
-            (v.definition.kind === 'boat' ? 9 : 3.5),
+            (v.definition.kind === 'boat' ? 9 : v.definition.kind === 'tuk-tuk' ? 5 : 3.5),
       )
       .sort(
         (a, b) =>

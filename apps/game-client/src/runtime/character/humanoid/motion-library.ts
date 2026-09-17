@@ -24,6 +24,11 @@ export const motionTiming: Record<HumanoidAction, { duration: number; loop: bool
   run_away: { duration: 1.83, loop: true },
   dance_hard: { duration: 10.83, loop: true },
   dance_medium: { duration: 2.33, loop: true },
+  drunk_walk: { duration: 3, loop: true },
+  drunk_walk_alt: { duration: 2.5, loop: true },
+  sit_idle_alt: { duration: 6.4, loop: true },
+  sit_talk: { duration: 44.07, loop: true },
+  walk_circle: { duration: 17.37, loop: true },
 };
 export interface MotionPose {
   rotations: Partial<Record<HumanoidBone, Quaternion>>;
@@ -33,13 +38,20 @@ export interface MotionPose {
  * Sampling these curves has no dependency on Tobi or a particular skeleton. */
 export function sampleMotion(action: HumanoidAction, t: number, clearance: number): MotionPose {
   const fallbackAction: HumanoidAction =
-    action === 'walk_alt' || action === 'walk_alt_2' || action === 'walk_backward'
+    action === 'walk_alt' ||
+    action === 'walk_alt_2' ||
+    action === 'walk_backward' ||
+    action === 'drunk_walk' ||
+    action === 'drunk_walk_alt' ||
+    action === 'walk_circle'
       ? 'walk'
       : action === 'run_away'
         ? 'run'
         : action === 'dance_hard' || action === 'dance_medium'
           ? 'dance'
-          : action;
+          : action === 'sit_idle_alt' || action === 'sit_talk'
+            ? 'sit_idle'
+            : action;
   const p = Math.min(1, t / motionTiming[action].duration),
     wave = Math.sin(p * Math.PI * 2);
   const r: Partial<Record<HumanoidBone, Tuple3>> = { chest: [0.018 * Math.sin(t * 3), 0, 0] };
@@ -94,9 +106,20 @@ export function sampleMotion(action: HumanoidAction, t: number, clearance: numbe
     set('chest', 0.08);
     hipOffset = action === 'jump_loop' ? 0 : -crouch * 0.25;
   }
-  if (action === 'sit_down' || action === 'sit_idle' || action === 'stand_up') {
+  if (
+    action === 'sit_down' ||
+    action === 'sit_idle' ||
+    action === 'sit_idle_alt' ||
+    action === 'sit_talk' ||
+    action === 'stand_up'
+  ) {
     const smooth = (x: number) => x * x * (3 - 2 * x);
-    const amount = action === 'sit_idle' ? 1 : action === 'stand_up' ? 1 - smooth(p) : smooth(p);
+    const amount =
+      action === 'sit_idle' || action === 'sit_idle_alt' || action === 'sit_talk'
+        ? 1
+        : action === 'stand_up'
+          ? 1 - smooth(p)
+          : smooth(p);
     set('leftUpperLeg', (-Math.PI / 2) * amount);
     set('rightUpperLeg', (-Math.PI / 2) * amount);
     set('leftLowerLeg', (Math.PI / 2) * amount);

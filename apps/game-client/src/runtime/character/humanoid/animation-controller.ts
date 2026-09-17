@@ -1,5 +1,6 @@
-import type { AnimationState, HumanoidAction } from './schema.js';
+import type { AnimationMetadata, AnimationState, HumanoidAction } from './schema.js';
 import { motionTiming } from './motion-library.js';
+import { animationMetadata } from './animation-metadata.js';
 
 export interface AnimationMarker {
   action: HumanoidAction;
@@ -25,16 +26,28 @@ export class CharacterAnimationController {
       { action: 'throw_bottle', name: 'release', normalizedTime: releaseTime },
     ],
     private readonly durations: Partial<Record<HumanoidAction, number>> = {},
+    private readonly metadata: Partial<Record<HumanoidAction, Partial<AnimationMetadata>>> = {},
+    private readonly crossfade = 0.18,
   ) {
     if (markers.some((m) => m.normalizedTime <= 0 || m.normalizedTime >= 1))
       throw new Error('Animation marker must be inside the clip');
   }
   timing(action = this.action) {
+    const policy = animationMetadata(
+      { crossfade: this.crossfade, animationMetadata: this.metadata },
+      action,
+    );
     return {
       ...motionTiming[action],
-      loop: motionTiming[action].loop && !(action === this.action && this.oneShot),
+      loop: policy.loopMode !== 'once' && !(action === this.action && this.oneShot),
       duration: this.durations[action] ?? motionTiming[action].duration,
     };
+  }
+  policy(action = this.action): AnimationMetadata {
+    return animationMetadata(
+      { crossfade: this.crossfade, animationMetadata: this.metadata },
+      action,
+    );
   }
   get busy(): boolean {
     return this.action === 'throw_bottle' && this.time < this.timing('throw_bottle').duration;
@@ -103,7 +116,11 @@ export class CharacterAnimationController {
           ? Math.max(0.65, Math.min(2.2, state.speed / cycleSpeeds.run))
           : 1;
     const before = this.time;
-    this.time += Math.max(0, delta) * this.playbackSpeed * (this.override ? 1 : rate);
+    this.time +=
+      Math.max(0, delta) *
+      this.playbackSpeed *
+      (this.policy().playbackSpeed ?? 1) *
+      (this.override ? 1 : rate);
     for (const marker of this.markers) {
       if (marker.action !== this.action || this.emitted.has(marker.name)) continue;
       const at = this.timing().duration * marker.normalizedTime;
