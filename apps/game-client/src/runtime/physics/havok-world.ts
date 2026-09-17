@@ -53,6 +53,42 @@ export class HavokWorld {
     }
     return handle;
   }
+
+  /** Every solid body in the level, as plain numbers.
+   *
+   * Level geometry is built, never described: it exists only as Babylon meshes inside a running
+   * scene, so nothing outside the browser could check it. Railings, open edges, doorway widths
+   * and vehicle routes through walls were all unverifiable for that reason.
+   *
+   * This reads the bodies back out of the finished scene. `tools/levels/capture-geometry.mjs`
+   * snapshots it per level and the validator checks the snapshot offline.
+   */
+  public describeGeometry(): {
+    name: string;
+    walkable: boolean;
+    min: [number, number, number];
+    max: [number, number, number];
+  }[] {
+    const out = [];
+    for (const handle of this.colliders) {
+      const mesh = handle.source;
+      if (!mesh || mesh.isDisposed()) continue;
+      mesh.computeWorldMatrix(true);
+      const box = mesh.getBoundingInfo().boundingBox;
+      const round = (v: { x: number; y: number; z: number }): [number, number, number] => [
+        Number(v.x.toFixed(2)),
+        Number(v.y.toFixed(2)),
+        Number(v.z.toFixed(2)),
+      ];
+      out.push({
+        name: mesh.name,
+        walkable: mesh.metadata?.collision?.walkable === true,
+        min: round(box.minimumWorld),
+        max: round(box.maximumWorld),
+      });
+    }
+    return out;
+  }
   public remove(handle: ColliderHandle): void {
     this.registered.delete(handle.source);
     const index = this.colliders.indexOf(handle);

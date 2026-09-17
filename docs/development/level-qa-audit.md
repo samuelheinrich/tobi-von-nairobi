@@ -78,11 +78,32 @@ Prüfungen darauf (`checks.mjs`), und pro Level ein Adapter (`adapters.mjs`), de
 | `ROUTE_THROUGH_SOLID`                              | Fahrweg durch ein Gebäude                                       |
 | `ROUTE_OUT_OF_BOUNDS`                              | Fahrweg verlässt die Welt                                       |
 
-### Was es noch nicht prüft, und warum
+### Geometrie-Register — der Engpass ist aufgelöst
 
-Geländer, offene Kanten, Türbreiten, Sitzbelegung, Deckenlücken und Z-Fighting sind **nicht**
-abgedeckt. Alle brauchen die Geometrie, die im Client entsteht. Sie kommen, sobald die Levels ihre
-Geometrie beschreiben statt sie nur zu bauen.
+`HavokWorld.describeGeometry()` liest die fertigen Kollisionskörper aus der laufenden Szene zurück.
+`tools/levels/capture-geometry.mjs` fährt den Devserver, öffnet jedes Level und legt die Körper
+unter `tools/levels/geometry/<level>.json` ab. Der Validator prüft den Schnappschuss offline.
+
+Erfasst sind **2'349 Körper aus sieben Levels**. Damit greifen zwei Prüfungen, die vorher unmöglich
+waren:
+
+| Prüfung                 | Was sie findet                                        |
+| ----------------------- | ----------------------------------------------------- |
+| `VOID_IN_PLAYABLE_AREA` | erklärte Spielfläche ohne Boden darunter              |
+| `UNRAILED_EDGE`         | begehbare Fläche mit Absturzkante und ohne Begrenzung |
+
+Nach jeder Änderung an Level-Geometrie muss `capture-geometry.mjs` neu laufen; die Schnappschüsse
+liegen im Repository, damit der Validator ohne Browser auskommt.
+
+**Boden von Wand unterscheidet sich über die Form, nicht über das Flag.** `prop(solid)` setzt
+`walkable: true` pauschal — jedes Dach, jede Fassade trägt dasselbe Kennzeichen. Eine Fläche gilt
+hier als begehbar, wenn sie höchstens 1,2 m dick und in beiden Grundrissachsen mindestens 1,5 m
+breit ist; als Begrenzung zählt, was mindestens 0,8 m hoch ist.
+
+### Was weiterhin fehlt
+
+Türbreiten, Sitzbelegung, Deckenlücken und Z-Fighting. Türen und Sitze brauchen eine Auszeichnung
+im Level, keine Form-Heuristik.
 
 ## Vier Irrtümer aus dem ersten Lauf
 
@@ -100,13 +121,26 @@ der Levels — das gehört genauso dokumentiert:
 
 Ein Validator, der falsch meldet, ist schlimmer als keiner — man gewöhnt sich das Wegsehen an.
 
+## Zweiter Durchgang, mit Geometrie
+
+67 Befunde. Die zwei schwersten:
+
+- **Zürich: 36 % der erklärten Spielfläche hat keinen Boden darunter** (939 von 2'640 Stichproben).
+  Die `navigationBounds` decken 236 × 174 m, der tatsächliche Boden nur die Insel plus einen
+  Nordstreifen. Das ist das «man landet im Nirgendwo».
+- **47 Flächen ohne Absturzsicherung**, darunter `hb-glass-roof` in 11,6 m Höhe und mehrere
+  Phuket-Venue-Dächer in 6 bis 8 m.
+
+Die Dächer sind kein Zufall: weil `prop(solid)` alles als begehbar auszeichnet, wird jedes Dach zur
+Plattform, die der Spieler betreten und von der er fallen kann. Entweder gehören Dächer als
+nicht begehbar markiert, oder sie brauchen Geländer. Beides ist eine Entscheidung pro Fläche, keine
+Sammelkorrektur.
+
 ## Nächste Schritte, in dieser Reihenfolge
 
-1. **Geometrie beschreibbar machen.** Solange Boden, Wände, Geländer und Türen nur im Client
-   entstehen, sind die wichtigsten Problemklassen aus deiner Liste nicht prüfbar. Der kleinste
-   tragfähige Schritt: die Szenen-Bauer melden ihre Kollisionskörper an ein Register, das der
-   Validator lesen kann.
-2. **Flaschen zurückbringen** in Bahn, Flugzeug und Bali-Adventure, nach dem Standard unten.
+1. ~~Geometrie beschreibbar machen~~ — erledigt, siehe oben.
+2. **Flaschen zurückbringen** in Bahn, Flugzeug und Bali-Adventure.
 3. **Phuket reparieren** — Partystrasse verlegen oder Häuserband versetzen, NPCs von den Fahrbahnen
    holen.
 4. **Weltgrenzen ergänzen** für die vier Level ohne `navigationBounds`.
+5. **Zürich überarbeiten** — Boden unter der Spielfläche, Weg nach Stadelhofen, Zugtrasse.

@@ -1,0 +1,5289 @@
+{
+ "level": "thailand_railway",
+ "bounds": {
+  "minX": -205,
+  "maxX": 20,
+  "minZ": -110,
+  "maxZ": 110
+ },
+ "bodies": [
+  {
+   "name": "phuket-island-ground",
+   "walkable": true,
+   "min": [
+    -208,
+    -1.1,
+    -110
+   ],
+   "max": [
+    -12,
+    -0.5,
+    110
+   ]
+  },
+  {
+   "name": "phuket-main-road",
+   "walkable": true,
+   "min": [
+    -192,
+    -0.48,
+    -7.5
+   ],
+   "max": [
+    -18,
+    -0.36,
+    7.5
+   ]
+  },
+  {
+   "name": "phuket-party-road",
+   "walkable": true,
+   "min": [
+    -165,
+    -0.46,
+    14
+   ],
+   "max": [
+    -87,
+    -0.34,
+    28
+   ]
+  },
+  {
+   "name": "phuket-market-road",
+   "walkable": true,
+   "min": [
+    -142,
+    -0.45,
+    -52
+   ],
+   "max": [
+    -80,
+    -0.35,
+    -42
+   ]
+  },
+  {
+   "name": "phuket-sidewalk",
+   "walkable": true,
+   "min": [
+    -192,
+    -0.43,
+    -12.5
+   ],
+   "max": [
+    -18,
+    -0.18,
+    -7.5
+   ]
+  },
+  {
+   "name": "phuket-sidewalk",
+   "walkable": true,
+   "min": [
+    -192,
+    -0.43,
+    7.5
+   ],
+   "max": [
+    -18,
+    -0.18,
+    12.5
+   ]
+  },
+  {
+   "name": "phuket-station-approach",
+   "walkable": true,
+   "min": [
+    -50,
+    -0.33,
+    28
+   ],
+   "max": [
+    -22,
+    0.02,
+    36
+   ]
+  },
+  {
+   "name": "phuket-enterable-floor",
+   "walkable": true,
+   "min": [
+    -53.6,
+    -0.35,
+    13
+   ],
+   "max": [
+    -46.4,
+    -0.15,
+    23
+   ]
+  },
+  {
+   "name": "phuket-enterable-back",
+   "walkable": true,
+   "min": [
+    -53.6,
+    -0.2,
+    22.86
+   ],
+   "max": [
+    -46.4,
+    5.3,
+    23.14
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -53.74,
+    -0.2,
+    13
+   ],
+   "max": [
+    -53.46,
+    5.3,
+    23
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -46.54,
+    -0.2,
+    13
+   ],
+   "max": [
+    -46.26,
+    5.3,
+    23
+   ]
+  },
+  {
+   "name": "phuket-walkable-roof",
+   "walkable": true,
+   "min": [
+    -53.8,
+    5.3,
+    12.8
+   ],
+   "max": [
+    -46.2,
+    5.6,
+    23.2
+   ]
+  },
+  {
+   "name": "phuket-shop-counter",
+   "walkable": true,
+   "min": [
+    -52,
+    -0.41,
+    19.8
+   ],
+   "max": [
+    -48,
+    0.64,
+    20.6
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -61.8,
+    -0.35,
+    -25.2
+   ],
+   "max": [
+    -54.6,
+    6.65,
+    -15.2
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -70,
+    -0.35,
+    17.4
+   ],
+   "max": [
+    -62.8,
+    8.15,
+    27.4
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -78.2,
+    -0.35,
+    -23
+   ],
+   "max": [
+    -71,
+    9.65,
+    -13
+   ]
+  },
+  {
+   "name": "phuket-enterable-floor",
+   "walkable": true,
+   "min": [
+    -86.4,
+    -0.35,
+    15.2
+   ],
+   "max": [
+    -79.2,
+    -0.15,
+    25.2
+   ]
+  },
+  {
+   "name": "phuket-enterable-back",
+   "walkable": true,
+   "min": [
+    -86.4,
+    -0.2,
+    25.06
+   ],
+   "max": [
+    -79.2,
+    5.3,
+    25.34
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -86.54,
+    -0.2,
+    15.2
+   ],
+   "max": [
+    -86.26,
+    5.3,
+    25.2
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -79.34,
+    -0.2,
+    15.2
+   ],
+   "max": [
+    -79.06,
+    5.3,
+    25.2
+   ]
+  },
+  {
+   "name": "phuket-walkable-roof",
+   "walkable": true,
+   "min": [
+    -86.6,
+    5.3,
+    15
+   ],
+   "max": [
+    -79,
+    5.6,
+    25.4
+   ]
+  },
+  {
+   "name": "phuket-shop-counter",
+   "walkable": true,
+   "min": [
+    -84.8,
+    -0.41,
+    22
+   ],
+   "max": [
+    -80.8,
+    0.64,
+    22.8
+   ]
+  },
+  {
+   "name": "phuket-roof-ramp",
+   "walkable": true,
+   "min": [
+    -79,
+    2.28,
+    15.2
+   ],
+   "max": [
+    -77,
+    2.63,
+    25.2
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -94.6,
+    -0.35,
+    -27.4
+   ],
+   "max": [
+    -87.4,
+    6.65,
+    -17.4
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -102.8,
+    -0.35,
+    13
+   ],
+   "max": [
+    -95.6,
+    8.15,
+    23
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -111,
+    -0.35,
+    -25.2
+   ],
+   "max": [
+    -103.8,
+    9.65,
+    -15.2
+   ]
+  },
+  {
+   "name": "phuket-enterable-floor",
+   "walkable": true,
+   "min": [
+    -119.2,
+    -0.35,
+    17.4
+   ],
+   "max": [
+    -112,
+    -0.15,
+    27.4
+   ]
+  },
+  {
+   "name": "phuket-enterable-back",
+   "walkable": true,
+   "min": [
+    -119.2,
+    -0.2,
+    27.26
+   ],
+   "max": [
+    -112,
+    5.3,
+    27.54
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -119.34,
+    -0.2,
+    17.4
+   ],
+   "max": [
+    -119.06,
+    5.3,
+    27.4
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -112.14,
+    -0.2,
+    17.4
+   ],
+   "max": [
+    -111.86,
+    5.3,
+    27.4
+   ]
+  },
+  {
+   "name": "phuket-walkable-roof",
+   "walkable": true,
+   "min": [
+    -119.4,
+    5.3,
+    17.2
+   ],
+   "max": [
+    -111.8,
+    5.6,
+    27.6
+   ]
+  },
+  {
+   "name": "phuket-shop-counter",
+   "walkable": true,
+   "min": [
+    -117.6,
+    -0.41,
+    24.2
+   ],
+   "max": [
+    -113.6,
+    0.64,
+    25
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -127.4,
+    -0.35,
+    -23
+   ],
+   "max": [
+    -120.2,
+    6.65,
+    -13
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -135.6,
+    -0.35,
+    15.2
+   ],
+   "max": [
+    -128.4,
+    8.15,
+    25.2
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -143.8,
+    -0.35,
+    -27.4
+   ],
+   "max": [
+    -136.6,
+    9.65,
+    -17.4
+   ]
+  },
+  {
+   "name": "phuket-enterable-floor",
+   "walkable": true,
+   "min": [
+    -152,
+    -0.35,
+    13
+   ],
+   "max": [
+    -144.8,
+    -0.15,
+    23
+   ]
+  },
+  {
+   "name": "phuket-enterable-back",
+   "walkable": true,
+   "min": [
+    -152,
+    -0.2,
+    22.86
+   ],
+   "max": [
+    -144.8,
+    5.3,
+    23.14
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -152.14,
+    -0.2,
+    13
+   ],
+   "max": [
+    -151.86,
+    5.3,
+    23
+   ]
+  },
+  {
+   "name": "phuket-enterable-side",
+   "walkable": true,
+   "min": [
+    -144.94,
+    -0.2,
+    13
+   ],
+   "max": [
+    -144.66,
+    5.3,
+    23
+   ]
+  },
+  {
+   "name": "phuket-walkable-roof",
+   "walkable": true,
+   "min": [
+    -152.2,
+    5.3,
+    12.8
+   ],
+   "max": [
+    -144.6,
+    5.6,
+    23.2
+   ]
+  },
+  {
+   "name": "phuket-shop-counter",
+   "walkable": true,
+   "min": [
+    -150.4,
+    -0.41,
+    19.8
+   ],
+   "max": [
+    -146.4,
+    0.64,
+    20.6
+   ]
+  },
+  {
+   "name": "phuket-roof-ramp",
+   "walkable": true,
+   "min": [
+    -144.6,
+    2.28,
+    13
+   ],
+   "max": [
+    -142.6,
+    2.63,
+    23
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -160.2,
+    -0.35,
+    -25.2
+   ],
+   "max": [
+    -153,
+    6.65,
+    -15.2
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -168.4,
+    -0.35,
+    17.4
+   ],
+   "max": [
+    -161.2,
+    8.15,
+    27.4
+   ]
+  },
+  {
+   "name": "phuket-facade-building",
+   "walkable": true,
+   "min": [
+    -176.6,
+    -0.35,
+    -23
+   ],
+   "max": [
+    -169.4,
+    9.65,
+    -13
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -110,
+    -0.35,
+    27.5
+   ],
+   "max": [
+    -96,
+    -0.15,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -110,
+    -0.3,
+    42.35
+   ],
+   "max": [
+    -96,
+    5.7,
+    42.65
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -110.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -109.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -96.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -95.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -110.2,
+    5.75,
+    27.3
+   ],
+   "max": [
+    -95.8,
+    6.05,
+    42.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -109.9,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -107.7,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -98.3,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -96.1,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -106.85,
+    -0.23,
+    36
+   ],
+   "max": [
+    -99.15,
+    0.23,
+    40
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -108.44,
+    -0.22,
+    31.5
+   ],
+   "max": [
+    -106.24,
+    0.53,
+    38.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -99.71,
+    -0.41,
+    29.95
+   ],
+   "max": [
+    -97.61,
+    0.64,
+    36.45
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -126,
+    -0.35,
+    27.5
+   ],
+   "max": [
+    -112,
+    -0.15,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -126,
+    -0.3,
+    42.35
+   ],
+   "max": [
+    -112,
+    5.7,
+    42.65
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -126.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -125.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -112.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -111.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -126.2,
+    5.75,
+    27.3
+   ],
+   "max": [
+    -111.8,
+    6.05,
+    42.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -125.9,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -123.7,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -114.3,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -112.1,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -122.85,
+    -0.23,
+    36
+   ],
+   "max": [
+    -115.15,
+    0.23,
+    40
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -124.44,
+    -0.22,
+    31.5
+   ],
+   "max": [
+    -122.24,
+    0.53,
+    38.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -115.71,
+    -0.41,
+    29.95
+   ],
+   "max": [
+    -113.61,
+    0.64,
+    36.45
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -142,
+    -0.35,
+    27.5
+   ],
+   "max": [
+    -128,
+    -0.15,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -142,
+    -0.3,
+    42.35
+   ],
+   "max": [
+    -128,
+    5.7,
+    42.65
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -142.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -141.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -128.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -127.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -142.2,
+    5.75,
+    27.3
+   ],
+   "max": [
+    -127.8,
+    6.05,
+    42.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -141.9,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -139.7,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -130.3,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -128.1,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -138.85,
+    -0.23,
+    36
+   ],
+   "max": [
+    -131.15,
+    0.23,
+    40
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -140.44,
+    -0.22,
+    31.5
+   ],
+   "max": [
+    -138.24,
+    0.53,
+    38.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -131.71,
+    -0.41,
+    29.95
+   ],
+   "max": [
+    -129.61,
+    0.64,
+    36.45
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -158,
+    -0.35,
+    27.5
+   ],
+   "max": [
+    -144,
+    -0.15,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -158,
+    -0.3,
+    42.35
+   ],
+   "max": [
+    -144,
+    5.7,
+    42.65
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -158.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -157.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -144.15,
+    -0.3,
+    27.5
+   ],
+   "max": [
+    -143.85,
+    5.7,
+    42.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -158.2,
+    5.75,
+    27.3
+   ],
+   "max": [
+    -143.8,
+    6.05,
+    42.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -157.9,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -155.7,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -146.3,
+    -0.3,
+    27.35
+   ],
+   "max": [
+    -144.1,
+    5.7,
+    27.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -154.85,
+    -0.23,
+    36
+   ],
+   "max": [
+    -147.15,
+    0.23,
+    40
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -156.44,
+    -0.22,
+    31.5
+   ],
+   "max": [
+    -154.24,
+    0.53,
+    38.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -147.71,
+    -0.41,
+    29.95
+   ],
+   "max": [
+    -145.61,
+    0.64,
+    36.45
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -118,
+    -0.35,
+    -0.5
+   ],
+   "max": [
+    -104,
+    -0.15,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -118,
+    -0.3,
+    -0.65
+   ],
+   "max": [
+    -104,
+    5.7,
+    -0.35
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -118.15,
+    -0.3,
+    -0.5
+   ],
+   "max": [
+    -117.85,
+    5.7,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -104.15,
+    -0.3,
+    -0.5
+   ],
+   "max": [
+    -103.85,
+    5.7,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -118.2,
+    5.75,
+    -0.7
+   ],
+   "max": [
+    -103.8,
+    6.05,
+    14.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -117.9,
+    -0.3,
+    14.35
+   ],
+   "max": [
+    -115.7,
+    5.7,
+    14.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -106.3,
+    -0.3,
+    14.35
+   ],
+   "max": [
+    -104.1,
+    5.7,
+    14.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -114.85,
+    -0.23,
+    2
+   ],
+   "max": [
+    -107.15,
+    0.23,
+    6
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -116.44,
+    -0.22,
+    3.5
+   ],
+   "max": [
+    -114.24,
+    0.53,
+    10.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -107.71,
+    -0.41,
+    5.55
+   ],
+   "max": [
+    -105.61,
+    0.64,
+    12.05
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -136,
+    -0.35,
+    -0.5
+   ],
+   "max": [
+    -122,
+    -0.15,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -136,
+    -0.3,
+    -0.65
+   ],
+   "max": [
+    -122,
+    5.7,
+    -0.35
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -136.15,
+    -0.3,
+    -0.5
+   ],
+   "max": [
+    -135.85,
+    5.7,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -122.15,
+    -0.3,
+    -0.5
+   ],
+   "max": [
+    -121.85,
+    5.7,
+    14.5
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -136.2,
+    5.75,
+    -0.7
+   ],
+   "max": [
+    -121.8,
+    6.05,
+    14.7
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -135.9,
+    -0.3,
+    14.35
+   ],
+   "max": [
+    -133.7,
+    5.7,
+    14.65
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -124.3,
+    -0.3,
+    14.35
+   ],
+   "max": [
+    -122.1,
+    5.7,
+    14.65
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -132.85,
+    -0.23,
+    2
+   ],
+   "max": [
+    -125.15,
+    0.23,
+    6
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -134.44,
+    -0.22,
+    3.5
+   ],
+   "max": [
+    -132.24,
+    0.53,
+    10.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -125.71,
+    -0.41,
+    5.55
+   ],
+   "max": [
+    -123.61,
+    0.64,
+    12.05
+   ]
+  },
+  {
+   "name": "phuket-venue-floor",
+   "walkable": true,
+   "min": [
+    -158,
+    -0.35,
+    -3
+   ],
+   "max": [
+    -140,
+    -0.15,
+    17
+   ]
+  },
+  {
+   "name": "phuket-venue-back",
+   "walkable": true,
+   "min": [
+    -158,
+    -0.3,
+    -3.15
+   ],
+   "max": [
+    -140,
+    7.7,
+    -2.85
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -158.15,
+    -0.3,
+    -3
+   ],
+   "max": [
+    -157.85,
+    7.7,
+    17
+   ]
+  },
+  {
+   "name": "phuket-venue-side",
+   "walkable": true,
+   "min": [
+    -140.15,
+    -0.3,
+    -3
+   ],
+   "max": [
+    -139.85,
+    7.7,
+    17
+   ]
+  },
+  {
+   "name": "phuket-venue-roof",
+   "walkable": true,
+   "min": [
+    -158.2,
+    7.75,
+    -3.2
+   ],
+   "max": [
+    -139.8,
+    8.05,
+    17.2
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -157.9,
+    -0.3,
+    16.85
+   ],
+   "max": [
+    -155.7,
+    7.7,
+    17.15
+   ]
+  },
+  {
+   "name": "phuket-venue-front-post",
+   "walkable": true,
+   "min": [
+    -142.3,
+    -0.3,
+    16.85
+   ],
+   "max": [
+    -140.1,
+    7.7,
+    17.15
+   ]
+  },
+  {
+   "name": "phuket-venue-stage",
+   "walkable": true,
+   "min": [
+    -153.95,
+    -0.23,
+    2
+   ],
+   "max": [
+    -144.05,
+    0.23,
+    6
+   ]
+  },
+  {
+   "name": "phuket-venue-seating",
+   "walkable": true,
+   "min": [
+    -155.68,
+    -0.22,
+    3.5
+   ],
+   "max": [
+    -153.48,
+    0.53,
+    10.5
+   ]
+  },
+  {
+   "name": "phuket-venue-bar",
+   "walkable": true,
+   "min": [
+    -144.47,
+    -0.41,
+    5.55
+   ],
+   "max": [
+    -142.37,
+    0.64,
+    12.05
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -138.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -133.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -129.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -124.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -120.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -115.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -111.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -106.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -102.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -97.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -93.6,
+    -0.4,
+    -67.7
+   ],
+   "max": [
+    -88.4,
+    0.6,
+    -66.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -138.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -133.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -129.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -124.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -120.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -115.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -111.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -106.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -102.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -97.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -93.6,
+    -0.4,
+    -54.7
+   ],
+   "max": [
+    -88.4,
+    0.6,
+    -53.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -138.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -133.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -129.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -124.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -120.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -115.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -111.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -106.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -102.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -97.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "phuket-market-counter",
+   "walkable": true,
+   "min": [
+    -93.6,
+    -0.4,
+    -41.7
+   ],
+   "max": [
+    -88.4,
+    0.6,
+    -40.3
+   ]
+  },
+  {
+   "name": "patong-beach-sand",
+   "walkable": true,
+   "min": [
+    -204.5,
+    -0.43,
+    -110
+   ],
+   "max": [
+    -177.5,
+    -0.18,
+    110
+   ]
+  },
+  {
+   "name": "phuket-water-boundary",
+   "walkable": false,
+   "min": [
+    -204.2,
+    -1,
+    -110
+   ],
+   "max": [
+    -203.8,
+    3,
+    110
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -178.25,
+    -0.3,
+    -90.25
+   ],
+   "max": [
+    -177.75,
+    5.7,
+    -89.75
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -168.25,
+    -0.3,
+    -71.25
+   ],
+   "max": [
+    -167.75,
+    5.7,
+    -70.75
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -173.25,
+    -0.3,
+    -52.25
+   ],
+   "max": [
+    -172.75,
+    5.7,
+    -51.75
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -178.25,
+    -0.3,
+    -33.25
+   ],
+   "max": [
+    -177.75,
+    5.7,
+    -32.75
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -168.25,
+    -0.3,
+    -14.25
+   ],
+   "max": [
+    -167.75,
+    5.7,
+    -13.75
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -173.25,
+    -0.3,
+    4.75
+   ],
+   "max": [
+    -172.75,
+    5.7,
+    5.25
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -178.25,
+    -0.3,
+    23.75
+   ],
+   "max": [
+    -177.75,
+    5.7,
+    24.25
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -168.25,
+    -0.3,
+    42.75
+   ],
+   "max": [
+    -167.75,
+    5.7,
+    43.25
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -173.25,
+    -0.3,
+    61.75
+   ],
+   "max": [
+    -172.75,
+    5.7,
+    62.25
+   ]
+  },
+  {
+   "name": "phuket-palm-trunk",
+   "walkable": true,
+   "min": [
+    -178.25,
+    -0.3,
+    80.75
+   ],
+   "max": [
+    -177.75,
+    5.7,
+    81.25
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    -77
+   ],
+   "max": [
+    -187,
+    0.1,
+    -73
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    -64
+   ],
+   "max": [
+    -182,
+    0.1,
+    -60
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    -51
+   ],
+   "max": [
+    -187,
+    0.1,
+    -47
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    -38
+   ],
+   "max": [
+    -182,
+    0.1,
+    -34
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    -25
+   ],
+   "max": [
+    -187,
+    0.1,
+    -21
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    -12
+   ],
+   "max": [
+    -182,
+    0.1,
+    -8
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    1
+   ],
+   "max": [
+    -187,
+    0.1,
+    5
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    14
+   ],
+   "max": [
+    -182,
+    0.1,
+    18
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    27
+   ],
+   "max": [
+    -187,
+    0.1,
+    31
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    40
+   ],
+   "max": [
+    -182,
+    0.1,
+    44
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -189,
+    -0.2,
+    53
+   ],
+   "max": [
+    -187,
+    0.1,
+    57
+   ]
+  },
+  {
+   "name": "patong-sunbed",
+   "walkable": true,
+   "min": [
+    -184,
+    -0.2,
+    66
+   ],
+   "max": [
+    -182,
+    0.1,
+    70
+   ]
+  },
+  {
+   "name": "patong-beach-bar",
+   "walkable": true,
+   "min": [
+    -188.5,
+    -0.23,
+    61
+   ],
+   "max": [
+    -177.5,
+    0.02,
+    79
+   ]
+  },
+  {
+   "name": "patong-beach-bar-counter",
+   "walkable": true,
+   "min": [
+    -182,
+    -0.35,
+    63.5
+   ],
+   "max": [
+    -180,
+    0.75,
+    76.5
+   ]
+  },
+  {
+   "name": "island-ground",
+   "walkable": true,
+   "min": [
+    -4,
+    -0.6,
+    -50
+   ],
+   "max": [
+    4,
+    0,
+    50
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    -46.5
+   ],
+   "max": [
+    -3.85,
+    1,
+    -29.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    -46.5
+   ],
+   "max": [
+    -3.88,
+    5,
+    -29.5
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    3.85,
+    0,
+    -46.5
+   ],
+   "max": [
+    4.15,
+    1,
+    -29.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    3.88,
+    0,
+    -46.5
+   ],
+   "max": [
+    4.13,
+    5,
+    -29.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    -4.05,
+    3.34,
+    -46.5
+   ],
+   "max": [
+    -1.55,
+    3.56,
+    -29.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    1.55,
+    3.34,
+    -46.5
+   ],
+   "max": [
+    4.05,
+    3.56,
+    -29.5
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -44.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -43.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -44.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -43.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -44.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -43.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -44.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -43.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -40.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -39.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -40.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -39.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -40.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -39.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -40.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -39.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -36.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -35.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -36.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -35.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -36.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -35.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -36.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -35.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -32.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -31.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -32.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -31.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -32.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -31.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -32.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -31.15
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    -29.57
+   ],
+   "max": [
+    -1.6,
+    1.25,
+    -29.22
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    1.6,
+    0,
+    -29.57
+   ],
+   "max": [
+    4,
+    1.25,
+    -29.22
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    -2.65,
+    0,
+    -29.34
+   ],
+   "max": [
+    -1.45,
+    2.7,
+    -29.16
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    1.45,
+    0,
+    -29.34
+   ],
+   "max": [
+    2.65,
+    2.7,
+    -29.16
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    -27.5
+   ],
+   "max": [
+    -3.85,
+    1,
+    -10.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    -27.5
+   ],
+   "max": [
+    -3.88,
+    5,
+    -10.5
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    3.85,
+    0,
+    -27.5
+   ],
+   "max": [
+    4.15,
+    1,
+    -10.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    3.88,
+    0,
+    -27.5
+   ],
+   "max": [
+    4.13,
+    5,
+    -10.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    -4.05,
+    3.34,
+    -27.5
+   ],
+   "max": [
+    -1.55,
+    3.56,
+    -10.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    1.55,
+    3.34,
+    -27.5
+   ],
+   "max": [
+    4.05,
+    3.56,
+    -10.5
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -25.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -24.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -25.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -24.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -25.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -24.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -25.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -24.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -21.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -20.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -21.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -20.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -21.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -20.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -21.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -20.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -17.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -16.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -17.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -16.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -17.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -16.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -17.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -16.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    -13.85
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    -12.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    -13.85
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    -12.15
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    -13.85
+   ],
+   "max": [
+    3.62,
+    0.55,
+    -12.15
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    -13.85
+   ],
+   "max": [
+    3.63,
+    1.43,
+    -12.15
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    -10.57
+   ],
+   "max": [
+    -1.6,
+    1.25,
+    -10.22
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    1.6,
+    0,
+    -10.57
+   ],
+   "max": [
+    4,
+    1.25,
+    -10.22
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    -2.65,
+    0,
+    -10.34
+   ],
+   "max": [
+    -1.45,
+    2.7,
+    -10.16
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    1.45,
+    0,
+    -10.34
+   ],
+   "max": [
+    2.65,
+    2.7,
+    -10.16
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    -8.5
+   ],
+   "max": [
+    -3.85,
+    1,
+    8.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    -8.5
+   ],
+   "max": [
+    -3.88,
+    5,
+    8.5
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    3.85,
+    0,
+    -8.5
+   ],
+   "max": [
+    4.15,
+    1,
+    8.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    3.88,
+    0,
+    -8.5
+   ],
+   "max": [
+    4.13,
+    5,
+    8.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    -4.05,
+    3.34,
+    -8.5
+   ],
+   "max": [
+    -1.55,
+    3.56,
+    8.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    1.55,
+    3.34,
+    -8.5
+   ],
+   "max": [
+    4.05,
+    3.56,
+    8.5
+   ]
+  },
+  {
+   "name": "bar-counter",
+   "walkable": true,
+   "min": [
+    1.9,
+    0,
+    -6
+   ],
+   "max": [
+    3.3,
+    1.1,
+    6
+   ]
+  },
+  {
+   "name": "bar-counter-top",
+   "walkable": true,
+   "min": [
+    1.75,
+    1.09,
+    -6.15
+   ],
+   "max": [
+    3.45,
+    1.18,
+    6.15
+   ]
+  },
+  {
+   "name": "bar-backboard",
+   "walkable": true,
+   "min": [
+    3.35,
+    0.55,
+    -6
+   ],
+   "max": [
+    3.85,
+    2.45,
+    6
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -5.71
+   ],
+   "max": [
+    1.76,
+    0.82,
+    -5.29
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -4.61
+   ],
+   "max": [
+    1.76,
+    0.82,
+    -4.19
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -3.51
+   ],
+   "max": [
+    1.76,
+    0.82,
+    -3.09
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -2.41
+   ],
+   "max": [
+    1.76,
+    0.82,
+    -1.99
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -1.31
+   ],
+   "max": [
+    1.76,
+    0.82,
+    -0.89
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    -0.21
+   ],
+   "max": [
+    1.76,
+    0.82,
+    0.21
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    0.89
+   ],
+   "max": [
+    1.76,
+    0.82,
+    1.31
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    1.99
+   ],
+   "max": [
+    1.76,
+    0.82,
+    2.41
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    3.09
+   ],
+   "max": [
+    1.76,
+    0.82,
+    3.51
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    4.19
+   ],
+   "max": [
+    1.76,
+    0.82,
+    4.61
+   ]
+  },
+  {
+   "name": "bar-stool",
+   "walkable": true,
+   "min": [
+    1.34,
+    0,
+    5.29
+   ],
+   "max": [
+    1.76,
+    0.82,
+    5.71
+   ]
+  },
+  {
+   "name": "standing-table",
+   "walkable": true,
+   "min": [
+    -3.05,
+    -0.01,
+    -4.95
+   ],
+   "max": [
+    -2.15,
+    1.04,
+    -4.05
+   ]
+  },
+  {
+   "name": "standing-table-top",
+   "walkable": true,
+   "min": [
+    -3.22,
+    1.04,
+    -5.13
+   ],
+   "max": [
+    -1.97,
+    1.12,
+    -3.88
+   ]
+  },
+  {
+   "name": "standing-table",
+   "walkable": true,
+   "min": [
+    -3.05,
+    -0.01,
+    -0.45
+   ],
+   "max": [
+    -2.15,
+    1.04,
+    0.45
+   ]
+  },
+  {
+   "name": "standing-table-top",
+   "walkable": true,
+   "min": [
+    -3.22,
+    1.04,
+    -0.63
+   ],
+   "max": [
+    -1.97,
+    1.12,
+    0.63
+   ]
+  },
+  {
+   "name": "standing-table",
+   "walkable": true,
+   "min": [
+    -3.05,
+    -0.01,
+    4.05
+   ],
+   "max": [
+    -2.15,
+    1.04,
+    4.95
+   ]
+  },
+  {
+   "name": "standing-table-top",
+   "walkable": true,
+   "min": [
+    -3.22,
+    1.04,
+    3.88
+   ],
+   "max": [
+    -1.97,
+    1.12,
+    5.13
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    8.43
+   ],
+   "max": [
+    -1.6,
+    1.25,
+    8.78
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    1.6,
+    0,
+    8.43
+   ],
+   "max": [
+    4,
+    1.25,
+    8.78
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    -2.65,
+    0,
+    8.66
+   ],
+   "max": [
+    -1.45,
+    2.7,
+    8.84
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    1.45,
+    0,
+    8.66
+   ],
+   "max": [
+    2.65,
+    2.7,
+    8.84
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    10.5
+   ],
+   "max": [
+    -3.85,
+    1,
+    27.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    10.5
+   ],
+   "max": [
+    -3.88,
+    5,
+    27.5
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    3.85,
+    0,
+    10.5
+   ],
+   "max": [
+    4.15,
+    1,
+    27.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    3.88,
+    0,
+    10.5
+   ],
+   "max": [
+    4.13,
+    5,
+    27.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    -4.05,
+    3.34,
+    10.5
+   ],
+   "max": [
+    -1.55,
+    3.56,
+    27.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    1.55,
+    3.34,
+    10.5
+   ],
+   "max": [
+    4.05,
+    3.56,
+    27.5
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    12.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    13.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    12.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    13.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    12.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    13.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    12.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    13.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    16.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    17.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    16.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    17.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    16.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    17.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    16.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    17.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    20.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    21.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    20.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    21.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    20.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    21.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    20.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    21.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    24.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    25.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    24.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    25.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    24.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    25.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    24.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    25.85
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    27.43
+   ],
+   "max": [
+    -1.6,
+    1.25,
+    27.78
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    1.6,
+    0,
+    27.43
+   ],
+   "max": [
+    4,
+    1.25,
+    27.78
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    -2.65,
+    0,
+    27.66
+   ],
+   "max": [
+    -1.45,
+    2.7,
+    27.84
+   ]
+  },
+  {
+   "name": "inter-car-door-open",
+   "walkable": true,
+   "min": [
+    1.45,
+    0,
+    27.66
+   ],
+   "max": [
+    2.65,
+    2.7,
+    27.84
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    29.5
+   ],
+   "max": [
+    -3.85,
+    1,
+    36.3
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    29.5
+   ],
+   "max": [
+    -3.88,
+    5,
+    36.3
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    -4.15,
+    0,
+    39.7
+   ],
+   "max": [
+    -3.85,
+    1,
+    46.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    -4.13,
+    0,
+    39.7
+   ],
+   "max": [
+    -3.88,
+    5,
+    46.5
+   ]
+  },
+  {
+   "name": "train-exit-door",
+   "walkable": false,
+   "min": [
+    -4.17,
+    0,
+    36.4
+   ],
+   "max": [
+    -3.83,
+    3.2,
+    39.6
+   ]
+  },
+  {
+   "name": "carriage-side",
+   "walkable": true,
+   "min": [
+    3.85,
+    0,
+    29.5
+   ],
+   "max": [
+    4.15,
+    1,
+    46.5
+   ]
+  },
+  {
+   "name": "carriage-safety",
+   "walkable": true,
+   "min": [
+    3.88,
+    0,
+    29.5
+   ],
+   "max": [
+    4.13,
+    5,
+    46.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    -4.05,
+    3.34,
+    29.5
+   ],
+   "max": [
+    -1.55,
+    3.56,
+    46.5
+   ]
+  },
+  {
+   "name": "carriage-roof",
+   "walkable": true,
+   "min": [
+    1.55,
+    3.34,
+    29.5
+   ],
+   "max": [
+    4.05,
+    3.56,
+    46.5
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    31.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    32.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    31.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    32.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    31.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    32.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    31.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    32.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    35.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    36.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    35.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    36.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    35.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    36.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    35.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    36.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    39.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    40.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    39.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    40.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    39.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    40.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    39.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    40.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    -3.62,
+    0,
+    43.15
+   ],
+   "max": [
+    -1.97,
+    0.55,
+    44.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    -3.63,
+    0.18,
+    43.15
+   ],
+   "max": [
+    -3.41,
+    1.43,
+    44.85
+   ]
+  },
+  {
+   "name": "train-seat",
+   "walkable": true,
+   "min": [
+    1.97,
+    0,
+    43.15
+   ],
+   "max": [
+    3.62,
+    0.55,
+    44.85
+   ]
+  },
+  {
+   "name": "train-seat-back",
+   "walkable": true,
+   "min": [
+    3.41,
+    0.18,
+    43.15
+   ],
+   "max": [
+    3.63,
+    1.43,
+    44.85
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    46.42
+   ],
+   "max": [
+    -1.6,
+    1.25,
+    46.77
+   ]
+  },
+  {
+   "name": "carriage-end",
+   "walkable": true,
+   "min": [
+    1.6,
+    0,
+    46.42
+   ],
+   "max": [
+    4,
+    1.25,
+    46.77
+   ]
+  },
+  {
+   "name": "train-end-wall",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    -47.65
+   ],
+   "max": [
+    4,
+    4,
+    -47.35
+   ]
+  },
+  {
+   "name": "train-end-wall",
+   "walkable": true,
+   "min": [
+    -4,
+    0,
+    47.35
+   ],
+   "max": [
+    4,
+    4,
+    47.65
+   ]
+  },
+  {
+   "name": "luggage-stack",
+   "walkable": true,
+   "min": [
+    1.95,
+    0,
+    -33.6
+   ],
+   "max": [
+    3.05,
+    0.8,
+    -32.4
+   ]
+  },
+  {
+   "name": "luggage-stack",
+   "walkable": true,
+   "min": [
+    1.95,
+    0,
+    -14.6
+   ],
+   "max": [
+    3.05,
+    0.8,
+    -13.4
+   ]
+  },
+  {
+   "name": "luggage-stack",
+   "walkable": true,
+   "min": [
+    1.95,
+    0,
+    23.4
+   ],
+   "max": [
+    3.05,
+    0.8,
+    24.6
+   ]
+  },
+  {
+   "name": "luggage-stack",
+   "walkable": true,
+   "min": [
+    1.95,
+    0,
+    41.4
+   ],
+   "max": [
+    3.05,
+    0.8,
+    42.6
+   ]
+  },
+  {
+   "name": "train-toilet-wall",
+   "walkable": true,
+   "min": [
+    1.7,
+    0,
+    -26.59
+   ],
+   "max": [
+    3.9,
+    2.8,
+    -26.41
+   ]
+  },
+  {
+   "name": "train-toilet-wall",
+   "walkable": true,
+   "min": [
+    1.7,
+    0,
+    -21.59
+   ],
+   "max": [
+    3.9,
+    2.8,
+    -21.41
+   ]
+  },
+  {
+   "name": "train-toilet-side",
+   "walkable": true,
+   "min": [
+    1.61,
+    0,
+    -26.5
+   ],
+   "max": [
+    1.79,
+    2.8,
+    -21.5
+   ]
+  },
+  {
+   "name": "train-locomotive-body",
+   "walkable": true,
+   "min": [
+    -3.75,
+    -1,
+    51.5
+   ],
+   "max": [
+    3.75,
+    2.3,
+    69.5
+   ]
+  },
+  {
+   "name": "train-locomotive-cab",
+   "walkable": true,
+   "min": [
+    -3.6,
+    0.3,
+    53
+   ],
+   "max": [
+    3.6,
+    4.1,
+    60
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -9.16,
+    -0.02,
+    -122.18
+   ],
+   "max": [
+    -8.12,
+    5.02,
+    -121.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -132.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -131.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    8.84,
+    -0.02,
+    -122.18
+   ],
+   "max": [
+    9.88,
+    5.02,
+    -121.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -132.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -131.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -10.16,
+    -0.02,
+    -106.18
+   ],
+   "max": [
+    -9.12,
+    6.02,
+    -105.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -116.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -115.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    9.84,
+    -0.02,
+    -106.18
+   ],
+   "max": [
+    10.88,
+    6.02,
+    -105.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -116.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -115.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -11.16,
+    -0.02,
+    -90.18
+   ],
+   "max": [
+    -10.12,
+    7.02,
+    -89.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -100.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -99.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    10.84,
+    -0.02,
+    -90.18
+   ],
+   "max": [
+    11.88,
+    7.02,
+    -89.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -100.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -99.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -12.16,
+    -0.02,
+    -74.18
+   ],
+   "max": [
+    -11.12,
+    5.02,
+    -73.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -84.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -83.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    11.84,
+    -0.02,
+    -74.18
+   ],
+   "max": [
+    12.88,
+    5.02,
+    -73.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -84.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -83.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -9.16,
+    -0.02,
+    -58.18
+   ],
+   "max": [
+    -8.12,
+    6.02,
+    -57.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -68.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -67.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    8.84,
+    -0.02,
+    -58.18
+   ],
+   "max": [
+    9.88,
+    6.02,
+    -57.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -68.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -67.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -10.16,
+    -0.02,
+    -42.18
+   ],
+   "max": [
+    -9.12,
+    7.02,
+    -41.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -52.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -51.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    9.84,
+    -0.02,
+    -42.18
+   ],
+   "max": [
+    10.88,
+    7.02,
+    -41.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -52.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -51.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -11.16,
+    -0.02,
+    -26.18
+   ],
+   "max": [
+    -10.12,
+    5.02,
+    -25.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -36.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -35.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    10.84,
+    -0.02,
+    -26.18
+   ],
+   "max": [
+    11.88,
+    5.02,
+    -25.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -36.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -35.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -12.16,
+    -0.02,
+    -10.18
+   ],
+   "max": [
+    -11.12,
+    6.02,
+    -9.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -20.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -19.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    11.84,
+    -0.02,
+    -10.18
+   ],
+   "max": [
+    12.88,
+    6.02,
+    -9.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -20.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -19.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -9.16,
+    -0.02,
+    5.82
+   ],
+   "max": [
+    -8.12,
+    7.02,
+    6.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    -4.18
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    -3.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    8.84,
+    -0.02,
+    5.82
+   ],
+   "max": [
+    9.88,
+    7.02,
+    6.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    -4.18
+   ],
+   "max": [
+    24.88,
+    6.02,
+    -3.82
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -10.16,
+    -0.02,
+    21.82
+   ],
+   "max": [
+    -9.12,
+    5.02,
+    22.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    11.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    12.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    9.84,
+    -0.02,
+    21.82
+   ],
+   "max": [
+    10.88,
+    5.02,
+    22.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    11.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    12.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -11.16,
+    -0.02,
+    37.82
+   ],
+   "max": [
+    -10.12,
+    6.02,
+    38.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    27.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    28.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    10.84,
+    -0.02,
+    37.82
+   ],
+   "max": [
+    11.88,
+    6.02,
+    38.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    27.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    28.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -12.16,
+    -0.02,
+    53.82
+   ],
+   "max": [
+    -11.12,
+    7.02,
+    54.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    43.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    44.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    11.84,
+    -0.02,
+    53.82
+   ],
+   "max": [
+    12.88,
+    7.02,
+    54.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    43.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    44.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -9.16,
+    -0.02,
+    69.82
+   ],
+   "max": [
+    -8.12,
+    5.02,
+    70.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    59.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    60.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    8.84,
+    -0.02,
+    69.82
+   ],
+   "max": [
+    9.88,
+    5.02,
+    70.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    59.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    60.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -10.16,
+    -0.02,
+    85.82
+   ],
+   "max": [
+    -9.12,
+    6.02,
+    86.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    75.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    76.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    9.84,
+    -0.02,
+    85.82
+   ],
+   "max": [
+    10.88,
+    6.02,
+    86.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    75.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    76.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -11.16,
+    -0.02,
+    101.82
+   ],
+   "max": [
+    -10.12,
+    7.02,
+    102.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    91.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    92.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    10.84,
+    -0.02,
+    101.82
+   ],
+   "max": [
+    11.88,
+    7.02,
+    102.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    91.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    92.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -12.16,
+    -0.02,
+    117.82
+   ],
+   "max": [
+    -11.12,
+    5.02,
+    118.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -24.16,
+    -0.02,
+    107.82
+   ],
+   "max": [
+    -23.12,
+    6.02,
+    108.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    11.84,
+    -0.02,
+    117.82
+   ],
+   "max": [
+    12.88,
+    5.02,
+    118.18
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    23.84,
+    -0.02,
+    107.82
+   ],
+   "max": [
+    24.88,
+    6.02,
+    108.18
+   ]
+  },
+  {
+   "name": "railway-platform",
+   "walkable": true,
+   "min": [
+    -16,
+    -0.57,
+    -57
+   ],
+   "max": [
+    -4,
+    0.08,
+    73
+   ]
+  },
+  {
+   "name": "railway-stop-ground",
+   "walkable": true,
+   "min": [
+    -155,
+    -1,
+    -78
+   ],
+   "max": [
+    25,
+    -0.5,
+    102
+   ]
+  },
+  {
+   "name": "railway-station-shelter",
+   "walkable": true,
+   "min": [
+    -35,
+    -0.6,
+    31
+   ],
+   "max": [
+    -13,
+    3.2,
+    45
+   ]
+  },
+  {
+   "name": "phuket-scooter-1",
+   "walkable": true,
+   "min": [
+    -60.95,
+    -0.36,
+    -7.4
+   ],
+   "max": [
+    -59.05,
+    0.74,
+    -6.6
+   ]
+  },
+  {
+   "name": "phuket-scooter-2",
+   "walkable": true,
+   "min": [
+    -103.58,
+    -0.35,
+    -44.01
+   ],
+   "max": [
+    -102.42,
+    0.75,
+    -41.99
+   ]
+  },
+  {
+   "name": "phuket-tuktuk-1",
+   "walkable": true,
+   "min": [
+    -85.62,
+    -0.18,
+    6.12
+   ],
+   "max": [
+    -82.38,
+    1.47,
+    7.88
+   ]
+  },
+  {
+   "name": "phuket-tuktuk-2",
+   "walkable": true,
+   "min": [
+    -152.62,
+    -0.15,
+    7.12
+   ],
+   "max": [
+    -149.38,
+    1.5,
+    8.88
+   ]
+  }
+ ]
+}

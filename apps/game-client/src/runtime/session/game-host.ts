@@ -188,11 +188,19 @@ export class GameHost {
     this.motor.support(1 / 60);
     this.syncVisual(0);
     this.camera.update(this.motor.position, 0, true);
-    if (import.meta.env.DEV)
+    if (import.meta.env.DEV) {
       this.scene.metadata = {
         ...this.scene.metadata,
         physicsProbe: { motor: this.motor, world: this.world },
       };
+      // Lets tools/levels/capture-geometry.mjs read the finished level's solid bodies, so the
+      // validator can check geometry that is built rather than described. Stripped from a build.
+      (window as unknown as Record<string, unknown>).__levelGeometry = () => ({
+        level: this.level.id,
+        bounds: this.level.navigationBounds ?? null,
+        bodies: this.world.describeGeometry(),
+      });
+    }
     window.addEventListener('resize', this.onResize);
     window.addEventListener('blur', this.onBlur);
     window.addEventListener('keydown', this.onKey);

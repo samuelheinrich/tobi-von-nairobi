@@ -1,0 +1,3142 @@
+{
+ "level": "bali_adventure",
+ "bounds": null,
+ "bodies": [
+  {
+   "name": "bali-coastal-heightfield",
+   "walkable": true,
+   "min": [
+    -300,
+    -12,
+    -200
+   ],
+   "max": [
+    244,
+    8,
+    320
+   ]
+  },
+  {
+   "name": "beach-bar-collision-shell",
+   "walkable": true,
+   "min": [
+    -72,
+    -1.75,
+    -110
+   ],
+   "max": [
+    -60,
+    1.75,
+    -100
+   ]
+  },
+  {
+   "name": "beach-bar-counter",
+   "walkable": true,
+   "min": [
+    -64.5,
+    0,
+    -103
+   ],
+   "max": [
+    -61.5,
+    1,
+    -102
+   ]
+  },
+  {
+   "name": "beach-bar-table",
+   "walkable": true,
+   "min": [
+    -69,
+    0.78,
+    -104.7
+   ],
+   "max": [
+    -67,
+    0.93,
+    -103.3
+   ]
+  },
+  {
+   "name": "beach-bar-table-leg",
+   "walkable": true,
+   "min": [
+    -68.17,
+    -0.01,
+    -104.17
+   ],
+   "max": [
+    -67.83,
+    0.84,
+    -103.83
+   ]
+  },
+  {
+   "name": "beach-bar-bench",
+   "walkable": true,
+   "min": [
+    -69,
+    0,
+    -105.63
+   ],
+   "max": [
+    -67,
+    0.48,
+    -104.98
+   ]
+  },
+  {
+   "name": "beach-bar-stairs-ramp",
+   "walkable": true,
+   "min": [
+    -74.2,
+    -0.16,
+    -110.53
+   ],
+   "max": [
+    -72.2,
+    3.72,
+    -99.47
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    -73.5,
+    3.52,
+    -99.5
+   ],
+   "max": [
+    -68.5,
+    3.72,
+    -97.5
+   ]
+  },
+  {
+   "name": "coast-warung-collision-shell",
+   "walkable": false,
+   "min": [
+    -41,
+    -1.75,
+    -80
+   ],
+   "max": [
+    -29,
+    1.75,
+    -70
+   ]
+  },
+  {
+   "name": "coast-warung-counter",
+   "walkable": true,
+   "min": [
+    -33.5,
+    0,
+    -73
+   ],
+   "max": [
+    -30.5,
+    1,
+    -72
+   ]
+  },
+  {
+   "name": "coast-warung-table",
+   "walkable": true,
+   "min": [
+    -38,
+    0.78,
+    -74.7
+   ],
+   "max": [
+    -36,
+    0.93,
+    -73.3
+   ]
+  },
+  {
+   "name": "coast-warung-table-leg",
+   "walkable": true,
+   "min": [
+    -37.17,
+    -0.01,
+    -74.17
+   ],
+   "max": [
+    -36.83,
+    0.84,
+    -73.83
+   ]
+  },
+  {
+   "name": "coast-warung-bench",
+   "walkable": true,
+   "min": [
+    -38,
+    0,
+    -75.63
+   ],
+   "max": [
+    -36,
+    0.48,
+    -74.98
+   ]
+  },
+  {
+   "name": "mini-mart-collision-shell",
+   "walkable": true,
+   "min": [
+    12,
+    -1.75,
+    3
+   ],
+   "max": [
+    24,
+    1.75,
+    13
+   ]
+  },
+  {
+   "name": "mini-mart-counter",
+   "walkable": true,
+   "min": [
+    19.5,
+    0,
+    10
+   ],
+   "max": [
+    22.5,
+    1,
+    11
+   ]
+  },
+  {
+   "name": "mini-mart-table",
+   "walkable": true,
+   "min": [
+    15,
+    0.78,
+    8.3
+   ],
+   "max": [
+    17,
+    0.93,
+    9.7
+   ]
+  },
+  {
+   "name": "mini-mart-table-leg",
+   "walkable": true,
+   "min": [
+    15.83,
+    -0.01,
+    8.83
+   ],
+   "max": [
+    16.17,
+    0.84,
+    9.17
+   ]
+  },
+  {
+   "name": "mini-mart-bench",
+   "walkable": true,
+   "min": [
+    15,
+    0,
+    7.37
+   ],
+   "max": [
+    17,
+    0.48,
+    8.02
+   ]
+  },
+  {
+   "name": "mini-mart-stairs-ramp",
+   "walkable": true,
+   "min": [
+    9.8,
+    -0.16,
+    2.47
+   ],
+   "max": [
+    11.8,
+    3.72,
+    13.53
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    10.5,
+    3.52,
+    13.5
+   ],
+   "max": [
+    15.5,
+    3.72,
+    15.5
+   ]
+  },
+  {
+   "name": "casa-collision-shell",
+   "walkable": true,
+   "min": [
+    -20,
+    -1.75,
+    -5
+   ],
+   "max": [
+    -8,
+    1.75,
+    5
+   ]
+  },
+  {
+   "name": "casa-counter",
+   "walkable": true,
+   "min": [
+    -12.5,
+    0,
+    2
+   ],
+   "max": [
+    -9.5,
+    1,
+    3
+   ]
+  },
+  {
+   "name": "casa-table",
+   "walkable": true,
+   "min": [
+    -17,
+    0.78,
+    0.3
+   ],
+   "max": [
+    -15,
+    0.93,
+    1.7
+   ]
+  },
+  {
+   "name": "casa-table-leg",
+   "walkable": true,
+   "min": [
+    -16.17,
+    -0.01,
+    0.83
+   ],
+   "max": [
+    -15.83,
+    0.84,
+    1.17
+   ]
+  },
+  {
+   "name": "casa-bench",
+   "walkable": true,
+   "min": [
+    -17,
+    0,
+    -0.63
+   ],
+   "max": [
+    -15,
+    0.48,
+    0.02
+   ]
+  },
+  {
+   "name": "casa-bed",
+   "walkable": true,
+   "min": [
+    -12,
+    0,
+    -1.4
+   ],
+   "max": [
+    -10,
+    0.5,
+    1.4
+   ]
+  },
+  {
+   "name": "casa-stairs-ramp",
+   "walkable": true,
+   "min": [
+    -22.2,
+    -0.16,
+    -5.53
+   ],
+   "max": [
+    -20.2,
+    3.72,
+    5.53
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    -21.5,
+    3.52,
+    5.5
+   ],
+   "max": [
+    -16.5,
+    3.72,
+    7.5
+   ]
+  },
+  {
+   "name": "town-bar-collision-shell",
+   "walkable": false,
+   "min": [
+    34,
+    -1.75,
+    3
+   ],
+   "max": [
+    46,
+    1.75,
+    13
+   ]
+  },
+  {
+   "name": "town-bar-counter",
+   "walkable": true,
+   "min": [
+    41.5,
+    0,
+    10
+   ],
+   "max": [
+    44.5,
+    1,
+    11
+   ]
+  },
+  {
+   "name": "town-bar-table",
+   "walkable": true,
+   "min": [
+    37,
+    0.78,
+    8.3
+   ],
+   "max": [
+    39,
+    0.93,
+    9.7
+   ]
+  },
+  {
+   "name": "town-bar-table-leg",
+   "walkable": true,
+   "min": [
+    37.83,
+    -0.01,
+    8.83
+   ],
+   "max": [
+    38.17,
+    0.84,
+    9.17
+   ]
+  },
+  {
+   "name": "town-bar-bench",
+   "walkable": true,
+   "min": [
+    37,
+    0,
+    7.37
+   ],
+   "max": [
+    39,
+    0.48,
+    8.02
+   ]
+  },
+  {
+   "name": "guesthouse-collision-shell",
+   "walkable": false,
+   "min": [
+    52,
+    -1.75,
+    17
+   ],
+   "max": [
+    64,
+    1.75,
+    27
+   ]
+  },
+  {
+   "name": "market-warung-collision-shell",
+   "walkable": true,
+   "min": [
+    34,
+    -1.75,
+    60
+   ],
+   "max": [
+    46,
+    1.75,
+    70
+   ]
+  },
+  {
+   "name": "market-warung-counter",
+   "walkable": true,
+   "min": [
+    41.5,
+    0,
+    67
+   ],
+   "max": [
+    44.5,
+    1,
+    68
+   ]
+  },
+  {
+   "name": "market-warung-table",
+   "walkable": true,
+   "min": [
+    37,
+    0.78,
+    65.3
+   ],
+   "max": [
+    39,
+    0.93,
+    66.7
+   ]
+  },
+  {
+   "name": "market-warung-table-leg",
+   "walkable": true,
+   "min": [
+    37.83,
+    -0.01,
+    65.83
+   ],
+   "max": [
+    38.17,
+    0.84,
+    66.17
+   ]
+  },
+  {
+   "name": "market-warung-bench",
+   "walkable": true,
+   "min": [
+    37,
+    0,
+    64.37
+   ],
+   "max": [
+    39,
+    0.48,
+    65.02
+   ]
+  },
+  {
+   "name": "market-warung-stairs-ramp",
+   "walkable": true,
+   "min": [
+    31.8,
+    -0.16,
+    59.47
+   ],
+   "max": [
+    33.8,
+    3.72,
+    70.53
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    32.5,
+    3.52,
+    70.5
+   ],
+   "max": [
+    37.5,
+    3.72,
+    72.5
+   ]
+  },
+  {
+   "name": "jungle-warung-collision-shell",
+   "walkable": false,
+   "min": [
+    93,
+    0.89,
+    138
+   ],
+   "max": [
+    105,
+    4.39,
+    148
+   ]
+  },
+  {
+   "name": "jungle-warung-counter",
+   "walkable": true,
+   "min": [
+    100.5,
+    2.64,
+    145
+   ],
+   "max": [
+    103.5,
+    3.64,
+    146
+   ]
+  },
+  {
+   "name": "jungle-warung-table",
+   "walkable": true,
+   "min": [
+    96,
+    3.42,
+    143.3
+   ],
+   "max": [
+    98,
+    3.57,
+    144.7
+   ]
+  },
+  {
+   "name": "jungle-warung-table-leg",
+   "walkable": true,
+   "min": [
+    96.83,
+    2.63,
+    143.83
+   ],
+   "max": [
+    97.17,
+    3.48,
+    144.17
+   ]
+  },
+  {
+   "name": "jungle-warung-bench",
+   "walkable": true,
+   "min": [
+    96,
+    2.64,
+    142.37
+   ],
+   "max": [
+    98,
+    3.12,
+    143.02
+   ]
+  },
+  {
+   "name": "rice-hut-collision-shell",
+   "walkable": false,
+   "min": [
+    -52,
+    2.82,
+    173
+   ],
+   "max": [
+    -40,
+    6.32,
+    183
+   ]
+  },
+  {
+   "name": "rice-hut-counter",
+   "walkable": true,
+   "min": [
+    -44.5,
+    4.57,
+    180
+   ],
+   "max": [
+    -41.5,
+    5.57,
+    181
+   ]
+  },
+  {
+   "name": "rice-hut-table",
+   "walkable": true,
+   "min": [
+    -49,
+    5.34,
+    178.3
+   ],
+   "max": [
+    -47,
+    5.49,
+    179.7
+   ]
+  },
+  {
+   "name": "rice-hut-table-leg",
+   "walkable": true,
+   "min": [
+    -48.17,
+    4.56,
+    178.83
+   ],
+   "max": [
+    -47.83,
+    5.41,
+    179.17
+   ]
+  },
+  {
+   "name": "rice-hut-bench",
+   "walkable": true,
+   "min": [
+    -49,
+    4.56,
+    177.37
+   ],
+   "max": [
+    -47,
+    5.04,
+    178.02
+   ]
+  },
+  {
+   "name": "harbour-shop-collision-shell",
+   "walkable": false,
+   "min": [
+    -94,
+    -1.75,
+    44
+   ],
+   "max": [
+    -82,
+    1.75,
+    54
+   ]
+  },
+  {
+   "name": "harbour-shop-counter",
+   "walkable": true,
+   "min": [
+    -86.5,
+    0,
+    51
+   ],
+   "max": [
+    -83.5,
+    1,
+    52
+   ]
+  },
+  {
+   "name": "harbour-shop-table",
+   "walkable": true,
+   "min": [
+    -91,
+    0.78,
+    49.3
+   ],
+   "max": [
+    -89,
+    0.93,
+    50.7
+   ]
+  },
+  {
+   "name": "harbour-shop-table-leg",
+   "walkable": true,
+   "min": [
+    -90.17,
+    -0.01,
+    49.83
+   ],
+   "max": [
+    -89.83,
+    0.84,
+    50.17
+   ]
+  },
+  {
+   "name": "harbour-shop-bench",
+   "walkable": true,
+   "min": [
+    -91,
+    0,
+    48.38
+   ],
+   "max": [
+    -89,
+    0.48,
+    49.03
+   ]
+  },
+  {
+   "name": "island-hut-collision-shell",
+   "walkable": false,
+   "min": [
+    -246,
+    -1.75,
+    85
+   ],
+   "max": [
+    -234,
+    1.75,
+    95
+   ]
+  },
+  {
+   "name": "island-hut-counter",
+   "walkable": true,
+   "min": [
+    -238.5,
+    0,
+    92
+   ],
+   "max": [
+    -235.5,
+    1,
+    93
+   ]
+  },
+  {
+   "name": "island-hut-table",
+   "walkable": true,
+   "min": [
+    -243,
+    0.78,
+    90.3
+   ],
+   "max": [
+    -241,
+    0.93,
+    91.7
+   ]
+  },
+  {
+   "name": "island-hut-table-leg",
+   "walkable": true,
+   "min": [
+    -242.17,
+    -0.01,
+    90.83
+   ],
+   "max": [
+    -241.83,
+    0.84,
+    91.17
+   ]
+  },
+  {
+   "name": "island-hut-bench",
+   "walkable": true,
+   "min": [
+    -243,
+    0,
+    89.37
+   ],
+   "max": [
+    -241,
+    0.48,
+    90.02
+   ]
+  },
+  {
+   "name": "island-hut-bed",
+   "walkable": true,
+   "min": [
+    -238,
+    0,
+    88.6
+   ],
+   "max": [
+    -236,
+    0.5,
+    91.4
+   ]
+  },
+  {
+   "name": "town-facade-0-collision-shell",
+   "walkable": false,
+   "min": [
+    69,
+    -1.75,
+    -20
+   ],
+   "max": [
+    81,
+    1.75,
+    -10
+   ]
+  },
+  {
+   "name": "town-facade-1-collision-shell",
+   "walkable": false,
+   "min": [
+    86,
+    -1.75,
+    -20
+   ],
+   "max": [
+    98,
+    1.75,
+    -10
+   ]
+  },
+  {
+   "name": "town-facade-2-collision-shell",
+   "walkable": false,
+   "min": [
+    69,
+    -1.75,
+    1
+   ],
+   "max": [
+    81,
+    1.75,
+    11
+   ]
+  },
+  {
+   "name": "town-facade-3-collision-shell",
+   "walkable": false,
+   "min": [
+    86,
+    -1.75,
+    1
+   ],
+   "max": [
+    98,
+    1.75,
+    11
+   ]
+  },
+  {
+   "name": "town-facade-4-collision-shell",
+   "walkable": false,
+   "min": [
+    69,
+    -1.75,
+    22
+   ],
+   "max": [
+    81,
+    1.75,
+    32
+   ]
+  },
+  {
+   "name": "town-facade-5-collision-shell",
+   "walkable": false,
+   "min": [
+    86,
+    -1.75,
+    22
+   ],
+   "max": [
+    98,
+    1.75,
+    32
+   ]
+  },
+  {
+   "name": "jetty-deck",
+   "walkable": true,
+   "min": [
+    -125,
+    0.1,
+    32.5
+   ],
+   "max": [
+    -97,
+    0.5,
+    37.5
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -121.28,
+    -2.5,
+    32.72
+   ],
+   "max": [
+    -120.72,
+    0.5,
+    33.28
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -111.28,
+    -2.5,
+    32.72
+   ],
+   "max": [
+    -110.72,
+    0.5,
+    33.28
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -101.28,
+    -2.5,
+    32.72
+   ],
+   "max": [
+    -100.72,
+    0.5,
+    33.28
+   ]
+  },
+  {
+   "name": "jetty-deck",
+   "walkable": true,
+   "min": [
+    -216,
+    0.1,
+    67.5
+   ],
+   "max": [
+    -188,
+    0.5,
+    72.5
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -212.28,
+    -2.5,
+    67.72
+   ],
+   "max": [
+    -211.72,
+    0.5,
+    68.28
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -202.28,
+    -2.5,
+    67.72
+   ],
+   "max": [
+    -201.72,
+    0.5,
+    68.28
+   ]
+  },
+  {
+   "name": "jetty-pile",
+   "walkable": true,
+   "min": [
+    -192.28,
+    -2.5,
+    67.72
+   ],
+   "max": [
+    -191.72,
+    0.5,
+    68.28
+   ]
+  },
+  {
+   "name": "dock-access",
+   "walkable": true,
+   "min": [
+    -97.99,
+    -0.16,
+    32.5
+   ],
+   "max": [
+    -94.01,
+    0.5,
+    37.5
+   ]
+  },
+  {
+   "name": "dock-access",
+   "walkable": true,
+   "min": [
+    -218.99,
+    -0.16,
+    67.5
+   ],
+   "max": [
+    -215.01,
+    0.5,
+    72.5
+   ]
+  },
+  {
+   "name": "temple-plinth",
+   "walkable": true,
+   "min": [
+    56,
+    -2.2,
+    199
+   ],
+   "max": [
+    104,
+    9.8,
+    245
+   ]
+  },
+  {
+   "name": "temple-stairs",
+   "walkable": true,
+   "min": [
+    76,
+    4.42,
+    178.97
+   ],
+   "max": [
+    84,
+    9.8,
+    199.03
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    74.3,
+    9.8,
+    200.5
+   ],
+   "max": [
+    77.7,
+    10.9,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    74.35,
+    10.9,
+    200.5
+   ],
+   "max": [
+    77.32,
+    12,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    74.41,
+    12,
+    200.5
+   ],
+   "max": [
+    76.95,
+    13.1,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    74.46,
+    13.1,
+    200.5
+   ],
+   "max": [
+    76.57,
+    14.2,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    74.52,
+    14.2,
+    200.5
+   ],
+   "max": [
+    76.2,
+    15.3,
+    203.5
+   ]
+  },
+  {
+   "name": "temple-wall",
+   "walkable": true,
+   "min": [
+    56.08,
+    9.8,
+    200
+   ],
+   "max": [
+    56.73,
+    10.95,
+    244
+   ]
+  },
+  {
+   "name": "guardian-statue",
+   "walkable": true,
+   "min": [
+    71.35,
+    9.8,
+    203.4
+   ],
+   "max": [
+    72.65,
+    11.8,
+    204.6
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    82.3,
+    9.8,
+    200.5
+   ],
+   "max": [
+    85.7,
+    10.9,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    82.68,
+    10.9,
+    200.5
+   ],
+   "max": [
+    85.65,
+    12,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    83.05,
+    12,
+    200.5
+   ],
+   "max": [
+    85.59,
+    13.1,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    83.43,
+    13.1,
+    200.5
+   ],
+   "max": [
+    85.54,
+    14.2,
+    203.5
+   ]
+  },
+  {
+   "name": "candi-bentar",
+   "walkable": true,
+   "min": [
+    83.8,
+    14.2,
+    200.5
+   ],
+   "max": [
+    85.48,
+    15.3,
+    203.5
+   ]
+  },
+  {
+   "name": "temple-wall",
+   "walkable": true,
+   "min": [
+    103.27,
+    9.8,
+    200
+   ],
+   "max": [
+    103.92,
+    10.95,
+    244
+   ]
+  },
+  {
+   "name": "guardian-statue",
+   "walkable": true,
+   "min": [
+    87.35,
+    9.8,
+    203.4
+   ],
+   "max": [
+    88.65,
+    11.8,
+    204.6
+   ]
+  },
+  {
+   "name": "shrine-base",
+   "walkable": true,
+   "min": [
+    77.5,
+    9.8,
+    234.5
+   ],
+   "max": [
+    82.5,
+    11.2,
+    239.5
+   ]
+  },
+  {
+   "name": "shrine-step",
+   "walkable": true,
+   "min": [
+    78.5,
+    9.8,
+    233.1
+   ],
+   "max": [
+    81.5,
+    10.4,
+    234.9
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    78.28,
+    11.2,
+    238.57
+   ],
+   "max": [
+    78.53,
+    14.2,
+    238.82
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    81.47,
+    11.2,
+    238.57
+   ],
+   "max": [
+    81.72,
+    14.2,
+    238.82
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    77,
+    14.16,
+    234
+   ],
+   "max": [
+    83,
+    14.44,
+    240
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    77.6,
+    14.86,
+    234.6
+   ],
+   "max": [
+    82.4,
+    15.14,
+    239.4
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    78.2,
+    15.56,
+    235.2
+   ],
+   "max": [
+    81.8,
+    15.84,
+    238.8
+   ]
+  },
+  {
+   "name": "shrine-base",
+   "walkable": true,
+   "min": [
+    63.5,
+    9.8,
+    231.5
+   ],
+   "max": [
+    68.5,
+    11.2,
+    236.5
+   ]
+  },
+  {
+   "name": "shrine-step",
+   "walkable": true,
+   "min": [
+    64.5,
+    9.8,
+    230.1
+   ],
+   "max": [
+    67.5,
+    10.4,
+    231.9
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    64.28,
+    11.2,
+    235.57
+   ],
+   "max": [
+    64.53,
+    14.2,
+    235.82
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    67.47,
+    11.2,
+    235.57
+   ],
+   "max": [
+    67.72,
+    14.2,
+    235.82
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    63,
+    14.16,
+    231
+   ],
+   "max": [
+    69,
+    14.44,
+    237
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    63.6,
+    14.86,
+    231.6
+   ],
+   "max": [
+    68.4,
+    15.14,
+    236.4
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    64.2,
+    15.56,
+    232.2
+   ],
+   "max": [
+    67.8,
+    15.84,
+    235.8
+   ]
+  },
+  {
+   "name": "shrine-base",
+   "walkable": true,
+   "min": [
+    92.5,
+    9.8,
+    231.5
+   ],
+   "max": [
+    97.5,
+    11.2,
+    236.5
+   ]
+  },
+  {
+   "name": "shrine-step",
+   "walkable": true,
+   "min": [
+    93.5,
+    9.8,
+    230.1
+   ],
+   "max": [
+    96.5,
+    10.4,
+    231.9
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    93.28,
+    11.2,
+    235.57
+   ],
+   "max": [
+    93.53,
+    14.2,
+    235.82
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    96.47,
+    11.2,
+    235.57
+   ],
+   "max": [
+    96.72,
+    14.2,
+    235.82
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    92,
+    14.16,
+    231
+   ],
+   "max": [
+    98,
+    14.44,
+    237
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    92.6,
+    14.86,
+    231.6
+   ],
+   "max": [
+    97.4,
+    15.14,
+    236.4
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    93.2,
+    15.56,
+    232.2
+   ],
+   "max": [
+    96.8,
+    15.84,
+    235.8
+   ]
+  },
+  {
+   "name": "terrace-bank",
+   "walkable": true,
+   "min": [
+    -31,
+    -3,
+    132
+   ],
+   "max": [
+    -1,
+    2.91,
+    142
+   ]
+  },
+  {
+   "name": "terrace-bank",
+   "walkable": true,
+   "min": [
+    -31,
+    -3,
+    142
+   ],
+   "max": [
+    -1,
+    4.11,
+    152
+   ]
+  },
+  {
+   "name": "terrace-bank",
+   "walkable": true,
+   "min": [
+    -31,
+    -3,
+    152
+   ],
+   "max": [
+    -1,
+    5.31,
+    162
+   ]
+  },
+  {
+   "name": "terrace-bank",
+   "walkable": true,
+   "min": [
+    -31,
+    -3,
+    162
+   ],
+   "max": [
+    -1,
+    6.51,
+    172
+   ]
+  },
+  {
+   "name": "terrace-shortcut",
+   "walkable": true,
+   "min": [
+    -35.5,
+    1.73,
+    129.99
+   ],
+   "max": [
+    -32.5,
+    6.51,
+    180.01
+   ]
+  },
+  {
+   "name": "terrace-walkway",
+   "walkable": true,
+   "min": [
+    -35,
+    6.35,
+    180
+   ],
+   "max": [
+    -13,
+    6.51,
+    182
+   ]
+  },
+  {
+   "name": "terrace-connection",
+   "walkable": true,
+   "min": [
+    -17.5,
+    6.35,
+    172
+   ],
+   "max": [
+    -14.5,
+    6.51,
+    182
+   ]
+  },
+  {
+   "name": "jungle-bridge",
+   "walkable": true,
+   "min": [
+    77.5,
+    2.83,
+    149.99
+   ],
+   "max": [
+    82.5,
+    4.01,
+    168.01
+   ]
+  },
+  {
+   "name": "bridge-rail",
+   "walkable": true,
+   "min": [
+    77.52,
+    3.72,
+    150
+   ],
+   "max": [
+    77.67,
+    4.72,
+    168
+   ]
+  },
+  {
+   "name": "bridge-rail",
+   "walkable": true,
+   "min": [
+    82.33,
+    3.72,
+    150
+   ],
+   "max": [
+    82.48,
+    4.72,
+    168
+   ]
+  },
+  {
+   "name": "shrine-base",
+   "walkable": true,
+   "min": [
+    -237.5,
+    0,
+    44.5
+   ],
+   "max": [
+    -232.5,
+    1.4,
+    49.5
+   ]
+  },
+  {
+   "name": "shrine-step",
+   "walkable": true,
+   "min": [
+    -236.5,
+    0,
+    43.1
+   ],
+   "max": [
+    -233.5,
+    0.6,
+    44.9
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    -236.73,
+    1.4,
+    48.58
+   ],
+   "max": [
+    -236.48,
+    4.4,
+    48.83
+   ]
+  },
+  {
+   "name": "shrine-post",
+   "walkable": true,
+   "min": [
+    -233.52,
+    1.4,
+    48.58
+   ],
+   "max": [
+    -233.27,
+    4.4,
+    48.83
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    -238,
+    4.36,
+    44
+   ],
+   "max": [
+    -232,
+    4.64,
+    50
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    -237.4,
+    5.06,
+    44.6
+   ],
+   "max": [
+    -232.6,
+    5.34,
+    49.4
+   ]
+  },
+  {
+   "name": "meru-roof",
+   "walkable": true,
+   "min": [
+    -236.8,
+    5.76,
+    45.2
+   ],
+   "max": [
+    -233.2,
+    6.04,
+    48.8
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -92.5,
+    0,
+    -68.1
+   ],
+   "max": [
+    -91.5,
+    0.4,
+    -65.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -90.46,
+    0,
+    -67.06
+   ],
+   "max": [
+    -90.34,
+    2.5,
+    -66.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -85.5,
+    0,
+    -62.1
+   ],
+   "max": [
+    -84.5,
+    0.4,
+    -59.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -83.46,
+    0,
+    -61.06
+   ],
+   "max": [
+    -83.34,
+    2.5,
+    -60.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -78.5,
+    0,
+    -68.1
+   ],
+   "max": [
+    -77.5,
+    0.4,
+    -65.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -76.46,
+    0,
+    -67.06
+   ],
+   "max": [
+    -76.34,
+    2.5,
+    -66.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -71.5,
+    0,
+    -62.1
+   ],
+   "max": [
+    -70.5,
+    0.4,
+    -59.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -69.46,
+    0,
+    -61.06
+   ],
+   "max": [
+    -69.34,
+    2.5,
+    -60.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -64.5,
+    0,
+    -68.1
+   ],
+   "max": [
+    -63.5,
+    0.4,
+    -65.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -62.46,
+    0,
+    -67.06
+   ],
+   "max": [
+    -62.34,
+    2.5,
+    -66.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -57.5,
+    0,
+    -62.1
+   ],
+   "max": [
+    -56.5,
+    0.4,
+    -59.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -55.46,
+    0,
+    -61.06
+   ],
+   "max": [
+    -55.34,
+    2.5,
+    -60.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -50.5,
+    0,
+    -68.1
+   ],
+   "max": [
+    -49.5,
+    0.4,
+    -65.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -48.46,
+    0,
+    -67.06
+   ],
+   "max": [
+    -48.34,
+    2.5,
+    -66.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -43.5,
+    0,
+    -62.1
+   ],
+   "max": [
+    -42.5,
+    0.4,
+    -59.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -41.46,
+    0,
+    -61.06
+   ],
+   "max": [
+    -41.34,
+    2.5,
+    -60.94
+   ]
+  },
+  {
+   "name": "beach-lounger",
+   "walkable": true,
+   "min": [
+    -36.5,
+    0,
+    -68.1
+   ],
+   "max": [
+    -35.5,
+    0.4,
+    -65.9
+   ]
+  },
+  {
+   "name": "parasol-post",
+   "walkable": true,
+   "min": [
+    -34.46,
+    0,
+    -67.06
+   ],
+   "max": [
+    -34.34,
+    2.5,
+    -66.94
+   ]
+  },
+  {
+   "name": "volleyball-post",
+   "walkable": true,
+   "min": [
+    -85.08,
+    0,
+    -112.08
+   ],
+   "max": [
+    -84.92,
+    2.5,
+    -111.92
+   ]
+  },
+  {
+   "name": "volleyball-post",
+   "walkable": true,
+   "min": [
+    -71.08,
+    0,
+    -112.08
+   ],
+   "max": [
+    -70.92,
+    2.5,
+    -111.92
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    25.5,
+    0,
+    52
+   ],
+   "max": [
+    28.5,
+    1,
+    54
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    25.1,
+    2.61,
+    51.5
+   ],
+   "max": [
+    28.9,
+    2.79,
+    54.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    32.5,
+    0,
+    52
+   ],
+   "max": [
+    35.5,
+    1,
+    54
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    32.1,
+    2.61,
+    51.5
+   ],
+   "max": [
+    35.9,
+    2.79,
+    54.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    39.5,
+    0,
+    52
+   ],
+   "max": [
+    42.5,
+    1,
+    54
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    39.1,
+    2.61,
+    51.5
+   ],
+   "max": [
+    42.9,
+    2.79,
+    54.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    65.5,
+    0,
+    56
+   ],
+   "max": [
+    68.5,
+    1,
+    58
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    65.1,
+    2.61,
+    55.5
+   ],
+   "max": [
+    68.9,
+    2.79,
+    58.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    72.5,
+    0,
+    56
+   ],
+   "max": [
+    75.5,
+    1,
+    58
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    72.1,
+    2.61,
+    55.5
+   ],
+   "max": [
+    75.9,
+    2.79,
+    58.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    79.5,
+    0,
+    56
+   ],
+   "max": [
+    82.5,
+    1,
+    58
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    79.1,
+    2.61,
+    55.5
+   ],
+   "max": [
+    82.9,
+    2.79,
+    58.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    65.5,
+    0,
+    78
+   ],
+   "max": [
+    68.5,
+    1,
+    80
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    65.1,
+    2.61,
+    77.5
+   ],
+   "max": [
+    68.9,
+    2.79,
+    80.5
+   ]
+  },
+  {
+   "name": "pasar-stall",
+   "walkable": true,
+   "min": [
+    72.5,
+    0,
+    78
+   ],
+   "max": [
+    75.5,
+    1,
+    80
+   ]
+  },
+  {
+   "name": "pasar-canopy",
+   "walkable": true,
+   "min": [
+    72.1,
+    2.61,
+    77.5
+   ],
+   "max": [
+    75.9,
+    2.79,
+    80.5
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -60.25,
+    0,
+    -51
+   ],
+   "max": [
+    -59.75,
+    6,
+    -50.5
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -59.1,
+    -0.1,
+    -50.95
+   ],
+   "max": [
+    -56.9,
+    1.1,
+    -48.55
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -38.08,
+    0,
+    -104.45
+   ],
+   "max": [
+    -37.58,
+    6,
+    -103.95
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -96.51,
+    0,
+    -77.07
+   ],
+   "max": [
+    -96.01,
+    6,
+    -76.57
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -67.84,
+    0,
+    -123.13
+   ],
+   "max": [
+    -67.34,
+    6,
+    -122.63
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -85.54,
+    0,
+    -40.49
+   ],
+   "max": [
+    -85.04,
+    6,
+    -39.99
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -84.39,
+    -0.1,
+    -40.44
+   ],
+   "max": [
+    -82.19,
+    1.1,
+    -38.04
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -11.29,
+    0,
+    -93.41
+   ],
+   "max": [
+    -10.79,
+    6,
+    -92.91
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -40.41,
+    0,
+    -25.91
+   ],
+   "max": [
+    -39.91,
+    6,
+    -25.41
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -49.09,
+    0,
+    -107.29
+   ],
+   "max": [
+    -48.59,
+    6,
+    -106.79
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -89.98,
+    0,
+    -66.34
+   ],
+   "max": [
+    -89.48,
+    6,
+    -65.84
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -88.83,
+    -0.1,
+    -66.29
+   ],
+   "max": [
+    -86.63,
+    1.1,
+    -63.89
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -80.29,
+    0,
+    -114.84
+   ],
+   "max": [
+    -79.79,
+    6,
+    -114.34
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -69.6,
+    0,
+    -37.72
+   ],
+   "max": [
+    -69.1,
+    6,
+    -37.22
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -21.7,
+    0,
+    -107.35
+   ],
+   "max": [
+    -21.2,
+    6,
+    -106.85
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -57.86,
+    0,
+    -138.05
+   ],
+   "max": [
+    -57.36,
+    6,
+    -137.55
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -80.88,
+    0,
+    -59.52
+   ],
+   "max": [
+    -80.38,
+    6,
+    -59.02
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -88.2,
+    0,
+    -103.57
+   ],
+   "max": [
+    -87.7,
+    6,
+    -103.07
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -87.05,
+    -0.1,
+    -103.52
+   ],
+   "max": [
+    -84.85,
+    1.1,
+    -101.12
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -54.92,
+    0,
+    -40.63
+   ],
+   "max": [
+    -54.42,
+    6,
+    -40.13
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -35.37,
+    0,
+    -116
+   ],
+   "max": [
+    -34.87,
+    6,
+    -115.5
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -16.26,
+    0,
+    -55.04
+   ],
+   "max": [
+    -15.76,
+    6,
+    -54.54
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    49.75,
+    3.18,
+    152.5
+   ],
+   "max": [
+    50.25,
+    9.18,
+    153
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    50.9,
+    3.08,
+    152.55
+   ],
+   "max": [
+    53.1,
+    4.28,
+    154.95
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    82.16,
+    0,
+    74.37
+   ],
+   "max": [
+    82.66,
+    6,
+    74.87
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -3.25,
+    1.08,
+    114.4
+   ],
+   "max": [
+    -2.75,
+    7.08,
+    114.9
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    12.78,
+    4.02,
+    167.86
+   ],
+   "max": [
+    13.28,
+    10.02,
+    168.36
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    13.93,
+    3.92,
+    167.91
+   ],
+   "max": [
+    16.13,
+    5.12,
+    170.31
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    121.31,
+    0,
+    90.51
+   ],
+   "max": [
+    121.81,
+    6,
+    91.01
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -20.65,
+    0,
+    73.19
+   ],
+   "max": [
+    -20.15,
+    6,
+    73.69
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    66.06,
+    0,
+    70.23
+   ],
+   "max": [
+    66.56,
+    6,
+    70.73
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    6.3,
+    1.94,
+    130.08
+   ],
+   "max": [
+    6.8,
+    7.94,
+    130.58
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    7.45,
+    1.84,
+    130.13
+   ],
+   "max": [
+    9.65,
+    3.04,
+    132.53
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    100.51,
+    1.7,
+    125.67
+   ],
+   "max": [
+    101.01,
+    7.7,
+    126.17
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    36.08,
+    4.24,
+    171.91
+   ],
+   "max": [
+    36.58,
+    10.24,
+    172.41
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    106.1,
+    0,
+    70.14
+   ],
+   "max": [
+    106.6,
+    6,
+    70.64
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -23.74,
+    0.3,
+    100.22
+   ],
+   "max": [
+    -23.24,
+    6.3,
+    100.72
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -22.59,
+    0.2,
+    100.27
+   ],
+   "max": [
+    -20.39,
+    1.4,
+    102.67
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    100.87,
+    4.16,
+    170.41
+   ],
+   "max": [
+    101.37,
+    10.16,
+    170.91
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -83.31,
+    0,
+    21.72
+   ],
+   "max": [
+    -82.81,
+    6,
+    22.22
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -114.77,
+    0,
+    36.46
+   ],
+   "max": [
+    -114.27,
+    6,
+    36.96
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -99.33,
+    0,
+    11.66
+   ],
+   "max": [
+    -98.83,
+    6,
+    12.16
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -108.87,
+    0,
+    56.16
+   ],
+   "max": [
+    -108.37,
+    6,
+    56.66
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -107.72,
+    -0.1,
+    56.21
+   ],
+   "max": [
+    -105.52,
+    1.1,
+    58.61
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -84.57,
+    0,
+    64.01
+   ],
+   "max": [
+    -84.07,
+    6,
+    64.51
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -89.24,
+    0,
+    20.19
+   ],
+   "max": [
+    -88.74,
+    6,
+    20.69
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -111.26,
+    0,
+    42.24
+   ],
+   "max": [
+    -110.76,
+    6,
+    42.74
+   ]
+  },
+  {
+   "name": "coastal-rock",
+   "walkable": true,
+   "min": [
+    -110.11,
+    -0.1,
+    42.29
+   ],
+   "max": [
+    -107.91,
+    1.1,
+    44.69
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -106.04,
+    0,
+    16.13
+   ],
+   "max": [
+    -105.54,
+    6,
+    16.63
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -100.29,
+    0,
+    57.65
+   ],
+   "max": [
+    -99.79,
+    6,
+    58.15
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -74.49,
+    0,
+    20.16
+   ],
+   "max": [
+    -73.99,
+    6,
+    20.66
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -76.42,
+    0,
+    57.1
+   ],
+   "max": [
+    -75.92,
+    6,
+    57.6
+   ]
+  },
+  {
+   "name": "palm-trunk",
+   "walkable": true,
+   "min": [
+    -93.96,
+    0,
+    3.63
+   ],
+   "max": [
+    -93.46,
+    6,
+    4.13
+   ]
+  },
+  {
+   "name": "beach-scooter",
+   "walkable": true,
+   "min": [
+    -55.81,
+    0,
+    -83.03
+   ],
+   "max": [
+    -54.19,
+    1.1,
+    -80.97
+   ]
+  },
+  {
+   "name": "town-scooter",
+   "walkable": true,
+   "min": [
+    4.6,
+    0,
+    15.05
+   ],
+   "max": [
+    5.4,
+    1.1,
+    16.95
+   ]
+  },
+  {
+   "name": "harbour-boat",
+   "walkable": true,
+   "min": [
+    -130.5,
+    -0.4,
+    33.85
+   ],
+   "max": [
+    -125.5,
+    0.4,
+    36.15
+   ]
+  }
+ ]
+}

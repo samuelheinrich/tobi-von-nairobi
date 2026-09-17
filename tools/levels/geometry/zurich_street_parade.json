@@ -1,0 +1,5247 @@
+{
+ "level": "zurich_street_parade",
+ "bounds": {
+  "minX": -118,
+  "maxX": 118,
+  "minZ": -52,
+  "maxZ": 122
+ },
+ "bodies": [
+  {
+   "name": "island-ground",
+   "walkable": true,
+   "min": [
+    -52,
+    -1,
+    -54
+   ],
+   "max": [
+    52,
+    0,
+    54
+   ]
+  },
+  {
+   "name": "quay-zuerichsee",
+   "walkable": false,
+   "min": [
+    -25.2,
+    0,
+    -54
+   ],
+   "max": [
+    -24.8,
+    2.6,
+    -11.2
+   ]
+  },
+  {
+   "name": "quay-zuerichsee",
+   "walkable": false,
+   "min": [
+    14.8,
+    0,
+    -54
+   ],
+   "max": [
+    15.2,
+    2.6,
+    -11.2
+   ]
+  },
+  {
+   "name": "quay-zuerichsee",
+   "walkable": false,
+   "min": [
+    -25,
+    0,
+    -54.2
+   ],
+   "max": [
+    15,
+    2.6,
+    -53.8
+   ]
+  },
+  {
+   "name": "quay-zuerichsee",
+   "walkable": false,
+   "min": [
+    -25,
+    0,
+    -11.4
+   ],
+   "max": [
+    15,
+    2.6,
+    -11
+   ]
+  },
+  {
+   "name": "quay-limmat_sued",
+   "walkable": false,
+   "min": [
+    -16.2,
+    0,
+    -1.8
+   ],
+   "max": [
+    -15.8,
+    2.6,
+    11.8
+   ]
+  },
+  {
+   "name": "quay-limmat_sued",
+   "walkable": false,
+   "min": [
+    1.8,
+    0,
+    -1.8
+   ],
+   "max": [
+    2.2,
+    2.6,
+    11.8
+   ]
+  },
+  {
+   "name": "quay-limmat_sued",
+   "walkable": false,
+   "min": [
+    -16,
+    0,
+    -2
+   ],
+   "max": [
+    2,
+    2.6,
+    -1.6
+   ]
+  },
+  {
+   "name": "quay-limmat_sued",
+   "walkable": false,
+   "min": [
+    -16,
+    0,
+    11.6
+   ],
+   "max": [
+    2,
+    2.6,
+    12
+   ]
+  },
+  {
+   "name": "quay-limmat_nord",
+   "walkable": false,
+   "min": [
+    -16.2,
+    0,
+    17.2
+   ],
+   "max": [
+    -15.8,
+    2.6,
+    54
+   ]
+  },
+  {
+   "name": "quay-limmat_nord",
+   "walkable": false,
+   "min": [
+    1.8,
+    0,
+    17.2
+   ],
+   "max": [
+    2.2,
+    2.6,
+    54
+   ]
+  },
+  {
+   "name": "quay-limmat_nord",
+   "walkable": false,
+   "min": [
+    -16,
+    0,
+    17
+   ],
+   "max": [
+    2,
+    2.6,
+    17.4
+   ]
+  },
+  {
+   "name": "quay-limmat_nord",
+   "walkable": false,
+   "min": [
+    -16,
+    0,
+    53.8
+   ],
+   "max": [
+    2,
+    2.6,
+    54.2
+   ]
+  },
+  {
+   "name": "bridge-rail-quaibruecke",
+   "walkable": true,
+   "min": [
+    -25,
+    0.22,
+    -11.15
+   ],
+   "max": [
+    15,
+    1.27,
+    -10.85
+   ]
+  },
+  {
+   "name": "bridge-rail-quaibruecke",
+   "walkable": true,
+   "min": [
+    -25,
+    0.22,
+    -2.15
+   ],
+   "max": [
+    15,
+    1.27,
+    -1.85
+   ]
+  },
+  {
+   "name": "bridge-rail-muensterbruecke",
+   "walkable": true,
+   "min": [
+    -16,
+    0.22,
+    11.85
+   ],
+   "max": [
+    2,
+    1.27,
+    12.15
+   ]
+  },
+  {
+   "name": "bridge-rail-muensterbruecke",
+   "walkable": true,
+   "min": [
+    -16,
+    0.22,
+    16.85
+   ],
+   "max": [
+    2,
+    1.27,
+    17.15
+   ]
+  },
+  {
+   "name": "zurich-seefeld_a",
+   "walkable": true,
+   "min": [
+    28,
+    0,
+    -22
+   ],
+   "max": [
+    36,
+    13,
+    -14
+   ]
+  },
+  {
+   "name": "roof-seefeld_a",
+   "walkable": true,
+   "min": [
+    24.99,
+    13,
+    -25.01
+   ],
+   "max": [
+    39.01,
+    15.2,
+    -10.99
+   ]
+  },
+  {
+   "name": "zurich-seefeld_b",
+   "walkable": true,
+   "min": [
+    40.5,
+    0,
+    -24.5
+   ],
+   "max": [
+    49.5,
+    15,
+    -15.5
+   ]
+  },
+  {
+   "name": "roof-seefeld_b",
+   "walkable": true,
+   "min": [
+    37.11,
+    15,
+    -27.89
+   ],
+   "max": [
+    52.89,
+    17.2,
+    -12.11
+   ]
+  },
+  {
+   "name": "zurich-seefeld_c",
+   "walkable": true,
+   "min": [
+    42,
+    0,
+    -37
+   ],
+   "max": [
+    50,
+    14,
+    -27
+   ]
+  },
+  {
+   "name": "roof-seefeld_c",
+   "walkable": true,
+   "min": [
+    37.23,
+    14,
+    -40.77
+   ],
+   "max": [
+    54.77,
+    16.2,
+    -23.23
+   ]
+  },
+  {
+   "name": "zurich-seefeld_d",
+   "walkable": true,
+   "min": [
+    40,
+    0,
+    -48
+   ],
+   "max": [
+    48,
+    12,
+    -40
+   ]
+  },
+  {
+   "name": "roof-seefeld_d",
+   "walkable": true,
+   "min": [
+    36.99,
+    12,
+    -51.01
+   ],
+   "max": [
+    51.01,
+    14.2,
+    -36.99
+   ]
+  },
+  {
+   "name": "zurich-china_garden",
+   "walkable": true,
+   "min": [
+    31,
+    0,
+    -51
+   ],
+   "max": [
+    37,
+    5,
+    -45
+   ]
+  },
+  {
+   "name": "roof-china_garden",
+   "walkable": true,
+   "min": [
+    28.74,
+    5,
+    -53.26
+   ],
+   "max": [
+    39.26,
+    7.2,
+    -42.74
+   ]
+  },
+  {
+   "name": "zurich-opernhaus",
+   "walkable": true,
+   "min": [
+    33.5,
+    0,
+    2.5
+   ],
+   "max": [
+    46.5,
+    13,
+    13.5
+   ]
+  },
+  {
+   "name": "roof-opernhaus",
+   "walkable": true,
+   "min": [
+    28.6,
+    13,
+    -3.4
+   ],
+   "max": [
+    51.4,
+    15.2,
+    19.4
+   ]
+  },
+  {
+   "name": "zurich-bellevue_block",
+   "walkable": true,
+   "min": [
+    21,
+    0,
+    7
+   ],
+   "max": [
+    31,
+    16,
+    17
+   ]
+  },
+  {
+   "name": "roof-bellevue_block",
+   "walkable": true,
+   "min": [
+    17.23,
+    16,
+    3.23
+   ],
+   "max": [
+    34.77,
+    18.2,
+    20.77
+   ]
+  },
+  {
+   "name": "zurich-bahnhofstrasse_1",
+   "walkable": true,
+   "min": [
+    -50,
+    0,
+    -1
+   ],
+   "max": [
+    -40,
+    15,
+    9
+   ]
+  },
+  {
+   "name": "roof-bahnhofstrasse_1",
+   "walkable": true,
+   "min": [
+    -53.77,
+    15,
+    -4.77
+   ],
+   "max": [
+    -36.23,
+    17.2,
+    12.77
+   ]
+  },
+  {
+   "name": "zurich-bahnhofstrasse_2",
+   "walkable": true,
+   "min": [
+    -50,
+    0,
+    12
+   ],
+   "max": [
+    -40,
+    17,
+    22
+   ]
+  },
+  {
+   "name": "roof-bahnhofstrasse_2",
+   "walkable": true,
+   "min": [
+    -53.77,
+    17,
+    8.23
+   ],
+   "max": [
+    -36.23,
+    19.2,
+    25.77
+   ]
+  },
+  {
+   "name": "zurich-bahnhofstrasse_3",
+   "walkable": true,
+   "min": [
+    -50,
+    0,
+    25
+   ],
+   "max": [
+    -40,
+    15,
+    35
+   ]
+  },
+  {
+   "name": "roof-bahnhofstrasse_3",
+   "walkable": true,
+   "min": [
+    -53.77,
+    15,
+    21.23
+   ],
+   "max": [
+    -36.23,
+    17.2,
+    38.77
+   ]
+  },
+  {
+   "name": "zurich-bahnhofstrasse_4",
+   "walkable": true,
+   "min": [
+    -50,
+    0,
+    38
+   ],
+   "max": [
+    -40,
+    16,
+    48
+   ]
+  },
+  {
+   "name": "roof-bahnhofstrasse_4",
+   "walkable": true,
+   "min": [
+    -53.77,
+    16,
+    34.23
+   ],
+   "max": [
+    -36.23,
+    18.2,
+    51.77
+   ]
+  },
+  {
+   "name": "zurich-altstadt_w1",
+   "walkable": true,
+   "min": [
+    -25.5,
+    0,
+    22
+   ],
+   "max": [
+    -18.5,
+    14,
+    30
+   ]
+  },
+  {
+   "name": "roof-altstadt_w1",
+   "walkable": true,
+   "min": [
+    -29.01,
+    14,
+    18.99
+   ],
+   "max": [
+    -14.99,
+    16.2,
+    33.01
+   ]
+  },
+  {
+   "name": "zurich-altstadt_w2",
+   "walkable": true,
+   "min": [
+    -25.5,
+    0,
+    32
+   ],
+   "max": [
+    -18.5,
+    15,
+    40
+   ]
+  },
+  {
+   "name": "roof-altstadt_w2",
+   "walkable": true,
+   "min": [
+    -29.01,
+    15,
+    28.99
+   ],
+   "max": [
+    -14.99,
+    17.2,
+    43.01
+   ]
+  },
+  {
+   "name": "zurich-altstadt_w3",
+   "walkable": true,
+   "min": [
+    -25,
+    0,
+    42
+   ],
+   "max": [
+    -17,
+    13,
+    50
+   ]
+  },
+  {
+   "name": "roof-altstadt_w3",
+   "walkable": true,
+   "min": [
+    -28.01,
+    13,
+    38.99
+   ],
+   "max": [
+    -13.99,
+    15.2,
+    53.01
+   ]
+  },
+  {
+   "name": "zurich-fraumuenster",
+   "walkable": true,
+   "min": [
+    -24.5,
+    0,
+    9
+   ],
+   "max": [
+    -15.5,
+    11,
+    19
+   ]
+  },
+  {
+   "name": "roof-fraumuenster",
+   "walkable": true,
+   "min": [
+    -28.77,
+    11,
+    5.23
+   ],
+   "max": [
+    -11.23,
+    14.4,
+    22.77
+   ]
+  },
+  {
+   "name": "zurich-grossmuenster",
+   "walkable": true,
+   "min": [
+    5.5,
+    0,
+    12
+   ],
+   "max": [
+    16.5,
+    13,
+    24
+   ]
+  },
+  {
+   "name": "roof-grossmuenster",
+   "walkable": true,
+   "min": [
+    0.48,
+    13,
+    7.48
+   ],
+   "max": [
+    21.52,
+    16.4,
+    28.52
+   ]
+  },
+  {
+   "name": "zurich-niederdorf_1",
+   "walkable": true,
+   "min": [
+    6.5,
+    0,
+    27.5
+   ],
+   "max": [
+    15.5,
+    15,
+    36.5
+   ]
+  },
+  {
+   "name": "roof-niederdorf_1",
+   "walkable": true,
+   "min": [
+    3.11,
+    15,
+    24.11
+   ],
+   "max": [
+    18.89,
+    17.2,
+    39.89
+   ]
+  },
+  {
+   "name": "zurich-niederdorf_2",
+   "walkable": true,
+   "min": [
+    6.5,
+    0,
+    37.5
+   ],
+   "max": [
+    15.5,
+    14,
+    46.5
+   ]
+  },
+  {
+   "name": "roof-niederdorf_2",
+   "walkable": true,
+   "min": [
+    3.11,
+    14,
+    34.11
+   ],
+   "max": [
+    18.89,
+    16.2,
+    49.89
+   ]
+  },
+  {
+   "name": "zurich-niederdorf_3",
+   "walkable": true,
+   "min": [
+    7.5,
+    0,
+    47
+   ],
+   "max": [
+    16.5,
+    13,
+    55
+   ]
+  },
+  {
+   "name": "roof-niederdorf_3",
+   "walkable": true,
+   "min": [
+    4.11,
+    13,
+    43.11
+   ],
+   "max": [
+    19.89,
+    15.2,
+    58.89
+   ]
+  },
+  {
+   "name": "zurich-hafen_schuppen",
+   "walkable": true,
+   "min": [
+    -48.5,
+    0,
+    -50.5
+   ],
+   "max": [
+    -41.5,
+    4,
+    -45.5
+   ]
+  },
+  {
+   "name": "roof-hafen_schuppen",
+   "walkable": true,
+   "min": [
+    -51.14,
+    4,
+    -54.14
+   ],
+   "max": [
+    -38.86,
+    6.2,
+    -41.86
+   ]
+  },
+  {
+   "name": "zurich-fraumuenster_spitz",
+   "walkable": true,
+   "min": [
+    -21.5,
+    0,
+    8.5
+   ],
+   "max": [
+    -18.5,
+    28,
+    11.5
+   ]
+  },
+  {
+   "name": "zurich-grossmuenster_nord",
+   "walkable": true,
+   "min": [
+    5.4,
+    0,
+    12.4
+   ],
+   "max": [
+    8.6,
+    30,
+    15.6
+   ]
+  },
+  {
+   "name": "zurich-grossmuenster_sued",
+   "walkable": true,
+   "min": [
+    5.4,
+    0,
+    20.4
+   ],
+   "max": [
+    8.6,
+    30,
+    23.6
+   ]
+  },
+  {
+   "name": "love-mobile-karl_fm",
+   "walkable": true,
+   "min": [
+    15.7,
+    0,
+    -33.5
+   ],
+   "max": [
+    19.3,
+    3.4,
+    -26.5
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    16.15,
+    3.4,
+    -33
+   ],
+   "max": [
+    18.85,
+    5.8,
+    -31.2
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    16.15,
+    3.4,
+    -28.8
+   ],
+   "max": [
+    18.85,
+    5.8,
+    -27
+   ]
+  },
+  {
+   "name": "love-mobile-bellevue_bass",
+   "walkable": true,
+   "min": [
+    24.2,
+    0,
+    -9.5
+   ],
+   "max": [
+    27.8,
+    3.4,
+    -2.5
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    24.65,
+    3.4,
+    -9
+   ],
+   "max": [
+    27.35,
+    5.8,
+    -7.2
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    24.65,
+    3.4,
+    -4.8
+   ],
+   "max": [
+    27.35,
+    5.8,
+    -3
+   ]
+  },
+  {
+   "name": "love-mobile-tobi_techno",
+   "walkable": true,
+   "min": [
+    -29.8,
+    0,
+    -32.5
+   ],
+   "max": [
+    -26.2,
+    3.4,
+    -25.5
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    -29.35,
+    3.4,
+    -32
+   ],
+   "max": [
+    -26.65,
+    5.8,
+    -30.2
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    -29.35,
+    3.4,
+    -27.8
+   ],
+   "max": [
+    -26.65,
+    5.8,
+    -26
+   ]
+  },
+  {
+   "name": "love-mobile-buerkli_beat",
+   "walkable": true,
+   "min": [
+    -36.8,
+    0,
+    -20.5
+   ],
+   "max": [
+    -33.2,
+    3.4,
+    -13.5
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    -36.35,
+    3.4,
+    -20
+   ],
+   "max": [
+    -33.65,
+    5.8,
+    -18.2
+   ]
+  },
+  {
+   "name": "speaker-stack",
+   "walkable": true,
+   "min": [
+    -36.35,
+    3.4,
+    -15.8
+   ],
+   "max": [
+    -33.65,
+    5.8,
+    -14
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    25.35,
+    0,
+    -46.22
+   ],
+   "max": [
+    25.85,
+    5.5,
+    -45.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    25.35,
+    0,
+    -38.22
+   ],
+   "max": [
+    25.85,
+    5.5,
+    -37.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    25.35,
+    0,
+    -22.22
+   ],
+   "max": [
+    25.85,
+    5.5,
+    -21.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    25.35,
+    0,
+    -14.22
+   ],
+   "max": [
+    25.85,
+    5.5,
+    -13.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -38.75,
+    0,
+    -42.22
+   ],
+   "max": [
+    -38.25,
+    5.5,
+    -41.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -38.75,
+    0,
+    -34.22
+   ],
+   "max": [
+    -38.25,
+    5.5,
+    -33.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -38.75,
+    0,
+    -22.22
+   ],
+   "max": [
+    -38.25,
+    5.5,
+    -21.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -38.75,
+    0,
+    -16.22
+   ],
+   "max": [
+    -38.25,
+    5.5,
+    -15.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -28.75,
+    0,
+    1.78
+   ],
+   "max": [
+    -28.25,
+    5,
+    2.22
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -28.75,
+    0,
+    11.78
+   ],
+   "max": [
+    -28.25,
+    5,
+    12.22
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -28.75,
+    0,
+    25.78
+   ],
+   "max": [
+    -28.25,
+    5,
+    26.22
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    -28.75,
+    0,
+    37.78
+   ],
+   "max": [
+    -28.25,
+    5,
+    38.22
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    29.75,
+    0,
+    -50.22
+   ],
+   "max": [
+    30.25,
+    6,
+    -49.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    39.75,
+    0,
+    -52.22
+   ],
+   "max": [
+    40.25,
+    6,
+    -51.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    45.75,
+    0,
+    -46.22
+   ],
+   "max": [
+    46.25,
+    6,
+    -45.78
+   ]
+  },
+  {
+   "name": "quay-tree",
+   "walkable": true,
+   "min": [
+    37.75,
+    0,
+    -44.22
+   ],
+   "max": [
+    38.25,
+    6,
+    -43.78
+   ]
+  },
+  {
+   "name": "city-boundary",
+   "walkable": false,
+   "min": [
+    -52.5,
+    0,
+    -54
+   ],
+   "max": [
+    -51.5,
+    9,
+    54
+   ]
+  },
+  {
+   "name": "city-boundary",
+   "walkable": false,
+   "min": [
+    51.5,
+    0,
+    -54
+   ],
+   "max": [
+    52.5,
+    9,
+    54
+   ]
+  },
+  {
+   "name": "city-boundary",
+   "walkable": false,
+   "min": [
+    -52,
+    0,
+    -54.5
+   ],
+   "max": [
+    52,
+    9,
+    -53.5
+   ]
+  },
+  {
+   "name": "city-north-ground",
+   "walkable": true,
+   "min": [
+    -124,
+    -0.7,
+    53
+   ],
+   "max": [
+    -70,
+    0,
+    123
+   ]
+  },
+  {
+   "name": "city-north-ground",
+   "walkable": true,
+   "min": [
+    0,
+    -0.7,
+    53
+   ],
+   "max": [
+    50,
+    0,
+    123
+   ]
+  },
+  {
+   "name": "city-north-ground",
+   "walkable": true,
+   "min": [
+    100,
+    -0.7,
+    53
+   ],
+   "max": [
+    124,
+    0,
+    123
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    42.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    43.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    42.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    43.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    55.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    56.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    55.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    56.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    68.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    69.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    68.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    69.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    81.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    82.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    81.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    82.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    94.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    95.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    94.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    95.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -39.56,
+    0,
+    107.94
+   ],
+   "max": [
+    -39.44,
+    6.2,
+    108.06
+   ]
+  },
+  {
+   "name": "tram-wire-pole",
+   "walkable": true,
+   "min": [
+    -28.56,
+    0,
+    107.94
+   ],
+   "max": [
+    -28.44,
+    6.2,
+    108.06
+   ]
+  },
+  {
+   "name": "zurich-tram-body",
+   "walkable": true,
+   "min": [
+    -35.33,
+    0,
+    38.5
+   ],
+   "max": [
+    -32.67,
+    3.1,
+    51.5
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    39.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    40.06
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    51.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    52.06
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    63.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    64.06
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    75.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    76.06
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    87.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    88.06
+   ]
+  },
+  {
+   "name": "lamp-post",
+   "walkable": true,
+   "min": [
+    -25.06,
+    0,
+    99.94
+   ],
+   "max": [
+    -24.94,
+    5.2,
+    100.06
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    -65.5,
+    0,
+    39.5
+   ],
+   "max": [
+    -50.5,
+    16,
+    50.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    -65.75,
+    16,
+    39.25
+   ],
+   "max": [
+    -50.25,
+    16.3,
+    50.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    -93.5,
+    0,
+    52.5
+   ],
+   "max": [
+    -78.5,
+    18,
+    63.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    -93.75,
+    18,
+    52.25
+   ],
+   "max": [
+    -78.25,
+    18.3,
+    63.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    -93.5,
+    0,
+    66.5
+   ],
+   "max": [
+    -78.5,
+    15,
+    77.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    -93.75,
+    15,
+    66.25
+   ],
+   "max": [
+    -78.25,
+    15.3,
+    77.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    -93.5,
+    0,
+    80.5
+   ],
+   "max": [
+    -78.5,
+    17,
+    91.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    -93.75,
+    17,
+    80.25
+   ],
+   "max": [
+    -78.25,
+    17.3,
+    91.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    -16.5,
+    0,
+    39.5
+   ],
+   "max": [
+    -3.5,
+    15,
+    50.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    -16.75,
+    15,
+    39.25
+   ],
+   "max": [
+    -3.25,
+    15.3,
+    50.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    9.5,
+    0,
+    53.5
+   ],
+   "max": [
+    22.5,
+    17,
+    64.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    9.25,
+    17,
+    53.25
+   ],
+   "max": [
+    22.75,
+    17.3,
+    64.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    5,
+    0,
+    66.5
+   ],
+   "max": [
+    19,
+    16,
+    77.5
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    4.75,
+    16,
+    66.25
+   ],
+   "max": [
+    19.25,
+    16.3,
+    77.75
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    23,
+    0,
+    58
+   ],
+   "max": [
+    37,
+    15,
+    68
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    22.75,
+    15,
+    57.75
+   ],
+   "max": [
+    37.25,
+    15.3,
+    68.25
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    40,
+    0,
+    56
+   ],
+   "max": [
+    54,
+    17,
+    66
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    39.75,
+    17,
+    55.75
+   ],
+   "max": [
+    54.25,
+    17.3,
+    66.25
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    93.5,
+    0,
+    70
+   ],
+   "max": [
+    106.5,
+    15,
+    82
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    93.25,
+    15,
+    69.75
+   ],
+   "max": [
+    106.75,
+    15.3,
+    82.25
+   ]
+  },
+  {
+   "name": "zurich-facade",
+   "walkable": true,
+   "min": [
+    93.5,
+    0,
+    86
+   ],
+   "max": [
+    106.5,
+    18,
+    98
+   ]
+  },
+  {
+   "name": "zurich-roof",
+   "walkable": true,
+   "min": [
+    93.25,
+    18,
+    85.75
+   ],
+   "max": [
+    106.75,
+    18.3,
+    98.25
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-collision-shell",
+   "walkable": true,
+   "min": [
+    -53,
+    -3.5,
+    44.5
+   ],
+   "max": [
+    -43,
+    3.5,
+    53.5
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-counter",
+   "walkable": true,
+   "min": [
+    -46.5,
+    0,
+    51
+   ],
+   "max": [
+    -43.5,
+    1,
+    52
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-table",
+   "walkable": true,
+   "min": [
+    -51,
+    0.78,
+    49.3
+   ],
+   "max": [
+    -49,
+    0.93,
+    50.7
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-table-leg",
+   "walkable": true,
+   "min": [
+    -50.17,
+    -0.01,
+    49.83
+   ],
+   "max": [
+    -49.83,
+    0.84,
+    50.17
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-bench",
+   "walkable": true,
+   "min": [
+    -51,
+    0,
+    48.38
+   ],
+   "max": [
+    -49,
+    0.48,
+    49.03
+   ]
+  },
+  {
+   "name": "bahnhofstrasse-kiosk-stairs-ramp",
+   "walkable": true,
+   "min": [
+    -55.2,
+    -0.15,
+    43.46
+   ],
+   "max": [
+    -53.2,
+    7.21,
+    54.54
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    -54.5,
+    7.02,
+    54
+   ],
+   "max": [
+    -49.5,
+    7.22,
+    56
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-collision-shell",
+   "walkable": true,
+   "min": [
+    10,
+    -4,
+    43
+   ],
+   "max": [
+    22,
+    4,
+    53
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-counter",
+   "walkable": true,
+   "min": [
+    17.5,
+    0,
+    50
+   ],
+   "max": [
+    20.5,
+    1,
+    51
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-table",
+   "walkable": true,
+   "min": [
+    13,
+    0.78,
+    48.3
+   ],
+   "max": [
+    15,
+    0.93,
+    49.7
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-table-leg",
+   "walkable": true,
+   "min": [
+    13.83,
+    -0.01,
+    48.83
+   ],
+   "max": [
+    14.17,
+    0.84,
+    49.17
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-bench",
+   "walkable": true,
+   "min": [
+    13,
+    0,
+    47.38
+   ],
+   "max": [
+    15,
+    0.48,
+    48.03
+   ]
+  },
+  {
+   "name": "limmatquai-cafe-stairs-ramp",
+   "walkable": true,
+   "min": [
+    7.8,
+    -0.14,
+    42.45
+   ],
+   "max": [
+    9.8,
+    8.2,
+    53.55
+   ]
+  },
+  {
+   "name": "roof-landing",
+   "walkable": true,
+   "min": [
+    8.5,
+    8.02,
+    53.5
+   ],
+   "max": [
+    13.5,
+    8.22,
+    55.5
+   ]
+  },
+  {
+   "name": "stadelhofen-shop-collision-shell",
+   "walkable": false,
+   "min": [
+    79,
+    -3.5,
+    57.5
+   ],
+   "max": [
+    91,
+    3.5,
+    66.5
+   ]
+  },
+  {
+   "name": "stadelhofen-shop-counter",
+   "walkable": true,
+   "min": [
+    86.5,
+    0,
+    64
+   ],
+   "max": [
+    89.5,
+    1,
+    65
+   ]
+  },
+  {
+   "name": "stadelhofen-shop-table",
+   "walkable": true,
+   "min": [
+    82,
+    0.78,
+    62.3
+   ],
+   "max": [
+    84,
+    0.93,
+    63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-shop-table-leg",
+   "walkable": true,
+   "min": [
+    82.83,
+    -0.01,
+    62.83
+   ],
+   "max": [
+    83.17,
+    0.84,
+    63.17
+   ]
+  },
+  {
+   "name": "stadelhofen-shop-bench",
+   "walkable": true,
+   "min": [
+    82,
+    0,
+    61.38
+   ],
+   "max": [
+    84,
+    0.48,
+    62.03
+   ]
+  },
+  {
+   "name": "hb-hall-floor",
+   "walkable": true,
+   "min": [
+    -74.5,
+    -0.3,
+    53.5
+   ],
+   "max": [
+    -69.6,
+    0,
+    72.5
+   ]
+  },
+  {
+   "name": "hb-hall-floor",
+   "walkable": true,
+   "min": [
+    -64.5,
+    -0.3,
+    53.5
+   ],
+   "max": [
+    4.6,
+    0,
+    72.5
+   ]
+  },
+  {
+   "name": "hb-hall-north-floor",
+   "walkable": true,
+   "min": [
+    -74.5,
+    -0.3,
+    72.5
+   ],
+   "max": [
+    -69.6,
+    0,
+    78
+   ]
+  },
+  {
+   "name": "hb-hall-north-floor",
+   "walkable": true,
+   "min": [
+    -64.5,
+    -0.3,
+    72.5
+   ],
+   "max": [
+    4.6,
+    0,
+    78
+   ]
+  },
+  {
+   "name": "hb-side-wall",
+   "walkable": true,
+   "min": [
+    -74.75,
+    0,
+    52.5
+   ],
+   "max": [
+    -74.25,
+    11,
+    119.5
+   ]
+  },
+  {
+   "name": "hb-side-wall",
+   "walkable": true,
+   "min": [
+    4.25,
+    0,
+    52.5
+   ],
+   "max": [
+    4.75,
+    11,
+    119.5
+   ]
+  },
+  {
+   "name": "hb-south-wall",
+   "walkable": true,
+   "min": [
+    -74.5,
+    0,
+    52.25
+   ],
+   "max": [
+    -48,
+    10,
+    52.75
+   ]
+  },
+  {
+   "name": "hb-south-wall",
+   "walkable": true,
+   "min": [
+    -22,
+    0,
+    52.25
+   ],
+   "max": [
+    4.5,
+    10,
+    52.75
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -70.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -69.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -60.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -59.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -50.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -49.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -40.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -39.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -30.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -29.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -20.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -19.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -10.22,
+    0,
+    71.78
+   ],
+   "max": [
+    -9.78,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-roof-column",
+   "walkable": true,
+   "min": [
+    -0.22,
+    0,
+    71.78
+   ],
+   "max": [
+    0.22,
+    11.5,
+    72.22
+   ]
+  },
+  {
+   "name": "hb-glass-roof",
+   "walkable": true,
+   "min": [
+    -74,
+    11.4,
+    54.5
+   ],
+   "max": [
+    4,
+    11.6,
+    71.5
+   ]
+  },
+  {
+   "name": "hb-glass-roof",
+   "walkable": true,
+   "min": [
+    -74,
+    11.4,
+    73.5
+   ],
+   "max": [
+    4,
+    11.6,
+    90.5
+   ]
+  },
+  {
+   "name": "hb-glass-roof",
+   "walkable": true,
+   "min": [
+    -74,
+    11.4,
+    92.5
+   ],
+   "max": [
+    4,
+    11.6,
+    109.5
+   ]
+  },
+  {
+   "name": "hb-track-pit-floor",
+   "walkable": true,
+   "min": [
+    -73.5,
+    -0.73,
+    78
+   ],
+   "max": [
+    3.5,
+    -0.38,
+    118
+   ]
+  },
+  {
+   "name": "hb-platform-1-platform",
+   "walkable": true,
+   "min": [
+    -67.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -64.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -66.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -65.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -67.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -64.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -66.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -65.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -67.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -64.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -66.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -65.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -67.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -64.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-0-bench-seat",
+   "walkable": true,
+   "min": [
+    -67.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -64.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-0-bench-back",
+   "walkable": true,
+   "min": [
+    -67.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -64.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-0-bench-leg",
+   "walkable": true,
+   "min": [
+    -67.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -66.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-0-bench-leg",
+   "walkable": true,
+   "min": [
+    -65.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -64.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-platform-2-platform",
+   "walkable": true,
+   "min": [
+    -55.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -52.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -54.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -53.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -55.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -52.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -54.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -53.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -55.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -52.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -54.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -53.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -55.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -52.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-1-bench-seat",
+   "walkable": true,
+   "min": [
+    -55.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -52.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-1-bench-back",
+   "walkable": true,
+   "min": [
+    -55.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -52.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-1-bench-leg",
+   "walkable": true,
+   "min": [
+    -55.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -54.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-1-bench-leg",
+   "walkable": true,
+   "min": [
+    -53.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -52.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-platform-3-platform",
+   "walkable": true,
+   "min": [
+    -43.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -40.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    -42.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -41.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    -43.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -40.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    -42.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -41.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    -43.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -40.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    -42.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -41.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    -43.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -40.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-2-bench-seat",
+   "walkable": true,
+   "min": [
+    -43.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -40.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-2-bench-back",
+   "walkable": true,
+   "min": [
+    -43.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -40.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-2-bench-leg",
+   "walkable": true,
+   "min": [
+    -43.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -42.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-2-bench-leg",
+   "walkable": true,
+   "min": [
+    -41.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -40.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-platform-4-platform",
+   "walkable": true,
+   "min": [
+    -31.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -28.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy-post",
+   "walkable": true,
+   "min": [
+    -30.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -29.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy",
+   "walkable": true,
+   "min": [
+    -31.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -28.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy-post",
+   "walkable": true,
+   "min": [
+    -30.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -29.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy",
+   "walkable": true,
+   "min": [
+    -31.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -28.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy-post",
+   "walkable": true,
+   "min": [
+    -30.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -29.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-4-canopy",
+   "walkable": true,
+   "min": [
+    -31.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -28.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-3-bench-seat",
+   "walkable": true,
+   "min": [
+    -31.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -28.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-3-bench-back",
+   "walkable": true,
+   "min": [
+    -31.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -28.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-3-bench-leg",
+   "walkable": true,
+   "min": [
+    -31.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -30.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-3-bench-leg",
+   "walkable": true,
+   "min": [
+    -29.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -28.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-platform-5-platform",
+   "walkable": true,
+   "min": [
+    -19.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -16.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy-post",
+   "walkable": true,
+   "min": [
+    -18.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -17.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy",
+   "walkable": true,
+   "min": [
+    -19.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -16.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy-post",
+   "walkable": true,
+   "min": [
+    -18.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -17.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy",
+   "walkable": true,
+   "min": [
+    -19.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -16.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy-post",
+   "walkable": true,
+   "min": [
+    -18.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -17.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-5-canopy",
+   "walkable": true,
+   "min": [
+    -19.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -16.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-4-bench-seat",
+   "walkable": true,
+   "min": [
+    -19.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -16.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-4-bench-back",
+   "walkable": true,
+   "min": [
+    -19.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -16.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-4-bench-leg",
+   "walkable": true,
+   "min": [
+    -19.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -18.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-4-bench-leg",
+   "walkable": true,
+   "min": [
+    -17.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -16.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-platform-6-platform",
+   "walkable": true,
+   "min": [
+    -7.6,
+    -0.09,
+    77.5
+   ],
+   "max": [
+    -4.4,
+    0.26,
+    118.5
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy-post",
+   "walkable": true,
+   "min": [
+    -6.08,
+    0.26,
+    84.42
+   ],
+   "max": [
+    -5.92,
+    3.46,
+    84.58
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy",
+   "walkable": true,
+   "min": [
+    -7.45,
+    3.39,
+    81
+   ],
+   "max": [
+    -4.55,
+    3.53,
+    88
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy-post",
+   "walkable": true,
+   "min": [
+    -6.08,
+    0.26,
+    97.42
+   ],
+   "max": [
+    -5.92,
+    3.46,
+    97.58
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy",
+   "walkable": true,
+   "min": [
+    -7.45,
+    3.39,
+    94
+   ],
+   "max": [
+    -4.55,
+    3.53,
+    101
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy-post",
+   "walkable": true,
+   "min": [
+    -6.08,
+    0.26,
+    110.42
+   ],
+   "max": [
+    -5.92,
+    3.46,
+    110.58
+   ]
+  },
+  {
+   "name": "hb-platform-6-canopy",
+   "walkable": true,
+   "min": [
+    -7.45,
+    3.39,
+    107
+   ],
+   "max": [
+    -4.55,
+    3.53,
+    114
+   ]
+  },
+  {
+   "name": "hb-bench-5-bench-seat",
+   "walkable": true,
+   "min": [
+    -7.3,
+    0.77,
+    93.65
+   ],
+   "max": [
+    -4.7,
+    0.95,
+    94.35
+   ]
+  },
+  {
+   "name": "hb-bench-5-bench-back",
+   "walkable": true,
+   "min": [
+    -7.3,
+    0.81,
+    94.23
+   ],
+   "max": [
+    -4.7,
+    1.71,
+    94.37
+   ]
+  },
+  {
+   "name": "hb-bench-5-bench-leg",
+   "walkable": true,
+   "min": [
+    -7.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -6.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-bench-5-bench-leg",
+   "walkable": true,
+   "min": [
+    -5.08,
+    0.34,
+    93.92
+   ],
+   "max": [
+    -4.92,
+    0.86,
+    94.08
+   ]
+  },
+  {
+   "name": "hb-ic-gleis-3-body",
+   "walkable": true,
+   "min": [
+    -58.55,
+    0.15,
+    83.3
+   ],
+   "max": [
+    -55.45,
+    3,
+    94.7
+   ]
+  },
+  {
+   "name": "hb-ic-gleis-3-body",
+   "walkable": true,
+   "min": [
+    -58.55,
+    0.15,
+    95.3
+   ],
+   "max": [
+    -55.45,
+    3,
+    106.7
+   ]
+  },
+  {
+   "name": "hb-ic-gleis-3-body",
+   "walkable": true,
+   "min": [
+    -58.55,
+    0.15,
+    107.3
+   ],
+   "max": [
+    -55.45,
+    3,
+    118.7
+   ]
+  },
+  {
+   "name": "hb-ir-gleis-7-body",
+   "walkable": true,
+   "min": [
+    -34.55,
+    0.15,
+    84.3
+   ],
+   "max": [
+    -31.45,
+    3,
+    95.7
+   ]
+  },
+  {
+   "name": "hb-ir-gleis-7-body",
+   "walkable": true,
+   "min": [
+    -34.55,
+    0.15,
+    96.3
+   ],
+   "max": [
+    -31.45,
+    3,
+    107.7
+   ]
+  },
+  {
+   "name": "hb-shop",
+   "walkable": true,
+   "min": [
+    -64.4,
+    0,
+    54.4
+   ],
+   "max": [
+    -57.6,
+    3.1,
+    57.6
+   ]
+  },
+  {
+   "name": "hb-shop",
+   "walkable": true,
+   "min": [
+    -56.4,
+    0,
+    54.4
+   ],
+   "max": [
+    -49.6,
+    3.1,
+    57.6
+   ]
+  },
+  {
+   "name": "hb-shop",
+   "walkable": true,
+   "min": [
+    -20.4,
+    0,
+    54.4
+   ],
+   "max": [
+    -13.6,
+    3.1,
+    57.6
+   ]
+  },
+  {
+   "name": "hb-shop",
+   "walkable": true,
+   "min": [
+    -11.4,
+    0,
+    54.4
+   ],
+   "max": [
+    -4.6,
+    3.1,
+    57.6
+   ]
+  },
+  {
+   "name": "hb-sbahn-access-ramp",
+   "walkable": true,
+   "min": [
+    -69.4,
+    -5.18,
+    55.98
+   ],
+   "max": [
+    -64.6,
+    0,
+    74.02
+   ]
+  },
+  {
+   "name": "hb-sbahn-access-rail",
+   "walkable": true,
+   "min": [
+    -69.48,
+    -2.54,
+    55.53
+   ],
+   "max": [
+    -69.32,
+    -1.49,
+    74.47
+   ]
+  },
+  {
+   "name": "hb-sbahn-access-rail",
+   "walkable": true,
+   "min": [
+    -64.68,
+    -2.54,
+    55.53
+   ],
+   "max": [
+    -64.52,
+    -1.49,
+    74.47
+   ]
+  },
+  {
+   "name": "hb-sbahn-shaft-wall",
+   "walkable": true,
+   "min": [
+    -69.7,
+    -5.2,
+    55.75
+   ],
+   "max": [
+    -69.4,
+    0,
+    74.25
+   ]
+  },
+  {
+   "name": "hb-sbahn-shaft-wall",
+   "walkable": true,
+   "min": [
+    -64.6,
+    -5.2,
+    55.75
+   ],
+   "max": [
+    -64.3,
+    0,
+    74.25
+   ]
+  },
+  {
+   "name": "hb-sbahn-connector-floor",
+   "walkable": true,
+   "min": [
+    -69.5,
+    -5.52,
+    73
+   ],
+   "max": [
+    -52,
+    -5.17,
+    80
+   ]
+  },
+  {
+   "name": "hb-sbahn-connector-wall",
+   "walkable": true,
+   "min": [
+    -64.5,
+    -5,
+    73.09
+   ],
+   "max": [
+    -52,
+    -1.2,
+    73.31
+   ]
+  },
+  {
+   "name": "hb-sbahn-connector-wall",
+   "walkable": true,
+   "min": [
+    -69.5,
+    -5,
+    79.69
+   ],
+   "max": [
+    -52,
+    -1.2,
+    79.91
+   ]
+  },
+  {
+   "name": "hb-sbahn-connector-wall",
+   "walkable": true,
+   "min": [
+    -69.7,
+    -5,
+    73
+   ],
+   "max": [
+    -69.4,
+    -1.2,
+    80
+   ]
+  },
+  {
+   "name": "hb-sbahn-floor",
+   "walkable": true,
+   "min": [
+    -52,
+    -5.52,
+    73.5
+   ],
+   "max": [
+    -18,
+    -5.17,
+    116.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-platform",
+   "walkable": true,
+   "min": [
+    -44.8,
+    -5.03,
+    76
+   ],
+   "max": [
+    -41.2,
+    -4.68,
+    116
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -43.08,
+    -4.68,
+    82.92
+   ],
+   "max": [
+    -42.92,
+    -1.48,
+    83.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -44.65,
+    -1.55,
+    79.5
+   ],
+   "max": [
+    -41.35,
+    -1.41,
+    86.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -43.08,
+    -4.68,
+    95.92
+   ],
+   "max": [
+    -42.92,
+    -1.48,
+    96.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -44.65,
+    -1.55,
+    92.5
+   ],
+   "max": [
+    -41.35,
+    -1.41,
+    99.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    -43.08,
+    -4.68,
+    108.92
+   ],
+   "max": [
+    -42.92,
+    -1.48,
+    109.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    -44.65,
+    -1.55,
+    105.5
+   ],
+   "max": [
+    -41.35,
+    -1.41,
+    112.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-platform",
+   "walkable": true,
+   "min": [
+    -28.8,
+    -5.03,
+    76
+   ],
+   "max": [
+    -25.2,
+    -4.68,
+    116
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -27.08,
+    -4.68,
+    82.92
+   ],
+   "max": [
+    -26.92,
+    -1.48,
+    83.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -28.65,
+    -1.55,
+    79.5
+   ],
+   "max": [
+    -25.35,
+    -1.41,
+    86.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -27.08,
+    -4.68,
+    95.92
+   ],
+   "max": [
+    -26.92,
+    -1.48,
+    96.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -28.65,
+    -1.55,
+    92.5
+   ],
+   "max": [
+    -25.35,
+    -1.41,
+    99.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    -27.08,
+    -4.68,
+    108.92
+   ],
+   "max": [
+    -26.92,
+    -1.48,
+    109.08
+   ]
+  },
+  {
+   "name": "hb-sbahn-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    -28.65,
+    -1.55,
+    105.5
+   ],
+   "max": [
+    -25.35,
+    -1.41,
+    112.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-wall",
+   "walkable": true,
+   "min": [
+    -52.4,
+    -5.2,
+    82
+   ],
+   "max": [
+    -52,
+    0,
+    117.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-wall",
+   "walkable": true,
+   "min": [
+    -18,
+    -5.2,
+    72.5
+   ],
+   "max": [
+    -17.6,
+    0,
+    117.5
+   ]
+  },
+  {
+   "name": "hb-sbahn-back",
+   "walkable": true,
+   "min": [
+    -52.5,
+    -5.2,
+    116.75
+   ],
+   "max": [
+    -17.5,
+    0,
+    117.25
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -70.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -67.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -64.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -61.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -58.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -55.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -52.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -49.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -46.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -43.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -40.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -37.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -34.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -31.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -28.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -25.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -22.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -19.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -16.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -13.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -10.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -7.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "hb-buffer",
+   "walkable": true,
+   "min": [
+    -4.05,
+    0,
+    75.28
+   ],
+   "max": [
+    -1.95,
+    0.8,
+    75.72
+   ]
+  },
+  {
+   "name": "stadelhofen-ground",
+   "walkable": true,
+   "min": [
+    49,
+    -0.5,
+    54
+   ],
+   "max": [
+    103,
+    0,
+    116
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-platform",
+   "walkable": true,
+   "min": [
+    63.15,
+    -0.09,
+    65.5
+   ],
+   "max": [
+    66.25,
+    0.26,
+    110.5
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    64.62,
+    0.26,
+    72.42
+   ],
+   "max": [
+    64.78,
+    3.46,
+    72.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    63.3,
+    3.39,
+    69
+   ],
+   "max": [
+    66.1,
+    3.53,
+    76
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    64.62,
+    0.26,
+    85.42
+   ],
+   "max": [
+    64.78,
+    3.46,
+    85.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    63.3,
+    3.39,
+    82
+   ],
+   "max": [
+    66.1,
+    3.53,
+    89
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy-post",
+   "walkable": true,
+   "min": [
+    64.62,
+    0.26,
+    98.42
+   ],
+   "max": [
+    64.78,
+    3.46,
+    98.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-1-canopy",
+   "walkable": true,
+   "min": [
+    63.3,
+    3.39,
+    95
+   ],
+   "max": [
+    66.1,
+    3.53,
+    102
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-platform",
+   "walkable": true,
+   "min": [
+    69.75,
+    -0.09,
+    65.5
+   ],
+   "max": [
+    72.85,
+    0.26,
+    110.5
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    71.22,
+    0.26,
+    72.42
+   ],
+   "max": [
+    71.38,
+    3.46,
+    72.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    69.9,
+    3.39,
+    69
+   ],
+   "max": [
+    72.7,
+    3.53,
+    76
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    71.22,
+    0.26,
+    85.42
+   ],
+   "max": [
+    71.38,
+    3.46,
+    85.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    69.9,
+    3.39,
+    82
+   ],
+   "max": [
+    72.7,
+    3.53,
+    89
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy-post",
+   "walkable": true,
+   "min": [
+    71.22,
+    0.26,
+    98.42
+   ],
+   "max": [
+    71.38,
+    3.46,
+    98.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-2-canopy",
+   "walkable": true,
+   "min": [
+    69.9,
+    3.39,
+    95
+   ],
+   "max": [
+    72.7,
+    3.53,
+    102
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-platform",
+   "walkable": true,
+   "min": [
+    75.5,
+    -0.09,
+    65.5
+   ],
+   "max": [
+    80.5,
+    0.26,
+    110.5
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    77.92,
+    0.26,
+    72.42
+   ],
+   "max": [
+    78.08,
+    3.46,
+    72.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    75.65,
+    3.39,
+    69
+   ],
+   "max": [
+    80.35,
+    3.53,
+    76
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    77.92,
+    0.26,
+    85.42
+   ],
+   "max": [
+    78.08,
+    3.46,
+    85.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    75.65,
+    3.39,
+    82
+   ],
+   "max": [
+    80.35,
+    3.53,
+    89
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy-post",
+   "walkable": true,
+   "min": [
+    77.92,
+    0.26,
+    98.42
+   ],
+   "max": [
+    78.08,
+    3.46,
+    98.58
+   ]
+  },
+  {
+   "name": "stadelhofen-platform-3-canopy",
+   "walkable": true,
+   "min": [
+    75.65,
+    3.39,
+    95
+   ],
+   "max": [
+    80.35,
+    3.53,
+    102
+   ]
+  },
+  {
+   "name": "stadelhofen-bench-bench-seat",
+   "walkable": true,
+   "min": [
+    76.7,
+    0.77,
+    81.65
+   ],
+   "max": [
+    79.3,
+    0.95,
+    82.35
+   ]
+  },
+  {
+   "name": "stadelhofen-bench-bench-back",
+   "walkable": true,
+   "min": [
+    76.7,
+    0.81,
+    82.23
+   ],
+   "max": [
+    79.3,
+    1.71,
+    82.37
+   ]
+  },
+  {
+   "name": "stadelhofen-bench-bench-leg",
+   "walkable": true,
+   "min": [
+    76.92,
+    0.34,
+    81.92
+   ],
+   "max": [
+    77.08,
+    0.86,
+    82.08
+   ]
+  },
+  {
+   "name": "stadelhofen-bench-bench-leg",
+   "walkable": true,
+   "min": [
+    78.92,
+    0.34,
+    81.92
+   ],
+   "max": [
+    79.08,
+    0.86,
+    82.08
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    53,
+    0,
+    63.3
+   ],
+   "max": [
+    65,
+    3.2,
+    63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    71,
+    0,
+    63.3
+   ],
+   "max": [
+    85,
+    3.2,
+    63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    53,
+    0,
+    112.3
+   ],
+   "max": [
+    65,
+    3.2,
+    112.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    71,
+    0,
+    112.3
+   ],
+   "max": [
+    85,
+    3.2,
+    112.7
+   ]
+  },
+  {
+   "name": "rail-service-gate-side",
+   "walkable": true,
+   "min": [
+    -6.85,
+    0,
+    60.83
+   ],
+   "max": [
+    -4.65,
+    3.2,
+    61.17
+   ]
+  },
+  {
+   "name": "rail-service-gate-side",
+   "walkable": true,
+   "min": [
+    -1.35,
+    0,
+    60.83
+   ],
+   "max": [
+    0.85,
+    3.2,
+    61.17
+   ]
+  },
+  {
+   "name": "rail-service-gate-side",
+   "walkable": true,
+   "min": [
+    64.15,
+    0,
+    60.83
+   ],
+   "max": [
+    66.35,
+    3.2,
+    61.17
+   ]
+  },
+  {
+   "name": "rail-service-gate-side",
+   "walkable": true,
+   "min": [
+    69.65,
+    0,
+    60.83
+   ],
+   "max": [
+    71.85,
+    3.2,
+    61.17
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-floor",
+   "walkable": true,
+   "min": [
+    -4.77,
+    6.79,
+    73.9
+   ],
+   "max": [
+    -1.62,
+    6.97,
+    85.4
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-front",
+   "walkable": true,
+   "min": [
+    -4.83,
+    8.92,
+    74.76
+   ],
+   "max": [
+    -1.68,
+    11.67,
+    74.94
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-back",
+   "walkable": true,
+   "min": [
+    -4.66,
+    3.14,
+    82.65
+   ],
+   "max": [
+    -1.51,
+    5.89,
+    82.83
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-side-front--1",
+   "walkable": true,
+   "min": [
+    -4.99,
+    7.95,
+    74.33
+   ],
+   "max": [
+    -4.85,
+    10.7,
+    78.03
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-side-back--1",
+   "walkable": true,
+   "min": [
+    -4.81,
+    4.03,
+    79.67
+   ],
+   "max": [
+    -4.67,
+    6.78,
+    83.37
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door--1--1",
+   "walkable": true,
+   "min": [
+    -4.91,
+    6.37,
+    78.15
+   ],
+   "max": [
+    -4.77,
+    8.72,
+    79.17
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door--1-1",
+   "walkable": true,
+   "min": [
+    -4.89,
+    5.85,
+    78.86
+   ],
+   "max": [
+    -4.75,
+    8.2,
+    79.88
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door-threshold--1",
+   "walkable": true,
+   "min": [
+    -5.53,
+    6.75,
+    78.59
+   ],
+   "max": [
+    -4.81,
+    6.87,
+    80.67
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-side-front-1",
+   "walkable": true,
+   "min": [
+    -1.6,
+    8.01,
+    74.37
+   ],
+   "max": [
+    -1.46,
+    10.76,
+    78.07
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-side-back-1",
+   "walkable": true,
+   "min": [
+    -1.55,
+    4.09,
+    79.72
+   ],
+   "max": [
+    -1.41,
+    6.84,
+    83.42
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door-1--1",
+   "walkable": true,
+   "min": [
+    -1.58,
+    6.44,
+    78.2
+   ],
+   "max": [
+    -1.44,
+    8.79,
+    79.22
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door-1-1",
+   "walkable": true,
+   "min": [
+    -1.57,
+    5.91,
+    78.91
+   ],
+   "max": [
+    -1.43,
+    8.26,
+    79.93
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-1-collider-door-threshold-1",
+   "walkable": true,
+   "min": [
+    -1.58,
+    6.83,
+    78.65
+   ],
+   "max": [
+    -0.86,
+    6.95,
+    80.73
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-floor",
+   "walkable": true,
+   "min": [
+    -4.59,
+    0.64,
+    81.55
+   ],
+   "max": [
+    -1.44,
+    0.82,
+    93.05
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-front",
+   "walkable": true,
+   "min": [
+    -4.65,
+    2.79,
+    83.09
+   ],
+   "max": [
+    -1.5,
+    5.54,
+    83.27
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-back",
+   "walkable": true,
+   "min": [
+    -4.58,
+    0.38,
+    92.66
+   ],
+   "max": [
+    -1.43,
+    3.13,
+    92.84
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-side-front--1",
+   "walkable": true,
+   "min": [
+    -4.71,
+    1.83,
+    82.44
+   ],
+   "max": [
+    -4.57,
+    4.58,
+    86.14
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-side-back--1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    89.05
+   ],
+   "max": [
+    -4.5,
+    3.13,
+    92.75
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door--1--1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    85.97
+   ],
+   "max": [
+    -4.5,
+    2.73,
+    86.99
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door--1-1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    87.01
+   ],
+   "max": [
+    -4.5,
+    2.73,
+    88.03
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door-threshold--1",
+   "walkable": true,
+   "min": [
+    -5.23,
+    0.61,
+    86.25
+   ],
+   "max": [
+    -4.51,
+    0.73,
+    88.33
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-side-front-1",
+   "walkable": true,
+   "min": [
+    -1.52,
+    1.89,
+    82.49
+   ],
+   "max": [
+    -1.38,
+    4.64,
+    86.19
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-side-back-1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    89.05
+   ],
+   "max": [
+    -1.35,
+    3.13,
+    92.75
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door-1--1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    85.97
+   ],
+   "max": [
+    -1.35,
+    2.73,
+    86.99
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door-1-1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.39,
+    87.01
+   ],
+   "max": [
+    -1.35,
+    2.74,
+    88.03
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-2-collider-door-threshold-1",
+   "walkable": true,
+   "min": [
+    -1.51,
+    0.67,
+    86.31
+   ],
+   "max": [
+    -0.79,
+    0.79,
+    88.39
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-floor",
+   "walkable": true,
+   "min": [
+    -4.58,
+    0.29,
+    93.45
+   ],
+   "max": [
+    -1.43,
+    0.47,
+    104.95
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-front",
+   "walkable": true,
+   "min": [
+    -4.58,
+    0.38,
+    93.36
+   ],
+   "max": [
+    -1.43,
+    3.13,
+    93.54
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-back",
+   "walkable": true,
+   "min": [
+    -4.58,
+    0.38,
+    104.86
+   ],
+   "max": [
+    -1.43,
+    3.13,
+    105.04
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-side-front--1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    93.45
+   ],
+   "max": [
+    -4.5,
+    3.13,
+    97.15
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-side-back--1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    101.25
+   ],
+   "max": [
+    -4.5,
+    3.13,
+    104.95
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door--1--1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    98.17
+   ],
+   "max": [
+    -4.5,
+    2.73,
+    99.19
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door--1-1",
+   "walkable": true,
+   "min": [
+    -4.64,
+    0.38,
+    99.21
+   ],
+   "max": [
+    -4.5,
+    2.73,
+    100.23
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door-threshold--1",
+   "walkable": true,
+   "min": [
+    -5.22,
+    0.27,
+    98.16
+   ],
+   "max": [
+    -4.5,
+    0.39,
+    100.24
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-side-front-1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    93.45
+   ],
+   "max": [
+    -1.35,
+    3.13,
+    97.15
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-side-back-1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    101.25
+   ],
+   "max": [
+    -1.35,
+    3.13,
+    104.95
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door-1--1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    98.17
+   ],
+   "max": [
+    -1.35,
+    2.73,
+    99.19
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door-1-1",
+   "walkable": true,
+   "min": [
+    -1.49,
+    0.38,
+    99.21
+   ],
+   "max": [
+    -1.35,
+    2.73,
+    100.23
+   ]
+  },
+  {
+   "name": "passenger-train-1-car-3-collider-door-threshold-1",
+   "walkable": true,
+   "min": [
+    -1.5,
+    0.27,
+    98.16
+   ],
+   "max": [
+    -0.78,
+    0.39,
+    100.24
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    17.12,
+    0.05,
+    -45.8
+   ],
+   "max": [
+    17.68,
+    1.8,
+    -45.24
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    16.07,
+    0.05,
+    -46.33
+   ],
+   "max": [
+    16.63,
+    1.8,
+    -45.77
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    27.33,
+    0.05,
+    -46.22
+   ],
+   "max": [
+    27.89,
+    1.85,
+    -45.66
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    15.1,
+    0.05,
+    -44.89
+   ],
+   "max": [
+    15.66,
+    1.73,
+    -44.33
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    27.18,
+    0.05,
+    -45.18
+   ],
+   "max": [
+    27.74,
+    1.87,
+    -44.62
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    15.94,
+    0.05,
+    -42.77
+   ],
+   "max": [
+    16.5,
+    1.77,
+    -42.21
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    26.14,
+    0.05,
+    -43.41
+   ],
+   "max": [
+    26.7,
+    1.8,
+    -42.85
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    22.94,
+    0.05,
+    -41.22
+   ],
+   "max": [
+    23.5,
+    1.83,
+    -40.66
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    25.27,
+    0.05,
+    -42.02
+   ],
+   "max": [
+    25.83,
+    1.8,
+    -41.46
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    22.2,
+    0.05,
+    -39.78
+   ],
+   "max": [
+    22.76,
+    1.81,
+    -39.22
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    25.93,
+    0.05,
+    -39.91
+   ],
+   "max": [
+    26.49,
+    1.8,
+    -39.35
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    16.9,
+    0.05,
+    -38.25
+   ],
+   "max": [
+    17.46,
+    1.85,
+    -37.69
+   ]
+  },
+  {
+   "name": "npc-capsule",
+   "walkable": false,
+   "min": [
+    23.62,
+    0.05,
+    -38.4
+   ],
+   "max": [
+    24.18,
+    1.85,
+    -37.84
+   ]
+  }
+ ]
+}

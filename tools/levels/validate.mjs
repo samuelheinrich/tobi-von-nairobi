@@ -10,6 +10,20 @@
  */
 import { adapters } from './adapters.mjs';
 import { runChecks, severityOrder } from './checks.mjs';
+import { geometryChecks } from './geometry-checks.mjs';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const geometryDir = resolve(dirname(fileURLToPath(import.meta.url)), 'geometry');
+/** Snapshots are keyed by the level's runtime id, which uses underscores. */
+const snapshotFor = (model) => {
+  for (const key of [model.id, model.id?.replace(/-/g, '_')]) {
+    const file = join(geometryDir, `${key}.json`);
+    if (key && existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
+  }
+  return null;
+};
 
 const argv = process.argv.slice(2);
 const asJson = argv.includes('--json');
@@ -25,7 +39,13 @@ for (const [id, build] of Object.entries(adapters)) {
     report.push({ level: id, error: String(error.message), findings: [] });
     continue;
   }
-  const findings = runChecks(model).sort(
+  const snapshot = snapshotFor(model);
+  if (!snapshot)
+    model.notes = [
+      ...(model.notes ?? []),
+      'Kein Geometrie-Schnappschuss: capture-geometry.mjs laufen lassen.',
+    ];
+  const findings = [...runChecks(model), ...geometryChecks(model, snapshot)].sort(
     (a, b) => severityOrder.indexOf(a.severity) - severityOrder.indexOf(b.severity),
   );
   report.push({ level: id, title: model.title, notes: model.notes, findings, model });
