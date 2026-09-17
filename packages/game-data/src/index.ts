@@ -100,6 +100,7 @@ export {
   zurichLayout,
   zurichSectors,
   zurichStations,
+  zurichStationBoxes,
   zurichTrainRoute,
   zurichPassengerSpawns,
   zurichBuildings,

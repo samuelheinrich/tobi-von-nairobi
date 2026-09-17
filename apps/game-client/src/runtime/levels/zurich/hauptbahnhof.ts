@@ -38,7 +38,7 @@ export function buildHauptbahnhof(b: WorldBuilder) {
   for (let x = -70; x <= 0; x += 10)
     b.prop(sector, 'hb-roof-column', [0.45, 11.5, 0.45], [x, 5.75, 72], '#6d7479', true);
   for (const z of [63, 82, 101])
-    b.prop(sector, 'hb-glass-roof', [78, 0.2, 17], [-35, 11.5, z], '#668291', true);
+    b.prop(sector, 'hb-glass-roof', [78, 0.2, 17], [-35, 11.5, z], '#668291', 'barrier');
   buildStationClock(b, sector, -35, 8.2, 52.15);
   b.sign(sector, 'ABFAHRT · DEPARTURES', -35, 7.2, 71.8, 11);
   for (const [line, text] of [
@@ -100,9 +100,30 @@ export function buildHauptbahnhof(b: WorldBuilder) {
   // intentional passage instead of a hole into the level void.
   for (const x of [-69.55, -64.45])
     b.prop(sector, 'hb-sbahn-shaft-wall', [0.3, 5.2, 18.5], [x, -2.6, 65], '#887f72', true);
-  b.prop(sector, 'hb-sbahn-connector-floor', [17.5, 0.35, 7], [-60.75, -5.35, 76.5], '#777b7d', true);
-  b.prop(sector, 'hb-sbahn-connector-wall', [12.5, 3.8, 0.22], [-58.25, -3.1, 73.2], '#887f72', true);
-  b.prop(sector, 'hb-sbahn-connector-wall', [17.5, 3.8, 0.22], [-60.75, -3.1, 79.8], '#887f72', true);
+  b.prop(
+    sector,
+    'hb-sbahn-connector-floor',
+    [17.5, 0.35, 7],
+    [-60.75, -5.35, 76.5],
+    '#777b7d',
+    true,
+  );
+  b.prop(
+    sector,
+    'hb-sbahn-connector-wall',
+    [12.5, 3.8, 0.22],
+    [-58.25, -3.1, 73.2],
+    '#887f72',
+    true,
+  );
+  b.prop(
+    sector,
+    'hb-sbahn-connector-wall',
+    [17.5, 3.8, 0.22],
+    [-60.75, -3.1, 79.8],
+    '#887f72',
+    true,
+  );
   b.prop(sector, 'hb-sbahn-connector-wall', [0.3, 3.8, 7], [-69.55, -3.1, 76.5], '#887f72', true);
   b.prop(sector, 'hb-sbahn-floor', [34, 0.35, 43], [-35, -5.35, 95], '#777b7d', true);
   for (const x of [-47, -39, -31, -23]) buildTrack(b, sector, 'hb-sbahn-track', x, -5, 96, 40);

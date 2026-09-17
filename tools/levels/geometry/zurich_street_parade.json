@@ -781,28 +781,28 @@
    "name": "zurich-hafen_schuppen",
    "walkable": true,
    "min": [
-    -48.5,
+    -51.5,
     0,
-    -50.5
+    -53.5
    ],
    "max": [
-    -41.5,
+    -44.5,
     4,
-    -45.5
+    -48.5
    ]
   },
   {
    "name": "roof-hafen_schuppen",
    "walkable": true,
    "min": [
-    -51.14,
+    -54.14,
     4,
-    -54.14
+    -57.14
    ],
    "max": [
-    -38.86,
+    -41.86,
     6.2,
-    -41.86
+    -44.86
    ]
   },
   {
@@ -1290,7 +1290,7 @@
     53
    ],
    "max": [
-    -70,
+    -74.5,
     0,
     123
    ]
@@ -1299,21 +1299,7 @@
    "name": "city-north-ground",
    "walkable": true,
    "min": [
-    0,
-    -0.7,
-    53
-   ],
-   "max": [
-    50,
-    0,
-    123
-   ]
-  },
-  {
-   "name": "city-north-ground",
-   "walkable": true,
-   "min": [
-    100,
+    4.5,
     -0.7,
     53
    ],
@@ -1321,6 +1307,62 @@
     124,
     0,
     123
+   ]
+  },
+  {
+   "name": "city-north-ground",
+   "walkable": true,
+   "min": [
+    -74.5,
+    -0.7,
+    118
+   ],
+   "max": [
+    4.5,
+    0,
+    123
+   ]
+  },
+  {
+   "name": "city-quay-parapet",
+   "walkable": false,
+   "min": [
+    -124.25,
+    0,
+    53
+   ],
+   "max": [
+    -123.75,
+    1.1,
+    123
+   ]
+  },
+  {
+   "name": "city-quay-parapet",
+   "walkable": false,
+   "min": [
+    123.75,
+    0,
+    53
+   ],
+   "max": [
+    124.25,
+    1.1,
+    123
+   ]
+  },
+  {
+   "name": "city-quay-parapet",
+   "walkable": false,
+   "min": [
+    -124,
+    0,
+    122.75
+   ],
+   "max": [
+    124,
+    1.1,
+    123.25
    ]
   },
   {
@@ -1605,7 +1647,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -65.75,
     16,
@@ -1633,7 +1675,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -93.75,
     18,
@@ -1661,7 +1703,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -93.75,
     15,
@@ -1689,7 +1731,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -93.75,
     17,
@@ -1717,7 +1759,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -16.75,
     15,
@@ -1745,7 +1787,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     9.25,
     17,
@@ -1773,7 +1815,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     4.75,
     16,
@@ -1791,26 +1833,26 @@
    "min": [
     23,
     0,
-    58
+    63
    ],
    "max": [
     37,
     15,
-    68
+    73
    ]
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     22.75,
     15,
-    57.75
+    62.75
    ],
    "max": [
     37.25,
     15.3,
-    68.25
+    73.25
    ]
   },
   {
@@ -1819,26 +1861,26 @@
    "min": [
     40,
     0,
-    56
+    67
    ],
    "max": [
     54,
     17,
-    66
+    77
    ]
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     39.75,
     17,
-    55.75
+    66.75
    ],
    "max": [
     54.25,
     17.3,
-    66.25
+    77.25
    ]
   },
   {
@@ -1857,7 +1899,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     93.25,
     15,
@@ -1885,7 +1927,7 @@
   },
   {
    "name": "zurich-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     93.25,
     18,
@@ -2097,12 +2139,12 @@
    "name": "stadelhofen-shop-collision-shell",
    "walkable": false,
    "min": [
-    79,
+    87,
     -3.5,
     57.5
    ],
    "max": [
-    91,
+    99,
     3.5,
     66.5
    ]
@@ -2111,12 +2153,12 @@
    "name": "stadelhofen-shop-counter",
    "walkable": true,
    "min": [
-    86.5,
+    94.5,
     0,
     64
    ],
    "max": [
-    89.5,
+    97.5,
     1,
     65
    ]
@@ -2125,12 +2167,12 @@
    "name": "stadelhofen-shop-table",
    "walkable": true,
    "min": [
-    82,
+    90,
     0.78,
     62.3
    ],
    "max": [
-    84,
+    92,
     0.93,
     63.7
    ]
@@ -2139,12 +2181,12 @@
    "name": "stadelhofen-shop-table-leg",
    "walkable": true,
    "min": [
-    82.83,
+    90.83,
     -0.01,
     62.83
    ],
    "max": [
-    83.17,
+    91.17,
     0.84,
     63.17
    ]
@@ -2153,12 +2195,12 @@
    "name": "stadelhofen-shop-bench",
    "walkable": true,
    "min": [
-    82,
+    90,
     0,
     61.38
    ],
    "max": [
-    84,
+    92,
     0.48,
     62.03
    ]
@@ -2389,7 +2431,7 @@
   },
   {
    "name": "hb-glass-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -74,
     11.4,
@@ -2403,7 +2445,7 @@
   },
   {
    "name": "hb-glass-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -74,
     11.4,
@@ -2417,7 +2459,7 @@
   },
   {
    "name": "hb-glass-roof",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -74,
     11.4,
@@ -2473,7 +2515,7 @@
   },
   {
    "name": "hb-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -67.45,
     3.39,
@@ -2501,7 +2543,7 @@
   },
   {
    "name": "hb-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -67.45,
     3.39,
@@ -2529,7 +2571,7 @@
   },
   {
    "name": "hb-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -67.45,
     3.39,
@@ -2627,7 +2669,7 @@
   },
   {
    "name": "hb-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -55.45,
     3.39,
@@ -2655,7 +2697,7 @@
   },
   {
    "name": "hb-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -55.45,
     3.39,
@@ -2683,7 +2725,7 @@
   },
   {
    "name": "hb-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -55.45,
     3.39,
@@ -2781,7 +2823,7 @@
   },
   {
    "name": "hb-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -43.45,
     3.39,
@@ -2809,7 +2851,7 @@
   },
   {
    "name": "hb-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -43.45,
     3.39,
@@ -2837,7 +2879,7 @@
   },
   {
    "name": "hb-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -43.45,
     3.39,
@@ -2935,7 +2977,7 @@
   },
   {
    "name": "hb-platform-4-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -31.45,
     3.39,
@@ -2963,7 +3005,7 @@
   },
   {
    "name": "hb-platform-4-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -31.45,
     3.39,
@@ -2991,7 +3033,7 @@
   },
   {
    "name": "hb-platform-4-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -31.45,
     3.39,
@@ -3089,7 +3131,7 @@
   },
   {
    "name": "hb-platform-5-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -19.45,
     3.39,
@@ -3117,7 +3159,7 @@
   },
   {
    "name": "hb-platform-5-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -19.45,
     3.39,
@@ -3145,7 +3187,7 @@
   },
   {
    "name": "hb-platform-5-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -19.45,
     3.39,
@@ -3243,7 +3285,7 @@
   },
   {
    "name": "hb-platform-6-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -7.45,
     3.39,
@@ -3271,7 +3313,7 @@
   },
   {
    "name": "hb-platform-6-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -7.45,
     3.39,
@@ -3299,7 +3341,7 @@
   },
   {
    "name": "hb-platform-6-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -7.45,
     3.39,
@@ -3663,7 +3705,7 @@
   },
   {
    "name": "hb-sbahn-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -44.65,
     -1.55,
@@ -3691,7 +3733,7 @@
   },
   {
    "name": "hb-sbahn-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -44.65,
     -1.55,
@@ -3719,7 +3761,7 @@
   },
   {
    "name": "hb-sbahn-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -44.65,
     -1.55,
@@ -3761,7 +3803,7 @@
   },
   {
    "name": "hb-sbahn-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -28.65,
     -1.55,
@@ -3789,7 +3831,7 @@
   },
   {
    "name": "hb-sbahn-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -28.65,
     -1.55,
@@ -3817,7 +3859,7 @@
   },
   {
    "name": "hb-sbahn-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     -28.65,
     -1.55,
@@ -4040,20 +4082,6 @@
    ]
   },
   {
-   "name": "stadelhofen-ground",
-   "walkable": true,
-   "min": [
-    49,
-    -0.5,
-    54
-   ],
-   "max": [
-    103,
-    0,
-    116
-   ]
-  },
-  {
    "name": "stadelhofen-platform-1-platform",
    "walkable": true,
    "min": [
@@ -4083,7 +4111,7 @@
   },
   {
    "name": "stadelhofen-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     63.3,
     3.39,
@@ -4111,7 +4139,7 @@
   },
   {
    "name": "stadelhofen-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     63.3,
     3.39,
@@ -4139,7 +4167,7 @@
   },
   {
    "name": "stadelhofen-platform-1-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     63.3,
     3.39,
@@ -4181,7 +4209,7 @@
   },
   {
    "name": "stadelhofen-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     69.9,
     3.39,
@@ -4209,7 +4237,7 @@
   },
   {
    "name": "stadelhofen-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     69.9,
     3.39,
@@ -4237,7 +4265,7 @@
   },
   {
    "name": "stadelhofen-platform-2-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     69.9,
     3.39,
@@ -4279,7 +4307,7 @@
   },
   {
    "name": "stadelhofen-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     75.65,
     3.39,
@@ -4307,7 +4335,7 @@
   },
   {
    "name": "stadelhofen-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     75.65,
     3.39,
@@ -4335,7 +4363,7 @@
   },
   {
    "name": "stadelhofen-platform-3-canopy",
-   "walkable": true,
+   "walkable": false,
    "min": [
     75.65,
     3.39,
@@ -4421,7 +4449,35 @@
    "name": "stadelhofen-end-wall",
    "walkable": true,
    "min": [
-    71,
+    64.75,
+    0,
+    63.3
+   ],
+   "max": [
+    71.25,
+    3.2,
+    63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    71.5,
+    0,
+    63.3
+   ],
+   "max": [
+    75,
+    3.2,
+    63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
+    80.5,
     0,
     63.3
    ],
@@ -4429,6 +4485,20 @@
     85,
     3.2,
     63.7
+   ]
+  },
+  {
+   "name": "stadelhofen-entrance-lintel",
+   "walkable": true,
+   "min": [
+    75,
+    3.2,
+    63.25
+   ],
+   "max": [
+    81,
+    3.8,
+    63.75
    ]
   },
   {
@@ -4449,6 +4519,20 @@
    "name": "stadelhofen-end-wall",
    "walkable": true,
    "min": [
+    64.75,
+    0,
+    112.3
+   ],
+   "max": [
+    71.25,
+    3.2,
+    112.7
+   ]
+  },
+  {
+   "name": "stadelhofen-end-wall",
+   "walkable": true,
+   "min": [
     71,
     0,
     112.3
@@ -4460,59 +4544,171 @@
    ]
   },
   {
-   "name": "rail-service-gate-side",
+   "name": "s16-cutting-0",
    "walkable": true,
    "min": [
-    -6.85,
+    -4.37,
     0,
-    60.83
+    118.97
    ],
    "max": [
-    -4.65,
-    3.2,
-    61.17
+    17.51,
+    2.6,
+    125.57
    ]
   },
   {
-   "name": "rail-service-gate-side",
+   "name": "s16-kerb-0",
    "walkable": true,
    "min": [
-    -1.35,
+    -4.61,
     0,
-    60.83
+    119.78
    ],
    "max": [
-    0.85,
-    3.2,
-    61.17
+    17.27,
+    0.5,
+    126.39
    ]
   },
   {
-   "name": "rail-service-gate-side",
+   "name": "s16-cutting-0",
    "walkable": true,
    "min": [
-    64.15,
+    -2.51,
     0,
-    60.83
+    112.43
    ],
    "max": [
-    66.35,
-    3.2,
-    61.17
+    19.37,
+    2.6,
+    119.03
    ]
   },
   {
-   "name": "rail-service-gate-side",
+   "name": "s16-kerb-0",
    "walkable": true,
    "min": [
-    69.65,
+    -2.27,
     0,
-    60.83
+    111.61
    ],
    "max": [
-    71.85,
-    3.2,
-    61.17
+    19.61,
+    0.5,
+    118.22
+   ]
+  },
+  {
+   "name": "s16-cutting-1",
+   "walkable": true,
+   "min": [
+    17.6,
+    0,
+    125.2
+   ],
+   "max": [
+    48.4,
+    2.6,
+    125.6
+   ]
+  },
+  {
+   "name": "s16-kerb-1",
+   "walkable": true,
+   "min": [
+    17.6,
+    0,
+    126.05
+   ],
+   "max": [
+    48.4,
+    0.5,
+    126.45
+   ]
+  },
+  {
+   "name": "s16-cutting-1",
+   "walkable": true,
+   "min": [
+    17.6,
+    0,
+    118.4
+   ],
+   "max": [
+    48.4,
+    2.6,
+    118.8
+   ]
+  },
+  {
+   "name": "s16-kerb-1",
+   "walkable": true,
+   "min": [
+    17.6,
+    0,
+    117.55
+   ],
+   "max": [
+    48.4,
+    0.5,
+    117.95
+   ]
+  },
+  {
+   "name": "s16-cutting-2",
+   "walkable": true,
+   "min": [
+    49.07,
+    0,
+    114.68
+   ],
+   "max": [
+    69.97,
+    2.6,
+    125.4
+   ]
+  },
+  {
+   "name": "s16-kerb-2",
+   "walkable": true,
+   "min": [
+    49.45,
+    0,
+    115.44
+   ],
+   "max": [
+    70.35,
+    0.5,
+    126.16
+   ]
+  },
+  {
+   "name": "s16-cutting-2",
+   "walkable": true,
+   "min": [
+    46.03,
+    0,
+    108.6
+   ],
+   "max": [
+    66.93,
+    2.6,
+    119.32
+   ]
+  },
+  {
+   "name": "s16-kerb-2",
+   "walkable": true,
+   "min": [
+    45.65,
+    0,
+    107.84
+   ],
+   "max": [
+    66.55,
+    0.5,
+    118.56
    ]
   },
   {

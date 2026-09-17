@@ -40,7 +40,11 @@ export function createWorldBuilder(
     size: readonly [number, number, number],
     at: readonly [number, number, number],
     color: string,
-    solid = false,
+    /** `true` is a surface you may stand on; `'barrier'` is solid but not a floor.
+     *
+     * Everything solid used to be walkable, which made every roof, canopy and glass hall a
+     * terrace eleven metres up with nothing at its edge. */
+    solid: boolean | 'barrier' = false,
     shape: 'box' | 'sphere' = 'box',
   ) {
     const key = color + shape;
@@ -61,7 +65,7 @@ export function createWorldBuilder(
     mesh.receiveShadows = true;
     mesh.metadata = { collision: { collision: 'none' }, cameraObstacle: false };
     if (solid) {
-      const c = world.addCollider(mesh, { collision: 'box', walkable: true })!;
+      const c = world.addCollider(mesh, { collision: 'box', walkable: solid !== 'barrier' })!;
       c.mesh.metadata.navigationObstacle = false;
       kit.colliders.push(c.mesh);
     }

@@ -60,14 +60,15 @@ export function buildPlatform(
       [d.width - 0.3, 0.14, 7],
       [d.x, d.y + 3.2, z],
       '#bbc2c7',
-      true,
+      // A platform canopy is shelter, not a gallery three metres over the tracks.
+      'barrier',
     );
   }
   b.sign(
     sector,
     `GLEIS ${d.trackNumbers.join(' / ')}`,
     d.x,
-      d.y + 4.15,
+    d.y + 4.15,
     d.z - d.length / 2 + 3,
     4.2,
   );
@@ -113,11 +114,7 @@ export function buildStationRamp(
       b.scene,
       `${id}-rail`,
       [0.16, 1.05, length + 0.25],
-      [
-        from.x + (side * width) / 2,
-        (from.y + to.y) / 2 + 0.48,
-        (from.z + to.z) / 2,
-      ],
+      [from.x + (side * width) / 2, (from.y + to.y) / 2 + 0.48, (from.z + to.z) / 2],
       b.palette('#6c747b'),
     );
     rail.rotation.x = ramp.rotation.x;

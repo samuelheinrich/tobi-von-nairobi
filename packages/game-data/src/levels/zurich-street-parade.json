@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "zurich_street_parade",
   "worldId": "zurich",
-  "title": "Zürich Street Parade",
-  "subtitle": "Vom Zürich HB durch die Bahnhofstrasse bis an den See – inklusive S16 nach Stadelhofen.",
+  "title": "Z\u00fcrich Street Parade",
+  "subtitle": "Vom Z\u00fcrich HB durch die Bahnhofstrasse bis an den See \u2013 inklusive S16 nach Stadelhofen.",
   "atmosphere": "night",
   "scenery": "street-parade",
   "maxWanted": 3,
@@ -320,62 +320,110 @@
     {
       "id": "zurich_hb_bottle_31",
       "itemId": "bottle",
-      "position": { "x": -34, "y": 0, "z": 43 }
+      "position": {
+        "x": -28.5,
+        "y": 0,
+        "z": 43
+      }
     },
     {
       "id": "zurich_hb_bottle_32",
       "itemId": "bottle",
-      "position": { "x": -34, "y": 0, "z": 50 }
+      "position": {
+        "x": -28.5,
+        "y": 0,
+        "z": 50
+      }
     },
     {
       "id": "zurich_hb_bottle_33",
       "itemId": "bottle",
-      "position": { "x": -42, "y": 0, "z": 63 }
+      "position": {
+        "x": -42,
+        "y": 0,
+        "z": 63
+      }
     },
     {
       "id": "zurich_hb_bottle_34",
       "itemId": "bottle",
-      "position": { "x": -66, "y": 0.32, "z": 83 }
+      "position": {
+        "x": -66,
+        "y": 0.32,
+        "z": 83
+      }
     },
     {
       "id": "zurich_hb_bottle_35",
       "itemId": "bottle",
-      "position": { "x": -54, "y": 0.32, "z": 106 }
+      "position": {
+        "x": -54,
+        "y": 0.32,
+        "z": 106
+      }
     },
     {
       "id": "zurich_hb_bottle_36",
       "itemId": "bottle",
-      "position": { "x": -30, "y": 0.32, "z": 86 }
+      "position": {
+        "x": -30,
+        "y": 0.32,
+        "z": 86
+      }
     },
     {
       "id": "zurich_hb_bottle_37",
       "itemId": "bottle",
-      "position": { "x": -6, "y": 0.32, "z": 106 }
+      "position": {
+        "x": -6,
+        "y": 0.32,
+        "z": 106
+      }
     },
     {
       "id": "zurich_hb_bottle_38",
       "itemId": "bottle",
-      "position": { "x": -43, "y": -4.68, "z": 91 }
+      "position": {
+        "x": -43,
+        "y": -4.68,
+        "z": 91
+      }
     },
     {
       "id": "zurich_hb_bottle_39",
       "itemId": "bottle",
-      "position": { "x": -27, "y": -4.68, "z": 103 }
+      "position": {
+        "x": -27,
+        "y": -4.68,
+        "z": 103
+      }
     },
     {
       "id": "stadelhofen_bottle_40",
       "itemId": "bottle",
-      "position": { "x": 62, "y": 0.32, "z": 78 }
+      "position": {
+        "x": 62,
+        "y": 0.32,
+        "z": 78
+      }
     },
     {
       "id": "stadelhofen_bottle_41",
       "itemId": "bottle",
-      "position": { "x": 70, "y": 0.32, "z": 96 }
+      "position": {
+        "x": 70,
+        "y": 0.32,
+        "z": 96
+      }
     },
     {
       "id": "stadelhofen_bottle_42",
       "itemId": "bottle",
-      "position": { "x": 76, "y": 0.32, "z": 84 }
+      "position": {
+        "x": 76,
+        "y": 0.32,
+        "z": 84
+      }
     }
   ],
   "powerups": [

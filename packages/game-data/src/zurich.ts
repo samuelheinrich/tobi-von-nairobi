@@ -190,8 +190,9 @@ export const zurichLayout = {
     },
     {
       id: 'hafen_schuppen',
-      x: -45,
-      z: -48,
+      // Moved clear of the finish: the parade route ran three metres through it.
+      x: -48,
+      z: -51,
       width: 7,
       depth: 5,
       height: 4,
@@ -242,9 +243,20 @@ export const zurichSectors = [
   { id: 'street_parade', x: 0, z: -24, radius: 76, visibilityMargin: 30 },
   { id: 'old_town', x: -3, z: 31, radius: 48, visibilityMargin: 30 },
   { id: 'bahnhofstrasse', x: -34, z: 45, radius: 38, visibilityMargin: 30 },
-  { id: 'zurich_hb', x: -35, z: 86, radius: 64, visibilityMargin: 30 },
-  { id: 'train_tunnel', x: 28, z: 116, radius: 58, visibilityMargin: 30 },
-  { id: 'stadelhofen', x: 70, z: 78, radius: 42, visibilityMargin: 30 },
+  // Generous margins on the two stations and the rail arc. They are landmarks: you are supposed
+  // to see from the lake that there is a railway over there and walk towards it. At a margin of
+  // 30 m Stadelhofen appeared out of nothing once you were already 72 m away.
+  { id: 'zurich_hb', x: -35, z: 86, radius: 64, visibilityMargin: 85 },
+  { id: 'train_tunnel', x: 28, z: 116, radius: 58, visibilityMargin: 70 },
+  { id: 'stadelhofen', x: 70, z: 84, radius: 52, visibilityMargin: 105 },
+] as const;
+
+/** The two station halls, in plan. Anything that has to know where a station ends reads this:
+ * the rail cutting stops at the mouth, the promenade stops at the wall, the validator stops
+ * calling the platform tracks a hole in the ground. */
+export const zurichStationBoxes = [
+  { id: 'zurich_hb', minX: -74.5, maxX: 4.5, minZ: 53, maxZ: 120 },
+  { id: 'stadelhofen', minX: 49, maxX: 103, minZ: 54, maxZ: 116 },
 ] as const;
 
 export const zurichStations = {
@@ -342,8 +354,9 @@ export const zurichBuildings = [
   },
   {
     id: 'stadelhofen-shop',
-    label: 'STADelHOFEN SHOP',
-    position: { x: 85, y: 0, z: 62 },
+    label: 'STADELHOFEN SHOP',
+    // Moved east: at x 85 the shop stood across the only way onto the eastern platform.
+    position: { x: 93, y: 0, z: 62 },
     width: 12,
     depth: 9,
     height: 7,

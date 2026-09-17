@@ -7,15 +7,41 @@ import { zurichBuildings } from '@tobi/game-data';
 /** Extends the original lake blockout to HB and Stadelhofen with reusable facade modules. */
 export function buildZurichCity(b: WorldBuilder) {
   const sector = 'bahnhofstrasse';
-  // The old level ends at z=54. This fan joins it to both stations without a floating plate edge.
+  // The old level ends at z=54. North of it the city used to be three separate slabs with two
+  // holes between them, 70 m and 50 m wide — a third of the level had no ground under it. The
+  // plate is now continuous from edge to edge, cut open only where Zürich HB carries its own
+  // floors: the hall at street level and the track pit below it.
   for (const [x, width] of [
-    [-97, 54],
-    [25, 50],
-    [112, 24],
+    [-99.25, 49.5],
+    [64.25, 119.5],
   ] as const)
     b.prop(sector, 'city-north-ground', [width, 0.7, 70], [x, -0.35, 88], '#4d535a', true);
+  // Behind the platform ends, joining the two halves north of the station.
+  b.prop(sector, 'city-north-ground', [79, 0.7, 5], [-35, -0.35, 120.5], '#4d535a', true);
+  // Parapet along the outer edge of the plate. Without it the city simply stopped and you walked
+  // off into the lake.
+  for (const [size, at] of [
+    [
+      [0.5, 1.1, 70],
+      [-124, 0.55, 88],
+    ],
+    [
+      [0.5, 1.1, 70],
+      [124, 0.55, 88],
+    ],
+    [
+      [248, 1.1, 0.5],
+      [0, 0.55, 123],
+    ],
+  ] as const)
+    b.prop(sector, 'city-quay-parapet', size, at, '#6d6a62', 'barrier');
   b.prop(sector, 'bahnhofstrasse-promenade', [14, 0.06, 73], [-34, 0.03, 74], '#8a8174');
-  b.prop(sector, 'stadelhofen-road', [44, 0.06, 12], [63, 0.03, 55], '#555b62');
+  // The way east. It used to start at x 41, behind a row of houses, so there was no walkable
+  // line from the parade to Stadelhofen at all — the station could only be reached across the
+  // tracks. It now runs from the promenade to the station forecourt.
+  b.prop(sector, 'stadelhofen-road', [96, 0.06, 12], [30, 0.03, 55], '#555b62');
+  for (let x = -14; x <= 70; x += 12)
+    b.prop(sector, 'stadelhofen-road-marking', [4.5, 0.02, 0.35], [x, 0.07, 55], '#c9c6ba');
   // Tram rails, catenary and a low-poly tram make the route readable from the lake.
   for (const dx of [-1.25, 1.25])
     b.prop(sector, 'tram-rail-north', [0.09, 0.04, 71], [-34 + dx, 0.07, 74], '#a9afb3');
@@ -56,8 +82,8 @@ export function buildZurichCity(b: WorldBuilder) {
     [-10, 45, 13, 11, 15, '#d0b791'],
     [16, 59, 13, 11, 17, '#c4ad93'],
     [12, 72, 14, 11, 16, '#d8c5a8'],
-    [30, 63, 14, 10, 15, '#c6b29a'],
-    [47, 61, 14, 10, 17, '#d9ceb8'],
+    [30, 68, 14, 10, 15, '#c6b29a'],
+    [47, 72, 14, 10, 17, '#d9ceb8'],
     [100, 76, 13, 12, 15, '#cfbaa0'],
     [100, 92, 13, 12, 18, '#d8c7aa'],
   ] as const;
@@ -70,7 +96,7 @@ export function buildZurichCity(b: WorldBuilder) {
       [width + 0.5, 0.3, depth + 0.5],
       [x, height + 0.15, z],
       '#83584c',
-      true,
+      'barrier',
     );
     for (let y = 2.5; y < height - 1; y += 3.2)
       for (let dx = -width / 2 + 1.5; dx < width / 2 - 0.5; dx += 2.4)
@@ -87,5 +113,7 @@ export function buildZurichCity(b: WorldBuilder) {
   );
   b.sign(sector, 'BAHNHOFSTRASSE', -34, 5.5, 42, 9);
   b.sign(sector, 'CENTRAL · HB ↑', -26, 5.5, 53, 7);
+  b.sign(sector, 'STADELHOFEN →', 6, 5.2, 50.6, 8);
+  b.sign(sector, 'STADELHOFEN →', 46, 5.2, 50.6, 8);
   return buildings;
 }

@@ -1,6 +1,11 @@
 {
  "level": "fly_high",
- "bounds": null,
+ "bounds": {
+  "minX": -9,
+  "maxX": 9,
+  "minZ": -36,
+  "maxZ": 36
+ },
  "bodies": [
   {
    "name": "cabin-floor-0",

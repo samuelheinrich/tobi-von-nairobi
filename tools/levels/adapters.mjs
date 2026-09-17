@@ -73,13 +73,16 @@ function zurich() {
   return base(level, {
     // The playable floor is no longer one plate. `zurichLayout.ground` still describes the
     // original island; the northern city and the station hall are laid down separately in the
-    // client. Until that lives in one place, the union is spelled out here.
+    // client. Until that lives in one place, both are spelled out here.
     ground: {
       minX: Math.min(ground.minX, -124),
       maxX: Math.max(ground.maxX, 124),
       minZ: ground.minZ,
       maxZ: Math.max(ground.maxZ, 123),
     },
+    // Two paved areas with a lake around them. Sampling the bounding box instead would call the
+    // whole Zürichsee a hole in the floor.
+    groundAreas: [{ ...ground }, { minX: -124, maxX: 124, minZ: 53, maxZ: 122 }],
     solids: [
       ...named(blocks, 'block').map((s) => (enterable.has(s.id) ? { ...s, enterable: true } : s)),
       ...named(towers, 'tower'),

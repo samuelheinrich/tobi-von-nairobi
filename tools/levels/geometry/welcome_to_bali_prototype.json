@@ -1,6 +1,11 @@
 {
  "level": "welcome_to_bali_prototype",
- "bounds": null,
+ "bounds": {
+  "minX": -12.5,
+  "maxX": 12.5,
+  "minZ": -28.5,
+  "maxZ": 28.5
+ },
  "bodies": [
   {
    "name": "tutorial-ground",
@@ -189,12 +194,12 @@
    "walkable": false,
    "min": [
     -0.28,
-    0.04,
+    0.01,
     6.72
    ],
    "max": [
     0.28,
-    1.79,
+    1.76,
     7.28
    ]
   }
