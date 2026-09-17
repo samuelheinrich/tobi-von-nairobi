@@ -17,23 +17,33 @@ function localModels(): Plugin {
     name: 'tobi-local-models',
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use('/models', (request, response, next) => {
-        const name = decodeURIComponent((request.url ?? '').split('?')[0] ?? '').replace(/^\//, '');
-        // Subfolders are allowed (models/tpose, models/tpose/18+), traversal is not.
-        if (!/^(?:[\w.+-]+\/)*[\w.+-]+\.glb$/i.test(name)) return next();
-        const root = join(repoRoot, 'models');
-        const file = resolve(root, name);
-        if (file !== root && !file.startsWith(root + sep)) return next();
-        let size: number;
-        try {
-          size = statSync(file).size;
-        } catch {
-          return next();
-        }
-        response.setHeader('Content-Type', 'model/gltf-binary');
-        response.setHeader('Content-Length', size);
-        createReadStream(file).pipe(response);
-      });
+      for (const [mount, directory, extensions] of [
+        ['/models', 'models', /\.glb$/i],
+        ['/level-assets', 'assets/game/levels', /\.(glb|json)$/i],
+      ] as const)
+        server.middlewares.use(mount, (request, response, next) => {
+          const name = decodeURIComponent((request.url ?? '').split('?')[0] ?? '').replace(
+            /^\//,
+            '',
+          );
+          // Subfolders are allowed (models/tpose, models/tpose/18+), traversal is not.
+          if (!/^(?:[\w.+-]+\/)*[\w.+-]+$/.test(name) || !extensions.test(name)) return next();
+          const root = join(repoRoot, directory);
+          const file = resolve(root, name);
+          if (file !== root && !file.startsWith(root + sep)) return next();
+          let size: number;
+          try {
+            size = statSync(file).size;
+          } catch {
+            return next();
+          }
+          response.setHeader(
+            'Content-Type',
+            name.endsWith('.json') ? 'application/json' : 'model/gltf-binary',
+          );
+          response.setHeader('Content-Length', size);
+          createReadStream(file).pipe(response);
+        });
     },
   };
 }

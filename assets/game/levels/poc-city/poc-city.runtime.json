@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 1,
+  "levelId": "poc-city",
+  "units": "metres",
+  "coordinateSystem": "babylon-left-handed-y-up",
+  "worldDimensions": [
+    50,
+    50
+  ],
+  "renderNodes": [
+    "GEO_alley",
+    "GEO_awning_home",
+    "GEO_awning_hotel",
+    "GEO_awning_shop",
+    "GEO_balcony",
+    "GEO_bar_back",
+    "GEO_bar_counter",
+    "GEO_bar_floor",
+    "GEO_bar_front_left",
+    "GEO_bar_front_right",
+    "GEO_bar_lintel",
+    "GEO_bar_roof",
+    "GEO_bar_side_-14.85",
+    "GEO_bar_side_-5.15",
+    "GEO_building_home",
+    "GEO_building_hotel",
+    "GEO_building_shop",
+    "GEO_chair_back_0",
+    "GEO_chair_back_1",
+    "GEO_chair_back_2",
+    "GEO_chair_back_3",
+    "GEO_chair_base_0",
+    "GEO_chair_base_1",
+    "GEO_chair_base_2",
+    "GEO_chair_base_3",
+    "GEO_chair_seat_0",
+    "GEO_chair_seat_1",
+    "GEO_chair_seat_2",
+    "GEO_chair_seat_3",
+    "GEO_crate_0",
+    "GEO_crate_1",
+    "GEO_crate_2",
+    "GEO_ground",
+    "GEO_lamp_head",
+    "GEO_lamp_pole",
+    "GEO_market_canopy",
+    "GEO_market_counter",
+    "GEO_market_post_3.4",
+    "GEO_market_post_6.6",
+    "GEO_rail_balcony_front",
+    "GEO_rail_balcony_left",
+    "GEO_rail_balcony_right",
+    "GEO_rail_roof_back",
+    "GEO_rail_roof_east",
+    "GEO_rail_roof_gap",
+    "GEO_rail_roof_west",
+    "GEO_road",
+    "GEO_road_mark_-13",
+    "GEO_road_mark_-18",
+    "GEO_road_mark_-23",
+    "GEO_road_mark_-3",
+    "GEO_road_mark_-8",
+    "GEO_road_mark_12",
+    "GEO_road_mark_17",
+    "GEO_road_mark_2",
+    "GEO_road_mark_22",
+    "GEO_road_mark_7",
+    "GEO_sidewalk",
+    "GEO_square",
+    "GEO_stair_rail_-5.36",
+    "GEO_stair_rail_-8.04",
+    "GEO_stair_tread_00",
+    "GEO_stair_tread_01",
+    "GEO_stair_tread_02",
+    "GEO_stair_tread_03",
+    "GEO_stair_tread_04",
+    "GEO_stair_tread_05",
+    "GEO_stair_tread_06",
+    "GEO_stair_tread_07",
+    "GEO_stair_tread_08",
+    "GEO_stair_tread_09",
+    "GEO_stair_tread_10",
+    "GEO_stair_tread_11",
+    "GEO_stair_tread_12",
+    "GEO_stair_tread_13",
+    "GEO_stair_tread_14",
+    "GEO_stair_tread_15",
+    "GEO_stair_tread_16",
+    "GEO_stair_tread_17",
+    "GEO_stair_tread_18",
+    "GEO_stair_tread_19",
+    "GEO_stairs_ramp",
+    "GEO_table_leg",
+    "GEO_table_top",
+    "GEO_wall",
+    "GEO_window_home-2",
+    "GEO_window_home1",
+    "GEO_window_hotel-2",
+    "GEO_window_hotel1",
+    "GEO_window_shop-2",
+    "GEO_window_shop1"
+  ],
+  "cutawayNodes": [
+    "GEO_balcony",
+    "GEO_bar_roof"
+  ],
+  "doors": [
+    {
+      "id": "MARK_door_bar_01",
+      "position": [
+        12.0,
+        0.12,
+        -2.15
+      ],
+      "width": 2,
+      "height": 2.6,
+      "depth": 1.3,
+      "building": "bar",
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    }
+  ],
+  "bottleSpawns": [
+    {
+      "id": "MARK_bottle_bar_01",
+      "position": [
+        8.0,
+        1.72,
+        -9.0
+      ],
+      "category": "bar"
+    },
+    {
+      "id": "MARK_bottle_roof_01",
+      "position": [
+        11.0,
+        3.4,
+        -10.0
+      ],
+      "category": "roof"
+    }
+  ],
+  "vehicleSpawns": [
+    {
+      "id": "MARK_vehicle_spawn_01",
+      "position": [
+        -18.0,
+        0.1,
+        11.0
+      ],
+      "vehicle": "scooter"
+    }
+  ],
+  "vehicleRoutes": [
+    {
+      "id": "MARK_vehicle_route_01",
+      "position": [
+        22.0,
+        0.1,
+        11.0
+      ],
+      "points": [
+        [
+          22.0,
+          0.1,
+          11.0
+        ],
+        [
+          0.0,
+          0.1,
+          11.0
+        ],
+        [
+          -22.0,
+          0.1,
+          11.0
+        ]
+      ]
+    }
+  ],
+  "roofAccess": [
+    {
+      "id": "MARK_roof_access_01",
+      "position": [
+        6.7,
+        3.3,
+        -2.5
+      ],
+      "target": "GEO_bar_roof",
+      "route": "MARK_stairs_route"
+    }
+  ],
+  "missionTriggers": [
+    {
+      "id": "MARK_mission_square",
+      "position": [
+        -2.0,
+        0.12,
+        -3.0
+      ],
+      "radius": 2
+    }
+  ],
+  "playerSpawns": [
+    {
+      "id": "MARK_spawn",
+      "position": [
+        19.0,
+        0.16,
+        4.0
+      ]
+    }
+  ],
+  "navigationRoutes": [
+    {
+      "id": "MARK_entry_route",
+      "position": [
+        12.0,
+        0.16,
+        4.0
+      ],
+      "points": [
+        [
+          12.0,
+          0.16,
+          4.0
+        ],
+        [
+          12.0,
+          0.0,
+          0.0
+        ],
+        [
+          12.0,
+          0.12,
+          -3.0
+        ],
+        [
+          12.0,
+          0.12,
+          -6.0
+        ]
+      ]
+    },
+    {
+      "id": "MARK_stairs_route",
+      "position": [
+        6.7,
+        0.16,
+        6.5
+      ],
+      "points": [
+        [
+          6.7,
+          0.16,
+          6.5
+        ],
+        [
+          6.7,
+          0.16,
+          5.7
+        ],
+        [
+          6.7,
+          3.3,
+          -1.8
+        ],
+        [
+          6.7,
+          3.3,
+          -3.2
+        ]
+      ]
+    }
+  ],
+  "walkableAreas": [
+    {
+      "id": "GEO_alley",
+      "min": [
+        -4.0,
+        0.0,
+        -18.5
+      ],
+      "max": [
+        0.0,
+        0.09,
+        -9.5
+      ]
+    },
+    {
+      "id": "GEO_awning_home",
+      "min": [
+        10.8,
+        2.61,
+        -16.0
+      ],
+      "max": [
+        19.200001,
+        2.79,
+        -14.6
+      ]
+    },
+    {
+      "id": "GEO_awning_hotel",
+      "min": [
+        -18.200001,
+        2.61,
+        22.0
+      ],
+      "max": [
+        -9.8,
+        2.79,
+        23.400002
+      ]
+    },
+    {
+      "id": "GEO_awning_shop",
+      "min": [
+        -17.700001,
+        2.61,
+        -3.0
+      ],
+      "max": [
+        -10.3,
+        2.79,
+        -1.6
+      ]
+    },
+    {
+      "id": "GEO_balcony",
+      "min": [
+        9.0,
+        3.1,
+        -2.0
+      ],
+      "max": [
+        15.0,
+        3.3,
+        1.0
+      ]
+    },
+    {
+      "id": "GEO_bar_floor",
+      "min": [
+        5.3,
+        0.0,
+        -11.7
+      ],
+      "max": [
+        14.7,
+        0.12,
+        -2.3
+      ]
+    },
+    {
+      "id": "GEO_bar_roof",
+      "min": [
+        4.9,
+        3.1,
+        -12.0
+      ],
+      "max": [
+        15.1,
+        3.3,
+        -2.0
+      ]
+    },
+    {
+      "id": "GEO_chair_seat_0",
+      "min": [
+        12.9,
+        0.56,
+        -8.3
+      ],
+      "max": [
+        13.5,
+        0.68,
+        -7.7
+      ]
+    },
+    {
+      "id": "GEO_chair_seat_1",
+      "min": [
+        10.5,
+        0.56,
+        -8.3
+      ],
+      "max": [
+        11.1,
+        0.68,
+        -7.7
+      ]
+    },
+    {
+      "id": "GEO_chair_seat_2",
+      "min": [
+        -0.3,
+        0.52,
+        -4.3
+      ],
+      "max": [
+        0.3,
+        0.64,
+        -3.7
+      ]
+    },
+    {
+      "id": "GEO_chair_seat_3",
+      "min": [
+        -0.3,
+        0.52,
+        -6.3
+      ],
+      "max": [
+        0.3,
+        0.64,
+        -5.7
+      ]
+    },
+    {
+      "id": "GEO_crate_0",
+      "min": [
+        -4.5,
+        0.08,
+        -6.5
+      ],
+      "max": [
+        -3.5,
+        1.08,
+        -5.5
+      ]
+    },
+    {
+      "id": "GEO_crate_1",
+      "min": [
+        -5.6,
+        0.08,
+        -6.5
+      ],
+      "max": [
+        -4.6,
+        1.08,
+        -5.5
+      ]
+    },
+    {
+      "id": "GEO_crate_2",
+      "min": [
+        -4.5,
+        0.08,
+        -7.6
+      ],
+      "max": [
+        -3.5,
+        1.08,
+        -6.6
+      ]
+    },
+    {
+      "id": "GEO_ground",
+      "min": [
+        -25.0,
+        -0.5,
+        -25.0
+      ],
+      "max": [
+        25.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "id": "GEO_market_canopy",
+      "min": [
+        -6.75,
+        2.655,
+        -0.05
+      ],
+      "max": [
+        -3.25,
+        2.805,
+        2.05
+      ]
+    },
+    {
+      "id": "GEO_road",
+      "min": [
+        -25.0,
+        0.0,
+        8.0
+      ],
+      "max": [
+        25.0,
+        0.09,
+        14.0
+      ]
+    },
+    {
+      "id": "GEO_sidewalk",
+      "min": [
+        -25.0,
+        0.0,
+        5.6
+      ],
+      "max": [
+        25.0,
+        0.16,
+        8.0
+      ]
+    },
+    {
+      "id": "GEO_square",
+      "min": [
+        -10.0,
+        0.0,
+        -9.5
+      ],
+      "max": [
+        2.0,
+        0.08,
+        3.5
+      ]
+    },
+    {
+      "id": "GEO_stairs_ramp",
+      "min": [
+        5.45,
+        -0.1732,
+        -2.03432
+      ],
+      "max": [
+        7.95,
+        3.2932,
+        6.03432
+      ]
+    },
+    {
+      "id": "GEO_table_top",
+      "min": [
+        11.2,
+        0.94,
+        -8.65
+      ],
+      "max": [
+        12.8,
+        1.1,
+        -7.35
+      ]
+    },
+    {
+      "id": "GEO_wall",
+      "min": [
+        -8.1,
+        0.09,
+        -13.125
+      ],
+      "max": [
+        -2.1,
+        1.29,
+        -12.875
+      ]
+    }
+  ]
+}

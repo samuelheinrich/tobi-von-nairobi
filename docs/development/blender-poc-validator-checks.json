@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "negativeFixtures": [
+    "orphan_collider",
+    "missing_collision",
+    "marker_outside",
+    "blocked_door",
+    "roof_without_access",
+    "unguarded_edge",
+    "stale_collider",
+    "ground_gaps",
+    "duplicate_floor",
+    "coplanar_faces",
+    "duplicate_name",
+    "open_geometry"
+  ],
+  "masterSaved": false,
+  "blenderVersion": "5.2.1 LTS"
+}

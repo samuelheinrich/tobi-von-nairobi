@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "levelId": "poc-city",
+  "blenderVersion": "5.2.1 LTS",
+  "status": "PASS",
+  "counts": {
+    "render": 91,
+    "colliders": 55,
+    "markers": 10
+  },
+  "findings": [
+    {
+      "severity": "PASS",
+      "code": "open_geometry",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "duplicate_floor",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "coplanar_faces",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "missing_collision",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "blocked_door",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "marker_outside",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "roof_without_access",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "unguarded_edge",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "duplicate_name",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "orphan_collider",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "stale_collider",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "ground_gaps",
+      "objects": [],
+      "message": "No issue detected by this check."
+    }
+  ],
+  "limitations": [
+    "AABB face/door tests are conservative for rotations.",
+    "Ground holes smaller than the 2 m sample grid may be missed.",
+    "Edge safety only covers declared safety_edges; it is not an arbitrary-mesh fall detector.",
+    "Roof access markers do not prove reachability; exercise the Havok route in Level Studio."
+  ]
+}

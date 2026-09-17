@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+  <meta charset="utf-8" />
+  <title>Blender Level Studio · Tobi</title>
+  <style>
+    body {
+      margin: 0;
+      background: #1e2a35;
+      color: white;
+      font: 14px system-ui;
+    }
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    aside {
+      position: fixed;
+      left: 12px;
+      top: 12px;
+      max-width: 360px;
+      padding: 16px;
+      background: #14222de8;
+    }
+    button {
+      margin: 4px;
+      padding: 8px;
+      color: white;
+      background: #3c5964;
+      border: 0;
+      cursor: pointer;
+    }
+    a {
+      color: #ade3ff;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+  </style>
+  <canvas></canvas>
+  <aside>
+    <b>BLENDER LEVEL STUDIO · POC CITY</b>
+    <p>
+      50 × 50 m · Blender-GLB + Havok<br />WASD: Capsule bewegen · Space: Springen<br />Maus ziehen
+      / Rad: Kamera
+    </p>
+    <button id="reset">Start</button><button id="roof">Dach</button
+    ><button id="bar">Bar-Eingang</button> <button id="stairs">Treppenanfang</button
+    ><button id="debug">Collider zeigen</button><button id="cutaway">Dach aus/ein</button>
+    <button id="follow">Kamera folgen / Übersicht</button
+    ><button id="probe">Laufwege prüfen</button>
+    <p><a href="/test/models.html">Modell-Studio</a></p>
+    <pre id="state">Lade Blender-Level …</pre>
+    <pre id="result"></pre>
+  </aside>
+  <script type="module" src="./level-studio.ts"></script>
+</html>

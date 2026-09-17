@@ -28,3 +28,13 @@ __pycache__/
 
 # Screenshots zur Fehlersuche, nicht Teil des Projekts.
 /tshoot/
+
+# Blender authoring backups and ephemeral working files; .blend masters remain versioned.
+*.blend1
+*.blend2
+/assets/blender/**/backups/*
+!/assets/blender/**/backups/.gitkeep
+/tools/blender/cache/
+/tools/blender/tmp/
+/assets/blender/**/cache/
+/assets/blender/**/tmp/

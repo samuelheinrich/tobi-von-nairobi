@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "blenderVersion": "5.2.1 LTS",
+  "masterSha256": "992093c4638f3857e2cad4ca69dc94dac5ca3b7cf26f9dad017fdc818faf9fae",
+  "exportPreservesMasterBytes": true,
+  "repeatExportIdentical": true,
+  "freshRecipeRebuildSameObjectFingerprints": true,
+  "guiEquivalentTransformEditPreservedOnUpdate": true,
+  "colliderFollowsEditedObject": true,
+  "backupCreatedBeforeUpdate": true,
+  "note": "GUI-equivalent transform change tested by Blender Python on a temporary copy; no manual GUI test claimed."
+}
