@@ -3,8 +3,14 @@
   "id": "welcome_to_bali_prototype",
   "worldId": "bali",
   "title": "Tutorial",
-  "subtitle": "Tobis Fahrschule: bewegen, werfen, pöbeln, verstecken und sitzen.",
+  "subtitle": "Tobis Fahrschule: bewegen, werfen, p\u00f6beln, verstecken und sitzen.",
   "maxWanted": 0,
+  "navigationBounds": {
+    "minX": -12.5,
+    "maxX": 12.5,
+    "minZ": -28.5,
+    "maxZ": 28.5
+  },
   "spawn": {
     "x": 0,
     "y": 1.5,

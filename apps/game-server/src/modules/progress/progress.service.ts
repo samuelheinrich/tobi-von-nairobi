@@ -112,10 +112,19 @@ export class ProgressService {
       const level = playableLevels.find((l) => l.id === run.levelId);
       if (!level) throw new UnprocessableEntityException('Level nicht verfügbar.');
       const ids = new Set(completion.pickupIds);
-      const distance = Math.hypot(
-        level.destination.position.x - level.spawn.x,
-        level.destination.position.z - level.spawn.z,
-      );
+      // The fastest honest run is the walk from the spawn to the destination at a sprint. When the
+      // player is carried there — Fly High ends at an airport 1.5 km away — that distance says
+      // nothing about how long the run took, so the walkable area is the measure instead. Without
+      // it, every Fly High result was rejected as implausibly fast.
+      const bounds = level.navigationBounds;
+      const distance = level.destination.carried
+        ? bounds
+          ? Math.hypot(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ)
+          : 0
+        : Math.hypot(
+            level.destination.position.x - level.spawn.x,
+            level.destination.position.z - level.spawn.z,
+          );
       const minMs = Math.floor((distance / movement.sprintSpeed) * 1000);
       if (
         completion.debugUsed ||

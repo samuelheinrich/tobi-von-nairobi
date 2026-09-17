@@ -29,9 +29,11 @@ export const checks = [
     if (!model.bounds)
       return [
         finding(
-          'CRITICAL',
+          'MEDIUM',
           'WORLD_BOUNDS_MISSING',
-          'Das Level erklärt keine navigationBounds: nichts hält den Spieler im Gebiet.',
+          'Das Level erklärt keine navigationBounds. Das ist kein Zaun um den Spieler, sondern ' +
+            'das Gitter, auf dem NPCs laufen und aus dem der Server ableitet, wie weit man zu ' +
+            'Fuss kommen kann. Ohne Grenzen laufen NPCs auf einer geratenen Box.',
         ),
       ];
     const out = [];
@@ -61,7 +63,8 @@ export const checks = [
       const solid = inAnySolid(model, item, CAPSULE_RADIUS);
       if (solid)
         out.push(finding('CRITICAL', 'SPAWN_IN_SOLID', `${name} steckt in ${solid.id}.`, item));
-      if (model.bounds && !covers(model.bounds, item))
+      // A carried destination is meant to lie outside the walkable grid: you fly there.
+      if (model.bounds && !covers(model.bounds, item) && !(name === 'Ziel' && model.carried))
         out.push(
           finding(
             'CRITICAL',

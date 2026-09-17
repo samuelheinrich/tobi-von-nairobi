@@ -48,6 +48,8 @@ const base = (level, extra) => ({
   npcs: [],
   spawn: level.spawn ? item('spawn', level.spawn) : null,
   destination: level.destination ? item(level.destination.id, level.destination.position) : null,
+  // A carried destination lies outside the walkable grid on purpose: you fly or ride there.
+  carried: level.destination?.carried === true,
   policeSpawns: (level.policeSpawns ?? []).map((p, i) => item(`police-${i}`, p)),
   /** Lower bottle floor for levels that are not a run. */
   minBottles: undefined,

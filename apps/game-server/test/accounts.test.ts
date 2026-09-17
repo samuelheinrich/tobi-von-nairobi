@@ -227,7 +227,7 @@ describe('authenticated, durable campaign progress', () => {
       ).json().score,
     ).toBe(0);
   });
-  it.each([baliAdventure, nanaPlaza, streetParade])(
+  it.each([nanaPlaza, streetParade])(
     'requires an escape result before awarding $title progress',
     async (level) => {
       const user = await register();
@@ -299,7 +299,7 @@ describe('authenticated, durable campaign progress', () => {
     });
   });
 
-  it.each([thailandRailway, hippieHouse, flyHigh])(
+  it.each([thailandRailway, hippieHouse, flyHigh, baliAdventure])(
     'stores $title without requiring police and restores its own result',
     async (level) => {
       const user = await register();

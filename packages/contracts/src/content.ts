@@ -90,7 +90,17 @@ export const levelSchema = z
       .optional(),
     spawn: positionSchema,
     destination: z
-      .object({ id: z.string(), position: positionSchema, radius: z.number().positive() })
+      .object({
+        id: z.string(),
+        position: positionSchema,
+        radius: z.number().positive(),
+        /** The player is carried here — by aircraft, by train — instead of walking.
+         *
+         * Without this, anything that reads the level has to assume the distance from the spawn
+         * to the destination is covered on foot. For Fly High that is 1.5 km, and the server
+         * rejected every honest run as implausibly fast. */
+        carried: z.boolean().default(false),
+      })
       .strict(),
     pickups: z.array(pickupSchema),
     powerups: z
