@@ -45,7 +45,12 @@ export async function exerciseFlight() {
       world.step(1 / 60);
     }
     if (flight.phase !== 'enter_cockpit') throw new Error('Trolley did not breach cockpit door.');
-    flight.interact({ x: -2.15, y: 5.5, z: 62.8 });
+    // Use the aisle just behind the breached door, where a player can actually stand. The trolley
+    // is still close enough to compete for E here; the pilot interaction must take priority.
+    const cockpitEntrance = { x: 0, y: 5.5, z: 57.8 };
+    if (!flight.interactionPrompt(cockpitEntrance).includes('PILOTENSITZ'))
+      throw new Error('Pilot interaction is not exposed from the cockpit entrance.');
+    flight.interact(cockpitEntrance);
     if (!flight.flying) throw new Error('Pilot seat did not start Flight Mode.');
     input.moveX = 0.55;
     input.moveZ = -0.35;

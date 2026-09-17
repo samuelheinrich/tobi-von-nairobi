@@ -1,4 +1,3 @@
-import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { InputActions, Position3 } from '@tobi/contracts';
 import { aircraftLayout } from '@tobi/game-data';
@@ -129,10 +128,12 @@ export class FlightRuntime {
     if (this.phase === 'landing')
       return `LANDEANFLUG · ${Math.round(this.controller.landingProgress * 100)}%`;
     if (this.phase === 'landed') return 'E · PILOTENSITZ VERLASSEN UND EVAKUIEREN';
+    // After the breach the trolley remains beside the doorway. The cockpit action must win over
+    // its grab prompt, otherwise the same E press simply picks the trolley up again.
+    if (this.phase === 'enter_cockpit' && this.insidePilotInteractionZone(player))
+      return 'E · PILOTENSITZ ÜBERNEHMEN';
     if (this.trolley.grabbed) return 'E · WAGEN LOSLASSEN   WASD · SCHIEBEN';
     if (this.trolley.near(player)) return 'E · SERVICEWAGEN GREIFEN';
-    if (this.phase === 'enter_cockpit' && this.near(player, this.aircraft.pilotApproach, 2.2))
-      return 'E · PILOTENSITZ ÜBERNEHMEN';
     return '';
   }
 
@@ -150,16 +151,16 @@ export class FlightRuntime {
       return true;
     }
     if (this.flying) return true;
-    if (this.trolley.interact(player)) {
-      this.phase = this.trolley.grabbed ? 'breach_door' : this.phase;
-      return true;
-    }
-    if (this.phase === 'enter_cockpit' && this.near(player, this.aircraft.pilotApproach, 2.2)) {
+    if (this.phase === 'enter_cockpit' && this.insidePilotInteractionZone(player)) {
       this.trolley.release();
       this.phase = 'flying';
       this.aircraft.setFlightPresentation(true);
       this.controller.start();
       this.events.push('alert');
+      return true;
+    }
+    if (this.trolley.interact(player)) {
+      this.phase = this.trolley.grabbed ? 'breach_door' : this.phase;
       return true;
     }
     return false;
@@ -238,12 +239,19 @@ export class FlightRuntime {
     return teleport;
   }
 
-  private near(player: Position3, point: readonly number[], radius: number): boolean {
+  /** The authored cockpit is larger than the fallback pilot chair and blocks access to its exact
+   * centre from some angles. Treat the usable cockpit aisle as one interaction zone instead of
+   * requiring Tobi's capsule centre to hit a small sphere inside the chair. */
+  private insidePilotInteractionZone(player: Position3): boolean {
+    const approach = this.aircraft.cockpitApproach;
+    const pilot = this.aircraft.pilotApproach;
+    const rear = Math.min(approach[2]!, pilot[2]!) - 0.75;
+    const front = Math.max(approach[2]!, pilot[2]!) + 2.5;
     return (
-      Vector3.Distance(
-        new Vector3(player.x, player.y, player.z),
-        new Vector3(point[0]!, point[1]!, point[2]!),
-      ) < radius
+      Math.abs(player.x) <= 6.2 &&
+      Math.abs(player.y - pilot[1]!) <= 2.2 &&
+      player.z >= rear &&
+      player.z <= front
     );
   }
 
