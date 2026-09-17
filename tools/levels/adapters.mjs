@@ -7,17 +7,28 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rect } from './model.mjs';
 
-const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const levelFile = (name) =>
-  JSON.parse(readFileSync(join(repoRoot, 'packages/game-data/src/levels', name), 'utf8'));
-
 /** The data package is TypeScript, so this file is run through tsx. Importing the real modules
  * beats parsing their source: an adapter can never silently miss a block because a comment or a
  * nested literal confused a regular expression, which is exactly what the first version did.
  */
-// Relative to the source, not the package name: tools/ is not a workspace package and has no
-// dependency on game-data, but tsx loads the TypeScript directly.
 const data = await import('../../packages/game-data/src/index.ts');
+
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+/** The assembled level, never the raw JSON.
+ *
+ * `index.ts` merges extra pickups into several levels — Bali gets `baliPickups`, Arlesheim its
+ * outdoor bottles. Reading the JSON reported both as far emptier than they are, and turned a real
+ * two-level problem into a five-level one. Always read what the game actually loads.
+ */
+const levelById = new Map(
+  [...data.playableLevels, data.drunkTank].map((level) => [level.id, level]),
+);
+const levelFile = (name) => {
+  const raw = JSON.parse(
+    readFileSync(join(repoRoot, 'packages/game-data/src/levels', name), 'utf8'),
+  );
+  return levelById.get(raw.id) ?? raw;
+};
 
 const item = (id, p) => ({ id, x: p.x, y: p.y, z: p.z });
 const fromPickups = (level) => (level.pickups ?? []).map((p) => item(p.id, p.position));

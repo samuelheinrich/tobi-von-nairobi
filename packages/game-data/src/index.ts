@@ -13,12 +13,21 @@ import rawCell from './levels/ausnuechterungszelle.json' with { type: 'json' };
 import { levelSchema, type LevelDefinition } from '@tobi/contracts';
 import rawLevel from './levels/welcome-to-bali.json' with { type: 'json' };
 
+import { railwayPickups } from './railway-bottles.js';
+import { aircraftPickups } from './aircraft-bottles.js';
+
 export const welcomeToBali = levelSchema.parse(rawLevel);
 export const contentVersion = 'prototype-8-zurich-hb';
 export const baliEscape = levelSchema.parse(rawEscape);
 export const beachBar = levelSchema.parse(rawBar);
 export const nightMarket = levelSchema.parse(rawMarket);
-export const thailandRailway = levelSchema.parse(rawRailway);
+export const thailandRailway = levelSchema.parse({
+  ...rawRailway,
+  pickups: railwayPickups,
+  objectives: rawRailway.objectives.map((o) =>
+    o.type === 'collect' ? { ...o, amount: railwayPickups.length } : o,
+  ),
+});
 export const streetParade = levelSchema.parse(rawParade);
 export const hippieHouse = levelSchema.parse({
   ...rawHouse,
@@ -40,7 +49,13 @@ export const baliAdventure = levelSchema.parse({
     o.type === 'collect' ? { ...o, amount: baliPickups.length } : o,
   ),
 });
-export const flyHigh = levelSchema.parse(rawFlight);
+export const flyHigh = levelSchema.parse({
+  ...rawFlight,
+  pickups: aircraftPickups,
+  objectives: rawFlight.objectives.map((o) =>
+    o.type === 'collect' ? { ...o, amount: aircraftPickups.length } : o,
+  ),
+});
 
 export const playableLevels = [
   welcomeToBali,
@@ -91,6 +106,14 @@ export {
   zurichWorldBounds,
 } from './zurich.js';
 export { railwayLayout } from './railway.js';
+export {
+  distributeBottles,
+  bottleWeight,
+  type BottleSpot,
+  type BottleSpotKind,
+} from './bottles.js';
+export { railwayPickups } from './railway-bottles.js';
+export { aircraftPickups } from './aircraft-bottles.js';
 export { phuketSectors, phuketVehicles, phuketResidents } from './phuket.js';
 export type { PhuketResident, PhuketResidentRole } from './phuket.js';
 export * from './nana-plaza.js';
