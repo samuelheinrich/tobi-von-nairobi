@@ -35,20 +35,24 @@ const start = (await page.locator('button').allInnerTexts()).findIndex((t) => /S
 await page.locator('button').nth(start).click();
 await page.waitForTimeout(8000);
 
-const stops = new Map();
+// Printed as it happens, not collected and printed at the end: a run that is cut short still
+// has to leave something behind.
+const last = new Map();
 let samples = 0;
+const began = Date.now();
 for (let tick = 0; tick * 1.5 < seconds; tick++) {
   const probe = await page.evaluate(() => globalThis.__levelProbe?.() ?? null);
   if (probe?.trains) {
     samples++;
     for (const train of probe.trains) {
-      const key = `${train.currentStation} · ${train.state} · Türen ${train.doorState}`;
-      stops.set(key, (stops.get(key) ?? 0) + 1);
+      const state = `${train.state} · ${train.currentStation} → ${train.nextStation} · Türen ${train.doorState}`;
+      if (last.get(train.id) === state) continue;
+      last.set(train.id, state);
+      const at = ((Date.now() - began) / 1000).toFixed(0).padStart(4);
+      console.log(`${at}s  ${train.id}  ${state}`);
     }
   }
   await page.waitForTimeout(1500);
 }
 if (!samples) console.log('Keine Zugdaten — hat das Level überhaupt Züge?');
-for (const [key, count] of [...stops].sort((a, c) => c[1] - a[1]))
-  console.log(`  ${String(count).padStart(3)}×  ${key}`);
 await browser.close();
