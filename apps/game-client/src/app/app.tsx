@@ -3,7 +3,8 @@ import { AccountPanel } from '../ui/account/account-panel.js';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { GameViewStore } from './game-view-store.js';
 import type { GameHost } from '../runtime/session/game-host.js';
-import { welcomeToBali, playableLevels, drunkTank } from '@tobi/game-data';
+import { welcomeToBali, drunkTank } from '@tobi/game-data';
+import { playableLevels } from './local-levels.js';
 import { Landing } from '../ui/landing.js';
 import { Hud, formatTime } from '../ui/hud.js';
 import { Controls } from '../ui/controls.js';
@@ -13,7 +14,14 @@ export function App() {
   const account = useAccount();
   const [showAccount, setShowAccount] = useState(false);
   const [generation, setGeneration] = useState(0);
-  const [level, setLevel] = useState(welcomeToBali);
+  const [level, setLevel] = useState(
+    () =>
+      (import.meta.env.DEV &&
+        playableLevels.find(
+          (entry) => entry.id === new URLSearchParams(location.search).get('level'),
+        )) ||
+      welcomeToBali,
+  );
   const store = useMemo(() => new GameViewStore(), [generation, level]);
   const view = useSyncExternalStore(store.subscribe, store.getSnapshot);
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -58,12 +66,13 @@ export function App() {
   // The drunk tank is an epilogue, not a level result: it has no bottles and is never saved.
   const custody = !level.selectable;
   useEffect(() => {
-    if (view.phase === 'complete' && view.result && !custody) void account.finish(view.result);
-  }, [view.phase, view.result, custody]);
+    if (view.phase === 'complete' && view.result && !custody && !level.sandbox)
+      void account.finish(view.result);
+  }, [view.phase, view.result, custody, level.sandbox]);
   const begin = async (): Promise<void> => {
     if (account.busy) return;
     host.current?.unlockAudio();
-    if (custody) {
+    if (custody || level.sandbox) {
       host.current?.start();
       return;
     }
@@ -203,7 +212,7 @@ export function App() {
           onStart={() => void begin()}
         />
       )}
-      {active && <Hud view={view} />}
+      {active && <Hud view={view} level={level} />}
       {(view.phase === 'paused' || help) && (
         <div className="modal-backdrop">
           <section

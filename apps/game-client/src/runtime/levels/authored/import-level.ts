@@ -181,6 +181,7 @@ export async function loadAuthoredLevel(scene: Scene, baseUrl: string) {
         vertices.indices = def.indices!;
         vertices.applyToMesh(mesh);
       }
+      mesh.metadata = { ...mesh.metadata, renderId: def.renderId };
       proxies.push(mesh);
       mesh.isVisible = false;
       mesh.isPickable = false;

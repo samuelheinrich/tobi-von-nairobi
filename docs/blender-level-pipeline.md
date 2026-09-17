@@ -185,8 +185,8 @@ prüft Schema/Koordinaten/IDs, lädt über `loadWorldAsset` und registriert sepa
 `HavokWorld.addCollider`. Keine zweite Physics-Engine, kein Name-Parsing für Gameplay. Nur der
 Prüfharness kennt die IDs seiner festen Teststrecke.
 
-Die lokalen Dateien werden durch den Vite-Dev-Mount `/level-assets/` ausgeliefert. Sie sind noch
-nicht in der Level-Galerie oder dem Produktions-Build. Ein Client-Build würde gemäss Projektregel
+Die lokalen Dateien werden durch den Vite-Dev-Mount `/level-assets/` ausgeliefert. Sie sind in der lokalen Level-Galerie als **PoC City · Blender-Testmap** verfügbar; im
+Produktions-Build wird dieser Testeintrag ausgeblendet. Ein Client-Build würde gemäss Projektregel
 automatisch deployen; für diesen Offline-PoC genügt der lokale Vite-Server.
 
 ## Validierung und Grenzen
@@ -237,6 +237,24 @@ nicht ungefragt migrieren. Spätere lokale Library: `assets/blender/library/{bui
 - Client-Typecheck und gezieltes ESLint bestanden. Lokales Node war 26.8.2 und damit ausserhalb
   der im Projekt vorgesehenen 24.x-Version; die Tools meldeten dafür eine Versionswarnung.
 
+## Im eigentlichen Spiel testen
+
+<http://localhost:5173/?level=poc_city> öffnet die Testmap direkt. Alternativ auf der Startseite
+in der Levelauswahl **PoC City · Blender-Testmap** wählen und **TESTMAP ERKUNDEN** drücken.
+Tobi benutzt seine bestehende GLB-Figur, Animationen, Third-Person-Kamera und Havok-Capsule.
+WASD bewegen, Maus Kamera, Space springen, Shift sprinten, ESC Pause/Level wechseln.
+Keine NPCs, Flaschenmissionen oder Abschlusszwang. Auch angemeldet wird kein Testlauf gespeichert.
+GLB und Sidecar-Collider werden vollständig geladen, bevor Tobi platziert wird.
+F1 bietet die bestehende Collision-Debugansicht und Teleports zu Start/Dach.
+
 Phase 8 ist erreicht. Keine bestehenden Levels migriert, kein Produktions-Build, kein Upload
 und keine GitHub-CI ausgelöst. Nächster Schritt ist der visuelle Test der Masterdatei und des
 Level-Studios durch den Eigentümer, bevor echte Levels auf diese Pipeline umgestellt werden.
+
+### Lokaler Spieltest nach Galerie-Integration
+
+Direktstart, Tobi-GLB, HUD und WASD-Bewegung auf der importierten Havok-Fläche geprüft;
+Typecheck und gezieltes ESLint bestanden. Der Galerie-Wechsel PoC → Tutorial → PoC lädt
+alle Szenen, erzeugt bei sehr schnellem Wechsel aber einen asynchronen Babylon-BRDF-Fehler
+im Headless-Browser. Separat im [Test-Backlog](development/test-backlog.md) dokumentiert;
+die direkte Testmap-URL funktioniert. Kein Produktions-Build/Upload ausgeführt.

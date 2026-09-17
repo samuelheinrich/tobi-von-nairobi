@@ -1,12 +1,17 @@
-import { playableLevels, welcomeToBali, worldNames } from '@tobi/game-data';
+import { welcomeToBali, worldNames } from '@tobi/game-data';
 
-const previews = import.meta.glob<string>('../assets/level-previews/*.webp', {
+import { playableLevels } from '../app/local-levels.js';
+
+const previews = import.meta.glob<string>('../assets/level-previews/*.{webp,png}', {
   eager: true,
   query: '?url',
   import: 'default',
 });
 export function levelPreview(id: string): string | undefined {
-  return previews[`../assets/level-previews/${id}.webp`];
+  return (
+    previews[`../assets/level-previews/${id}.webp`] ??
+    previews[`../assets/level-previews/${id}.png`]
+  );
 }
 export function levelTitle(id: string, title: string): string {
   return id === welcomeToBali.id ? `Tutorial` : title;
@@ -74,24 +79,28 @@ export function LevelGallery({
               </div>
               <div className="level-card-copy">
                 <span className="level-world">
-                  {worldNames[level.worldId]}
+                  {level.sandbox ? 'LOKALE TESTMAP' : worldNames[level.worldId]}
                   {index === 0 ? ' / TUTORIAL' : ''}
                 </span>
                 <strong>{level.title}</strong>
                 <span className="level-card-details">
-                  {level.scenery === 'aircraft'
-                    ? '2 Decks · Flight Mode'
-                    : level.scenery === 'railway'
-                      ? '5 Wagen · Notbremse'
-                      : `${level.pickups.length} Flaschen`}{' '}
-                  <span>
-                    {level.scenery === 'aircraft'
-                      ? 'Cockpit übernehmen'
+                  {level.sandbox
+                    ? 'Freies Erkunden'
+                    : level.scenery === 'aircraft'
+                      ? '2 Decks · Flight Mode'
                       : level.scenery === 'railway'
-                        ? 'Fahrender Nachtzug'
-                        : level.maxWanted
-                          ? `${'★'.repeat(level.maxWanted)} Verfolgung`
-                          : 'In Ruhe erkunden'}
+                        ? '5 Wagen · Notbremse'
+                        : `${level.pickups.length} Flaschen`}{' '}
+                  <span>
+                    {level.sandbox
+                      ? 'Bar · Treppe · Dach'
+                      : level.scenery === 'aircraft'
+                        ? 'Cockpit übernehmen'
+                        : level.scenery === 'railway'
+                          ? 'Fahrender Nachtzug'
+                          : level.maxWanted
+                            ? `${'★'.repeat(level.maxWanted)} Verfolgung`
+                            : 'In Ruhe erkunden'}
                   </span>
                 </span>
               </div>

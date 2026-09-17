@@ -61,8 +61,13 @@ export const levelSchema = z
         'aircraft',
         'tutorial',
         'bali-adventure',
+        'authored',
       ])
       .default('village'),
+    /** Offline-authored GLB plus runtime/collision sidecars. */
+    authoredAsset: z.string().startsWith('/').optional(),
+    /** Free exploration without completion or persisted results. */
+    sandbox: z.boolean().default(false),
     /** Levels reachable only through a gameplay outcome stay out of the menu gallery. */
     selectable: z.boolean().default(true),
     maxWanted: z.number().int().min(0).max(5),
@@ -89,6 +94,7 @@ export const levelSchema = z
       .strict()
       .optional(),
     spawn: positionSchema,
+    spawnYaw: z.number().finite().optional(),
     destination: z
       .object({
         id: z.string(),

@@ -1,3 +1,4 @@
+import { createAuthoredScene } from './authored/scene.js';
 import type { CameraMode } from '../camera/third-person-camera.js';
 import type { SceneInteractionResult } from './scene-interaction.js';
 import type { AmbientZone } from '../audio/spatial-ambience.js';
@@ -23,6 +24,7 @@ import type { SoundCue } from '../audio/sound-cues.js';
 import { updateGeometryAudit } from '../rendering/geometry-validation.js';
 
 export interface LevelScene extends BaliScene {
+  readonly ready?: Promise<void>;
   readonly vehicles?: readonly VehicleDefinition[];
   cameraMode?(position: Position3): CameraMode;
   safeGround?(position: Position3): boolean;
@@ -43,6 +45,7 @@ export interface LevelScene extends BaliScene {
   readonly debugTeleports?: readonly { label: string; position: Position3 }[];
 }
 function buildLevelScene(scene: Scene, world: HavokWorld, level: LevelDefinition): LevelScene {
+  if (level.scenery === 'authored') return createAuthoredScene(scene, world, level);
   if (level.scenery === 'bali-adventure') return createBaliAdventureScene(scene, world, level);
   if (level.scenery === 'tutorial') return createTutorialScene(scene, world, level);
   if (level.scenery === 'aircraft') return createAircraftScene(scene, world, level);
@@ -60,16 +63,20 @@ export function createLevelScene(
   level: LevelDefinition,
 ): LevelScene {
   const environment = buildLevelScene(scene, world, level);
-  const present = new Set(environment.colliders);
-  for (const c of world.colliders) {
-    if (c.config.layer !== 'WORLD_STATIC' || c.config.mask !== undefined || present.has(c.mesh))
-      continue;
-    const bounds = c.mesh.getBoundingInfo().boundingBox;
-    c.mesh.metadata.navigationObstacle ??=
-      bounds.maximumWorld.y > 0.3 && bounds.minimumWorld.y < 1.5;
-    environment.colliders.push(c.mesh);
-    present.add(c.mesh);
-  }
-  updateGeometryAudit(scene);
+  const finish = () => {
+    const present = new Set(environment.colliders);
+    for (const c of world.colliders) {
+      if (c.config.layer !== 'WORLD_STATIC' || c.config.mask !== undefined || present.has(c.mesh))
+        continue;
+      const bounds = c.mesh.getBoundingInfo().boundingBox;
+      c.mesh.metadata.navigationObstacle ??=
+        bounds.maximumWorld.y > 0.3 && bounds.minimumWorld.y < 1.5;
+      environment.colliders.push(c.mesh);
+      present.add(c.mesh);
+    }
+    updateGeometryAudit(scene);
+  };
+  if (environment.ready) return { ...environment, ready: environment.ready.then(finish) };
+  finish();
   return environment;
 }

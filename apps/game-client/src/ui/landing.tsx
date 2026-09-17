@@ -54,12 +54,14 @@ export function Landing({
                 : level.subtitle}
             </p>
             <div className="selected-mission">
-              {level.scenery === 'aircraft'
-                ? 'Cockpit stürmen · selbst fliegen'
-                : level.scenery === 'railway'
-                  ? 'Notbremse · Zug verlassen'
-                  : `${level.pickups.length} Flaschen`}{' '}
-              <span>→ {destinationName(level)}</span>
+              {level.sandbox
+                ? 'Bar · Treppe · Balkon · Dach'
+                : level.scenery === 'aircraft'
+                  ? 'Cockpit stürmen · selbst fliegen'
+                  : level.scenery === 'railway'
+                    ? 'Notbremse · Zug verlassen'
+                    : `${level.pickups.length} Flaschen`}{' '}
+              <span>{level.sandbox ? 'Ohne Abschlusszwang' : `→ ${destinationName(level)}`}</span>
             </div>
             <button
               className="primary-button gallery-start"
@@ -68,23 +70,27 @@ export function Landing({
             >
               {view.phase === 'loading'
                 ? 'LEVEL WIRD GELADEN …'
-                : tutorial
-                  ? 'TUTORIAL STARTEN'
-                  : level.scenery === 'aircraft'
-                    ? 'COCKPIT STÜRMEN'
-                    : level.scenery === 'hippie-house'
-                      ? 'REIN IN DIE WG'
-                      : level.scenery === 'railway'
-                        ? 'EINSTEIGEN'
-                        : level.scenery === 'bali-adventure'
-                          ? 'BALI ERKUNDEN'
-                          : 'FLUCHT STARTEN'}
+                : level.sandbox
+                  ? 'TESTMAP ERKUNDEN'
+                  : tutorial
+                    ? 'TUTORIAL STARTEN'
+                    : level.scenery === 'aircraft'
+                      ? 'COCKPIT STÜRMEN'
+                      : level.scenery === 'hippie-house'
+                        ? 'REIN IN DIE WG'
+                        : level.scenery === 'railway'
+                          ? 'EINSTEIGEN'
+                          : level.scenery === 'bali-adventure'
+                            ? 'BALI ERKUNDEN'
+                            : 'FLUCHT STARTEN'}
               <span aria-hidden="true">↗</span>
             </button>
             <p className="guest-note">
-              {signedIn
-                ? 'Mit deinem Konto: Levelergebnisse werden gespeichert.'
-                : 'Ohne Anmeldung spielen. Ein Konto brauchst du nur zum Speichern.'}
+              {level.sandbox
+                ? 'Lokaler Testlauf ohne Speicherung.'
+                : signedIn
+                  ? 'Mit deinem Konto: Levelergebnisse werden gespeichert.'
+                  : 'Ohne Anmeldung spielen. Ein Konto brauchst du nur zum Speichern.'}
             </p>
           </div>
         </div>

@@ -6,7 +6,7 @@ import {
   worldNames,
   destinationName,
 } from '@tobi/game-data';
-import type { GameView } from '@tobi/contracts';
+import type { GameView, LevelDefinition } from '@tobi/contracts';
 import { PursuitHud } from './pursuit-hud.js';
 import { BottleIcon } from './icons.js';
 
@@ -16,14 +16,14 @@ export function formatTime(seconds: number): string {
     .padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
 }
 
-export function Hud({ view }: { view: GameView }) {
-  const level = levelById(view.levelId) ?? playableLevels[0];
+export function Hud({ view, level: selectedLevel }: { view: GameView; level?: LevelDefinition }) {
+  const level = selectedLevel ?? levelById(view.levelId) ?? playableLevels[0];
   return (
     <div className="hud" aria-label="Spielstatus">
       <TutorialCoach lesson={view.lesson} />
       <section className="mission-card">
         <div className="eyebrow">
-          {worldNames[level.worldId].toUpperCase()}{' '}
+          {level.sandbox ? 'LOKALE TESTMAP' : worldNames[level.worldId].toUpperCase()}{' '}
           <span className="mission-type">{level.title.toUpperCase()}</span>
         </div>
         <h2>{view.objective}</h2>
@@ -56,7 +56,9 @@ export function Hud({ view }: { view: GameView }) {
                       : 'Flaschen trinken sich automatisch. G: werfen. R: anpöbeln.'
                   : view.pursuit && !view.canCheckIn
                     ? `Nutze Gebäude oder Musikfahrzeuge als Deckung. ${pursuitBalance.escapeDuration} Sekunden ohne Sichtkontakt!`
-                    : `${destinationName(level)} wartet am Ende des Wegs.`}
+                    : level.sandbox
+                      ? 'WASD: bewegen · Space: springen · Maus: Kamera · ESC: Pause / Level wechseln'
+                      : `${destinationName(level)} wartet am Ende des Wegs.`}
         </p>
         {view.total > 0 && (
           <div className="bottle-progress">
@@ -240,7 +242,7 @@ export function Hud({ view }: { view: GameView }) {
         </div>
       )}
       <div className="location-chip">
-        <span>◉</span> {destinationName(level).toUpperCase()}{' '}
+        <span>◉</span> {level.sandbox ? 'FREIES ERKUNDEN' : destinationName(level).toUpperCase()}{' '}
         <small>
           {level.scenery === 'railway'
             ? view.railway?.state === 'DOORS_OPEN'

@@ -160,3 +160,13 @@ Gezielt lokal geprüft: vollständige WG-/Quartierroute, alle 36 Flaschen, Indoo
   nicht wie eine Mauer mitten in der Stadt wirkt.
 - **Aufwand:** S.
 - **Risiko solange offen:** Restkontakte an den gedrehten Trassenwänden in den beiden Kurven.
+
+## 2026-09-17 – Sehr schneller Szenenwechsel / Babylon RGBD
+
+Beim lokalen PoC-Galerie-Smoke-Test: Testmap starten, sofort pausieren/zurück,
+Tutorial wählen und sofort wieder PoC wählen. Die neue Szene startet, Chromium/SwiftShader
+meldet dabei jedoch `Cannot read properties of null (reading 'program')` aus
+`Engine.bindSamplers → PostProcessManager.directRender → RGBDTextureTools`.
+Der verzögerte BRDF-Decode kann nach Engine-Disposal weiterlaufen. Kein Floor-/Collider-Fehler.
+Direkter PoC-Start und Bewegung funktionieren. Engine-/Texture-Lifecycle gesondert prüfen;
+keine spekulative Änderung der Babylon-Interna oder vollständige Suite für diesen PoC.

@@ -115,9 +115,19 @@ export class GameHost {
       throw new Error('Für Tobi wird WebGL 2 benötigt.');
     }
     engine.setHardwareScalingLevel(Math.max(1, window.devicePixelRatio / 1.5));
+    const scene = new Scene(engine);
+    const world = new HavokWorld(scene, module);
     try {
-      return new GameHost(canvas, store, engine, module, level);
+      const environment = createLevelScene(scene, world, level);
+      await environment.ready;
+      if (signal.aborted) {
+        scene.dispose();
+        engine.dispose();
+        return null;
+      }
+      return new GameHost(canvas, store, engine, scene, world, environment, level);
     } catch (error) {
+      scene.dispose();
       engine.dispose();
       throw error;
     }
@@ -127,15 +137,16 @@ export class GameHost {
     private readonly canvas: HTMLCanvasElement,
     private readonly store: GameViewStore,
     private readonly engine: Engine,
-    module: Awaited<ReturnType<typeof preparePhysics>>,
+    scene: Scene,
+    world: HavokWorld,
+    environment: LevelScene,
     private readonly level: LevelDefinition,
   ) {
     // A level may run without a score economy; the drunk tank hands out neither points nor bonus.
     this.tutorial = level.scenery === 'tutorial' ? new Tutorial(tutorialLessons) : null;
     this.session = new PrototypeSession(level, level.scoring ?? prototypeBalance);
-    this.scene = new Scene(engine);
-    this.world = new HavokWorld(this.scene, module);
-    const environment = createLevelScene(this.scene, this.world, level);
+    this.scene = scene;
+    this.world = world;
     this.environment = environment;
     this.vehicles = environment.vehicles
       ? new VehicleRuntime(this.scene, this.world, environment.vehicles)
@@ -175,6 +186,8 @@ export class GameHost {
               ? 'interior'
               : 'follow',
     );
+    this.camera.yaw = level.spawnYaw ?? 0;
+    this.facing.yaw = level.spawnYaw ?? 0;
     this.input = new KeyboardInput(canvas);
     // Settle the capsule before accepting input, with the same single physics step as gameplay.
     for (let i = 0; i < 60; i++) {
@@ -429,6 +442,7 @@ export class GameHost {
   }
 
   private objectiveText(): string {
+    if (this.level.sandbox) return 'Erkunde Bar, Treppe, Balkon und Dach – ohne Zeitlimit';
     if (this.tutorial?.active) return this.tutorial.active.title;
     if (this.flight) return this.flight.objective;
     if (this.environment.railway) return this.environment.railway.objective;
@@ -447,6 +461,8 @@ export class GameHost {
     this.motor.teleport(this.level.spawn);
     this.locomotion.reset();
     this.camera.reset();
+    this.camera.yaw = this.level.spawnYaw ?? 0;
+    this.facing.yaw = this.level.spawnYaw ?? 0;
     this.clock.reset();
   }
 
@@ -815,6 +831,7 @@ export class GameHost {
     }
     const destination = this.level.destination;
     const nearDestination =
+      !this.level.sandbox &&
       Vector3.Distance(
         position,
         new Vector3(destination.position.x, destination.position.y + 1, destination.position.z),
@@ -827,6 +844,7 @@ export class GameHost {
       (!this.tutorial || this.tutorial.complete) &&
       nearDestination &&
       !this.police?.system.wanted.level &&
+      !this.level.sandbox &&
       this.session.reach(destination.id)
     ) {
       this.input.enabled = false;
@@ -1025,6 +1043,7 @@ export class GameHost {
           objective: this.objectiveText(),
           pursuit: this.police?.system.snapshot() ?? null,
           canCheckIn:
+            !this.level.sandbox &&
             this.session.mission.active?.type === 'reach' &&
             !this.police?.system.wanted.level &&
             (!this.flight || this.flight.exploringAirport) &&
