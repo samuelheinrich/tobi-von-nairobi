@@ -23,6 +23,21 @@ Diese aktuelle Eigentümerentscheidung ersetzt widersprechende Test-/CI-Pflichte
 
 Saubere Modulgrenzen, verständliche Änderungen und bestehende Formatkonventionen beibehalten. Fremde Änderungen erhalten. Keine Secrets, `.env`-Dateien oder private Referenzbilder committen. Keine Nachrichten an Dritte ohne Auftrag.
 
+## Blender-Leveldesign
+
+Für Blender-authored Levels kann der lokale MCP-Server `blender` (`mcp-for-blender`) eine geöffnete
+`.blend`-Masterdatei live inspizieren und gezielt bearbeiten. Nutze bei räumlichen/visuellen
+Leveländerungen nach Möglichkeit Scene-/Objektabfragen und Viewport-Ansicht statt nur JSON oder
+Blind-Edits. Falls die GUI oder MCP nicht erreichbar ist, bleibt die dokumentierte CLI-Pipeline
+ein vollwertiger Weg; keine Arbeit wegen MCP blockieren.
+
+Änderungen in Blender zuerst mit `tools/blender/mcp_bridge.py` in der offenen Szene prüfen,
+generierte Collider bei Bedarf synchronisieren und die Masterdatei mit Backup speichern. Danach
+die bestehenden Validator-/Export-Scripts ausführen. Original-GLB oder `.blend` nie durch einen
+MCP-Schnellexport ersetzen; Runtime-GLB und JSON-Sidecars werden weiterhin kontrolliert aus der
+gespeicherten Masterdatei erzeugt. Für diese Schritte keine GitHub-CI starten und keinen
+Game-Client-Build ausführen, sofern nicht ausdrücklich eine Veröffentlichung beauftragt ist.
+
 ## Webserver-Deployment
 
 Ausdrückliche Eigentümerentscheidung vom 17. September 2026:

@@ -5,6 +5,65 @@ Character-Assets oder Gameplay-Logik**. Im lokalen Studio repräsentiert eine Ca
 um die vorhandene Spielfigur-Physik zu prüfen. Der nördliche S16-Korridor des Streetparade-Levels
 ist die erste Übernahme in eine bestehende Spielwelt.
 
+## Interaktives Authoring mit Blender MCP
+
+`mcp-for-blender` ergänzt die Offline-Scripts um einen Live-Zugriff auf die geöffnete Blender-GUI:
+Ein Agent kann Szene und einzelne Objekte inspizieren, einen Viewport-Screenshot anfordern und
+Geometrie, Marker oder Materialien direkt in der **aktuellen `.blend`-Szene** bearbeiten. Der
+MCP-Server ist ein [Community-Projekt](https://github.com/ahujasid/mcp-for-blender), nicht Teil
+von Blender. Auf diesem Rechner ist Version **2.0.3** installiert, das Add-on in Blender 5.2
+aktiviert und der Codex-Server `blender` registriert. [Codex unterstützt lokale STDIO-MCP-Server](https://learn.chatgpt.com/docs/extend/mcp)
+über `config.toml`.
+
+Einmalige Einrichtung auf einem weiteren macOS-Entwicklungsrechner (Blender, `uvx` und `codex`
+vorausgesetzt):
+
+```bash
+uvx mcp-for-blender==2.0.3 install-addon
+codex mcp add blender --env DISABLE_TELEMETRY=true -- "$(command -v uvx)" mcp-for-blender==2.0.3
+codex mcp list
+```
+
+In Blender unter **Preferences → Add-ons** „MCP for Blender“ aktivieren. Danach Codex neu starten,
+damit die Tools in dessen Werkzeugkatalog erscheinen. Eine Level-Masterdatei in Blender öffnen,
+z. B. `open -a Blender assets/blender/levels/zurich-rail/zurich-rail.blend`. Das Add-on startet
+seinen lokalen Server normalerweise automatisch; andernfalls im 3D-Viewport `N` → **MCP for
+Blender** → **Start MCP Server**. Standardport ist `127.0.0.1:9876`; nur **eine** Blender-Instanz
+darf diesen Port verwenden. Externe Asset-/KI-Dienste im Add-on bleiben für diese Pipeline aus.
+
+Der Arbeitsablauf für ein bestehendes Level:
+
+1. Master in Blender öffnen. Via MCP `get_scene_info`, `get_object_info` und
+   `get_viewport_screenshot` die Stelle ansehen; `execute_blender_code` für gezielte Änderungen
+   an `GEO_*`, `COL_*` oder `MARK_*` verwenden. Kein direktes Überschreiben des GLB.
+2. Das Projektmodul `tools/blender/mcp_bridge.py` in der **laufenden GUI** nutzen. Es liest auch
+   ungespeicherte Änderungen und führt denselben Validator aus wie der spätere CLI-Export:
+
+   ```python
+   import bpy, sys
+   from pathlib import Path
+   master = Path(bpy.data.filepath).resolve()
+   sys.path.insert(0, str(master.parents[4] / 'tools/blender'))
+   import mcp_bridge
+   print(mcp_bridge.inspect_live())
+   print(mcp_bridge.validate_live()['status'])
+   ```
+
+3. Nach Geometrieänderungen `mcp_bridge.sync_colliders_live()` aufrufen. Manuell geänderte
+   Collider bleiben dabei erhalten und werden bei Abweichungen vom Render-Mesh gemeldet.
+   `mcp_bridge.validate_live()` erneut prüfen. `mcp_bridge.save_master_with_backup()` speichert
+   dann die GUI-Szene und legt vorher eine Kopie in `backups/` ab.
+4. **Separat** den unten dokumentierten Blender-Validator und `export_level.py` auf die
+   gespeicherte Masterdatei anwenden. Für Zürich zusätzlich
+   `node tools/levels/audit-zurich-rail.mjs` ausführen, danach lokal im Spiel ansehen. Die
+   GLB-/JSON-Dateien entstehen ausschliesslich aus dem gespeicherten Master.
+
+MCP ist für visuelle Inspektion und kleine interaktive Korrekturen gedacht. Recipe-Builds,
+Versionsprüfung, Backups, Collision-Sidecars und deterministischer Export bleiben in den
+vorhandenen Scripts. Eine im GUI geänderte, generierte Route wird bei `--update` geschützt;
+Recipe und Master bei späteren strukturellen Änderungen bewusst abgleichen. Wenn Blender MCP
+nicht läuft, kann die gesamte Pipeline weiterhin per CLI genutzt werden.
+
 ## Dateien
 
 ```text
@@ -28,6 +87,7 @@ tools/blender/
   validate_level.py            Geometrie- und Metadaten-Prüfungen
   export_level.py              separater Export, speichert NICHT die Masterdatei
   inspect_level.py             Objektinventar als JSON auf stdout
+  mcp_bridge.py                Live-Inspektion, Validator, Collider-Sync und Backup-Speichern in der GUI
   common.py                    gemeinsamer Scene-Vertrag und Achsenumrechnung
   check_pipeline.py            kleine lokale Validator-Gegenproben
 ```
