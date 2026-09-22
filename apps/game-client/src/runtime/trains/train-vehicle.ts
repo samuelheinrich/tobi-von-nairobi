@@ -40,11 +40,19 @@ export class TrainVehicle {
   ) {
     this.route = new TrainRoute(definition);
     this.distance = this.route.stopDistance(0);
-    this.cars = Array.from(
-      { length: carCount },
-      (_, index) =>
-        new TrainCar(scene, world, `${id}-car-${index + 1}`, index === 0 ? '#d7262e' : '#be1e2d'),
-    );
+    this.cars = Array.from({ length: carCount }, (_, index) => {
+      const spacing = 12.2;
+      const offset = (index - (carCount - 1) / 2) * spacing;
+      const initial = this.route.sample(this.distance + offset);
+      return new TrainCar(
+        scene,
+        world,
+        `${id}-car-${index + 1}`,
+        index === 0 ? '#d7262e' : '#be1e2d',
+        initial.position,
+        initial.yaw,
+      );
+    });
     this.paint();
   }
 

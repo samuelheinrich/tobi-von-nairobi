@@ -1,13 +1,14 @@
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition, Position3 } from '@tobi/contracts';
-import { zurichSectors, zurichTrainRoute } from '@tobi/game-data';
+import { zurichSectors, zurichTrainService } from '@tobi/game-data';
 import type { HavokWorld } from '../../physics/havok-world.js';
 import { createWorldBuilder } from '../../world/scene-builder.js';
 import { TrainSystem } from '../../trains/train-system.js';
 import { createParadeScene } from '../parade-scene.js';
 import { buildZurichCity } from './city.js';
 import { buildHauptbahnhof } from './hauptbahnhof.js';
-import { buildZurichRailNetwork } from './rail-network.js';
+import { loadAuthoredLevel } from '../authored/import-level.js';
+import { routeFromAuthoredMarker } from '../../trains/authored-route.js';
 import { buildStadelhofen } from './stadelhofen.js';
 
 export function createZurichScene(scene: Scene, world: HavokWorld, level: LevelDefinition) {
@@ -16,8 +17,21 @@ export function createZurichScene(scene: Scene, world: HavokWorld, level: LevelD
     cityBuildings = buildZurichCity(builder),
     hb = buildHauptbahnhof(builder),
     stadelhofen = buildStadelhofen(builder);
-  buildZurichRailNetwork(builder);
-  const trains = new TrainSystem(scene, world, [zurichTrainRoute]);
+  let trains: TrainSystem | undefined;
+  const ready = loadAuthoredLevel(scene, '/level-assets/zurich-rail/zurich-rail').then(
+    (authored) => {
+      const marker = authored.metadata.vehicleRoutes[0];
+      if (!marker) throw new Error('Zürich rail asset has no vehicle route.');
+      for (const mesh of authored.container.meshes) {
+        if (!mesh.getTotalVertices()) continue;
+        builder.sectors.add('train_tunnel', mesh);
+        mesh.receiveShadows = true;
+      }
+      builder.colliders.push(...authored.proxies);
+      trains = new TrainSystem(scene, world, [routeFromAuthoredMarker(marker, zurichTrainService)]);
+      builder.sectors.update(level.spawn);
+    },
+  );
   builder.sectors.update(level.spawn);
   const audioZones = [
     {
@@ -68,22 +82,28 @@ export function createZurichScene(scene: Scene, world: HavokWorld, level: LevelD
   return {
     ...builder,
     destination: parade.destination,
-    transit: trains,
-    restSpots: [
-      ...hb.restSpots,
-      ...stadelhofen.restSpots,
-      ...cityBuildings.flatMap((building) => building.restSpots),
-      ...trains.seats,
-    ],
+    ready,
+    get transit() {
+      if (!trains) throw new Error('Zürich trains accessed before authored rail assets loaded.');
+      return trains;
+    },
+    get restSpots() {
+      return [
+        ...hb.restSpots,
+        ...stadelhofen.restSpots,
+        ...cityBuildings.flatMap((building) => building.restSpots),
+        ...(trains?.seats ?? []),
+      ];
+    },
     audioZones,
     focus(position: Position3) {
       builder.sectors.update(position);
       for (const building of cityBuildings) building.focus(position.x, position.y, position.z);
-      scene.metadata = { ...scene.metadata, sectors: builder.sectors.stats, trains: trains.debug };
+      scene.metadata = { ...scene.metadata, sectors: builder.sectors.stats, trains: trains?.debug };
     },
     update(delta: number) {
       parade.update?.(delta);
-      trains.update(delta);
+      trains?.update(delta);
     },
     worldLabel(position: Position3) {
       if (position.z < 40) return 'STREET PARADE · SEEBECKEN';
@@ -94,14 +114,14 @@ export function createZurichScene(scene: Scene, world: HavokWorld, level: LevelD
     },
     interactionPrompt(position: Position3) {
       if (position.z > 74 && (position.x < 5 || position.x > 48)) {
-        const train = trains.primary?.snapshot;
+        const train = trains?.primary?.snapshot;
         return train
           ? `${train.state} · ${train.currentStation} → ${train.nextStation} · TÜREN ${train.doorState}`
           : '';
       }
       return '';
     },
-    debugState: () => ({ sectors: builder.sectors.stats, trains: trains.debug }),
+    debugState: () => ({ sectors: builder.sectors.stats, trains: trains?.debug }),
     debugTeleports: [
       { label: 'Zürich HB · Halle', position: { x: -42, y: 1.1, z: 64 } },
       { label: 'Zürich HB · Gleis 12', position: { x: -6, y: 1.25, z: 87 } },

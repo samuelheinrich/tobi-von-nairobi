@@ -12,6 +12,8 @@ export interface LevelMarker {
   id: string;
   position: Triple;
   points?: Triple[];
+  stopDistances?: number[];
+  stopIds?: string[];
 }
 export interface AuthoredLevelMetadata {
   schemaVersion: 1;
@@ -82,11 +84,18 @@ function metadata(value: unknown): AuthoredLevelMetadata {
     if (!Array.isArray(list)) throw new Error(`Missing marker list: ${key}`);
     for (const marker of list) {
       record(marker);
+      const distances = marker.stopDistances;
       if (
         typeof marker.id !== 'string' ||
         !vector(marker.position, 3) ||
         (marker.points !== undefined &&
-          (!Array.isArray(marker.points) || !marker.points.every((v) => vector(v, 3))))
+          (!Array.isArray(marker.points) || !marker.points.every((v) => vector(v, 3)))) ||
+        (distances !== undefined &&
+          (!Array.isArray(distances) ||
+            !distances.every((n) => Number.isFinite(n) && n > 0 && n < 1) ||
+            distances.some((n, i) => i > 0 && n <= distances[i - 1]))) ||
+        (marker.stopIds !== undefined &&
+          (!Array.isArray(marker.stopIds) || !marker.stopIds.every((id) => typeof id === 'string')))
       )
         throw new Error(`Invalid marker in ${key}`);
     }

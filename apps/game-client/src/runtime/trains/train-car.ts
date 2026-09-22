@@ -30,8 +30,15 @@ export class TrainCar {
     private readonly world: HavokWorld,
     public readonly id: string,
     accent: string,
+    initialPosition: Vector3,
+    initialYaw: number,
   ) {
     this.root = new TransformNode(id, scene);
+    const initialRotation = Quaternion.FromEulerAngles(0, initialYaw, 0);
+    const initialMatrix = Matrix.Identity();
+    Matrix.FromQuaternionToRef(initialRotation, initialMatrix);
+    this.root.position.copyFrom(initialPosition);
+    this.root.rotationQuaternion = initialRotation;
     const white = material(scene, id + '-white', '#e8edf0'),
       blue = material(scene, id + '-sbb-blue', accent),
       dark = material(scene, id + '-window', '#19364a'),
@@ -107,7 +114,11 @@ export class TrainCar {
       local: [number, number, number],
       door?: { side: -1 | 1; panel: -1 | 1 },
     ) => {
-      const proxy = box(scene, `${id}-collider-${name}`, size, [0, -100, 0], interior);
+      const at = initialPosition.add(
+        Vector3.TransformCoordinates(new Vector3(...local), initialMatrix),
+      );
+      const proxy = box(scene, `${id}-collider-${name}`, size, [at.x, at.y, at.z], interior);
+      proxy.rotationQuaternion = initialRotation.clone();
       proxy.isVisible = false;
       proxy.isPickable = false;
       this.parts.push({
@@ -135,6 +146,7 @@ export class TrainCar {
         [side * (this.width / 2 + 0.28), -0.05, 0],
       );
     }
+    this.pose(initialPosition, initialYaw, 'CLOSED', 0);
   }
 
   public pose(position: Vector3, yaw: number, doors: TrainDoorState, openness: number): void {

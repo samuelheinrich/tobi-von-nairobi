@@ -1,6 +1,34 @@
 # Zürich HB und S16
 
-Stand: 16. September 2026.
+Stand: 22. September 2026.
+
+## Blender-Streckenabschnitt
+
+Der nördliche S16-Bogen zwischen HB und Stadelhofen liegt jetzt als editierbare Masterdatei
+`assets/blender/levels/zurich-rail/zurich-rail.blend` vor. Der Blender-Marker
+`MARK_s16_route` definiert die durchgehende Fahrstrecke und beide Haltepunkte; die Runtime
+übernimmt diese Punkte aus `zurich-rail.runtime.json`. Gleisbett und Schienen sind durchgehende
+Streifen-Meshes, und die seitlichen Begrenzungen haben eigene vereinfachte Collision-Meshes.
+HB, Stadelhofen und die Stadt bleiben vorerst in der vorhandenen Runtime-Architektur. Eine
+vollständige Migration des Zürich-Levels wurde für diesen ersten Realtest bewusst nicht
+vorgenommen.
+
+Der frühere nördliche Stadt-Parapet und die Stadelhofener Abschlusswand schnitten die
+Zugstrecke. Sie haben nun eine sichtbare Öffnung; die Blender-Strecke ergänzt dort Boden und
+begrenzende Wände. Eine Bank am HB stand vor der mittleren S16-Tür und liegt nun ausserhalb der
+Türbereiche am Bahnsteigende. Die Havok-Wagencollider werden direkt an ihrer ersten
+Halteposition erzeugt; zuvor standen sie zunächst 100 Meter unter der Karte und lagen während
+der Bewegung weit neben dem sichtbaren Zug. Die Dachlandings zweier begehbarer Läden schliessen
+nun ohne Spalt an Rampe und Dach an und haben Geländer an den offenen Seiten.
+`node tools/levels/audit-zurich-rail.mjs` prüft den gesamten
+Wagenkörper aller drei Wagen gegen Bahnhof-, Stadt- und exportierte Strecken-Collider in
+0,5-Meter-Schritten. Der Blender-Validator prüft echte koplanare Flächen statt nur gedrehte
+Bounding Boxes; der Export des Streckenabschnitts ist derzeit `PASS`.
+
+Recipe und Master lassen sich mit der [Blender-Pipeline](../blender-level-pipeline.md) bearbeiten.
+Nach einem gespeicherten GUI-Edit: Validator und Export ausführen, dann den lokalen Level neu
+laden. Der Vite-Produktions-Build kopiert GLB und beide JSON-Sidecars nach
+`level-assets/zurich-rail/`; der Dev-Server liest dieselben Dateien direkt aus `assets/game`.
 
 ## Spielwelt
 
@@ -68,7 +96,14 @@ und Fahrgastzahl; die allgemeine Physikansicht zeigt zusätzlich Train- und Plat
 
 Der lokale Smoke-Test lädt das Level und die HB-Vorschau ohne Browserfehler. Zusätzlich wurden der
 Hallenweg, der vollständige Rampenabstieg, der abgewinkelte Weg ins S-Bahn-Untergeschoss und der
-offene S16-Durchgang mit der echten Player-Capsule begangen. Typecheck, der kleine Zürich-Datentest
-und ein Client-Build sind die vorgesehenen automatisierten Prüfungen. Eine
+offene S16-Durchgang mit der echten Player-Capsule begangen. Für Änderungen am Streckenabschnitt
+genügen lokal der Blender-Validator, der Wagenkorridor-Check und bei Bedarf Typecheck und der
+kleine Zürich-Datentest. Ein Client-Build lädt automatisch auf den Webserver hoch und wird nur
+für eine beabsichtigte Veröffentlichung ausgeführt. Eine
 vollständige Fahrt mit freiem Umherlaufen, Ein-/Aussteigen bei allen Türphasen sowie längere
 Hardware-/Safari-Abnahme bleiben bewusst manuell; daraus ist keine GitHub-CI-Aufgabe abzuleiten.
+Der gezielte Geometrie-Validator meldet derzeit keine kritischen oder hohen Zürich-Befunde.
+Vier mittlere Hinweise zu offenen Kanten der grossen Stadt-/Hallenbodenplatten bleiben zur
+visuellen Prüfung; deren Rechtecke grenzen teils an andere Bodenplatten und sind nicht
+automatisch als gefährliche Fallkante zu verstehen. Ein vollständiger Zugumlauf unter realer
+Browser-Grafiklast sowie Ein-/Aussteigen an beiden Stationen bleibt manuell abzunehmen.

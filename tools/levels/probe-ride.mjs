@@ -30,10 +30,15 @@ if (card < 0) {
   process.exit(1);
 }
 await page.locator('button').nth(card).click();
-await page.waitForTimeout(700);
-const start = (await page.locator('button').allInnerTexts()).findIndex((t) => /STARTEN/.test(t));
-await page.locator('button').nth(start).click();
-await page.waitForTimeout(8000);
+const start = page
+  .locator('button')
+  .filter({ hasText: /STARTEN/ })
+  .first();
+await start.waitFor({ state: 'visible', timeout: 30000 });
+await start.click();
+await page.waitForFunction(() => globalThis.__levelProbe?.()?.trains?.length > 0, null, {
+  timeout: 30000,
+});
 
 // Printed as it happens, not collected and printed at the end: a run that is cut short still
 // has to leave something behind.

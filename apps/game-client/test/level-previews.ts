@@ -37,6 +37,7 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true });
 const scene = new Scene(engine);
 const world = new HavokWorld(scene, await preparePhysics());
 const environment = createLevelScene(scene, world, level);
+await environment.ready;
 const vehicles = environment.vehicles
   ? new VehicleRuntime(scene, world, environment.vehicles)
   : null;

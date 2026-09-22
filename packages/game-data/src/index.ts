@@ -101,7 +101,7 @@ export {
   zurichSectors,
   zurichStations,
   zurichStationBoxes,
-  zurichTrainRoute,
+  zurichTrainService,
   zurichPassengerSpawns,
   zurichBuildings,
   zurichWorldBounds,

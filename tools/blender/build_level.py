@@ -14,7 +14,11 @@ from generate_collision import generate
 parser = argparse.ArgumentParser()
 parser.add_argument('recipe')
 parser.add_argument('--update', action='store_true')
+parser.add_argument('--prune', action='store_true',
+                    help='On --update, remove recipe objects deleted from the recipe if unedited.')
 args = parser.parse_args(arguments())
+if args.prune and not args.update:
+    raise RuntimeError('--prune requires --update and its automatic backup.')
 recipe_path = Path(args.recipe).resolve()
 recipe = json.loads(recipe_path.read_text())
 if recipe.get('blenderVersion', bpy.app.version_string) != bpy.app.version_string:
@@ -50,6 +54,17 @@ for name, color in recipe['materials'].items():
         node.inputs['Roughness'].default_value = 0.85
     materials[name] = mat
 preserved = []
+if args.prune:
+    wanted = {spec['id'] for spec in recipe['objects']}
+    for obsolete in list(scene.objects):
+        if obsolete.get('_recipe_id') and obsolete['_recipe_id'] not in wanted:
+            if obsolete.get('_generated_signature') != signature(obsolete):
+                preserved.append(obsolete.name)
+                continue
+            collider = bpy.data.objects.get('COL_' + obsolete.name[4:]) if obsolete.name.startswith('GEO_') else None
+            if collider and collider.get('_generated_signature') == signature(collider):
+                bpy.data.objects.remove(collider, do_unlink=True)
+            bpy.data.objects.remove(obsolete, do_unlink=True)
 for spec in recipe['objects']:
     existing = bpy.data.objects.get(spec['id'])
     if existing:
@@ -62,12 +77,51 @@ for spec in recipe['objects']:
         obj.empty_display_type = 'ARROWS'
         obj.empty_display_size = 0.5
     else:
-        sx, sy, sz = [v / 2 for v in spec['size']]
-        vertices = [(x*sx,y*sy,z*sz) for x,y,z in
-                    [(-1,-1,-1),(-1,-1,1),(-1,1,-1),(-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1)]]
-        faces = [(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]
+        if spec['kind'] == 'polyline_strip':
+            points = spec['points']
+            width, height = spec['width'], spec['height']
+            offset, base = spec.get('offset', 0), spec.get('baseHeight', 0)
+            if len(points) < 2 or width <= 0 or height <= 0:
+                raise ValueError(f'Invalid polyline strip: {spec["id"]}')
+            vertices, faces = [], []
+            for index, point in enumerate(points):
+                before = points[max(0, index-1)]
+                after = points[min(len(points)-1, index+1)]
+                previous = (point[0]-before[0], point[1]-before[1]) if index else (after[0]-point[0], after[1]-point[1])
+                following = (after[0]-point[0], after[1]-point[1]) if index < len(points)-1 else previous
+                def unit_normal(delta):
+                    length = math.hypot(*delta)
+                    if length < 1e-6:
+                        raise ValueError(f'Repeated polyline point: {spec["id"]}')
+                    return (delta[1]/length, -delta[0]/length)
+                left, right = unit_normal(previous), unit_normal(following)
+                tangent = (left[0]+right[0], left[1]+right[1])
+                tangent_length = math.hypot(*tangent)
+                if tangent_length < 1e-6:
+                    raise ValueError(f'Polyline reverses direction: {spec["id"]}')
+                tangent = (tangent[0]/tangent_length, tangent[1]/tangent_length)
+                miter = 1 / max(.3, tangent[0]*left[0]+tangent[1]*left[1])
+                for side, level in ((-1,0),(1,0),(-1,1),(1,1)):
+                    distance = (offset + side*width/2)*miter
+                    vertices.append((point[0]+tangent[0]*distance,
+                                     point[1]+tangent[1]*distance,
+                                     point[2]+base+level*height))
+                if index:
+                    a, b = (index-1)*4, index*4
+                    faces.extend(((a+2,a+3,b+3,b+2),(a,b,b+1,a+1),
+                                  (a,b,b+2,a+2),(a+1,a+3,b+3,b+1)))
+            last = (len(points)-1)*4
+            faces.extend(((0,2,3,1),(last,last+1,last+3,last+2)))
+        elif spec['kind'] == 'box':
+            sx, sy, sz = [v / 2 for v in spec['size']]
+            vertices = [(x*sx,y*sy,z*sz) for x,y,z in
+                        [(-1,-1,-1),(-1,-1,1),(-1,1,-1),(-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1)]]
+            faces = [(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]
+            faces = [tuple(reversed(face)) for face in faces]
+        else:
+            raise ValueError(f'Unsupported recipe object kind: {spec["kind"]}')
         mesh = bpy.data.meshes.new(spec['id'] + '_mesh')
-        mesh.from_pydata(vertices, [], [tuple(reversed(face)) for face in faces])
+        mesh.from_pydata(vertices, [], faces)
         mesh.update()
         obj = bpy.data.objects.new(spec['id'], mesh)
         obj.data.materials.append(materials[spec['material']])

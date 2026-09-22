@@ -134,12 +134,32 @@ export function buildBuilding(b: BuildingAuthor, d: BuildingDefinition, sector: 
         [cx, y + (i * rise) / 22, z - length / 2 + (i * length) / 22],
         '#ccb796',
       );
+    // The landing overlaps both the ramp head and the roof instead of leaving a narrow gap.
+    // Its outer sides are guarded; the open side faces the walkable roof.
+    const landingX = x - w / 2 + 0.5,
+      landingZ = z + depth / 2 + 0.5;
     b.prop(
       sector,
       'roof-landing',
-      [5, 0.2, 2],
-      [x - w / 2 + 1, y + rise - 0.1, z + depth / 2 + 1.5],
+      [6, 0.2, 3],
+      [landingX, y + rise - 0.1, landingZ],
       '#a28e70',
+      true,
+    );
+    b.prop(
+      sector,
+      'roof-landing-rail',
+      [6, 1.05, 0.16],
+      [landingX, y + rise + 0.525, landingZ + 1.5],
+      '#85847d',
+      true,
+    );
+    b.prop(
+      sector,
+      'roof-landing-rail',
+      [0.16, 1.05, 3],
+      [landingX - 3, y + rise + 0.525, landingZ],
+      '#85847d',
       true,
     );
     b.sign(sector, 'ROOFTOP ↑', cx, y + 1.4, z - 6, 3);

@@ -1,4 +1,4 @@
-import { createReadStream, statSync } from 'node:fs';
+import { createReadStream, readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve, sep } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
@@ -48,8 +48,26 @@ function localModels(): Plugin {
   };
 }
 
+/** Keep the authored GLB and both sidecars at the URL used by the live level. */
+function authoredLevelAssets(): Plugin {
+  return {
+    name: 'tobi-authored-level-assets',
+    apply: 'build',
+    generateBundle() {
+      for (const suffix of ['glb', 'runtime.json', 'collision.json']) {
+        const name = `zurich-rail.${suffix}`;
+        this.emitFile({
+          type: 'asset',
+          fileName: `level-assets/zurich-rail/${name}`,
+          source: readFileSync(join(repoRoot, 'assets/game/levels/zurich-rail', name)),
+        });
+      }
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), localModels()],
+  plugins: [react(), localModels(), authoredLevelAssets()],
   resolve: { dedupe: ['react', 'react-dom'] },
   optimizeDeps: {
     entries: ['index.html', 'test/*.html', 'test/*-harness.ts'],

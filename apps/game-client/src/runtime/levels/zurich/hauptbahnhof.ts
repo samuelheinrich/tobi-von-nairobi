@@ -63,13 +63,15 @@ export function buildHauptbahnhof(b: WorldBuilder) {
       length: 41,
       trackNumbers: [pair * 2 + 1, pair * 2 + 2],
     });
-    buildStationFurniture(b, sector, `hb-bench-${pair}`, x, 0.34, 94);
+    // Keep the middle of each platform clear: S16 doors stop near z=83/95/107.
+    // A bench at z=94 physically blocked the doorway despite the two-metre opening.
+    buildStationFurniture(b, sector, `hb-bench-${pair}`, x, 0.34, 115);
     restSpots.push({
       id: `hb-seat-${pair}`,
       label: `GLEIS ${pair * 2 + 1} · SITZEN`,
       kind: 'seat',
-      position: { x, y: 1.05, z: 94 },
-      exit: { x: x + 1.9, y: 1.25, z: 94 },
+      position: { x, y: 1.05, z: 115 },
+      exit: { x: x + 1.9, y: 1.25, z: 115 },
       yaw: Math.PI / 2,
       seatHeight: 0.52,
     });

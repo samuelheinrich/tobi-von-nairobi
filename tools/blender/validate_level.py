@@ -1,5 +1,6 @@
 """Conservative geometric preflight; warnings are candidates for GUI review, never auto-repairs."""
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -10,6 +11,49 @@ from common import bounds, objects, level_paths, read_recipe, signature, write_j
 
 def overlap(a, b, tolerance=0):
     return all(min(a[1][i], b[1][i])-max(a[0][i], b[0][i]) > tolerance for i in range(3))
+
+def world_faces(obj):
+    vertices = [obj.matrix_world @ vertex.co for vertex in obj.data.vertices]
+    for polygon in obj.data.polygons:
+        points = [vertices[index] for index in polygon.vertices]
+        if len(points) < 3:
+            continue
+        normal = (points[1]-points[0]).cross(points[2]-points[0]).normalized()
+        if normal.length > 0:
+            yield points, normal
+
+def face_overlap(a, b, normal, tolerance=.001):
+    # Convex face projections: SAT excludes edge-only contact and rotated AABB false positives.
+    drop = max(range(3), key=lambda index: abs(normal[index]))
+    axes = [index for index in range(3) if index != drop]
+    left = [(point[axes[0]], point[axes[1]]) for point in a]
+    right = [(point[axes[0]], point[axes[1]]) for point in b]
+    for polygon in (left, right):
+        for index, point in enumerate(polygon):
+            following = polygon[(index+1) % len(polygon)]
+            axis = (following[1]-point[1], point[0]-following[0])
+            length = math.hypot(*axis)
+            if length < 1e-9:
+                continue
+            axis = (axis[0]/length, axis[1]/length)
+            lo = [sum(position[dimension]*axis[dimension] for dimension in range(2))
+                  for position in left]
+            hi = [sum(position[dimension]*axis[dimension] for dimension in range(2))
+                  for position in right]
+            if min(max(lo),max(hi))-max(min(lo),min(hi)) <= tolerance:
+                return False
+    return True
+
+def coplanar_faces(a, b):
+    for points_a, normal_a in world_faces(a):
+        for points_b, normal_b in world_faces(b):
+            if abs(normal_a.dot(normal_b)) < .99999:
+                continue
+            if any(abs(normal_a.dot(point-points_a[0])) > .001 for point in points_b):
+                continue
+            if face_overlap(points_a, points_b, normal_a):
+                return True
+    return False
 
 def validate(save=True):
     source, _ = level_paths()
@@ -64,16 +108,13 @@ def validate(save=True):
             planar = all(min(aa[1][k],bb[1][k])-max(aa[0][k],bb[0][k]) > .01 for k in (0,1))
             if planar and abs(aa[1][2]-bb[1][2]) < .001:
                 note('ERROR','duplicate_floor',[a.name,b.name],'Overlapping walkable tops differ by less than 1 mm.')
-    # Detect coplanar box-like faces beyond floors (including decorative layers).
+    # Compare actual world-space faces; rotated rails made AABB face tests noisy.
     for i,a in enumerate(geo):
         aa=bounds(a)
         for b in geo[i+1:]:
             bb=bounds(b)
-            for axis in range(3):
-                planar=all(min(aa[1][k],bb[1][k])-max(aa[0][k],bb[0][k])>.03 for k in range(3) if k!=axis)
-                if planar and any(abs(aa[end][axis]-bb[end][axis])<.001 for end in (0,1)):
-                    note('WARNING','coplanar_faces',[a.name,b.name],'Potential coincident faces; inspect overlap in GUI.')
-                    break
+            if overlap(aa,bb) and coplanar_faces(a,b):
+                note('WARNING','coplanar_faces',[a.name,b.name],'World-space mesh faces overlap on the same plane.')
     halfx,halfy=[n/2 for n in recipe['worldDimensions']]
     for marker in markers:
         p=marker.matrix_world.translation
@@ -116,8 +157,14 @@ def validate(save=True):
     # Ray tests on the ground-coverage meshes find missing base tiles/holes on a 2 m grid.
     ground=[o for o in geo if o.get('ground_coverage')]
     gaps=[]
-    for x in range(int(-halfx+1),int(halfx),2):
-        for y in range(int(-halfy+1),int(halfy),2):
+    coverage_regions=recipe.get('groundCoverageRegions',[[-halfx,-halfy,halfx,halfy]])
+    for minx,miny,maxx,maxy in coverage_regions:
+        if minx>=maxx or miny>=maxy or any(abs(v)>lim for v,lim in
+           ((minx,halfx),(maxx,halfx),(miny,halfy),(maxy,halfy))):
+            note('ERROR','coverage_region',[],'Invalid ground-coverage region.')
+            continue
+        for x in range(math.ceil(minx+1),math.floor(maxx),2):
+          for y in range(math.ceil(miny+1),math.floor(maxy),2):
             supported=False
             for obj in ground:
                 inverse=obj.matrix_world.inverted()
@@ -132,7 +179,7 @@ def validate(save=True):
     report=dict(schemaVersion=1,levelId=recipe['id'],blenderVersion=bpy.app.version_string,
                 status='ERROR' if any(f['severity']=='ERROR' for f in findings) else 'WARNING' if any(f['severity']=='WARNING' for f in findings) else 'PASS',
                 counts=dict(render=len(geo),colliders=len(cols),markers=len(markers)),findings=findings,
-                limitations=['AABB face/door tests are conservative for rotations.',
+                limitations=['Door clearance uses conservative AABB tests for rotations.',
                              'Ground holes smaller than the 2 m sample grid may be missed.',
                              'Edge safety only covers declared safety_edges; it is not an arbitrary-mesh fall detector.',
                              'Roof access markers do not prove reachability; exercise the Havok route in Level Studio.'])

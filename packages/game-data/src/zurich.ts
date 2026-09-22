@@ -276,24 +276,13 @@ export const zurichStations = {
   },
 } as const;
 
-/** Centre-line followed by the reusable train runtime. The northern arc is enclosed by tunnel
- * portals, so its finite turnaround never reads as the edge of the world. */
-export const zurichTrainRoute = {
+/** Service identity only. The editable Blender marker owns track points and stop distances. */
+export const zurichTrainService = {
   id: 'hb_stadelhofen_loop',
   label: 'S16 Zürich HB – Stadelhofen',
-  points: [
-    { x: -3, y: 0.38, z: 60 },
-    { x: -3, y: 0.38, z: 87 },
-    { x: -3, y: 0.38, z: 116 },
-    { x: 18, y: 0.38, z: 122 },
-    { x: 48, y: 0.38, z: 122 },
-    { x: 68, y: 0.38, z: 112 },
-    { x: 68, y: 0.38, z: 86 },
-    { x: 68, y: 0.38, z: 60 },
-  ],
   stops: [
-    { id: 'zurich_hb', label: 'Zürich HB', distance: 0.148188 },
-    { id: 'stadelhofen', label: 'Zürich Stadelhofen', distance: 0.8573 },
+    { id: 'zurich_hb', label: 'Zürich HB' },
+    { id: 'stadelhofen', label: 'Zürich Stadelhofen' },
   ],
   maxSpeed: 10,
 } as const;

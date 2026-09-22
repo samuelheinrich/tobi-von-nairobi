@@ -1,8 +1,9 @@
-# Offline-Leveldesign mit Blender – PoC City
+# Offline-Leveldesign mit Blender
 
-Blender ist Authoring-Tool, Babylon/Havok bleiben Runtime. Dieser PoC enthält **keine NPCs,
+Blender ist Authoring-Tool, Babylon/Havok bleiben Runtime. Der PoC enthält **keine NPCs,
 Character-Assets oder Gameplay-Logik**. Im lokalen Studio repräsentiert eine Capsule den Spieler,
-um die vorhandene Spielfigur-Physik zu prüfen. Bestehende Levels bleiben unverändert.
+um die vorhandene Spielfigur-Physik zu prüfen. Der nördliche S16-Korridor des Streetparade-Levels
+ist die erste Übernahme in eine bestehende Spielwelt.
 
 ## Dateien
 
@@ -37,6 +38,36 @@ oder externen Downloads. Die Recipe enthält World-Grösse, Materialien, Road-/C
 explizite Objektparameter. Die Regeln beschreiben den PoC; `objects` ist die ausführbare Liste.
 Noch kein allgemeiner Stadtgenerator und keine Asset-Library. Spätere Library-Builder können
 Objekte mit demselben Metadatenvertrag erzeugen.
+
+## Erster Einsatz im Streetparade-Level
+
+Die editierbare Datei liegt unter `assets/blender/levels/zurich-rail/zurich-rail.blend`, die
+ausgelieferten Daten unter `assets/game/levels/zurich-rail/`. Diese Recipe wurde mit **Blender
+5.2.2 LTS** erstellt. Sie umfasst bewusst nur die nördliche S16-Strecke mit Boden,
+Begrenzungen und Routenmarker; HB und Stadelhofen bleiben vorerst in den bestehenden
+TypeScript-Szenen. Die Schienen und das Gleisbett nutzen den wiederverwendbaren Recipe-Typ
+`polyline_strip`: ein durchgehendes Mesh je Material anstelle überlappender Boxen an jeder Kurve.
+
+Vom Repository-Root nach einer Änderung der Recipe:
+
+```bash
+BLENDER_BIN=/Applications/Blender.app/Contents/MacOS/Blender
+"$BLENDER_BIN" --background --python-exit-code 1 \
+  --python tools/blender/build_level.py -- \
+  assets/blender/levels/zurich-rail/zurich-rail.recipe.json --update
+"$BLENDER_BIN" --background assets/blender/levels/zurich-rail/zurich-rail.blend \
+  --python-exit-code 1 --python tools/blender/validate_level.py
+"$BLENDER_BIN" --background assets/blender/levels/zurich-rail/zurich-rail.blend \
+  --python-exit-code 1 --python tools/blender/export_level.py
+node tools/levels/audit-zurich-rail.mjs
+```
+
+`--update --prune` entfernt nur aus der Recipe gelöschte, **unveränderte** generierte Objekte;
+das automatische Backup bleibt erhalten. Im GUI bearbeitete Objekte bleiben geschützt. Nach
+manuellen Scene-Änderungen normalerweise nur validieren und exportieren. Die Laufzeit liest die
+Route aus dem exportierten Marker, sodass Blender-Änderungen an diesem Marker nach dem Export
+wirksam werden. Der Zugkorridor-Check muss anschliessend bestehen, bevor der Abschnitt übernommen
+wird.
 
 ## Master öffnen und bearbeiten
 

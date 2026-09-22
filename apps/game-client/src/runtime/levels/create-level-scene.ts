@@ -76,7 +76,12 @@ export function createLevelScene(
     }
     updateGeometryAudit(scene);
   };
-  if (environment.ready) return { ...environment, ready: environment.ready.then(finish) };
+  if (environment.ready) {
+    const ready = environment.ready.then(finish);
+    // Keep getters (transit/seats) on scenes whose authored assets load asynchronously.
+    Object.defineProperty(environment, 'ready', { value: ready, configurable: true });
+    return environment;
+  }
   finish();
   return environment;
 }

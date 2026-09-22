@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "levelId": "zurich-rail",
+  "units": "metres",
+  "coordinateSystem": "babylon-left-handed-y-up",
+  "worldDimensions": [
+    300,
+    300
+  ],
+  "renderNodes": [
+    "GEO_ballast",
+    "GEO_cutting_end_guard_-10",
+    "GEO_cutting_end_guard_80",
+    "GEO_cutting_wall_-1",
+    "GEO_cutting_wall_1",
+    "GEO_north_cutting_floor",
+    "GEO_north_guard",
+    "GEO_rail_left",
+    "GEO_rail_right"
+  ],
+  "cutawayNodes": [],
+  "doors": [],
+  "bottleSpawns": [],
+  "vehicleSpawns": [],
+  "vehicleRoutes": [
+    {
+      "id": "MARK_s16_route",
+      "position": [
+        -3.0,
+        0.38,
+        60.0
+      ],
+      "points": [
+        [
+          -3.0,
+          0.38,
+          60.0
+        ],
+        [
+          -3.0,
+          0.38,
+          87.0
+        ],
+        [
+          -3.0,
+          0.38,
+          95.0
+        ],
+        [
+          -3.0,
+          0.38,
+          112.0
+        ],
+        [
+          -2.0,
+          0.38,
+          116.0
+        ],
+        [
+          1.0,
+          0.38,
+          120.0
+        ],
+        [
+          6.0,
+          0.38,
+          123.0
+        ],
+        [
+          12.0,
+          0.38,
+          125.0
+        ],
+        [
+          20.0,
+          0.38,
+          126.0
+        ],
+        [
+          47.0,
+          0.38,
+          126.0
+        ],
+        [
+          55.0,
+          0.38,
+          125.0
+        ],
+        [
+          61.0,
+          0.38,
+          122.0
+        ],
+        [
+          65.0,
+          0.38,
+          118.0
+        ],
+        [
+          68.0,
+          0.38,
+          112.0
+        ],
+        [
+          68.0,
+          0.38,
+          86.0
+        ],
+        [
+          68.0,
+          0.38,
+          60.0
+        ]
+      ],
+      "stopDistances": [
+        0.1866901742434712,
+        0.8613158705619928
+      ],
+      "stopIds": [
+        "zurich_hb",
+        "stadelhofen"
+      ]
+    }
+  ],
+  "roofAccess": [],
+  "missionTriggers": [],
+  "playerSpawns": [],
+  "navigationRoutes": [],
+  "walkableAreas": [
+    {
+      "id": "GEO_north_cutting_floor",
+      "min": [
+        -10.0,
+        -0.7,
+        123.0
+      ],
+      "max": [
+        80.0,
+        0.0,
+        134.0
+      ]
+    }
+  ]
+}

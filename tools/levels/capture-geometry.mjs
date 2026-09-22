@@ -36,21 +36,16 @@ for (const card of cards) {
   const label = card.text.slice(0, 40);
   if (wanted.length && !wanted.some((w) => label.toLowerCase().includes(w.toLowerCase()))) continue;
   await page.locator('button').nth(card.index).click();
-  await page.waitForTimeout(600);
-  const start = (await page.locator('button').allInnerTexts()).findIndex((t) => /STARTEN/.test(t));
-  if (start >= 0)
-    await page
-      .locator('button')
-      .nth(start)
-      .click()
-      .catch(() => {});
-  // Geometry is laid down while the level builds; give it room before reading.
-  let snapshot = null;
-  for (let attempt = 0; attempt < 40; attempt++) {
-    await page.waitForTimeout(1500);
-    snapshot = await page.evaluate(() => globalThis.__levelGeometry?.() ?? null).catch(() => null);
-    if (snapshot?.bodies?.length) break;
-  }
+  const start = page
+    .locator('button')
+    .filter({ hasText: /STARTEN/ })
+    .first();
+  await start.waitFor({ state: 'visible', timeout: 30000 });
+  await start.click();
+  await page.waitForFunction(() => globalThis.__levelGeometry?.()?.bodies?.length > 0, null, {
+    timeout: 30000,
+  });
+  const snapshot = await page.evaluate(() => globalThis.__levelGeometry?.() ?? null);
   if (!snapshot?.bodies?.length) {
     console.log(`  ${label}: keine Geometrie gelesen`);
     continue;

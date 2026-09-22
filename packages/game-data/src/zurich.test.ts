@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { streetParade } from './index.js';
-import { zurichLayout, zurichStations, zurichTrainRoute, zurichWorldBounds } from './zurich.js';
+import { zurichLayout, zurichStations, zurichTrainService, zurichWorldBounds } from './zurich.js';
 
 interface Rect {
   minX: number;
@@ -70,8 +70,7 @@ describe('Zurich street parade placement', () => {
   it('authors the promised HB tracks and a two-station train route', () => {
     expect(zurichStations.hb.surfaceTracks).toBe(12);
     expect(zurichStations.hb.undergroundTracks).toBe(4);
-    expect(zurichTrainRoute.stops.map((stop) => stop.id)).toEqual(['zurich_hb', 'stadelhofen']);
-    expect(zurichTrainRoute.points.length).toBeGreaterThanOrEqual(6);
+    expect(zurichTrainService.stops.map((stop) => stop.id)).toEqual(['zurich_hb', 'stadelhofen']);
   });
 
   it('distributes twelve additional bottles through HB and Stadelhofen', () => {

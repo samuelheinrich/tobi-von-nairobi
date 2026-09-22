@@ -44,17 +44,21 @@ export function buildStadelhofen(b: WorldBuilder) {
   // The south wall used to be closed across the eastern platform and open across the tracks, so
   // the only way into the station was to climb onto the rails. It is the other way round now: a
   // six-metre entrance onto platform 3, and the track mouth walled off.
-  for (const z of [63.5, 112.5]) {
-    b.prop(sector, 'stadelhofen-end-wall', [12, 3.2, 0.4], [59, 1.6, z], '#9e927f', true);
-    b.prop(sector, 'stadelhofen-end-wall', [6.5, 3.2, 0.4], [68, 1.6, z], '#9e927f', true);
-    if (z > 100) {
-      b.prop(sector, 'stadelhofen-end-wall', [14, 3.2, 0.4], [78, 1.6, z], '#9e927f', true);
-      continue;
-    }
-    b.prop(sector, 'stadelhofen-end-wall', [3.5, 3.2, 0.4], [73.25, 1.6, z], '#9e927f', true);
-    b.prop(sector, 'stadelhofen-end-wall', [4.5, 3.2, 0.4], [82.75, 1.6, z], '#9e927f', true);
-    b.prop(sector, 'stadelhofen-entrance-lintel', [6, 0.6, 0.5], [78, 3.5, z], '#7c7263', true);
-  }
+  // The northern train mouth stays open across the full three-car sweep; the Blender cutting
+  // protects its edges beyond the platform.
+  const entranceZ = 63.5;
+  b.prop(sector, 'stadelhofen-end-wall', [12, 3.2, 0.4], [59, 1.6, entranceZ], '#9e927f', true);
+  b.prop(sector, 'stadelhofen-end-wall', [6.5, 3.2, 0.4], [68, 1.6, entranceZ], '#9e927f', true);
+  b.prop(sector, 'stadelhofen-end-wall', [3.5, 3.2, 0.4], [73.25, 1.6, entranceZ], '#9e927f', true);
+  b.prop(sector, 'stadelhofen-end-wall', [4.5, 3.2, 0.4], [82.75, 1.6, entranceZ], '#9e927f', true);
+  b.prop(
+    sector,
+    'stadelhofen-entrance-lintel',
+    [6, 0.6, 0.5],
+    [78, 3.5, entranceZ],
+    '#7c7263',
+    true,
+  );
   b.sign(sector, 'EINGANG · GLEIS 3', 78, 4.3, 63.1, 6);
   b.sign(sector, 'ZÜRICH STADELHOFEN', 80, 5.7, 67.1, 11);
   b.sign(sector, 'BELLEVUE / SEE ↓', 86, 4.8, 59.2, 7);

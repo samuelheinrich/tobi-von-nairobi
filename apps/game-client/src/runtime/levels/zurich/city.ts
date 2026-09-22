@@ -29,9 +29,15 @@ export function buildZurichCity(b: WorldBuilder) {
       [0.5, 1.1, 70],
       [124, 0.55, 88],
     ],
+    // The centre opening is the S16 cutting. Its grounded northern edge and guard
+    // are authored together in Blender, clear of the train's full carriage sweep.
     [
-      [248, 1.1, 0.5],
-      [0, 0.55, 123],
+      [114, 1.1, 0.5],
+      [-67, 0.55, 123],
+    ],
+    [
+      [44, 1.1, 0.5],
+      [102, 0.55, 123],
     ],
   ] as const)
     b.prop(sector, 'city-quay-parapet', size, at, '#6d6a62', 'barrier');
