@@ -342,6 +342,21 @@ Phase 8 ist erreicht. Keine bestehenden Levels migriert, kein Produktions-Build,
 und keine GitHub-CI ausgelöst. Nächster Schritt ist der visuelle Test der Masterdatei und des
 Level-Studios durch den Eigentümer, bevor echte Levels auf diese Pipeline umgestellt werden.
 
+## Grosse, unabhängige Welten
+
+Der [neue Zürich-Street-Parade-Blockout](gameplay/zurich-streetparade-blockout.md)
+nutzt dieselbe `.blend`-Master/Recipe/Export-Kette. Die Pipeline versteht nun
+`polygon_prism` für unregelmässige begehbare Ufer sowie `polygon_surface` für
+disjunkte Strassenflächen. Benannte Collections liegen bei grossen Welten unter
+`GENERATED`; `MANUAL` bleibt als separater GUI-Arbeitsbereich erhalten.
+Mit `mergeRenderMeshes: true` werden Visuals erst beim GLB-Export pro Material
+und Sektor gebündelt; die einzeln editierbaren Master-Objekte und getrennten
+Collision-Records bleiben erhalten. Runtime-JSON führt Sektorzuordnungen und
+Atmosphärenwerte für spätere Streaming-/LOD-Schritte. Der gezielte
+`validate_zurich_blockout.py` ergänzt die allgemeine geometrische Prüfung um
+Wege-, Wasser-, Brücken-, Bahnhofs- und Randkontrollen. Er behauptet keine
+vollständige Havok-Navigation oder Fertigstellung der Untergeschosse.
+
 ### Lokaler Spieltest nach Galerie-Integration
 
 Direktstart, Tobi-GLB, HUD und WASD-Bewegung auf der importierten Havok-Fläche geprüft;

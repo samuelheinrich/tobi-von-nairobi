@@ -54,13 +54,15 @@ function authoredLevelAssets(): Plugin {
     name: 'tobi-authored-level-assets',
     apply: 'build',
     generateBundle() {
-      for (const suffix of ['glb', 'runtime.json', 'collision.json']) {
-        const name = `zurich-rail.${suffix}`;
-        this.emitFile({
-          type: 'asset',
-          fileName: `level-assets/zurich-rail/${name}`,
-          source: readFileSync(join(repoRoot, 'assets/game/levels/zurich-rail', name)),
-        });
+      for (const level of ['zurich-rail', 'zurich-streetparade', 'poc-city']) {
+        for (const suffix of ['glb', 'runtime.json', 'collision.json']) {
+          const name = `${level}.${suffix}`;
+          this.emitFile({
+            type: 'asset',
+            fileName: `level-assets/${level}/${name}`,
+            source: readFileSync(join(repoRoot, 'assets/game/levels', level, name)),
+          });
+        }
       }
     },
   };

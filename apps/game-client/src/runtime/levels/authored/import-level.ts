@@ -11,6 +11,7 @@ type Triple = [number, number, number];
 export interface LevelMarker {
   id: string;
   position: Triple;
+  label?: string;
   points?: Triple[];
   stopDistances?: number[];
   stopIds?: string[];
@@ -20,6 +21,13 @@ export interface AuthoredLevelMetadata {
   levelId: string;
   coordinateSystem: 'babylon-left-handed-y-up';
   renderNodes: string[];
+  environment?: {
+    fogDensity?: number;
+    fogColor?: Triple;
+    sky?: string;
+    shadowMode?: 'full' | 'minimal';
+  } | null;
+  sectors?: Record<string, string[]>;
   cutawayNodes: string[];
   doors: LevelMarker[];
   bottleSpawns: LevelMarker[];

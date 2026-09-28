@@ -442,7 +442,7 @@ export class GameHost {
   }
 
   private objectiveText(): string {
-    if (this.level.sandbox) return 'Erkunde Bar, Treppe, Balkon und Dach – ohne Zeitlimit';
+    if (this.level.sandbox) return this.level.subtitle;
     if (this.tutorial?.active) return this.tutorial.active.title;
     if (this.flight) return this.flight.objective;
     if (this.environment.railway) return this.environment.railway.objective;

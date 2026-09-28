@@ -7,6 +7,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 import bpy
+from mathutils import Vector, geometry
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import arguments, collections, signature
 from generate_collision import generate
@@ -33,8 +34,10 @@ if master.exists():
     bpy.ops.wm.open_mainfile(filepath=str(master))
 else:
     bpy.ops.wm.read_factory_settings(use_empty=True)
-cols = collections()
 scene = bpy.context.scene
+scene['root_collection'] = recipe.get('rootCollection', 'POC_CITY')
+scene['authoring_collections'] = recipe.get('collections', [])
+cols = collections()
 scene.unit_settings.system = 'METRIC'
 scene.unit_settings.scale_length = 1
 scene['level_id'] = recipe['id']
@@ -65,6 +68,7 @@ if args.prune:
             if collider and collider.get('_generated_signature') == signature(collider):
                 bpy.data.objects.remove(collider, do_unlink=True)
             bpy.data.objects.remove(obsolete, do_unlink=True)
+generated = []
 for spec in recipe['objects']:
     existing = bpy.data.objects.get(spec['id'])
     if existing:
@@ -112,6 +116,25 @@ for spec in recipe['objects']:
                                   (a,b,b+2,a+2),(a+1,a+3,b+3,b+1)))
             last = (len(points)-1)*4
             faces.extend(((0,2,3,1),(last,last+1,last+3,last+2)))
+        elif spec['kind'] in ('polygon_prism', 'polygon_surface'):
+            outline = spec['outline']
+            if len(outline) < 3 or (spec['kind'] == 'polygon_prism' and spec['height'] <= 0):
+                raise ValueError(f'Invalid polygon: {spec["id"]}')
+            area = sum(outline[i][0]*outline[(i+1)%len(outline)][1] -
+                       outline[(i+1)%len(outline)][0]*outline[i][1]
+                       for i in range(len(outline)))
+            if area < 0:
+                outline = list(reversed(outline))
+            levels = (0,spec['height']) if spec['kind'] == 'polygon_prism' else (0,)
+            vertices = [(x,y,z) for z in levels for x,y in outline]
+            count = len(outline)
+            triangles = geometry.tessellate_polygon([[Vector((x,y,0)) for x,y in outline]])
+            if spec['kind'] == 'polygon_prism':
+                faces = [tuple(index + count for index in tri) for tri in triangles]
+                faces += [tuple(reversed(tri)) for tri in triangles]
+                faces += [(i,(i+1)%count,(i+1)%count+count,i+count) for i in range(count)]
+            else:
+                faces = [tuple(tri) for tri in triangles]
         elif spec['kind'] == 'box':
             sx, sy, sz = [v / 2 for v in spec['size']]
             vertices = [(x*sx,y*sy,z*sz) for x,y,z in
@@ -131,7 +154,11 @@ for spec in recipe['objects']:
     for key, value in spec.get('properties', {}).items():
         obj[key] = value
     obj['_recipe_id'] = spec['id']
-    bpy.context.view_layer.update()
+    generated.append(obj)
+# Resolve transforms once after linking the batch, rather than rebuilding the
+# dependency graph after every wall / window in a multi-storey building.
+bpy.context.view_layer.update()
+for obj in generated:
     obj['_generated_signature'] = signature(obj)
 generate()
 # Wireframe collision is easy to inspect in the GUI, never part of the visual GLB.
@@ -141,7 +168,7 @@ for obj in cols['COLLISION'].objects:
 for screen in bpy.data.screens:
     for area in screen.areas:
         if area.type == 'VIEW_3D':
-            area.spaces.active.clip_end = 250
+            area.spaces.active.clip_end = max(250, max(recipe['worldDimensions'])*1.5)
             area.spaces.active.shading.color_type = 'MATERIAL'
             area.spaces.active.region_3d.view_distance = 65
 bpy.ops.wm.save_as_mainfile(filepath=str(master))

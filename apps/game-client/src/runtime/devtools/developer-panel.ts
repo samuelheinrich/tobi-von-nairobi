@@ -16,7 +16,7 @@ export function createDeveloperPanel(commands: DebugCommands): () => void {
   panel.append(title);
   for (const [label, action] of [
     ['Respawn Tobi', commands.respawn],
-    ['Teleport zum Airbnb', commands.teleportHome],
+    ['Teleport zum Levelziel', commands.teleportHome],
   ] as const) {
     const button = document.createElement('button');
     button.textContent = label;

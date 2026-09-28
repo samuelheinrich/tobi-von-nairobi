@@ -52,16 +52,28 @@ def signature(obj):
     return hashlib.sha256(json.dumps(state, sort_keys=True).encode()).hexdigest()
 
 def collections():
-    root = bpy.data.collections.get('POC_CITY')
+    scene = bpy.context.scene
+    root_name = scene.get('root_collection', 'POC_CITY')
+    root = bpy.data.collections.get(root_name)
     if root is None:
-        root = bpy.data.collections.new('POC_CITY')
-        bpy.context.scene.collection.children.link(root)
+        root = bpy.data.collections.new(root_name)
+        scene.collection.children.link(root)
+    structured = root_name != 'POC_CITY'
+    generated = bpy.data.collections.get('GENERATED') if structured else None
+    if structured and generated is None:
+        generated = bpy.data.collections.new('GENERATED')
+    if generated is not None and generated.name not in root.children:
+        root.children.link(generated)
     out = {}
-    for name in COLLECTIONS:
+    for name in dict.fromkeys((*COLLECTIONS, *scene.get('authoring_collections', []))):
         col = bpy.data.collections.get(name)
         if col is None:
             col = bpy.data.collections.new(name)
-            root.children.link(col)
+        parent = generated if structured and name not in ('GENERATED','MANUAL') else root
+        if col.name not in parent.children:
+            parent.children.link(col)
+        if structured and parent is generated and col.name in root.children:
+            root.children.unlink(col)
         out[name] = col
     return out
 

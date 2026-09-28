@@ -1,0 +1,83 @@
+{
+  "levelId": "zurich-streetparade",
+  "status": "WARNING",
+  "coordinateSystem": "east/north/up metres, Bellevue origin",
+  "dimensions": [
+    3600,
+    4600
+  ],
+  "anchors": {
+    "bellevue": [
+      0,
+      0
+    ],
+    "hb": [
+      -440.48,
+      1245.94
+    ],
+    "stadelhofen": [
+      240.25,
+      -38.31
+    ],
+    "enge": [
+      -1036.75,
+      -314.72
+    ],
+    "quaibruecke": [
+      -77.59,
+      4.76
+    ],
+    "buerkliplatz": [
+      -302.54,
+      -59.01
+    ],
+    "bauschaenzli": [
+      -211.87,
+      106.08
+    ],
+    "opera": [
+      122.98,
+      -215.78
+    ],
+    "hafendamm": [
+      -712.23,
+      -734.27
+    ],
+    "utoquai": [
+      320,
+      -760
+    ]
+  },
+  "counts": {
+    "render": 556,
+    "colliders": 279,
+    "markers": 20,
+    "triangles": 4968,
+    "cityBlocks": 177,
+    "stations": 3,
+    "aboveGroundHbTracks": 12,
+    "belowGroundHbTracks": 4
+  },
+  "connectivity": {
+    "checked": [
+      "hb",
+      "stadelhofen",
+      "enge",
+      "bellevue",
+      "quaibruecke",
+      "buerkliplatz",
+      "utoquai",
+      "opera",
+      "hafendamm",
+      "bauschaenzli"
+    ],
+    "allConnected": true
+  },
+  "genericStatus": "WARNING",
+  "issues": [],
+  "limitations": [
+    "Walking proof samples authored paths on geometric surfaces; it does not simulate Havok/player radius.",
+    "Underground HB outline and train loop are metadata/blockout, not yet enterable or animated.",
+    "Background silhouette/city edge visibility still requires in-game camera inspection."
+  ]
+}

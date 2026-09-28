@@ -7,6 +7,7 @@ from common import collections, objects, signature
 
 def generate():
     col = collections()['COLLISION']
+    generated = []
     for obj in objects('GEO_'):
         if not obj.get('solid', False):
             continue
@@ -27,7 +28,9 @@ def generate():
         collider['_source_signature'] = signature(obj)
         collider.display_type = 'WIRE'
         collider.hide_render = True
-        bpy.context.view_layer.update()
+        generated.append(collider)
+    bpy.context.view_layer.update()
+    for collider in generated:
         collider['_generated_signature'] = signature(collider)
 
 if __name__ == '__main__':

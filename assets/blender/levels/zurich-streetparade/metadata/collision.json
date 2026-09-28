@@ -1,0 +1,7048 @@
+{
+  "schemaVersion": 1,
+  "levelId": "zurich-streetparade",
+  "coordinateSystem": "babylon-left-handed-y-up",
+  "colliders": [
+    {
+      "id": "COL_bahnhofbruecke_deck",
+      "renderId": "GEO_EXPORT_049_zurich_hb_bridge",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        135.0,
+        0.16,
+        -1050.0
+      ],
+      "size": [
+        210.0,
+        0.03999999910593033,
+        17.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bahnhofbruecke_rail_-1",
+      "renderId": "GEO_EXPORT_058_zurich_hb_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        135.0,
+        0.81,
+        -1041.800049
+      ],
+      "size": [
+        210.0,
+        1.25,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bahnhofbruecke_rail_1",
+      "renderId": "GEO_EXPORT_058_zurich_hb_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        135.0,
+        0.81,
+        -1058.199951
+      ],
+      "size": [
+        210.0,
+        1.25,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bauschaenzli_bridge_rail_-1",
+      "renderId": "GEO_EXPORT_032_limmat_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        270.0,
+        0.8,
+        -102.580002
+      ],
+      "size": [
+        42.0,
+        1.2000000476837158,
+        0.3499999940395355
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bauschaenzli_bridge_rail_1",
+      "renderId": "GEO_EXPORT_032_limmat_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        270.0,
+        0.8,
+        -109.580002
+      ],
+      "size": [
+        42.0,
+        1.2000000476837158,
+        0.3499999940395355
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bauschaenzli_footbridge",
+      "renderId": "GEO_EXPORT_028_limmat_bridge",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        262.434998,
+        0.16,
+        -106.080002
+      ],
+      "size": [
+        51.130001068115234,
+        0.03999999910593033,
+        7.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_bauschaenzli_island",
+      "renderId": "GEO_EXPORT_030_limmat_park",
+      "shape": "mesh",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        204.369995,
+        -0.345,
+        -109.080002
+      ],
+      "size": [
+        105.0,
+        0.8500000238418579,
+        70.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "vertices": [
+        256.869995,
+        -0.77,
+        -74.080002,
+        167.869995,
+        -0.77,
+        -77.080002,
+        151.869995,
+        -0.77,
+        -106.080002,
+        168.869995,
+        -0.77,
+        -140.080002,
+        251.869995,
+        -0.77,
+        -144.080002,
+        256.869995,
+        0.08,
+        -74.080002,
+        167.869995,
+        0.08,
+        -77.080002,
+        151.869995,
+        0.08,
+        -106.080002,
+        168.869995,
+        0.08,
+        -140.080002,
+        251.869995,
+        0.08,
+        -144.080002
+      ],
+      "indices": [
+        5,
+        9,
+        8,
+        5,
+        8,
+        7,
+        5,
+        7,
+        6,
+        3,
+        4,
+        0,
+        2,
+        3,
+        0,
+        1,
+        2,
+        0,
+        6,
+        1,
+        0,
+        5,
+        6,
+        0,
+        7,
+        2,
+        1,
+        6,
+        7,
+        1,
+        8,
+        3,
+        2,
+        7,
+        8,
+        2,
+        9,
+        4,
+        3,
+        8,
+        9,
+        3,
+        5,
+        0,
+        4,
+        9,
+        5,
+        4
+      ]
+    },
+    {
+      "id": "COL_city_block_001",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1388.537964,
+        12.0,
+        876.929993
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_002",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1245.280029,
+        13.5,
+        869.236023
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_003",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1104.144043,
+        10.0,
+        868.963989
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_004",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        951.22699,
+        7.0,
+        869.534973
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_005",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        815.966003,
+        12.0,
+        870.828003
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_006",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1389.894043,
+        9.0,
+        731.396973
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_007",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1239.723999,
+        7.0,
+        723.130981
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_008",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1099.583984,
+        12.0,
+        732.072021
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_009",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        955.286011,
+        10.0,
+        731.148987
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_010",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1386.922974,
+        7.0,
+        580.197021
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_011",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1251.69104,
+        9.0,
+        578.03302
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_012",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1103.936035,
+        10.0,
+        586.575012
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_013",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        954.291992,
+        7.0,
+        586.887024
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_014",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1390.064941,
+        7.0,
+        433.450989
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_015",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1386.849976,
+        12.0,
+        293.311005
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_016",
+      "renderId": "GEO_EXPORT_046_streetparade_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        660.301025,
+        9.0,
+        292.567993
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_017",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1394.137939,
+        13.5,
+        156.460999
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_018",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1243.447021,
+        13.5,
+        143.643997
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_019",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        954.559021,
+        7.0,
+        149.376007
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_020",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1395.593018,
+        10.0,
+        11.53
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_021",
+      "renderId": "GEO_EXPORT_015_enge_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1241.011963,
+        12.0,
+        8.061
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_022",
+      "renderId": "GEO_EXPORT_016_enge_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1103.79895,
+        13.5,
+        9.55
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_023",
+      "renderId": "GEO_EXPORT_017_enge_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        814.96698,
+        12.0,
+        4.418
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_024",
+      "renderId": "GEO_EXPORT_045_streetparade_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        658.559021,
+        10.0,
+        6.256
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_025",
+      "renderId": "GEO_EXPORT_046_streetparade_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        526.210022,
+        13.5,
+        -1.89
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_026",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1394.954956,
+        13.5,
+        -136.164001
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_027",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1245.883057,
+        10.0,
+        -133.195999
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_028",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1098.618042,
+        9.0,
+        -142.018997
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_029",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        805.099976,
+        12.0,
+        -145.337006
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_030",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        669.538025,
+        10.0,
+        -135.936005
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_031",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        524.655029,
+        12.0,
+        -145.209
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_032",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1390.849976,
+        10.0,
+        -283.615997
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_033",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1246.187988,
+        7.0,
+        -285.248993
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_034",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1098.07605,
+        13.5,
+        -284.54599
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_035",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        805.635986,
+        7.0,
+        -279.394012
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_036",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        660.448975,
+        13.5,
+        -291.365997
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_037",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        518.182007,
+        10.0,
+        -290.947998
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_038",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1394.884033,
+        12.0,
+        -434.837006
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_039",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1238.347046,
+        13.5,
+        -428.992004
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_040",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1102.100952,
+        7.0,
+        -427.549988
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_041",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        807.203979,
+        13.5,
+        -429.463013
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_042",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        663.979004,
+        13.5,
+        -425.210999
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_043",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        513.257019,
+        12.0,
+        -433.515015
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_044",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1384.321045,
+        12.0,
+        -580.161011
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_045",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1240.21106,
+        10.0,
+        -579.377014
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_046",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1100.327026,
+        7.0,
+        -570.573975
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_047",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        805.38501,
+        10.0,
+        -570.231995
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_048",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        658.63501,
+        9.0,
+        -569.322998
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_049",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        521.544006,
+        12.0,
+        -570.299988
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_050",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1392.366943,
+        9.0,
+        -718.135986
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_051",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1242.879028,
+        10.0,
+        -714.372986
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_052",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1103.113037,
+        7.0,
+        -719.849976
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_053",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        661.137024,
+        7.0,
+        -714.849976
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_054",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        522.643005,
+        7.0,
+        -719.107971
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_055",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1388.017944,
+        9.0,
+        -870.877991
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_056",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1239.108032,
+        9.0,
+        -862.124023
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_057",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1094.553955,
+        7.0,
+        -858.611023
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_058",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        954.619995,
+        9.0,
+        -866.176025
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_059",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        662.390991,
+        12.0,
+        -871.125977
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_060",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        515.388977,
+        9.0,
+        -863.757019
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_061",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1385.848999,
+        12.0,
+        -1007.161987
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_062",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1248.246948,
+        13.5,
+        -1014.390991
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_063",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1099.031982,
+        10.0,
+        -1016.981018
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_064",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        959.007996,
+        7.0,
+        -1014.973022
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_065",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1394.916992,
+        12.0,
+        -1148.470947
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_066",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1248.130981,
+        10.0,
+        -1156.828003
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_067",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1102.311035,
+        10.0,
+        -1155.102051
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_068",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        957.48999,
+        12.0,
+        -1154.062988
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_069",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1384.939941,
+        10.0,
+        -1293.321045
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_070",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1247.003052,
+        9.0,
+        -1301.375977
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_071",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1095.046021,
+        9.0,
+        -1304.925049
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_072",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        958.630005,
+        7.0,
+        -1295.102051
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_073",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1385.686035,
+        13.5,
+        -1449.036011
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_074",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1238.44397,
+        10.0,
+        -1448.76001
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_075",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1098.166016,
+        9.0,
+        -1440.379028
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_076",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        949.122986,
+        7.0,
+        -1447.760986
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_077",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -499.562012,
+        13.5,
+        880.276978
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_078",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -637.422974,
+        12.0,
+        873.267029
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_079",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -791.468994,
+        13.5,
+        873.840027
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_080",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -924.861023,
+        13.5,
+        877.179016
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_081",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -488.46701,
+        7.0,
+        728.276978
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_082",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -636.538025,
+        13.5,
+        725.950989
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_083",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -783.463013,
+        10.0,
+        725.705994
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_084",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -931.992004,
+        10.0,
+        728.575989
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_085",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -355.376007,
+        12.0,
+        584.27002
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_086",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -493.235992,
+        10.0,
+        589.736023
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_087",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -646.057983,
+        7.0,
+        589.294006
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_088",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -786.810974,
+        7.0,
+        588.461975
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_089",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -924.567993,
+        7.0,
+        587.22699
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_090",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -348.136993,
+        12.0,
+        434.802002
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_091",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -492.367004,
+        9.0,
+        444.190002
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_092",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -633.640991,
+        12.0,
+        436.35199
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_093",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -783.122986,
+        12.0,
+        446.520996
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_094",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -930.36499,
+        13.5,
+        444.057007
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_095",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -354.82901,
+        9.0,
+        295.479004
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_096",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -501.024994,
+        10.0,
+        298.585999
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_097",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -644.849976,
+        9.0,
+        291.391998
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_098",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -789.078979,
+        10.0,
+        301.363007
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_099",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -926.075989,
+        9.0,
+        297.740997
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_100",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -492.276001,
+        13.5,
+        143.585007
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_101",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -646.684021,
+        13.5,
+        145.867996
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_102",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -790.700012,
+        7.0,
+        150.940994
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_103",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -930.078003,
+        13.5,
+        154.921005
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_104",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -492.825989,
+        13.5,
+        4.802
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_105",
+      "renderId": "GEO_EXPORT_037_stadelhofen_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -635.145996,
+        10.0,
+        2.096
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_106",
+      "renderId": "GEO_EXPORT_038_stadelhofen_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -781.122009,
+        10.0,
+        7.105
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_107",
+      "renderId": "GEO_EXPORT_039_stadelhofen_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -926.114014,
+        10.0,
+        4.01
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_108",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -65.343002,
+        7.0,
+        -138.757004
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_109",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -203.533997,
+        12.0,
+        -135.701996
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_110",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -343.459015,
+        10.0,
+        -138.052002
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_111",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -497.019012,
+        9.0,
+        -141.792999
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_112",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -645.452026,
+        7.0,
+        -146.475006
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_113",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -787.234985,
+        10.0,
+        -144.126007
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_114",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -932.929993,
+        7.0,
+        -143.927994
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_115",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -57.375999,
+        9.0,
+        -283.860992
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_116",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -198.076004,
+        9.0,
+        -289.002991
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_117",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -347.018005,
+        10.0,
+        -290.459991
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_118",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -492.457001,
+        13.5,
+        -283.941986
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_119",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -645.505981,
+        13.5,
+        -289.260986
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_120",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -786.380005,
+        12.0,
+        -286.337006
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_121",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -932.106995,
+        10.0,
+        -280.912994
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_122",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -63.330002,
+        13.5,
+        -426.381989
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_123",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -201.429001,
+        9.0,
+        -436.48999
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_124",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -349.390991,
+        9.0,
+        -429.78299
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_125",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -494.588989,
+        9.0,
+        -430.006012
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_126",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -636.286011,
+        9.0,
+        -427.424011
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_127",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -780.413025,
+        10.0,
+        -427.743988
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_128",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -928.109985,
+        13.5,
+        -428.496002
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_129",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -60.512001,
+        13.5,
+        -578.317017
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_130",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -201.774002,
+        9.0,
+        -579.903992
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_131",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -346.218994,
+        9.0,
+        -574.044006
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_132",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -499.34201,
+        12.0,
+        -573.656982
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_133",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -637.195984,
+        9.0,
+        -580.914978
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_134",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -785.364014,
+        9.0,
+        -577.362976
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_135",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -933.232971,
+        13.5,
+        -569.338013
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_136",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -65.481003,
+        10.0,
+        -719.948975
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_137",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -202.117004,
+        12.0,
+        -726.372009
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_138",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -350.877991,
+        7.0,
+        -725.937012
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_139",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -494.602997,
+        12.0,
+        -718.291992
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_140",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -641.744019,
+        12.0,
+        -723.064026
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_141",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -779.072998,
+        12.0,
+        -724.002014
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_142",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -923.866028,
+        12.0,
+        -714.304016
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_143",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -53.834,
+        13.5,
+        -868.572021
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_144",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -204.535995,
+        12.0,
+        -866.119019
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_145",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -343.019989,
+        9.0,
+        -871.046997
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_146",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -495.216003,
+        12.0,
+        -865.570007
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_147",
+      "renderId": "GEO_EXPORT_010_city_center_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -637.148987,
+        12.0,
+        -867.502014
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_148",
+      "renderId": "GEO_EXPORT_011_city_center_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -790.96698,
+        12.0,
+        -863.734985
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_149",
+      "renderId": "GEO_EXPORT_012_city_center_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -930.137024,
+        9.0,
+        -858.388977
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_150",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -56.529999,
+        9.0,
+        -1006.635986
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_151",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -210.432007,
+        7.0,
+        -1014.109985
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_152",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -354.494995,
+        9.0,
+        -1009.302979
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_153",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -498.854004,
+        12.0,
+        -1004.804016
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_154",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -641.969971,
+        12.0,
+        -1010.78302
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_155",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -783.435974,
+        12.0,
+        -1015.414001
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_156",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -934.442993,
+        10.0,
+        -1013.666016
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_157",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -64.893997,
+        13.5,
+        -1149.255005
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_158",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -205.667007,
+        12.0,
+        -1159.838013
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_159",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -348.13501,
+        10.0,
+        -1159.312988
+      ],
+      "size": [
+        88.0,
+        20.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_160",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -499.160004,
+        9.0,
+        -1158.297974
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_161",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -643.497009,
+        12.0,
+        -1158.352051
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_162",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -778.604004,
+        7.0,
+        -1153.017944
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_163",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -930.937012,
+        7.0,
+        -1148.378052
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_164",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -60.407001,
+        9.0,
+        -1306.938965
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_165",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -198.337006,
+        7.0,
+        -1294.811035
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_166",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -350.299011,
+        13.5,
+        -1305.041016
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_167",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -498.153992,
+        13.5,
+        -1301.562012
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_168",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -637.547974,
+        13.5,
+        -1300.744995
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_169",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -788.268982,
+        7.0,
+        -1293.109009
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_170",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -933.388,
+        13.5,
+        -1299.666992
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_171",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -53.209,
+        9.0,
+        -1441.593018
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_172",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -202.643997,
+        9.0,
+        -1445.337036
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_173",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -354.927002,
+        7.0,
+        -1450.755981
+      ],
+      "size": [
+        88.0,
+        14.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_174",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -489.027008,
+        9.0,
+        -1441.956055
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_175",
+      "renderId": "GEO_EXPORT_052_zurich_hb_facade_1",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -633.585022,
+        12.0,
+        -1449.707031
+      ],
+      "size": [
+        88.0,
+        24.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_176",
+      "renderId": "GEO_EXPORT_053_zurich_hb_facade_2",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -779.653015,
+        9.0,
+        -1438.805054
+      ],
+      "size": [
+        88.0,
+        18.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_block_177",
+      "renderId": "GEO_EXPORT_051_zurich_hb_facade_0",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -929.656982,
+        13.5,
+        -1451.470947
+      ],
+      "size": [
+        88.0,
+        27.0,
+        77.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_east",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -1115.0,
+        3.0,
+        -345.0
+      ],
+      "size": [
+        10.0,
+        6.0,
+        2610.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_north_east",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -525.0,
+        3.0,
+        -1645.0
+      ],
+      "size": [
+        1190.0,
+        6.0,
+        10.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_north_west",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        905.0,
+        3.0,
+        -1645.0
+      ],
+      "size": [
+        1290.0,
+        6.0,
+        10.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_south_east",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -735.0,
+        3.0,
+        955.0
+      ],
+      "size": [
+        770.0,
+        6.0,
+        10.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_south_west",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1135.0,
+        3.0,
+        955.0
+      ],
+      "size": [
+        830.0,
+        6.0,
+        10.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_city_boundary_west",
+      "renderId": "GEO_EXPORT_002_background_city_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1545.0,
+        3.0,
+        -345.0
+      ],
+      "size": [
+        10.0,
+        6.0,
+        2610.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_east_bank_terrain",
+      "renderId": "GEO_EXPORT_005_bellevue_pavement",
+      "shape": "mesh",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -525.0,
+        -0.4,
+        -345.0
+      ],
+      "size": [
+        1190.0,
+        0.800000011920929,
+        2610.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "vertices": [
+        65.0,
+        -0.8,
+        -1650.0,
+        60.0,
+        -0.8,
+        -1140.0,
+        55.0,
+        -0.8,
+        -860.0,
+        65.0,
+        -0.8,
+        -570.0,
+        70.0,
+        -0.8,
+        -330.0,
+        55.0,
+        -0.8,
+        -120.0,
+        0.0,
+        -0.8,
+        30.0,
+        -25.0,
+        -0.8,
+        80.0,
+        -35.0,
+        -0.8,
+        145.0,
+        -40.0,
+        -0.8,
+        250.0,
+        -160.0,
+        -0.8,
+        420.0,
+        -250.0,
+        -0.8,
+        620.0,
+        -345.0,
+        -0.8,
+        960.0,
+        -1120.0,
+        -0.8,
+        960.0,
+        -1120.0,
+        -0.8,
+        -1650.0,
+        65.0,
+        0.0,
+        -1650.0,
+        60.0,
+        0.0,
+        -1140.0,
+        55.0,
+        0.0,
+        -860.0,
+        65.0,
+        0.0,
+        -570.0,
+        70.0,
+        0.0,
+        -330.0,
+        55.0,
+        0.0,
+        -120.0,
+        0.0,
+        0.0,
+        30.0,
+        -25.0,
+        0.0,
+        80.0,
+        -35.0,
+        0.0,
+        145.0,
+        -40.0,
+        0.0,
+        250.0,
+        -160.0,
+        0.0,
+        420.0,
+        -250.0,
+        0.0,
+        620.0,
+        -345.0,
+        0.0,
+        960.0,
+        -1120.0,
+        0.0,
+        960.0,
+        -1120.0,
+        0.0,
+        -1650.0
+      ],
+      "indices": [
+        15,
+        29,
+        28,
+        16,
+        15,
+        28,
+        17,
+        16,
+        28,
+        18,
+        17,
+        28,
+        19,
+        18,
+        28,
+        20,
+        19,
+        28,
+        21,
+        20,
+        28,
+        22,
+        21,
+        28,
+        23,
+        22,
+        28,
+        24,
+        23,
+        28,
+        25,
+        24,
+        28,
+        26,
+        25,
+        28,
+        27,
+        26,
+        28,
+        13,
+        14,
+        0,
+        13,
+        0,
+        1,
+        13,
+        1,
+        2,
+        13,
+        2,
+        3,
+        13,
+        3,
+        4,
+        13,
+        4,
+        5,
+        13,
+        5,
+        6,
+        13,
+        6,
+        7,
+        13,
+        7,
+        8,
+        13,
+        8,
+        9,
+        13,
+        9,
+        10,
+        13,
+        10,
+        11,
+        13,
+        11,
+        12,
+        16,
+        1,
+        0,
+        15,
+        16,
+        0,
+        17,
+        2,
+        1,
+        16,
+        17,
+        1,
+        18,
+        3,
+        2,
+        17,
+        18,
+        2,
+        19,
+        4,
+        3,
+        18,
+        19,
+        3,
+        20,
+        5,
+        4,
+        19,
+        20,
+        4,
+        21,
+        6,
+        5,
+        20,
+        21,
+        5,
+        22,
+        7,
+        6,
+        21,
+        22,
+        6,
+        23,
+        8,
+        7,
+        22,
+        23,
+        7,
+        24,
+        9,
+        8,
+        23,
+        24,
+        8,
+        25,
+        10,
+        9,
+        24,
+        25,
+        9,
+        26,
+        11,
+        10,
+        25,
+        26,
+        10,
+        27,
+        12,
+        11,
+        26,
+        27,
+        11,
+        28,
+        13,
+        12,
+        27,
+        28,
+        12,
+        29,
+        14,
+        13,
+        28,
+        29,
+        13,
+        15,
+        0,
+        14,
+        29,
+        15,
+        14
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_00",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -296.152008,
+        0.58,
+        790.377014
+      ],
+      "size": [
+        353.02301025390625,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.7965878844261169,
+        -0.0,
+        0.6045227646827698
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_01",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -203.723007,
+        0.58,
+        520.575012
+      ],
+      "size": [
+        219.31700134277344,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.8397513628005981,
+        -0.0,
+        0.542971134185791
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_02",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -98.856003,
+        0.58,
+        335.807007
+      ],
+      "size": [
+        208.08700561523438,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.8878860473632812,
+        -0.0,
+        0.4600634276866913
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_03",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -36.102001,
+        0.58,
+        197.567001
+      ],
+      "size": [
+        105.11898803710938,
+        1.159999966621399,
+        0.3999999463558197
+      ],
+      "rotation": [
+        -0.0,
+        -0.7237282991409302,
+        -0.0,
+        0.6900850534439087
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_04",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -28.615999,
+        0.58,
+        112.712997
+      ],
+      "size": [
+        65.76499938964844,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.7589654922485352,
+        -0.0,
+        0.6511308550834656
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_05",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -11.248,
+        0.58,
+        55.625999
+      ],
+      "size": [
+        55.902000427246094,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.8506508469581604,
+        -0.0,
+        0.5257311463356018
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_06",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        28.813999,
+        0.58,
+        -44.518002
+      ],
+      "size": [
+        159.76499938964844,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.8198336958885193,
+        -0.0,
+        0.5726017355918884
+      ]
+    },
+    {
+      "id": "COL_east_quay_guard_07",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        63.896,
+        0.58,
+        -224.899994
+      ],
+      "size": [
+        210.53500366210938,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.7318630814552307,
+        -0.0,
+        0.6814517378807068
+      ]
+    },
+    {
+      "id": "COL_enge_building",
+      "renderId": "GEO_EXPORT_021_enge_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1067.312988,
+        8.0,
+        349.230011
+      ],
+      "size": [
+        55.0,
+        16.0,
+        32.0
+      ],
+      "rotation": [
+        0.0,
+        0.2503800094127655,
+        0.0,
+        0.9681476354598999
+      ]
+    },
+    {
+      "id": "COL_enge_canopy",
+      "renderId": "GEO_EXPORT_020_enge_roof",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1036.75,
+        6.5,
+        314.720001
+      ],
+      "size": [
+        154.0,
+        1.0,
+        24.0
+      ],
+      "rotation": [
+        0.0,
+        0.2503800094127655,
+        0.0,
+        0.9681476354598999
+      ]
+    },
+    {
+      "id": "COL_enge_canopy_column_-1_-1",
+      "renderId": "GEO_EXPORT_021_enge_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1099.807983,
+        3.0,
+        292.342987
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_enge_canopy_column_-1_1",
+      "renderId": "GEO_EXPORT_021_enge_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1089.141968,
+        3.0,
+        273.10199
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_enge_canopy_column_1_-1",
+      "renderId": "GEO_EXPORT_021_enge_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        984.357971,
+        3.0,
+        356.338013
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_enge_canopy_column_1_1",
+      "renderId": "GEO_EXPORT_021_enge_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        973.692017,
+        3.0,
+        337.096985
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_enge_platform_0",
+      "renderId": "GEO_EXPORT_018_enge_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        1037.234985,
+        0.11,
+        315.595001
+      ],
+      "size": [
+        220.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.2503800094127655,
+        0.0,
+        0.9681476354598999
+      ]
+    },
+    {
+      "id": "COL_fraumuenster_body",
+      "renderId": "GEO_EXPORT_029_limmat_limestone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        330.0,
+        13.0,
+        -310.0
+      ],
+      "size": [
+        44.0,
+        26.0,
+        36.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_fraumuenster_tower",
+      "renderId": "GEO_EXPORT_032_limmat_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        320.0,
+        52.0,
+        -310.0
+      ],
+      "size": [
+        12.0,
+        52.0,
+        12.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_grossmuenster_body",
+      "renderId": "GEO_EXPORT_029_limmat_limestone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        12.0,
+        13.0,
+        -325.0
+      ],
+      "size": [
+        44.0,
+        26.0,
+        36.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_grossmuenster_tower",
+      "renderId": "GEO_EXPORT_032_limmat_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        2.0,
+        55.0,
+        -325.0
+      ],
+      "size": [
+        12.0,
+        58.0,
+        12.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hafendamm_pier",
+      "renderId": "GEO_EXPORT_022_hafendamm_quay",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        697.22998,
+        0.08,
+        751.77002
+      ],
+      "size": [
+        152.06900024414062,
+        0.03999999910593033,
+        15.0
+      ],
+      "rotation": [
+        0.0,
+        0.5194626450538635,
+        0.0,
+        0.8544931411743164
+      ]
+    },
+    {
+      "id": "COL_hafendamm_rail_-1",
+      "renderId": "GEO_EXPORT_024_hafendamm_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        703.97699,
+        0.7,
+        755.268005
+      ],
+      "size": [
+        152.06900024414062,
+        1.25,
+        0.3499999940395355
+      ],
+      "rotation": [
+        0.0,
+        0.5194626450538635,
+        0.0,
+        0.8544931411743164
+      ]
+    },
+    {
+      "id": "COL_hafendamm_rail_1",
+      "renderId": "GEO_EXPORT_024_hafendamm_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        690.482971,
+        0.7,
+        748.271973
+      ],
+      "size": [
+        152.06900024414062,
+        1.25,
+        0.3499999940395355
+      ],
+      "rotation": [
+        0.0,
+        0.5194626450538635,
+        0.0,
+        0.8544931411743164
+      ]
+    },
+    {
+      "id": "COL_hb_canopy",
+      "renderId": "GEO_EXPORT_056_zurich_hb_roof",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        610.47998,
+        24.0,
+        -1245.939941
+      ],
+      "size": [
+        450.0,
+        2.0,
+        190.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_0",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        756.47998,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_1",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        701.47998,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_2",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        646.47998,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_3",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        591.47998,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_4",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        536.47998,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_5",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        481.480011,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_6",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        426.480011,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_0_7",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        371.480011,
+        12.0,
+        -1155.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_0",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        756.47998,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_1",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        701.47998,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_2",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        646.47998,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_3",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        591.47998,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_4",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        536.47998,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_5",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        481.480011,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_6",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        426.480011,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_canopy_column_1_7",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        371.480011,
+        12.0,
+        -1335.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        24.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_east_north",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        262.980011,
+        7.0,
+        -1304.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        14.0,
+        87.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_east_south",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        262.980011,
+        7.0,
+        -1186.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        14.0,
+        87.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_north_wall",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        305.480011,
+        7.0,
+        -1348.439941
+      ],
+      "size": [
+        85.0,
+        14.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_roof",
+      "renderId": "GEO_EXPORT_056_zurich_hb_roof",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        305.480011,
+        15.0,
+        -1245.939941
+      ],
+      "size": [
+        85.0,
+        2.0,
+        205.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_south_wall",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        305.480011,
+        7.0,
+        -1143.439941
+      ],
+      "size": [
+        85.0,
+        14.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_west_north",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        347.980011,
+        7.0,
+        -1304.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        14.0,
+        87.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_hall_west_south",
+      "renderId": "GEO_EXPORT_057_zurich_hb_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        347.980011,
+        7.0,
+        -1186.939941
+      ],
+      "size": [
+        1.2000000476837158,
+        14.0,
+        87.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_00",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1183.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_01",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1206.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_02",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1229.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_03",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1252.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_04",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1275.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_hb_platform_05",
+      "renderId": "GEO_EXPORT_054_zurich_hb_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        575.47998,
+        0.11,
+        -1298.339966
+      ],
+      "size": [
+        430.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_0",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -90.980003,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_1",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -101.480003,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_2",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -111.980003,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_3",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -122.480003,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_4",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -132.979996,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_5",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -143.479996,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_column_6",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -153.979996,
+        4.0,
+        214.779999
+      ],
+      "size": [
+        2.0,
+        8.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_house",
+      "renderId": "GEO_EXPORT_033_opera_limestone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -122.980003,
+        13.0,
+        257.779999
+      ],
+      "size": [
+        92.0,
+        26.0,
+        66.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_opera_portico",
+      "renderId": "GEO_EXPORT_035_opera_white",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -122.980003,
+        5.0,
+        219.779999
+      ],
+      "size": [
+        75.0,
+        10.0,
+        8.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_quaibruecke_deck",
+      "renderId": "GEO_EXPORT_004_bellevue_bridge",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        137.0,
+        0.16,
+        27.0
+      ],
+      "size": [
+        370.0,
+        0.03999999910593033,
+        25.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_quaibruecke_rail_-1",
+      "renderId": "GEO_EXPORT_007_bellevue_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        137.0,
+        0.81,
+        39.200001
+      ],
+      "size": [
+        370.0,
+        1.25,
+        0.44999998807907104
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_quaibruecke_rail_1",
+      "renderId": "GEO_EXPORT_007_bellevue_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        137.0,
+        0.81,
+        14.8
+      ],
+      "size": [
+        370.0,
+        1.25,
+        0.44999998807907104
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_building",
+      "renderId": "GEO_EXPORT_043_stadelhofen_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -276.312012,
+        8.0,
+        67.025002
+      ],
+      "size": [
+        55.0,
+        16.0,
+        32.0
+      ],
+      "rotation": [
+        0.0,
+        -0.5299192667007446,
+        0.0,
+        0.8480480909347534
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_canopy",
+      "renderId": "GEO_EXPORT_042_stadelhofen_roof",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -240.25,
+        6.5,
+        38.310001
+      ],
+      "size": [
+        178.5,
+        1.0,
+        36.0
+      ],
+      "rotation": [
+        0.0,
+        -0.5299192667007446,
+        0.0,
+        0.8480480909347534
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_canopy_column_-1_-1",
+      "renderId": "GEO_EXPORT_043_stadelhofen_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -221.994003,
+        3.0,
+        114.519997
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_canopy_column_-1_1",
+      "renderId": "GEO_EXPORT_043_stadelhofen_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -191.434998,
+        3.0,
+        99.614998
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_canopy_column_1_-1",
+      "renderId": "GEO_EXPORT_043_stadelhofen_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -289.065002,
+        3.0,
+        -22.995001
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_canopy_column_1_1",
+      "renderId": "GEO_EXPORT_043_stadelhofen_station",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -258.506012,
+        3.0,
+        -37.900002
+      ],
+      "size": [
+        1.2000000476837158,
+        6.0,
+        1.2000000476837158
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_platform_0",
+      "renderId": "GEO_EXPORT_040_stadelhofen_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -246.542007,
+        0.11,
+        41.379002
+      ],
+      "size": [
+        255.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        -0.5299192667007446,
+        0.0,
+        0.8480480909347534
+      ]
+    },
+    {
+      "id": "COL_stadelhofen_platform_1",
+      "renderId": "GEO_EXPORT_040_stadelhofen_platform",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -235.755997,
+        0.11,
+        36.118
+      ],
+      "size": [
+        255.0,
+        0.2199999988079071,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        -0.5299192667007446,
+        0.0,
+        0.8480480909347534
+      ]
+    },
+    {
+      "id": "COL_stage_bauschaenzli",
+      "renderId": "GEO_EXPORT_003_bauschaenzli_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        211.869995,
+        0.32,
+        -106.080002
+      ],
+      "size": [
+        25.0,
+        0.6200000047683716,
+        15.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stage_bellevue",
+      "renderId": "GEO_EXPORT_006_bellevue_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -20.0,
+        0.32,
+        -45.0
+      ],
+      "size": [
+        29.0,
+        0.6200000047683716,
+        16.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stage_buerkliplatz",
+      "renderId": "GEO_EXPORT_008_buerkliplatz_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        377.0,
+        0.32,
+        95.0
+      ],
+      "size": [
+        37.0,
+        0.6200000047683716,
+        17.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stage_hafendamm",
+      "renderId": "GEO_EXPORT_023_hafendamm_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        727.22998,
+        0.32,
+        700.27002
+      ],
+      "size": [
+        30.0,
+        0.6200000047683716,
+        16.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stage_opera",
+      "renderId": "GEO_EXPORT_034_opera_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -202.979996,
+        0.32,
+        218.779999
+      ],
+      "size": [
+        32.0,
+        0.6200000047683716,
+        18.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_stage_utoquai",
+      "renderId": "GEO_EXPORT_047_utoquai_stage",
+      "shape": "box",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        -320.0,
+        0.32,
+        760.0
+      ],
+      "size": [
+        22.0,
+        0.6200000047683716,
+        12.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "COL_west_bank_terrain",
+      "renderId": "GEO_EXPORT_013_city_center_pavement",
+      "shape": "mesh",
+      "walkable": true,
+      "layer": "WORLD_STATIC",
+      "position": [
+        850.0,
+        -0.4,
+        -345.0
+      ],
+      "size": [
+        1400.0,
+        0.800000011920929,
+        2610.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "vertices": [
+        1550.0,
+        -0.8,
+        960.0,
+        720.0,
+        -0.8,
+        960.0,
+        705.0,
+        -0.8,
+        760.0,
+        650.0,
+        -0.8,
+        620.0,
+        570.0,
+        -0.8,
+        460.0,
+        475.0,
+        -0.8,
+        300.0,
+        365.0,
+        -0.8,
+        135.0,
+        285.0,
+        -0.8,
+        80.0,
+        265.0,
+        -0.8,
+        30.0,
+        285.0,
+        -0.8,
+        -120.0,
+        285.0,
+        -0.8,
+        -330.0,
+        255.0,
+        -0.8,
+        -570.0,
+        255.0,
+        -0.8,
+        -860.0,
+        160.0,
+        -0.8,
+        -1140.0,
+        150.0,
+        -0.8,
+        -1650.0,
+        1550.0,
+        -0.8,
+        -1650.0,
+        1550.0,
+        0.0,
+        960.0,
+        720.0,
+        0.0,
+        960.0,
+        705.0,
+        0.0,
+        760.0,
+        650.0,
+        0.0,
+        620.0,
+        570.0,
+        0.0,
+        460.0,
+        475.0,
+        0.0,
+        300.0,
+        365.0,
+        0.0,
+        135.0,
+        285.0,
+        0.0,
+        80.0,
+        265.0,
+        0.0,
+        30.0,
+        285.0,
+        0.0,
+        -120.0,
+        285.0,
+        0.0,
+        -330.0,
+        255.0,
+        0.0,
+        -570.0,
+        255.0,
+        0.0,
+        -860.0,
+        160.0,
+        0.0,
+        -1140.0,
+        150.0,
+        0.0,
+        -1650.0,
+        1550.0,
+        0.0,
+        -1650.0
+      ],
+      "indices": [
+        31,
+        30,
+        29,
+        16,
+        31,
+        29,
+        16,
+        29,
+        28,
+        16,
+        28,
+        27,
+        16,
+        27,
+        26,
+        16,
+        26,
+        25,
+        16,
+        25,
+        24,
+        22,
+        24,
+        23,
+        16,
+        24,
+        22,
+        16,
+        22,
+        21,
+        16,
+        21,
+        20,
+        16,
+        20,
+        19,
+        16,
+        19,
+        18,
+        16,
+        18,
+        17,
+        13,
+        14,
+        15,
+        13,
+        15,
+        0,
+        12,
+        13,
+        0,
+        11,
+        12,
+        0,
+        10,
+        11,
+        0,
+        9,
+        10,
+        0,
+        8,
+        9,
+        0,
+        7,
+        8,
+        6,
+        6,
+        8,
+        0,
+        5,
+        6,
+        0,
+        4,
+        5,
+        0,
+        3,
+        4,
+        0,
+        2,
+        3,
+        0,
+        1,
+        2,
+        0,
+        17,
+        1,
+        0,
+        16,
+        17,
+        0,
+        18,
+        2,
+        1,
+        17,
+        18,
+        1,
+        19,
+        3,
+        2,
+        18,
+        19,
+        2,
+        20,
+        4,
+        3,
+        19,
+        20,
+        3,
+        21,
+        5,
+        4,
+        20,
+        21,
+        4,
+        22,
+        6,
+        5,
+        21,
+        22,
+        5,
+        23,
+        7,
+        6,
+        22,
+        23,
+        6,
+        24,
+        8,
+        7,
+        23,
+        24,
+        7,
+        25,
+        9,
+        8,
+        24,
+        25,
+        8,
+        26,
+        10,
+        9,
+        25,
+        26,
+        9,
+        27,
+        11,
+        10,
+        26,
+        27,
+        10,
+        28,
+        12,
+        11,
+        27,
+        28,
+        11,
+        29,
+        13,
+        12,
+        28,
+        29,
+        12,
+        30,
+        14,
+        13,
+        29,
+        30,
+        13,
+        31,
+        15,
+        14,
+        30,
+        31,
+        14,
+        16,
+        0,
+        15,
+        31,
+        16,
+        15
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_00",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        711.104004,
+        0.58,
+        860.10498
+      ],
+      "size": [
+        200.56199645996094,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.6801507472991943,
+        0.0,
+        0.7330722808837891
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_01",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        676.197021,
+        0.58,
+        690.512024
+      ],
+      "size": [
+        150.41600036621094,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.5631818175315857,
+        0.0,
+        0.8263330459594727
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_02",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        608.747986,
+        0.58,
+        540.625977
+      ],
+      "size": [
+        178.88499450683594,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.5257311463356018,
+        0.0,
+        0.8506508469581604
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_03",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        521.296021,
+        0.58,
+        380.714996
+      ],
+      "size": [
+        186.0780029296875,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.49470254778862,
+        0.0,
+        0.8690623641014099
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_04",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        418.834991,
+        0.58,
+        218.276993
+      ],
+      "size": [
+        198.30499267578125,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.4718579947948456,
+        0.0,
+        0.881674587726593
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_05",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        324.207001,
+        0.58,
+        108.653999
+      ],
+      "size": [
+        97.08200073242188,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.2966126799583435,
+        0.0,
+        0.9549978375434875
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_06",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        273.700012,
+        0.58,
+        55.52
+      ],
+      "size": [
+        53.851993560791016,
+        1.159999966621399,
+        0.3999999463558197
+      ],
+      "rotation": [
+        0.0,
+        -0.5606288909912109,
+        0.0,
+        0.8280671834945679
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_07",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        273.612,
+        0.58,
+        -45.185001
+      ],
+      "size": [
+        151.32699584960938,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        -0.0,
+        -0.7523840665817261,
+        -0.0,
+        0.6587247848510742
+      ]
+    },
+    {
+      "id": "COL_west_quay_guard_08",
+      "renderId": "GEO_EXPORT_026_lake_stone",
+      "shape": "box",
+      "walkable": false,
+      "layer": "WORLD_STATIC",
+      "position": [
+        283.600006,
+        0.58,
+        -225.0
+      ],
+      "size": [
+        210.0,
+        1.159999966621399,
+        0.4000000059604645
+      ],
+      "rotation": [
+        0.0,
+        -0.7071066498756409,
+        0.0,
+        0.70710688829422
+      ]
+    }
+  ]
+}

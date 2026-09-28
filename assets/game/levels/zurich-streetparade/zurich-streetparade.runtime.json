@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 1,
+  "levelId": "zurich-streetparade",
+  "units": "metres",
+  "coordinateSystem": "babylon-left-handed-y-up",
+  "worldDimensions": [
+    3600,
+    4600
+  ],
+  "renderNodes": [
+    "GEO_EXPORT_000_background_city_distant",
+    "GEO_EXPORT_001_background_city_hill",
+    "GEO_EXPORT_002_background_city_stone",
+    "GEO_EXPORT_003_bauschaenzli_stage",
+    "GEO_EXPORT_004_bellevue_bridge",
+    "GEO_EXPORT_005_bellevue_pavement",
+    "GEO_EXPORT_006_bellevue_stage",
+    "GEO_EXPORT_007_bellevue_stone",
+    "GEO_EXPORT_008_buerkliplatz_stage",
+    "GEO_EXPORT_009_city_center_asphalt",
+    "GEO_EXPORT_010_city_center_facade_0",
+    "GEO_EXPORT_011_city_center_facade_1",
+    "GEO_EXPORT_012_city_center_facade_2",
+    "GEO_EXPORT_013_city_center_pavement",
+    "GEO_EXPORT_014_enge_asphalt",
+    "GEO_EXPORT_015_enge_facade_0",
+    "GEO_EXPORT_016_enge_facade_1",
+    "GEO_EXPORT_017_enge_facade_2",
+    "GEO_EXPORT_018_enge_platform",
+    "GEO_EXPORT_019_enge_rail",
+    "GEO_EXPORT_020_enge_roof",
+    "GEO_EXPORT_021_enge_station",
+    "GEO_EXPORT_022_hafendamm_quay",
+    "GEO_EXPORT_023_hafendamm_stage",
+    "GEO_EXPORT_024_hafendamm_stone",
+    "GEO_EXPORT_025_lake_lake",
+    "GEO_EXPORT_026_lake_stone",
+    "GEO_EXPORT_027_limmat_asphalt",
+    "GEO_EXPORT_028_limmat_bridge",
+    "GEO_EXPORT_029_limmat_limestone",
+    "GEO_EXPORT_030_limmat_park",
+    "GEO_EXPORT_031_limmat_river",
+    "GEO_EXPORT_032_limmat_stone",
+    "GEO_EXPORT_033_opera_limestone",
+    "GEO_EXPORT_034_opera_stage",
+    "GEO_EXPORT_035_opera_white",
+    "GEO_EXPORT_036_stadelhofen_asphalt",
+    "GEO_EXPORT_037_stadelhofen_facade_0",
+    "GEO_EXPORT_038_stadelhofen_facade_1",
+    "GEO_EXPORT_039_stadelhofen_facade_2",
+    "GEO_EXPORT_040_stadelhofen_platform",
+    "GEO_EXPORT_041_stadelhofen_rail",
+    "GEO_EXPORT_042_stadelhofen_roof",
+    "GEO_EXPORT_043_stadelhofen_station",
+    "GEO_EXPORT_044_streetparade_asphalt",
+    "GEO_EXPORT_045_streetparade_facade_0",
+    "GEO_EXPORT_046_streetparade_facade_1",
+    "GEO_EXPORT_047_utoquai_stage",
+    "GEO_EXPORT_048_zurich_hb_asphalt",
+    "GEO_EXPORT_049_zurich_hb_bridge",
+    "GEO_EXPORT_050_zurich_hb_clock",
+    "GEO_EXPORT_051_zurich_hb_facade_0",
+    "GEO_EXPORT_052_zurich_hb_facade_1",
+    "GEO_EXPORT_053_zurich_hb_facade_2",
+    "GEO_EXPORT_054_zurich_hb_platform",
+    "GEO_EXPORT_055_zurich_hb_rail",
+    "GEO_EXPORT_056_zurich_hb_roof",
+    "GEO_EXPORT_057_zurich_hb_station",
+    "GEO_EXPORT_058_zurich_hb_stone",
+    "GEO_EXPORT_059_zurich_hb_tunnel"
+  ],
+  "cutawayNodes": [],
+  "environment": {
+    "sky": "summer_evening",
+    "fogDensity": 0.00045,
+    "fogColor": [
+      0.65,
+      0.73,
+      0.83
+    ],
+    "shadowMode": "minimal",
+    "waterAnimation": "deferred_to_detail_pass"
+  },
+  "sectors": {
+    "zurich_hb": [
+      "GEO_EXPORT_049_zurich_hb_bridge",
+      "GEO_EXPORT_058_zurich_hb_stone",
+      "GEO_EXPORT_052_zurich_hb_facade_1",
+      "GEO_EXPORT_053_zurich_hb_facade_2",
+      "GEO_EXPORT_051_zurich_hb_facade_0",
+      "GEO_EXPORT_056_zurich_hb_roof",
+      "GEO_EXPORT_057_zurich_hb_station",
+      "GEO_EXPORT_054_zurich_hb_platform",
+      "GEO_EXPORT_055_zurich_hb_rail",
+      "GEO_EXPORT_050_zurich_hb_clock",
+      "GEO_EXPORT_059_zurich_hb_tunnel",
+      "GEO_EXPORT_048_zurich_hb_asphalt"
+    ],
+    "limmat": [
+      "GEO_EXPORT_032_limmat_stone",
+      "GEO_EXPORT_028_limmat_bridge",
+      "GEO_EXPORT_030_limmat_park",
+      "GEO_EXPORT_029_limmat_limestone",
+      "GEO_EXPORT_031_limmat_river",
+      "GEO_EXPORT_027_limmat_asphalt"
+    ],
+    "enge": [
+      "GEO_EXPORT_016_enge_facade_1",
+      "GEO_EXPORT_017_enge_facade_2",
+      "GEO_EXPORT_015_enge_facade_0",
+      "GEO_EXPORT_021_enge_station",
+      "GEO_EXPORT_020_enge_roof",
+      "GEO_EXPORT_018_enge_platform",
+      "GEO_EXPORT_019_enge_rail",
+      "GEO_EXPORT_014_enge_asphalt"
+    ],
+    "streetparade": [
+      "GEO_EXPORT_046_streetparade_facade_1",
+      "GEO_EXPORT_045_streetparade_facade_0",
+      "GEO_EXPORT_044_streetparade_asphalt"
+    ],
+    "city_center": [
+      "GEO_EXPORT_012_city_center_facade_2",
+      "GEO_EXPORT_010_city_center_facade_0",
+      "GEO_EXPORT_011_city_center_facade_1",
+      "GEO_EXPORT_009_city_center_asphalt",
+      "GEO_EXPORT_013_city_center_pavement"
+    ],
+    "stadelhofen": [
+      "GEO_EXPORT_039_stadelhofen_facade_2",
+      "GEO_EXPORT_037_stadelhofen_facade_0",
+      "GEO_EXPORT_038_stadelhofen_facade_1",
+      "GEO_EXPORT_036_stadelhofen_asphalt",
+      "GEO_EXPORT_043_stadelhofen_station",
+      "GEO_EXPORT_042_stadelhofen_roof",
+      "GEO_EXPORT_040_stadelhofen_platform",
+      "GEO_EXPORT_041_stadelhofen_rail"
+    ],
+    "background_city": [
+      "GEO_EXPORT_002_background_city_stone",
+      "GEO_EXPORT_000_background_city_distant",
+      "GEO_EXPORT_001_background_city_hill"
+    ],
+    "bellevue": [
+      "GEO_EXPORT_005_bellevue_pavement",
+      "GEO_EXPORT_004_bellevue_bridge",
+      "GEO_EXPORT_007_bellevue_stone",
+      "GEO_EXPORT_006_bellevue_stage"
+    ],
+    "lake": [
+      "GEO_EXPORT_026_lake_stone",
+      "GEO_EXPORT_025_lake_lake"
+    ],
+    "hafendamm": [
+      "GEO_EXPORT_022_hafendamm_quay",
+      "GEO_EXPORT_024_hafendamm_stone",
+      "GEO_EXPORT_023_hafendamm_stage"
+    ],
+    "opera": [
+      "GEO_EXPORT_035_opera_white",
+      "GEO_EXPORT_033_opera_limestone",
+      "GEO_EXPORT_034_opera_stage"
+    ],
+    "bauschaenzli": [
+      "GEO_EXPORT_003_bauschaenzli_stage"
+    ],
+    "buerkliplatz": [
+      "GEO_EXPORT_008_buerkliplatz_stage"
+    ],
+    "utoquai": [
+      "GEO_EXPORT_047_utoquai_stage"
+    ]
+  },
+  "doors": [],
+  "bottleSpawns": [],
+  "vehicleSpawns": [],
+  "vehicleRoutes": [
+    {
+      "id": "MARK_streetparade_route",
+      "position": [
+        -320.0,
+        0.1,
+        760.0
+      ],
+      "points": [
+        [
+          -320.0,
+          0.1,
+          760.0
+        ],
+        [
+          -195.0,
+          0.1,
+          370.0
+        ],
+        [
+          -170.0,
+          0.1,
+          190.0
+        ],
+        [
+          0.0,
+          0.1,
+          0.0
+        ],
+        [
+          0.0,
+          0.1,
+          27.0
+        ],
+        [
+          300.0,
+          0.1,
+          27.0
+        ],
+        [
+          302.540009,
+          0.1,
+          59.009998
+        ],
+        [
+          405.0,
+          0.1,
+          180.0
+        ],
+        [
+          545.0,
+          0.1,
+          360.0
+        ],
+        [
+          640.0,
+          0.1,
+          535.0
+        ],
+        [
+          712.22998,
+          0.1,
+          734.27002
+        ]
+      ],
+      "stopIds": [
+        "utoquai",
+        "bellevue",
+        "buerkliplatz",
+        "hafendamm"
+      ]
+    },
+    {
+      "id": "MARK_zurich_train_loop",
+      "position": [
+        440.480011,
+        -8.5,
+        -1245.939941
+      ],
+      "points": [
+        [
+          440.480011,
+          -8.5,
+          -1245.939941
+        ],
+        [
+          -240.25,
+          -8.5,
+          38.310001
+        ],
+        [
+          1036.75,
+          -8.5,
+          314.720001
+        ],
+        [
+          440.480011,
+          -8.5,
+          -1245.939941
+        ]
+      ],
+      "stopIds": [
+        "zurich_hb",
+        "stadelhofen",
+        "enge",
+        "zurich_hb"
+      ],
+      "sector": "rail",
+      "underground": true
+    }
+  ],
+  "roofAccess": [],
+  "missionTriggers": [
+    {
+      "id": "MARK_explore_hafendamm",
+      "position": [
+        712.22998,
+        0.25,
+        734.27002
+      ],
+      "radius": 12,
+      "label": "Hafendamm Enge",
+      "sector": "hafendamm"
+    },
+    {
+      "id": "MARK_stage_bauschaenzli",
+      "position": [
+        211.869995,
+        0.7,
+        -106.080002
+      ],
+      "radius": 14,
+      "label": "bauschaenzli stage",
+      "sector": "bauschaenzli"
+    },
+    {
+      "id": "MARK_stage_bellevue",
+      "position": [
+        -20.0,
+        0.7,
+        -45.0
+      ],
+      "radius": 14,
+      "label": "bellevue stage",
+      "sector": "bellevue"
+    },
+    {
+      "id": "MARK_stage_buerkliplatz",
+      "position": [
+        377.0,
+        0.7,
+        95.0
+      ],
+      "radius": 14,
+      "label": "buerkliplatz stage",
+      "sector": "buerkliplatz"
+    },
+    {
+      "id": "MARK_stage_hafendamm",
+      "position": [
+        727.22998,
+        0.7,
+        700.27002
+      ],
+      "radius": 14,
+      "label": "hafendamm stage",
+      "sector": "hafendamm"
+    },
+    {
+      "id": "MARK_stage_opera",
+      "position": [
+        -202.979996,
+        0.7,
+        218.779999
+      ],
+      "radius": 14,
+      "label": "opera stage",
+      "sector": "opera"
+    },
+    {
+      "id": "MARK_stage_utoquai",
+      "position": [
+        -320.0,
+        0.7,
+        760.0
+      ],
+      "radius": 14,
+      "label": "utoquai stage",
+      "sector": "utoquai"
+    }
+  ],
+  "playerSpawns": [
+    {
+      "id": "MARK_first_spawn",
+      "position": [
+        237.479996,
+        1.2,
+        -1245.939941
+      ],
+      "label": "Zürich HB",
+      "sector": "zurich_hb"
+    },
+    {
+      "id": "MARK_landmark_bauschaenzli",
+      "position": [
+        211.869995,
+        1.2,
+        -106.080002
+      ],
+      "label": "bauschaenzli",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_bellevue",
+      "position": [
+        0.0,
+        1.2,
+        0.0
+      ],
+      "label": "bellevue",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_buerkliplatz",
+      "position": [
+        302.540009,
+        1.2,
+        59.009998
+      ],
+      "label": "buerkliplatz",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_hafendamm",
+      "position": [
+        712.22998,
+        1.2,
+        734.27002
+      ],
+      "label": "hafendamm",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_opera",
+      "position": [
+        -170.0,
+        1.2,
+        190.0
+      ],
+      "label": "opera",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_quaibruecke",
+      "position": [
+        77.589996,
+        1.2,
+        27.0
+      ],
+      "label": "quaibruecke",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_landmark_utoquai",
+      "position": [
+        -320.0,
+        1.2,
+        760.0
+      ],
+      "label": "utoquai",
+      "sector": "streetparade"
+    },
+    {
+      "id": "MARK_station_enge",
+      "position": [
+        1036.75,
+        1.2,
+        314.720001
+      ],
+      "label": "enge",
+      "sector": "enge"
+    },
+    {
+      "id": "MARK_station_stadelhofen",
+      "position": [
+        -240.25,
+        1.2,
+        38.310001
+      ],
+      "label": "stadelhofen",
+      "sector": "stadelhofen"
+    },
+    {
+      "id": "MARK_station_zurich_hb",
+      "position": [
+        237.479996,
+        1.2,
+        -1245.939941
+      ],
+      "label": "zurich_hb",
+      "sector": "zurich_hb"
+    }
+  ],
+  "navigationRoutes": [],
+  "walkableAreas": [
+    {
+      "id": "GEO_bahnhofbruecke_deck",
+      "min": [
+        30.0,
+        0.14,
+        -1058.5
+      ],
+      "max": [
+        240.0,
+        0.18,
+        -1041.5
+      ]
+    },
+    {
+      "id": "GEO_bauschaenzli_footbridge",
+      "min": [
+        236.869995,
+        0.14,
+        -109.580002
+      ],
+      "max": [
+        288.0,
+        0.18,
+        -102.580002
+      ]
+    },
+    {
+      "id": "GEO_bauschaenzli_island",
+      "min": [
+        151.869995,
+        -0.77,
+        -144.080002
+      ],
+      "max": [
+        256.869995,
+        0.08,
+        -74.080002
+      ]
+    },
+    {
+      "id": "GEO_east_bank_terrain",
+      "min": [
+        -1120.0,
+        -0.8,
+        -1650.0
+      ],
+      "max": [
+        70.0,
+        0.0,
+        960.0
+      ]
+    },
+    {
+      "id": "GEO_enge_platform_0",
+      "min": [
+        939.572388,
+        0.0,
+        259.64209
+      ],
+      "max": [
+        1134.897583,
+        0.22,
+        371.547913
+      ]
+    },
+    {
+      "id": "GEO_hafendamm_pier",
+      "min": [
+        655.571838,
+        0.06,
+        680.817688
+      ],
+      "max": [
+        738.888123,
+        0.1,
+        822.722351
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_00",
+      "min": [
+        360.47998,
+        0.0,
+        -1186.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1180.339966
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_01",
+      "min": [
+        360.47998,
+        0.0,
+        -1209.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1203.339966
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_02",
+      "min": [
+        360.47998,
+        0.0,
+        -1232.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1226.339966
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_03",
+      "min": [
+        360.47998,
+        0.0,
+        -1255.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1249.339966
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_04",
+      "min": [
+        360.47998,
+        0.0,
+        -1278.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1272.339966
+      ]
+    },
+    {
+      "id": "GEO_hb_platform_05",
+      "min": [
+        360.47998,
+        0.0,
+        -1301.339966
+      ],
+      "max": [
+        790.47998,
+        0.22,
+        -1295.339966
+      ]
+    },
+    {
+      "id": "GEO_quaibruecke_deck",
+      "min": [
+        -48.0,
+        0.14,
+        14.5
+      ],
+      "max": [
+        322.0,
+        0.18,
+        39.5
+      ]
+    },
+    {
+      "id": "GEO_stadelhofen_platform_0",
+      "min": [
+        -305.130707,
+        0.0,
+        -74.532356
+      ],
+      "max": [
+        -187.953308,
+        0.22,
+        157.290359
+      ]
+    },
+    {
+      "id": "GEO_stadelhofen_platform_1",
+      "min": [
+        -294.344696,
+        0.0,
+        -79.793358
+      ],
+      "max": [
+        -177.167297,
+        0.22,
+        152.029358
+      ]
+    },
+    {
+      "id": "GEO_stage_bauschaenzli",
+      "min": [
+        199.369995,
+        0.01,
+        -113.580002
+      ],
+      "max": [
+        224.369995,
+        0.63,
+        -98.580002
+      ]
+    },
+    {
+      "id": "GEO_stage_bellevue",
+      "min": [
+        -34.5,
+        0.01,
+        -53.0
+      ],
+      "max": [
+        -5.5,
+        0.63,
+        -37.0
+      ]
+    },
+    {
+      "id": "GEO_stage_buerkliplatz",
+      "min": [
+        358.5,
+        0.01,
+        86.5
+      ],
+      "max": [
+        395.5,
+        0.63,
+        103.5
+      ]
+    },
+    {
+      "id": "GEO_stage_hafendamm",
+      "min": [
+        712.22998,
+        0.01,
+        692.27002
+      ],
+      "max": [
+        742.22998,
+        0.63,
+        708.27002
+      ]
+    },
+    {
+      "id": "GEO_stage_opera",
+      "min": [
+        -218.979996,
+        0.01,
+        209.779999
+      ],
+      "max": [
+        -186.979996,
+        0.63,
+        227.779999
+      ]
+    },
+    {
+      "id": "GEO_stage_utoquai",
+      "min": [
+        -331.0,
+        0.01,
+        754.0
+      ],
+      "max": [
+        -309.0,
+        0.63,
+        766.0
+      ]
+    },
+    {
+      "id": "GEO_west_bank_terrain",
+      "min": [
+        150.0,
+        -0.8,
+        -1650.0
+      ],
+      "max": [
+        1550.0,
+        0.0,
+        960.0
+      ]
+    }
+  ]
+}

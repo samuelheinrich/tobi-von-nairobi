@@ -16,10 +16,9 @@ export function App() {
   const [generation, setGeneration] = useState(0);
   const [level, setLevel] = useState(
     () =>
-      (import.meta.env.DEV &&
-        playableLevels.find(
-          (entry) => entry.id === new URLSearchParams(location.search).get('level'),
-        )) ||
+      playableLevels.find(
+        (entry) => entry.id === new URLSearchParams(location.search).get('level'),
+      ) ||
       welcomeToBali,
   );
   const store = useMemo(() => new GameViewStore(), [generation, level]);

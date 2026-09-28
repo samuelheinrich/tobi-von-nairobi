@@ -106,19 +106,22 @@ def validate(save=True):
         for b in floors[i+1:]:
             bb=bounds(b)
             planar = all(min(aa[1][k],bb[1][k])-max(aa[0][k],bb[0][k]) > .01 for k in (0,1))
-            if planar and abs(aa[1][2]-bb[1][2]) < .001:
+            if planar and abs(aa[1][2]-bb[1][2]) < .001 and coplanar_faces(a,b):
                 note('ERROR','duplicate_floor',[a.name,b.name],'Overlapping walkable tops differ by less than 1 mm.')
-    # Compare actual world-space faces; rotated rails made AABB face tests noisy.
-    for i,a in enumerate(geo):
-        aa=bounds(a)
-        for b in geo[i+1:]:
-            bb=bounds(b)
+    # Cache transformed bounds once and sweep along X. Multi-storey interiors
+    # otherwise recompute eight transformed corners millions of times.
+    bounded = sorted(((bounds(obj), obj) for obj in geo), key=lambda pair: pair[0][0][0])
+    for i,(aa,a) in enumerate(bounded):
+        for bb,b in bounded[i+1:]:
+            if bb[0][0] >= aa[1][0]:
+                break
             if overlap(aa,bb) and coplanar_faces(a,b):
                 note('WARNING','coplanar_faces',[a.name,b.name],'World-space mesh faces overlap on the same plane.')
     halfx,halfy=[n/2 for n in recipe['worldDimensions']]
     for marker in markers:
         p=marker.matrix_world.translation
-        if abs(p.x)>halfx or abs(p.y)>halfy or p.z < -.5 or p.z>50:
+        lowest = -50 if marker.get('underground') else -.5
+        if abs(p.x)>halfx or abs(p.y)>halfy or p.z < lowest or p.z>50:
             note('ERROR','marker_outside',[marker.name],'Marker outside playable world bounds.')
         for route_point in marker.get('points',[]):
             if abs(route_point[0])>halfx or abs(route_point[1])>halfy:

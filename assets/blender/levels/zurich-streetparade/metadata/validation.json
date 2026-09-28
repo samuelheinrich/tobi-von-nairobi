@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "levelId": "zurich-streetparade",
+  "blenderVersion": "5.2.2 LTS",
+  "status": "WARNING",
+  "counts": {
+    "render": 556,
+    "colliders": 279,
+    "markers": 20
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_city_boundary_east",
+        "GEO_city_boundary_north_east"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_city_boundary_east",
+        "GEO_city_boundary_south_east"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_city_boundary_north_west",
+        "GEO_city_boundary_west"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_city_boundary_south_west",
+        "GEO_city_boundary_west"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_bank_terrain",
+        "GEO_lake_water"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_bank_terrain",
+        "GEO_limmat_water"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_quay_guard_00",
+        "GEO_east_quay_guard_01"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_quay_guard_01",
+        "GEO_east_quay_guard_02"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_quay_guard_03",
+        "GEO_east_quay_guard_04"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_east_quay_guard_04",
+        "GEO_east_quay_guard_05"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hafendamm_pier",
+        "GEO_hafendamm_rail_-1"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hafendamm_pier",
+        "GEO_hafendamm_rail_1"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hb_hall_east_north",
+        "GEO_hb_hall_north_wall"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hb_hall_east_south",
+        "GEO_hb_hall_south_wall"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hb_hall_north_wall",
+        "GEO_hb_hall_west_north"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_hb_hall_south_wall",
+        "GEO_hb_hall_west_south"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_lake_water",
+        "GEO_limmat_water"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_lake_water",
+        "GEO_west_bank_terrain"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_limmat_water",
+        "GEO_west_bank_terrain"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_00",
+        "GEO_west_quay_guard_01"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_01",
+        "GEO_west_quay_guard_02"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_02",
+        "GEO_west_quay_guard_03"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_03",
+        "GEO_west_quay_guard_04"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_04",
+        "GEO_west_quay_guard_05"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "WARNING",
+      "code": "coplanar_faces",
+      "objects": [
+        "GEO_west_quay_guard_07",
+        "GEO_west_quay_guard_08"
+      ],
+      "message": "World-space mesh faces overlap on the same plane."
+    },
+    {
+      "severity": "PASS",
+      "code": "open_geometry",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "duplicate_floor",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "missing_collision",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "blocked_door",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "marker_outside",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "roof_without_access",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "unguarded_edge",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "duplicate_name",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "orphan_collider",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "stale_collider",
+      "objects": [],
+      "message": "No issue detected by this check."
+    },
+    {
+      "severity": "PASS",
+      "code": "ground_gaps",
+      "objects": [],
+      "message": "No issue detected by this check."
+    }
+  ],
+  "limitations": [
+    "Door clearance uses conservative AABB tests for rotations.",
+    "Ground holes smaller than the 2 m sample grid may be missed.",
+    "Edge safety only covers declared safety_edges; it is not an arbitrary-mesh fall detector.",
+    "Roof access markers do not prove reachability; exercise the Havok route in Level Studio."
+  ]
+}

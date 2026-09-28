@@ -3,9 +3,9 @@ import { DirectionalLight } from '@babylonjs/core/Lights/directionalLight.js';
 import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js';
 import { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
-import { Color4 } from '@babylonjs/core/Maths/math.color.js';
+import { Color3, Color4 } from '@babylonjs/core/Maths/math.color.js';
 import { Mesh } from '@babylonjs/core/Meshes/mesh.js';
-import type { Scene } from '@babylonjs/core/scene.js';
+import { Scene } from '@babylonjs/core/scene.js';
 import type { LevelDefinition } from '@tobi/contracts';
 import type { HavokWorld } from '../../physics/havok-world.js';
 import type { LevelScene } from '../create-level-scene.js';
@@ -36,17 +36,37 @@ export function createAuthoredScene(
   destination.isVisible = false;
   const colliders: Mesh[] = [];
   const debugTeleports: { label: string; position: { x: number; y: number; z: number } }[] = [];
+  let minimumSafeHeight = -4;
   const ready = loadAuthoredLevel(scene, level.authoredAsset).then((loaded) => {
+    for (const area of loaded.metadata.walkableAreas) {
+      minimumSafeHeight = Math.min(minimumSafeHeight, area.min[1] - 4);
+    }
+    const environment = loaded.metadata.environment;
+    if (environment?.fogDensity && environment.fogColor) {
+      scene.fogMode = Scene.FOGMODE_EXP2;
+      scene.fogDensity = environment.fogDensity;
+      scene.fogColor = Color3.FromArray(environment.fogColor);
+      scene.clearColor = new Color4(...environment.fogColor, 1);
+      if (scene.activeCamera) {
+        scene.activeCamera.minZ = Math.max(scene.activeCamera.minZ, 0.25);
+        scene.activeCamera.maxZ = Math.max(scene.activeCamera.maxZ, 4200);
+      }
+    }
     colliders.push(...loaded.proxies);
     const solidNames = new Set(loaded.proxies.map((mesh) => mesh.metadata?.renderId));
     for (const mesh of loaded.container.meshes) {
       mesh.receiveShadows = true;
       if (solidNames.has(mesh.name)) mesh.metadata = { ...mesh.metadata, cameraObstacle: true };
-      if (mesh.getTotalVertices()) shadows.addShadowCaster(mesh);
+      if (
+        mesh.getTotalVertices() &&
+        environment?.shadowMode !== 'minimal' &&
+        !loaded.metadata.sectors?.background_city?.includes(mesh.name)
+      )
+        shadows.addShadowCaster(mesh);
     }
     for (const marker of [...loaded.metadata.playerSpawns, ...loaded.metadata.roofAccess]) {
       const [x, y, z] = marker.position;
-      debugTeleports.push({ label: marker.id, position: { x, y: y + 1.1, z } });
+      debugTeleports.push({ label: marker.label ?? marker.id, position: { x, y: y + 1.1, z } });
     }
   });
   return {
@@ -56,6 +76,6 @@ export function createAuthoredScene(
     ready,
     debugTeleports,
     worldLabel: () => level.title,
-    safeGround: (p) => p.y > -4,
+    safeGround: (p) => p.y > minimumSafeHeight,
   };
 }
